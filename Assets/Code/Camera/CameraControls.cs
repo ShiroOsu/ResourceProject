@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 
 public class CameraControls : MonoBehaviour, Controls.ICameraActions
 {
-    // Expose to inspector
-    public float m_CameraSpeed = 10f;
-    public float m_RotateSpeed = 5f;
+    public CameraData m_Data = null;
+    private float m_CameraSpeed;
+    private float m_RotationSpeed;
 
     private Controls m_CameraControls = null;
     private Vector3 m_MoveDirection;
@@ -14,6 +14,14 @@ public class CameraControls : MonoBehaviour, Controls.ICameraActions
 
     public void Awake()
     {
+        if (!m_Data)
+        {
+            m_Data = ScriptableObject.CreateInstance<CameraData>();
+        }
+
+        m_CameraSpeed = m_Data.cameraSpeed;
+        m_RotationSpeed = m_Data.rotationSpeed;
+
         m_CameraControls = new Controls();
         m_CameraControls.Camera.SetCallbacks(this);
     }
@@ -72,6 +80,6 @@ public class CameraControls : MonoBehaviour, Controls.ICameraActions
     {
         Zoom(deltaTime);
         transform.position += m_MoveDirection * m_CameraSpeed * deltaTime;
-        transform.Rotate(m_RotationDirection * m_RotateSpeed * deltaTime, Space.Self);
+        transform.Rotate(m_RotationDirection * m_RotationSpeed * deltaTime, Space.Self);
     }
 }
