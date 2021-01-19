@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Inputs/Controls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Inputs/Camera/Controls.inputactions'
 
 using System;
 using System.Collections;
@@ -144,33 +144,6 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Selection"",
-            ""id"": ""afc797e7-3d5f-4932-a545-baefc258a663"",
-            ""actions"": [
-                {
-                    ""name"": ""Select"",
-                    ""type"": ""Button"",
-                    ""id"": ""b3204654-64c1-42c6-969a-116c25fe63a2"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""80f454e0-6edd-4f0d-a73a-36caa35a991b"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Select"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
@@ -180,9 +153,6 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Camera_Movement = m_Camera.FindAction("Movement", throwIfNotFound: true);
         m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
         m_Camera_Rotation = m_Camera.FindAction("Rotation", throwIfNotFound: true);
-        // Selection
-        m_Selection = asset.FindActionMap("Selection", throwIfNotFound: true);
-        m_Selection_Select = m_Selection.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,47 +247,10 @@ public class @Controls : IInputActionCollection, IDisposable
         }
     }
     public CameraActions @Camera => new CameraActions(this);
-
-    // Selection
-    private readonly InputActionMap m_Selection;
-    private ISelectionActions m_SelectionActionsCallbackInterface;
-    private readonly InputAction m_Selection_Select;
-    public struct SelectionActions
-    {
-        private @Controls m_Wrapper;
-        public SelectionActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Select => m_Wrapper.m_Selection_Select;
-        public InputActionMap Get() { return m_Wrapper.m_Selection; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(SelectionActions set) { return set.Get(); }
-        public void SetCallbacks(ISelectionActions instance)
-        {
-            if (m_Wrapper.m_SelectionActionsCallbackInterface != null)
-            {
-                @Select.started -= m_Wrapper.m_SelectionActionsCallbackInterface.OnSelect;
-                @Select.performed -= m_Wrapper.m_SelectionActionsCallbackInterface.OnSelect;
-                @Select.canceled -= m_Wrapper.m_SelectionActionsCallbackInterface.OnSelect;
-            }
-            m_Wrapper.m_SelectionActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Select.started += instance.OnSelect;
-                @Select.performed += instance.OnSelect;
-                @Select.canceled += instance.OnSelect;
-            }
-        }
-    }
-    public SelectionActions @Selection => new SelectionActions(this);
     public interface ICameraActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
-    }
-    public interface ISelectionActions
-    {
-        void OnSelect(InputAction.CallbackContext context);
     }
 }

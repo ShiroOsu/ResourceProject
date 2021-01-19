@@ -3,10 +3,14 @@ using UnityEngine.InputSystem;
 
 public class CameraControls : MonoBehaviour, Controls.ICameraActions
 {
+    // Expose to inspector
+    public float m_CameraSpeed = 10f;
+    public float m_RotateSpeed = 5f;
+
     private Controls m_CameraControls = null;
-    private Vector3 m_DirectionVector;
+    private Vector3 m_MoveDirection;
     private Vector3 m_ZoomDirection;
-    private float m_CameraSpeed = 10f;
+    private Vector3 m_RotationDirection;
 
     public void Awake()
     {
@@ -26,24 +30,15 @@ public class CameraControls : MonoBehaviour, Controls.ICameraActions
 
     public void Update()
     {
-        if (m_ZoomDirection.y > 0f)
-        {
-            transform.position -= m_ZoomDirection * Time.deltaTime;
-        } 
-        else
-        {
-            transform.position -= m_ZoomDirection * Time.deltaTime; 
-        }
-
-        transform.position += m_DirectionVector * m_CameraSpeed * Time.deltaTime;
+        MoveCamera(Time.deltaTime);
     }
 
     public void OnMovement(InputAction.CallbackContext context)
     {
         var direction = context.ReadValue<Vector2>();
 
-        m_DirectionVector.x = direction.x;
-        m_DirectionVector.z = direction.y;
+        m_MoveDirection.x = direction.x;
+        m_MoveDirection.z = direction.y;
     }
 
     public void OnZoom(InputAction.CallbackContext context)
@@ -52,9 +47,31 @@ public class CameraControls : MonoBehaviour, Controls.ICameraActions
         m_ZoomDirection.y = scroll;
     }
 
+    private void Zoom(float time)
+    {
+        // Add a limit
+        // lerp for smooth zoom maybe
+
+        if (m_ZoomDirection.y > 0f)
+        {
+            transform.position -= m_ZoomDirection * time;
+        }
+        else
+        {
+            transform.position -= m_ZoomDirection * time;
+        }
+    }
+
     public void OnRotation(InputAction.CallbackContext context)
     {
-        var qe = context.ReadValue<float>();
-        Debug.Log(qe);
+        var direction = context.ReadValue<float>();
+        m_RotationDirection.y = direction;
+    }
+
+    private void MoveCamera(float deltaTime)
+    {
+        Zoom(deltaTime);
+        transform.position += m_MoveDirection * m_CameraSpeed * deltaTime;
+        transform.Rotate(m_RotationDirection * m_RotateSpeed * deltaTime, Space.Self);
     }
 }
