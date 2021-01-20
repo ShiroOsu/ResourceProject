@@ -5,4 +5,5 @@ public class CameraData : ScriptableObject
 {
     public float cameraSpeed;
     public float rotationSpeed;
+    public float zoomSpeed;
 }

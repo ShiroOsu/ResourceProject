@@ -3,14 +3,16 @@ using UnityEngine.InputSystem;
 
 public class CameraControls : MonoBehaviour, Controls.ICameraActions
 {
+    // Values set in CameraData
     public CameraData m_Data = null;
     private float m_CameraSpeed;
     private float m_RotationSpeed;
+    private float m_ZoomSpeed;
 
     private Controls m_CameraControls = null;
-    private Vector3 m_MoveDirection;
-    private Vector3 m_ZoomDirection;
+    private Vector3 m_ForwardVector;
     private Vector3 m_RotationDirection;
+    private Vector3 m_ZoomVector;
 
     public void Awake()
     {
@@ -21,6 +23,7 @@ public class CameraControls : MonoBehaviour, Controls.ICameraActions
 
         m_CameraSpeed = m_Data.cameraSpeed;
         m_RotationSpeed = m_Data.rotationSpeed;
+        m_ZoomSpeed = m_Data.zoomSpeed;
 
         m_CameraControls = new Controls();
         m_CameraControls.Camera.SetCallbacks(this);
@@ -45,28 +48,29 @@ public class CameraControls : MonoBehaviour, Controls.ICameraActions
     {
         var direction = context.ReadValue<Vector2>();
 
-        m_MoveDirection.x = direction.x;
-        m_MoveDirection.z = direction.y;
+        m_ForwardVector.x = direction.x;
+        m_ForwardVector.z = direction.y;
     }
 
     public void OnZoom(InputAction.CallbackContext context)
     {
-        var scroll = context.ReadValue<float>();
-        m_ZoomDirection.y = scroll;
+        var scrollValue = context.ReadValue<float>();
+        m_ZoomVector.y = scrollValue;
     }
 
-    private void Zoom(float time)
+    private void Zoom(float deltaTime)
     {
         // Add a limit
         // lerp for smooth zoom maybe
+        // Zoom towards mouse pointers current position?
 
-        if (m_ZoomDirection.y > 0f)
+        if (m_ZoomVector.y > 0f)
         {
-            transform.position -= m_ZoomDirection * time;
+            transform.position -= m_ZoomVector * m_ZoomSpeed * deltaTime;
         }
         else
         {
-            transform.position -= m_ZoomDirection * time;
+            transform.position -= m_ZoomVector * m_ZoomSpeed * deltaTime;
         }
     }
 
@@ -79,7 +83,9 @@ public class CameraControls : MonoBehaviour, Controls.ICameraActions
     private void MoveCamera(float deltaTime)
     {
         Zoom(deltaTime);
-        transform.position += m_MoveDirection * m_CameraSpeed * deltaTime;
         transform.Rotate(m_RotationDirection * m_RotationSpeed * deltaTime, Space.Self);
+
+        Vector3 forwardDirection = transform.rotation * m_ForwardVector;
+        transform.position += forwardDirection.normalized * m_CameraSpeed * deltaTime;
     }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6690d5d936a4e46867a17523396499, type: 3}
   m_Name: CameraData
   m_EditorClassIdentifier: 
-  cameraSpeed: 10
-  rotationSpeed: 10
+  cameraSpeed: 70
+  rotationSpeed: 70
