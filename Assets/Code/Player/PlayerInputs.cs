@@ -11,12 +11,15 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     private Vector3 m_Origin;
     private Vector3 m_Direction;
 
+
     private void Awake()
     {
         if (!m_Data)
         {
             m_Data = ScriptableObject.CreateInstance<PlayerData>();
         }
+
+        m_LayerMask = LayerMask.GetMask("InteractionLayer");
 
         m_PlayerControls = new PlayerControls();
         m_PlayerControls.Player.SetCallbacks(this);
@@ -35,10 +38,18 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     public void OnMouse(InputAction.CallbackContext context)
     {
         var pressed = context.ReadValueAsButton();
+        var mousePos = Mouse.current.position.ReadValue();
 
         if (pressed)
         {
-            Physics.Raycast(m_Origin, m_Direction, maxDistance:Mathf.Infinity, m_LayerMask);
+            m_Direction = new Vector3(mousePos.x, 0f, mousePos.y);
+            bool ray = Physics.Raycast(m_Origin, m_Direction, out RaycastHit hit, maxDistance:Mathf.Infinity, m_LayerMask);
+
+            if (ray)
+            {
+                Debug.Log(hit.collider.name);
+            }
+
             Debug.Log("Left mouse button pressed");
         }
     }

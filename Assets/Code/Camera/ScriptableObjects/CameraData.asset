@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraSpeed: 70
   rotationSpeed: 70
+  zoomSpeed: 10
