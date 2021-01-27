@@ -5,4 +5,6 @@ public interface IUnit
 
     // Spawn unit
     public void Spawn();
+
+    public void Move(UnityEngine.Vector3 destination);
 }
