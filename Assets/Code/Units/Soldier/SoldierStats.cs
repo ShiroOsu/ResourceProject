@@ -14,17 +14,20 @@ public class SoldierStats : ScriptableObject, ISerializationCallbackReceiver
     [Tooltip("Health regeneration per 5s")]
     public float hpRegen = 1f;
 
-    // During game time the health of the player data will be "runTimeHealth"
+    public float damage = 1f;
+    public float attackSpeed = 1f;
+
+    public float movementSpeed = 2f;
+
+    // During game time the health & HpRegen of the unit data will be "runTimeHealth"
     // To prevent any overrides to the initial health the unit start with.
     [NonSerialized] public float runTimeHealth;
     [NonSerialized] public float runTimeHpRegen;
-    [NonSerialized] public int runTimeDefense;
 
     public void OnAfterDeserialize() 
     {
         runTimeHealth = health;
         runTimeHpRegen = hpRegen;
-        runTimeDefense = defense;
     }
     public void OnBeforeSerialize() { }
 }

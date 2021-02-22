@@ -45,6 +45,8 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         var leftMouse = context.ReadValueAsButton();
         mousePosition = Mouse.current.position.ReadValue();
 
+
+
         // why check leftmouse?
         if (leftMouse && context.performed)
         {

@@ -1,23 +1,19 @@
 using UnityEngine;
+using System.Collections;
 
 public class SoldierUnit : MonoBehaviour, IUnit
 {
     public SoldierStats m_Stats;
 
-    private float m_Speed = 1f;
-    private bool move = false;
-    private Vector3 m_Pos;
+    private float m_Speed;
+    private IEnumerator m_MoveCoroutine;
 
     private void Awake()
     {
         if (!m_Stats)
         { m_Stats = ScriptableObject.CreateInstance<SoldierStats>(); }
-    }
 
-    public void Update()
-    {
-        if (move)
-        { MoveUnits(Time.deltaTime); }
+        m_Speed = m_Stats.movementSpeed;
     }
 
     public void Destroy()
@@ -32,19 +28,35 @@ public class SoldierUnit : MonoBehaviour, IUnit
 
     public void Move(Vector3 destination)
     {
-        // Temp
-        m_Pos = destination;
-        m_Pos.y = transform.position.y; // do not change y pos
-        move = true;
+        m_MoveCoroutine = SmoothStep(transform.position, destination, m_Speed);
+        StartCoroutine(m_MoveCoroutine);
     }
 
-    private void MoveUnits(float deltaTime)
+    private IEnumerator SmoothStep(Vector3 start, Vector3 end, float speed)
     {
-        transform.position = Vector3.Lerp(transform.position, m_Pos, m_Speed * deltaTime);
+        // Temp
+        end.y = start.y;
 
-        if (transform.position == m_Pos)
+        float startTime = Time.time;
+        bool moving = true;
+        float errorMargin = 0.001f;
+
+        while (moving)
         {
-            move = false;
+            float currentSpeed = Mathf.Clamp01(Time.time - startTime) * 
+                Mathf.Clamp01(((end - transform.position).magnitude * speed) / speed) * speed * Time.deltaTime;
+
+            transform.position += (end - start).normalized * currentSpeed;
+
+            if ((end - transform.position).sqrMagnitude < errorMargin) 
+            {
+                moving = false;
+                transform.position = end;
+            }
+            else
+            {
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }
