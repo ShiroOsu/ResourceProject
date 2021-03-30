@@ -15,3 +15,6 @@ MonoBehaviour:
   interactionLayer:
     serializedVersion: 2
     m_Bits: 64
+  multiSelectionLayer:
+    serializedVersion: 2
+    m_Bits: 1024
