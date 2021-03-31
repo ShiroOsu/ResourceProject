@@ -46,7 +46,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
     private void Update()
     {
-        HoldingLeftButton();
+        IsLMBHoldingDown();
     }
 
     #region Enable PlayerControls
@@ -118,7 +118,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         }
     }
 
-    private void HoldingLeftButton()
+    private void IsLMBHoldingDown()
     {
         if (Mouse.current.leftButton.isPressed)
         {
@@ -131,6 +131,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         }
         else
         {
+            // When releasing LMB SquareImage might still be active when it should not be
             if (m_SquareImage.gameObject.activeInHierarchy)
             {
                 m_SquareImage.gameObject.SetActive(false);
@@ -191,14 +192,14 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     }
 
 
-    private void OnGUI()
-    {
-        // draw selection box
-        //if (m_BoxEndPos != Vector2.zero && m_BoxStartPos != Vector2.zero)
-        //{
-        //    var rect = new Rect(m_BoxStartPos.x, Screen.height - m_BoxStartPos.y, m_BoxEndPos.x - m_BoxStartPos.x, -1 * (m_BoxEndPos.y - m_BoxStartPos.y));
-        //    Debug.Log(m_Image);
-        //    GUI.DrawTexture(rect, m_Image);
-        //}
-    }
+    //private void OnGUI()
+    //{
+    //    // draw selection box
+    //    //if (m_BoxEndPos != Vector2.zero && m_BoxStartPos != Vector2.zero)
+    //    //{
+    //    //    var rect = new Rect(m_BoxStartPos.x, Screen.height - m_BoxStartPos.y, m_BoxEndPos.x - m_BoxStartPos.x, -1 * (m_BoxEndPos.y - m_BoxStartPos.y));
+    //    //    Debug.Log(m_Image);
+    //    //    GUI.DrawTexture(rect, m_Image);
+    //    //}
+    //}
 }

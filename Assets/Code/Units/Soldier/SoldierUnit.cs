@@ -1,15 +1,15 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class SoldierUnit : MonoBehaviour, IUnit
 {
-    // Why am I not using unity's Agent AI?
-
     public SoldierStats m_Stats;
     private CapsuleCollider m_UnitCollider;
+    private NavMeshAgent m_Agent;
+    public NavMeshAgent Agent => m_Agent;
 
-    private float m_Speed;
-    private bool m_Moving;
     private IEnumerator m_MoveCoroutine;
 
     private void Awake()
@@ -17,9 +17,12 @@ public class SoldierUnit : MonoBehaviour, IUnit
         if (!m_Stats)
         { m_Stats = ScriptableObject.CreateInstance<SoldierStats>(); }
 
-        m_Speed = m_Stats.movementSpeed;
-
         m_UnitCollider = GetComponent<CapsuleCollider>();
+        m_Agent = GetComponent<NavMeshAgent>();
+
+        m_Agent.agentTypeID = -1372625422;
+        m_Agent.speed = m_Stats.movementSpeed;
+
     }
 
     public void Destroy()
@@ -34,14 +37,10 @@ public class SoldierUnit : MonoBehaviour, IUnit
 
     public void Move(Vector3 destination)
     {
-        // TODO / BUG
-        // want to be able to move units to another location before reaching current
+        m_Agent.SetDestination(destination);
 
-        // when spam-clicking on the ground the unit will get high speed
-        // and move towards a different location then clicked, as if combining/adding new and lest vector
-
-        m_MoveCoroutine = SmoothStep(transform.position, destination, m_Speed);
-        StartCoroutine(m_MoveCoroutine);
+        //m_MoveCoroutine = SmoothStep(transform.position, destination, m_Agent.speed);
+        //StartCoroutine(m_MoveCoroutine);                    
     }
 
     private IEnumerator SmoothStep(Vector3 start, Vector3 end, float speed)
@@ -49,10 +48,10 @@ public class SoldierUnit : MonoBehaviour, IUnit
         end.y += (m_UnitCollider.height * 0.5f);
 
         float startTime = Time.time;
-        m_Moving = true;
+        bool moving = true;
         float errorMargin = 0.001f;
 
-        while (m_Moving)
+        while (moving)
         {
             float currentSpeed = Mathf.Clamp01(Time.time - startTime) *
                 Mathf.Clamp01((end - transform.position).magnitude) * speed * Time.deltaTime;
@@ -61,7 +60,7 @@ public class SoldierUnit : MonoBehaviour, IUnit
 
             if ((end - transform.position).sqrMagnitude < errorMargin)
             {
-                m_Moving = false;
+                moving = false;
                 transform.position = end;
             }
             else
