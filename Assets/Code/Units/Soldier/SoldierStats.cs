@@ -18,6 +18,7 @@ public class SoldierStats : ScriptableObject, ISerializationCallbackReceiver
     public float attackSpeed = 1f;
 
     public float movementSpeed = 2f;
+    public float acceleration = 16f;
 
     // During game time the health & HpRegen of the unit data will be "runTimeHealth"
     // To prevent any overrides to the initial health the unit start with.
