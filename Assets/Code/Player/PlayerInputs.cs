@@ -13,20 +13,20 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     private LayerMask m_InteractionMask;
 
     // Temp unit stuff
-    private List<GameObject> m_Units = null;
-    private Vector2 mousePosition;
+    private List<GameObject> m_SelectedUnitsList = null;
 
     // MultiSelectionBox
     private Vector2 m_BoxStartPos;
-    private Vector2 m_BoxEndPos;
 
-    [Header("MultiSelectionBox Texture")]
+    [Header("MultiSelectionBox")]
     public Texture m_Image;
-    public RectTransform m_SquareImage;
+    public RectTransform m_SelectionImage;
     private LayerMask m_MultiSelectionMask;
 
     // holding time for multiSelection box
-    private float m_HoldTime = 1f;
+    private float m_HoldTime = 0.01f;
+
+    private Vector2 mousePosition;
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
             m_Data = ScriptableObject.CreateInstance<PlayerData>();
         }
 
-        m_Units = new List<GameObject>();
+        m_SelectedUnitsList = new List<GameObject>();
 
         m_InteractionMask = m_Data.interactionLayer;
         m_MultiSelectionMask = m_Data.multiSelectionLayer;
@@ -46,6 +46,8 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
     private void Update()
     {
+        mousePosition = Mouse.current.position.ReadValue();
+
         IsLMBHoldingDown();
     }
 
@@ -63,35 +65,35 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
     public void OnLeftMouse(InputAction.CallbackContext context)
     {
-        mousePosition = Mouse.current.position.ReadValue();
+        m_BoxStartPos = mousePosition;
 
-        // 'only' want to check this if clicked
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, m_InteractionMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
             Debug.Log("Clicked on " + hit.transform.name + " (Left Click)");
 
-            // Temp, because this only check units, but what if we click on a building?
-            // Interface or Layer to be able to click on it?
-            // Also hold down left click to select multiple units by 'drawing a box'.
+            // What if we click on a building?
             if (hit.transform.GetComponent<IUnit>() != null)
             {
-                m_Units.Add(hit.transform.gameObject);
+                if (m_SelectedUnitsList.Contains(hit.transform.gameObject))
+                {
+                    m_SelectedUnitsList.Clear();
+                }
+
+                m_SelectedUnitsList.Add(hit.transform.gameObject);
             }
-            else { m_Units.Clear(); } // Temp
+            else { m_SelectedUnitsList.Clear(); } 
         }
     }
 
     public void OnRightMouse(InputAction.CallbackContext context)
     {
-        mousePosition = Mouse.current.position.ReadValue();
-
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
         Vector3 newPosition;
 
         // Temp
-        if (Physics.Raycast(ray, out RaycastHit hit, m_InteractionMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
             // Check if new position is 'available'
             // Aka you try to move units to a place they can not reach
@@ -108,10 +110,10 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         if (context.performed)
         {
-            if (m_Units.Count < 1)
+            if (m_SelectedUnitsList.Count < 1)
                 return;
            
-            foreach (var unit in m_Units)
+            foreach (var unit in m_SelectedUnitsList)
             {
                 unit.GetComponent<IUnit>()?.Move(newPosition);
             }
@@ -131,75 +133,49 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         }
         else
         {
-            // When releasing LMB SquareImage might still be active when it should not be
-            if (m_SquareImage.gameObject.activeInHierarchy)
-            {
-                m_SquareImage.gameObject.SetActive(false);
-            }
+            if (m_SelectionImage.gameObject.activeInHierarchy)
+                m_SelectionImage.gameObject.SetActive(false);
+            
+            AddUnitsToList();
 
-            m_HoldTime = 1f;
+            m_HoldTime = 0.01f;
         }
+    }
+
+    private void AddUnitsToList()
+    {
+        Vector2 min = m_SelectionImage.anchoredPosition - (m_SelectionImage.sizeDelta * 0.5f);
+        Vector2 max = m_SelectionImage.anchoredPosition + (m_SelectionImage.sizeDelta * 0.5f);
+
+        GameObject[] allUnits = FindObjectsOfType<GameObject>();
+        foreach (var unit in allUnits)
+        {
+            if (unit.activeInHierarchy && unit.GetComponent<IUnit>() != null)
+            {
+                Vector3 unitScreenPos = m_Camera.WorldToScreenPoint(unit.transform.position);
+
+                if (unitScreenPos.x > min.x &&
+                    unitScreenPos.x < max.x &&
+                    unitScreenPos.y > min.y &&
+                    unitScreenPos.y < max.y)
+                {
+                    m_SelectedUnitsList.Add(unit);
+                }
+            }
+        }
+
     }
 
     // Don't like the name of the function
     private void MultiSelectionBox()
     {
-        var LMB = Mouse.current.leftButton;
-        var mousePosition = Mouse.current.position.ReadValue();
+        if (!m_SelectionImage.gameObject.activeInHierarchy)
+            m_SelectionImage.gameObject.SetActive(true);
 
-        if (LMB.isPressed)
-        {
-            m_SquareImage.gameObject.SetActive(true);
-        }
-        else { m_SquareImage.gameObject.SetActive(false); }
+        float width = mousePosition.x - m_BoxStartPos.x;
+        float height = mousePosition.y - m_BoxStartPos.y;
 
-        if (LMB.isPressed)
-        {
-            Ray ray = m_Camera.ScreenPointToRay(mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, m_MultiSelectionMask))
-            {
-                //Debug.Log(hit.point);
-            }
-
-            //if (Physics.Raycast(m_Camera.ScreenPointToRay(mousePosition), out RaycastHit hit))
-            //{
-            //    m_BoxStartPos = new Vector2(hit.point.x, hit.point.z);
-            //}
-        }
-        else
-        {
-            //if (Physics.Raycast(m_Camera.ScreenPointToRay(mousePosition), out RaycastHit hit))
-            //{
-            //    m_BoxEndPos = new Vector2(hit.point.x, hit.point.z);
-            //}
-        }
-
-        Vector3 squareStart = m_Camera.WorldToScreenPoint(m_BoxStartPos);
-
-        Vector3 center = (squareStart + (Vector3)m_BoxEndPos) / 2f;
-
-        m_SquareImage.position = center;
-
-        float sizeX = Mathf.Abs(squareStart.x - m_BoxEndPos.x);
-        float sizeY = Mathf.Abs(squareStart.y - m_BoxEndPos.y);
-
-        m_SquareImage.sizeDelta = new Vector2(sizeX, sizeY);
-
-        //if (m_BoxEndPos != Vector2.zero && m_BoxStartPos != Vector2.zero)
-        //{
-        //    m_BoxStartPos = m_BoxEndPos = Vector2.zero;
-        //}
+        m_SelectionImage.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+        m_SelectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
     }
-
-
-    //private void OnGUI()
-    //{
-    //    // draw selection box
-    //    //if (m_BoxEndPos != Vector2.zero && m_BoxStartPos != Vector2.zero)
-    //    //{
-    //    //    var rect = new Rect(m_BoxStartPos.x, Screen.height - m_BoxStartPos.y, m_BoxEndPos.x - m_BoxStartPos.x, -1 * (m_BoxEndPos.y - m_BoxStartPos.y));
-    //    //    Debug.Log(m_Image);
-    //    //    GUI.DrawTexture(rect, m_Image);
-    //    //}
-    //}
 }
