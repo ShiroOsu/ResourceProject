@@ -5,7 +5,6 @@ using UnityEngine.AI;
 public class SoldierUnit : MonoBehaviour, IUnit
 {
     public SoldierStats m_Stats;
-    //private CapsuleCollider m_UnitCollider;
     private NavMeshAgent m_Agent;
 
     private void Awake()
@@ -13,7 +12,6 @@ public class SoldierUnit : MonoBehaviour, IUnit
         if (!m_Stats)
         { m_Stats = ScriptableObject.CreateInstance<SoldierStats>(); }
 
-        //m_UnitCollider = GetComponent<CapsuleCollider>();
         m_Agent = GetComponent<NavMeshAgent>();
 
         m_Agent.agentTypeID = -1372625422; // ???
