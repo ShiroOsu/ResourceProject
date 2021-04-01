@@ -95,14 +95,6 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         // Temp
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
-            // Check if new position is 'available'
-            // Aka you try to move units to a place they can not reach
-            // Make them not move? or something
-            if (true)
-            {
-
-            }
-
             newPosition = hit.point;
             Debug.Log(newPosition + " (Right Click)");
         }
@@ -163,10 +155,8 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                 }
             }
         }
-
     }
 
-    // Don't like the name of the function
     private void MultiSelectionBox()
     {
         if (!m_SelectionImage.gameObject.activeInHierarchy)
