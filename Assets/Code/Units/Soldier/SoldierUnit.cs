@@ -17,7 +17,6 @@ public class SoldierUnit : MonoBehaviour, IUnit
         m_Agent.agentTypeID = -1372625422; // ???
         m_Agent.speed = m_Stats.movementSpeed;
         m_Agent.acceleration = m_Stats.acceleration;
-
     }
 
     public void Destroy()

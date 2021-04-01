@@ -7,26 +7,16 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     [Header("General")]
     public PlayerData m_Data = null;
     public Camera m_Camera = null;
-    private PlayerControls m_PlayerControls;
 
-    // Raycast temp holders
-    private LayerMask m_InteractionMask;
-
-    // Temp unit stuff
-    private List<GameObject> m_SelectedUnitsList = null;
-
-    // MultiSelectionBox
+    [Header("MultiSelection")]
+    public float m_HoldTime = 0.01f;
+    public RectTransform m_SelectionImage;
     private Vector2 m_BoxStartPos;
 
-    [Header("MultiSelectionBox")]
-    public Texture m_Image;
-    public RectTransform m_SelectionImage;
-    private LayerMask m_MultiSelectionMask;
-
-    // holding time for multiSelection box
-    private float m_HoldTime = 0.01f;
-
+    private LayerMask m_InteractionMask;
+    private List<GameObject> m_SelectedUnitsList = null;
     private Vector2 mousePosition;
+    private PlayerControls m_PlayerControls;
 
     private void Awake()
     {
@@ -38,7 +28,6 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         m_SelectedUnitsList = new List<GameObject>();
 
         m_InteractionMask = m_Data.interactionLayer;
-        m_MultiSelectionMask = m_Data.multiSelectionLayer;
 
         m_PlayerControls = new PlayerControls();
         m_PlayerControls.Player.SetCallbacks(this);
