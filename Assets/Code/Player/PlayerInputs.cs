@@ -62,18 +62,32 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         {
             Debug.Log("Clicked on " + hit.transform.name + " (Left Click)");
 
-            // What if we click on a building?
             if (hit.transform.GetComponent<IUnit>() != null)
             {
-                if (m_SelectedUnitsList.Contains(hit.transform.gameObject))
-                {
-                    m_SelectedUnitsList.Clear();
-                }
-
-                m_SelectedUnitsList.Add(hit.transform.gameObject);
+                ClickOnUnit(hit.transform.gameObject);
             }
-            else { m_SelectedUnitsList.Clear(); } 
+            else { m_SelectedUnitsList.Clear(); }
+
+            if (hit.transform.GetComponent<IStructure>() != null)
+            {
+                ClickOnBuilding(hit.transform.gameObject);
+            }
         }
+    }
+
+    private void ClickOnBuilding(GameObject structure) 
+    {
+        structure.GetComponent<IStructure>()?.Selected();
+    }
+
+    private void ClickOnUnit(GameObject unit)
+    {
+        if (m_SelectedUnitsList.Contains(unit))
+        {
+            m_SelectedUnitsList.Clear();
+        }
+
+        m_SelectedUnitsList.Add(unit);
     }
 
     public void OnRightMouse(InputAction.CallbackContext context)

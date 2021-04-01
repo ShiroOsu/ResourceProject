@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Data: {fileID: 11400000, guid: 0a89b7ac4383e254b8e6b5ce8aba97c5, type: 2}
   m_Camera: {fileID: 963194227}
-  m_Image: {fileID: 2800000, guid: 9dfae5550f51f1346afd456f015b13ac, type: 3}
+  m_HoldTime: 0.01
   m_SelectionImage: {fileID: 675218744}
 --- !u!1 &675218743
 GameObject:
