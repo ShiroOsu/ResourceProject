@@ -9,7 +9,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     public Camera m_Camera = null;
 
     [Header("MultiSelection")]
-    public float m_HoldTime = 0.01f;
+    public float m_HoldTime = 0.05f;
     public RectTransform m_SelectionImage;
     private Vector2 m_BoxStartPos;
 
@@ -60,7 +60,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
-            Debug.Log("Clicked on " + hit.transform.name + " (Left Click)");
+            //Debug.Log("Clicked on " + hit.transform.name + " (Left Click)");
 
             if (hit.transform.GetComponent<IUnit>() != null)
             {
@@ -75,13 +75,15 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         }
     }
 
-    private void ClickOnBuilding(GameObject structure) 
+    private void ClickOnBuilding(GameObject structure)
     {
         structure.GetComponent<IStructure>()?.Selected();
     }
 
     private void ClickOnUnit(GameObject unit)
     {
+        Debug.Log(m_SelectedUnitsList.Contains(unit));
+
         if (m_SelectedUnitsList.Contains(unit))
         {
             m_SelectedUnitsList.Clear();
@@ -95,11 +97,9 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
         Vector3 newPosition;
 
-        // Temp
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
             newPosition = hit.point;
-            Debug.Log(newPosition + " (Right Click)");
         }
         else { return; }
 
@@ -107,7 +107,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         {
             if (m_SelectedUnitsList.Count < 1)
                 return;
-           
+
             foreach (var unit in m_SelectedUnitsList)
             {
                 unit.GetComponent<IUnit>()?.Move(newPosition);
@@ -126,14 +126,15 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                 MultiSelectionBox();
             }
         }
-        else
+        // This is called also OnLeftMouse when it should not
+        else if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             if (m_SelectionImage.gameObject.activeInHierarchy)
                 m_SelectionImage.gameObject.SetActive(false);
-            
+
             AddUnitsToList();
 
-            m_HoldTime = 0.01f;
+            m_HoldTime = 0.05f;
         }
     }
 
@@ -142,6 +143,9 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         Vector2 min = m_SelectionImage.anchoredPosition - (m_SelectionImage.sizeDelta * 0.5f);
         Vector2 max = m_SelectionImage.anchoredPosition + (m_SelectionImage.sizeDelta * 0.5f);
 
+        // Temp, because it finds ALL GameObjects in scene then loops through them,
+        // then looking for the objects with the IUnit interface
+        // Would be ideal to only needing to loop through a list that only contains units
         GameObject[] allUnits = FindObjectsOfType<GameObject>();
         foreach (var unit in allUnits)
         {
@@ -154,10 +158,14 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                     unitScreenPos.y > min.y &&
                     unitScreenPos.y < max.y)
                 {
-                    m_SelectedUnitsList.Add(unit);
+                    if (!m_SelectedUnitsList.Contains(unit))
+                    {
+                        m_SelectedUnitsList.Add(unit);
+                    }
                 }
             }
         }
+        HighlightSelectedUnits(m_SelectedUnitsList);
     }
 
     private void MultiSelectionBox()
@@ -170,5 +178,16 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         m_SelectionImage.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
         m_SelectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
+    }
+
+    private void HighlightSelectedUnits(List<GameObject> units)
+    {
+        if (units.Count < 1)
+            return;
+
+        foreach (var unit in units)
+        {
+            unit.GetComponent<IUnit>()?.Selected();
+        }
     }
 }

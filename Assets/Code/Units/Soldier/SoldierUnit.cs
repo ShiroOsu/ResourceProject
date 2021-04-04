@@ -14,9 +14,14 @@ public class SoldierUnit : MonoBehaviour, IUnit
 
         m_Agent = GetComponent<NavMeshAgent>();
 
-        m_Agent.agentTypeID = -1372625422; // ???
+        m_Agent.agentTypeID = -1372625422; // Soldier ID
         m_Agent.speed = m_Stats.movementSpeed;
         m_Agent.acceleration = m_Stats.acceleration;
+    }
+
+    public void Selected()
+    {
+        Debug.Log(transform.name + " selected");
     }
 
     public void Destroy()

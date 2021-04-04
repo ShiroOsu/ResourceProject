@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/SoldierStats")]
+[CreateAssetMenu(fileName = "SoldierStats", menuName = "ScriptableObjects/Units/SoldierStats")]
 public class SoldierStats : ScriptableObject, ISerializationCallbackReceiver
 {
     // Initial Values of a SoldierUnit

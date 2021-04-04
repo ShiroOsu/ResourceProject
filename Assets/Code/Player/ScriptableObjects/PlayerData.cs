@@ -1,7 +1,7 @@
 using UnityEngine;
 //using System;
 
-[CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/PlayerData")]
+[CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/Player/PlayerData")]
 public class PlayerData : ScriptableObject//, ISerializationCallbackReceiver
 {
     public LayerMask interactionLayer;

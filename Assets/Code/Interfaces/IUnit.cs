@@ -1,5 +1,7 @@
 public interface IUnit
 {
+    public void Selected();
+
     // Destroy unit
     public void Destroy();
 
