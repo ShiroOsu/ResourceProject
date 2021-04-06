@@ -17,6 +17,7 @@ public class SoldierUnit : MonoBehaviour, IUnit
         m_Agent.agentTypeID = -1372625422; // Soldier ID
         m_Agent.speed = m_Stats.movementSpeed;
         m_Agent.acceleration = m_Stats.acceleration;
+        //m_Agent.angularSpeed = m_Stats.turnSpeed;
     }
 
     public void Selected()
@@ -26,12 +27,7 @@ public class SoldierUnit : MonoBehaviour, IUnit
 
     public void Destroy()
     {
-        Debug.Log(transform.name + " Destroy");
-    }
-
-    public void Spawn()
-    {
-        Debug.Log(transform.name + " Spawn");
+        gameObject.SetActive(false);
     }
 
     public void Move(Vector3 destination)

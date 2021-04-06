@@ -2,18 +2,25 @@ using UnityEngine;
 
 public class Castle : MonoBehaviour, IStructure
 {
-    public void Build()
+    private GameManager m_GameManager;
+
+    private void Awake()
     {
-        Debug.Log("Build " + transform.name);
+        m_GameManager = FindObjectOfType<GameManager>();
     }
 
     public void Destroy()
     {
-        Debug.Log("Destroy " + transform.name);
+        Destroy();
     }
 
     public void Selected()
     {
         Debug.Log(transform.name + " selected");
+    }
+
+    public void SpawnBuilder()
+    {
+        m_GameManager.m_BuilderPool.Rent(true);
     }
 }

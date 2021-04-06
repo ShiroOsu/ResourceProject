@@ -6,10 +6,10 @@ public class ObjectPool
 {
     private readonly uint m_ExpandBy;
     private readonly GameObject m_Prefab;
-    private Transform m_Parent;
-    public readonly Stack<GameObject> objects = new Stack<GameObject>();
+    private readonly Transform m_Parent;
+    public readonly Stack<GameObject> objects = new Stack<GameObject>();  
 
-    public ObjectPool(uint initSize, GameObject prefab, uint expandBy = 1, Transform parent = null, bool checkParentForChildren = false)
+    public ObjectPool(uint initSize, GameObject prefab, Transform parent = null, uint expandBy = 1, bool checkParentForChildren = false)
     {
         m_ExpandBy = expandBy < 1 ? 1 : expandBy;
         m_Prefab = prefab;

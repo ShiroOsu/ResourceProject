@@ -60,8 +60,6 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
-            //Debug.Log("Clicked on " + hit.transform.name + " (Left Click)");
-
             if (hit.transform.GetComponent<IUnit>() != null)
             {
                 ClickOnUnit(hit.transform.gameObject);
@@ -70,24 +68,20 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
             if (hit.transform.GetComponent<IStructure>() != null)
             {
-                ClickOnBuilding(hit.transform.gameObject);
+                var structure = hit.transform.GetComponent<IStructure>();
+                ClickOnBuilding(structure);
             }
         }
     }
 
-    private void ClickOnBuilding(GameObject structure)
+    private void ClickOnBuilding(IStructure structure)
     {
-        structure.GetComponent<IStructure>()?.Selected();
+        structure.Selected();
     }
 
     private void ClickOnUnit(GameObject unit)
     {
-        Debug.Log(m_SelectedUnitsList.Contains(unit));
-
-        if (m_SelectedUnitsList.Contains(unit))
-        {
-            m_SelectedUnitsList.Clear();
-        }
+        m_SelectedUnitsList.Clear();
 
         m_SelectedUnitsList.Add(unit);
     }
@@ -103,6 +97,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         }
         else { return; }
 
+        // Necessary to check performed?
         if (context.performed)
         {
             if (m_SelectedUnitsList.Count < 1)
@@ -127,6 +122,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
             }
         }
         // This is called also OnLeftMouse when it should not
+        // Should only check released if LeftMouse was holding down
         else if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             if (m_SelectionImage.gameObject.activeInHierarchy)
@@ -165,7 +161,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                 }
             }
         }
-        HighlightSelectedUnits(m_SelectedUnitsList);
+        HighlightMultipleUnits(m_SelectedUnitsList);
     }
 
     private void MultiSelectionBox()
@@ -180,7 +176,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         m_SelectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
     }
 
-    private void HighlightSelectedUnits(List<GameObject> units)
+    private void HighlightMultipleUnits(List<GameObject> units)
     {
         if (units.Count < 1)
             return;

@@ -16,7 +16,8 @@ public class BuilderUnit : MonoBehaviour, IUnit
 
         m_Agent.agentTypeID = 0; // Builder ID
         m_Agent.speed = m_Stats.movementSpeed;
-        m_Agent.acceleration = m_Stats.acceleration;                  
+        m_Agent.acceleration = m_Stats.acceleration;
+        //m_Agent.angularSpeed = m_Stats.turnSpeed;
     }
 
     public void Selected()
@@ -26,12 +27,7 @@ public class BuilderUnit : MonoBehaviour, IUnit
 
     public void Destroy()
     {
-        Debug.Log(transform.name + " destroy");
-    }
-
-    public void Spawn()
-    {
-        Debug.Log(transform.name + " spawn");
+        gameObject.SetActive(false);
     }
 
     public void Build()
