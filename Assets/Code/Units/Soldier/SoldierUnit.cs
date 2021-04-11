@@ -4,7 +4,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class SoldierUnit : MonoBehaviour, IUnit
 {
-    public SoldierStats m_Stats;
+    public SoldierStats m_Stats = null;
+    public GameObject m_SelectionCircle;
     private NavMeshAgent m_Agent;
 
     private void Awake()
@@ -20,9 +21,14 @@ public class SoldierUnit : MonoBehaviour, IUnit
         //m_Agent.angularSpeed = m_Stats.turnSpeed;
     }
 
+    public void Unselect()
+    {
+        m_SelectionCircle.SetActive(false);
+    }
+
     public void Selected()
     {
-        Debug.Log(transform.name + " selected");
+        m_SelectionCircle.SetActive(true);
     }
 
     public void Destroy()

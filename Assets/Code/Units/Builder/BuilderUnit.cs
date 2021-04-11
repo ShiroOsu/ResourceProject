@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class BuilderUnit : MonoBehaviour, IUnit
 {
     public BuilderStats m_Stats = null;
+    public GameObject m_SelectionCircle;
     private NavMeshAgent m_Agent;
 
     private void Awake()
@@ -20,9 +21,14 @@ public class BuilderUnit : MonoBehaviour, IUnit
         //m_Agent.angularSpeed = m_Stats.turnSpeed;
     }
 
+    public void Unselect()
+    {
+        m_SelectionCircle.SetActive(false);
+    }
+
     public void Selected()
     {
-        Debug.Log(transform.name + " selected");
+        m_SelectionCircle.SetActive(true);
     }
 
     public void Destroy()

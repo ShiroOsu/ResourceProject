@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerData : ScriptableObject//, ISerializationCallbackReceiver
 {
     public LayerMask interactionLayer;
-    public LayerMask multiSelectionLayer;
 
     // During game time the health of the player data will be "runTimeHealth"
     // To prevent any overrides to the initial health the player start with.

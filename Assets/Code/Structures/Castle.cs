@@ -11,6 +11,7 @@ public class Castle : MonoBehaviour, IStructure
 
     public void Destroy()
     {
+        // Temp
         Destroy();
     }
 
@@ -21,6 +22,12 @@ public class Castle : MonoBehaviour, IStructure
 
     public void SpawnBuilder()
     {
+        // Temp
         m_GameManager.m_BuilderPool.Rent(true);
+    }
+    
+    public void Upgrade()
+    {
+        Debug.Log(transform.name + " upgrade");
     }
 }

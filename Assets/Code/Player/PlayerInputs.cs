@@ -18,6 +18,9 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     private Vector2 mousePosition;
     private PlayerControls m_PlayerControls;
 
+    [Header("Click Animator")]
+    public Animator m_Animator;
+
     private void Awake()
     {
         if (!m_Data)
@@ -31,6 +34,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         m_PlayerControls = new PlayerControls();
         m_PlayerControls.Player.SetCallbacks(this);
+
     }
 
     private void Update()
@@ -60,15 +64,19 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
-            if (hit.transform.GetComponent<IUnit>() != null)
+            if (!hit.transform.parent)
             {
-                ClickOnUnit(hit.transform.gameObject);
+                m_SelectedUnitsList.Clear(); // SelectUnits(false);
+                return;
             }
-            else { m_SelectedUnitsList.Clear(); }
 
-            if (hit.transform.GetComponent<IStructure>() != null)
+            if (hit.transform.parent.GetComponent<IUnit>() != null)
             {
-                var structure = hit.transform.GetComponent<IStructure>();
+                ClickOnUnit(hit.transform.parent.gameObject);
+            }
+
+            if (hit.transform.TryGetComponent(out IStructure structure))
+            {
                 ClickOnBuilding(structure);
             }
         }
@@ -81,9 +89,12 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
     private void ClickOnUnit(GameObject unit)
     {
-        m_SelectedUnitsList.Clear();
-
-        m_SelectedUnitsList.Add(unit);
+        if (!m_SelectedUnitsList.Contains(unit))
+        {
+            m_SelectedUnitsList.Add(unit);
+            SelectUnits(true);
+        }
+        else SelectUnits(false);
     }
 
     public void OnRightMouse(InputAction.CallbackContext context)
@@ -94,19 +105,18 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
             newPosition = hit.point;
+            PlayClickAnimation(true);
         }
-        else { return; }
-
-        // Necessary to check performed?
-        if (context.performed)
+        else
         {
-            if (m_SelectedUnitsList.Count < 1)
-                return;
-
-            foreach (var unit in m_SelectedUnitsList)
-            {
-                unit.GetComponent<IUnit>()?.Move(newPosition);
-            }
+            PlayClickAnimation(false);
+            return;
+        }
+        
+        foreach (var unit in m_SelectedUnitsList)
+        {
+            unit.TryGetComponent(out IUnit u);
+            u.Move(newPosition);
         }
     }
 
@@ -161,7 +171,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                 }
             }
         }
-        HighlightMultipleUnits(m_SelectedUnitsList);
+        SelectUnits(true);
     }
 
     private void MultiSelectionBox()
@@ -176,14 +186,45 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         m_SelectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
     }
 
-    private void HighlightMultipleUnits(List<GameObject> units)
+    private void SelectUnits(bool select)
     {
-        if (units.Count < 1)
-            return;
-
-        foreach (var unit in units)
+        foreach (var unit in m_SelectedUnitsList)
         {
-            unit.GetComponent<IUnit>()?.Selected();
+            unit.TryGetComponent(out IUnit u);
+
+            if (select)
+            {
+                u.Selected();
+            }
+            else u.Unselect();
+        }
+
+        if (!select)
+        {
+            m_SelectedUnitsList.Clear();
+        }
+    }
+
+    private void PlayClickAnimation(bool active)
+    {
+        if (!active)
+        {
+            m_Animator.gameObject.SetActive(active);
+            m_Animator.SetBool("Clicked", active);
+            return;
+        }
+
+        Ray ray = m_Camera.ScreenPointToRay(mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
+        {
+            if (hit.transform.GetComponent<Terrain>() != null)
+            {
+                m_Animator.gameObject.transform.position = hit.point + new Vector3(0f, 0.1f, 0f);
+                m_Animator.gameObject.transform.rotation = Quaternion.LookRotation(-hit.normal);
+                m_Animator.gameObject.SetActive(true);
+                m_Animator.SetBool("Clicked", true);
+            }
         }
     }
 }
