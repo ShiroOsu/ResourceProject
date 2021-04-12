@@ -2,12 +2,25 @@ using UnityEngine;
 
 public class Castle : MonoBehaviour, IStructure
 {
-    private GameManager m_GameManager;
+    [Header("Game Manager")]
+    [SerializeField] private GameManager m_GameManager;
+    
+    [Header("Image in UI")]
+    [SerializeField] private GameObject m_CastleImage = null;
+
+    // Spawn location for builders
+    private Vector3 m_UnitSpawnLocation;
 
     private void Awake()
     {
-        //[SerializeField], put ref to gamemanager in editor
-        m_GameManager = FindObjectOfType<GameManager>();
+        // If possible to build castles, when building make sure it has the game manager,
+        // if manager has the builder objectPool
+        if (!m_GameManager) { m_GameManager = FindObjectOfType<GameManager>(); }
+    }
+
+    public void SetUnitSpawnPoint(Vector3 spawnPoint)
+    {
+        m_UnitSpawnLocation = spawnPoint;
     }
 
     public void Destroy()
@@ -16,15 +29,19 @@ public class Castle : MonoBehaviour, IStructure
         Destroy();
     }
 
-    public void Selected()
+    public void Unselect()
     {
-        Debug.Log(transform.name + " selected");
+        m_CastleImage.SetActive(false);
     }
 
-    public void SpawnBuilder()
+    public void Selected()
     {
-        // Temp
-        m_GameManager.m_BuilderPool.Rent(true);
+        m_CastleImage.SetActive(true);
+    }
+
+    private void SpawnBuilder()
+    {
+        m_GameManager.m_BuilderPool.Rent(true).transform.position = transform.position;
     }
     
     public void Upgrade()

@@ -5,22 +5,28 @@ using UnityEngine.InputSystem;
 public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 {
     [Header("General")]
-    public PlayerData m_Data = null;
-    public Camera m_Camera = null;
+    [SerializeField] private PlayerData m_Data = null;
+    [SerializeField] private Camera m_Camera = null;
 
-    [Header("MultiSelection")]
-    public float m_HoldTime = 0.05f;
-    public RectTransform m_SelectionImage;
+    [Header("Multi Selection")]
+    [SerializeField] private RectTransform m_SelectionImage;
     private Vector2 m_BoxStartPos;
+    private float m_HoldTime = 0.05f;
 
+    // Interaction
     private LayerMask m_InteractionMask;
     private List<GameObject> m_SelectedUnitsList = null;
     private Vector2 mousePosition;
+
+    // Controls
     private PlayerControls m_PlayerControls;
 
     [Header("Click Animator")]
-    public Animator m_Animator;
+    [SerializeField] private Animator m_Animator;
     private float m_Timer = 1f;
+
+    // Current selected structure
+    private IStructure m_CurrentlySelected;
 
     private void Awake()
     {
@@ -70,8 +76,14 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
         {
+            // Ground click
             if (!hit.transform.parent)
             {
+                if (m_CurrentlySelected != null)
+                {
+                    m_CurrentlySelected.Unselect();
+                }
+
                 SelectUnits(false);
                 return;
             }
@@ -81,7 +93,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                 ClickOnUnit(hit.transform.parent.gameObject);
             }
 
-            if (hit.transform.TryGetComponent(out IStructure structure))
+            if (hit.transform.parent.TryGetComponent(out IStructure structure))
             {
                 ClickOnBuilding(structure);
             }
@@ -90,7 +102,8 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
     private void ClickOnBuilding(IStructure structure)
     {
-        structure.Selected();
+        m_CurrentlySelected = structure;
+        m_CurrentlySelected.Selected();
     }
 
     private void ClickOnUnit(GameObject unit)
@@ -105,6 +118,11 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
     public void OnRightMouse(InputAction.CallbackContext context)
     {
+        if (m_SelectedUnitsList.Count < 1)
+        {
+            return;
+        }
+
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
         Vector3 newPosition;
 
@@ -114,7 +132,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
             PlayClickAnimation(true);
         }
         else { return; }
-        
+
 
         foreach (var unit in m_SelectedUnitsList)
         {

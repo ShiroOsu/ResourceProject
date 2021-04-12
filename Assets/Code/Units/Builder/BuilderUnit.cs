@@ -4,8 +4,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class BuilderUnit : MonoBehaviour, IUnit
 {
-    public UnitData m_Stats = null;
-    public GameObject m_SelectionCircle;
+    [SerializeField] private UnitData m_Stats = null;
+    [SerializeField] private GameObject m_SelectionCircle;
     private NavMeshAgent m_Agent;
 
     private void Awake()
@@ -36,7 +36,7 @@ public class BuilderUnit : MonoBehaviour, IUnit
         gameObject.SetActive(false);
     }
 
-    public void Build()
+    private void Build()
     {
         // When this unit is ordered to build a structure move towards the location
         // Move(Structure.location)
