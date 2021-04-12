@@ -20,6 +20,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
     [Header("Click Animator")]
     public Animator m_Animator;
+    private float m_Timer = 1f;
 
     private void Awake()
     {
@@ -42,6 +43,11 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         mousePosition = Mouse.current.position.ReadValue();
 
         IsLMBHoldingDown();
+
+        if (m_Animator.gameObject.activeSelf)
+        {
+            StopClickAnimation();
+        }
     }
 
     #region Enable PlayerControls
@@ -66,7 +72,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         {
             if (!hit.transform.parent)
             {
-                m_SelectedUnitsList.Clear(); // SelectUnits(false);
+                SelectUnits(false);
                 return;
             }
 
@@ -107,12 +113,9 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
             newPosition = hit.point;
             PlayClickAnimation(true);
         }
-        else
-        {
-            PlayClickAnimation(false);
-            return;
-        }
+        else { return; }
         
+
         foreach (var unit in m_SelectedUnitsList)
         {
             unit.TryGetComponent(out IUnit u);
@@ -138,13 +141,13 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
             if (m_SelectionImage.gameObject.activeInHierarchy)
                 m_SelectionImage.gameObject.SetActive(false);
 
-            AddUnitsToList();
+            AddUnitsInSelectionBox();
 
             m_HoldTime = 0.05f;
         }
     }
 
-    private void AddUnitsToList()
+    private void AddUnitsInSelectionBox()
     {
         Vector2 min = m_SelectionImage.anchoredPosition - (m_SelectionImage.sizeDelta * 0.5f);
         Vector2 max = m_SelectionImage.anchoredPosition + (m_SelectionImage.sizeDelta * 0.5f);
@@ -202,6 +205,17 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         if (!select)
         {
             m_SelectedUnitsList.Clear();
+        }
+    }
+
+    private void StopClickAnimation()
+    {
+        m_Timer -= Time.deltaTime;
+
+        if (m_Timer < 0f)
+        {
+            PlayClickAnimation(false);
+            m_Timer = 1f;
         }
     }
 

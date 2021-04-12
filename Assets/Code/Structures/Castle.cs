@@ -6,6 +6,7 @@ public class Castle : MonoBehaviour, IStructure
 
     private void Awake()
     {
+        //[SerializeField], put ref to gamemanager in editor
         m_GameManager = FindObjectOfType<GameManager>();
     }
 

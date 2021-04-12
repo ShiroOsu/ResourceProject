@@ -1220,7 +1220,7 @@ PrefabInstance:
     - target: {fileID: 3698478918268666469, guid: 53015e7ed2b33c7439aca0dd67a44a13, type: 3}
       propertyPath: m_Stats
       value: 
-      objectReference: {fileID: 11400000, guid: bad6880c02c5f3741ab59d46716f841c, type: 2}
+      objectReference: {fileID: 11400000, guid: fd914d685150a064ca45497afe128b02, type: 2}
     - target: {fileID: 8717004148852162051, guid: 53015e7ed2b33c7439aca0dd67a44a13, type: 3}
       propertyPath: m_Name
       value: Builder
@@ -1241,7 +1241,7 @@ PrefabInstance:
     - target: {fileID: 6390691231787087605, guid: 2a99a8fefe6ff0943879edf0dc9509ec, type: 3}
       propertyPath: m_Stats
       value: 
-      objectReference: {fileID: 11400000, guid: 234b846bcb3910d4d935e278be4d3bd5, type: 2}
+      objectReference: {fileID: 11400000, guid: fd914d685150a064ca45497afe128b02, type: 2}
     - target: {fileID: 8419146751067424914, guid: 2a99a8fefe6ff0943879edf0dc9509ec, type: 3}
       propertyPath: m_AgentTypeID
       value: -1372625422

@@ -4,14 +4,14 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class BuilderUnit : MonoBehaviour, IUnit
 {
-    public BuilderStats m_Stats = null;
+    public UnitData m_Stats = null;
     public GameObject m_SelectionCircle;
     private NavMeshAgent m_Agent;
 
     private void Awake()
     {
         if (!m_Stats) 
-        { m_Stats = ScriptableObject.CreateInstance<BuilderStats>(); }
+        { m_Stats = ScriptableObject.CreateInstance<UnitData>(); }
         
         m_Agent = GetComponent<NavMeshAgent>();
 
