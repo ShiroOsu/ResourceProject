@@ -1,10 +1,12 @@
 using UnityEngine;
 //using System;
 
-[CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/Player/PlayerData")]
-public class PlayerData : ScriptableObject//, ISerializationCallbackReceiver
+[CreateAssetMenu(fileName = "MouseData", menuName = "ScriptableObjects/Player/MouseData")]
+public class MouseData : ScriptableObject//, ISerializationCallbackReceiver
 {
-    public LayerMask interactionLayer;
+    public LayerMask unitMask;
+    public LayerMask structureMask;
+    public LayerMask groundMask;
 
     // During game time the health of the player data will be "runTimeHealth"
     // To prevent any overrides to the initial health the player start with.

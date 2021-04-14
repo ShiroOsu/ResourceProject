@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8098e4cc2ad590d498071d3ee8f20066, type: 3}
-  m_Name: PlayerData
+  m_Name: MouseData
   m_EditorClassIdentifier: 
-  interactionLayer:
+  unitMask:
     serializedVersion: 2
-    m_Bits: 64
-  multiSelectionLayer:
+    m_Bits: 512
+  structureMask:
     serializedVersion: 2
     m_Bits: 1024
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 128

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8867468480502671618}
   - component: {fileID: 8501979086281190489}
   - component: {fileID: 2430893610509365598}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tower_RightUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 1859091896018858677}
   - component: {fileID: 6286982739196425741}
   - component: {fileID: 1261853629043770031}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tower_LeftUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 5045449637233620518}
   - component: {fileID: 1974292748198205110}
   - component: {fileID: 814233508781737497}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 27305681177818366}
   - component: {fileID: 6665347985369727395}
   - component: {fileID: 1909166055516773881}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tower_LeftDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 3015530819926163027}
   - component: {fileID: 3990102057421559634}
   - component: {fileID: 8371740127334479130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tower_RightDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8918257048631504737}
   - component: {fileID: -2113485979895984729}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Castle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,3 +523,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad0e11119111fa4f86226bac0adea8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_GameManager: {fileID: 0}
+  m_CastleImage: {fileID: 0}

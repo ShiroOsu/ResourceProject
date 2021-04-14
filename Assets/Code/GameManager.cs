@@ -3,18 +3,21 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("Pool Prefabs")]
-    public GameObject m_BuilderPrefab = null;
-    public GameObject m_SoldierPrefab = null;
+    [SerializeField] private GameObject m_BuilderPrefab = null;
+    [SerializeField] private GameObject m_SoldierPrefab = null;
+    [SerializeField] private GameObject m_FlagPrefab = null;
 
-    public ObjectPool m_BuilderPool = null;
-    public ObjectPool m_SoldierPool = null;
+    public ObjectPool builderPool = null;
+    public ObjectPool soldierPool = null;
+    public ObjectPool flagPool = null;
 
 
-    private void Start()
+    private void Awake()
     {
         DontDestroyOnLoad(this);
 
-        m_BuilderPool = new ObjectPool(5, m_BuilderPrefab, new GameObject("BuilderPool").transform);
-        m_SoldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);                            
+        builderPool = new ObjectPool(5, m_BuilderPrefab, new GameObject("BuilderPool").transform);
+        soldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);
+        flagPool = new ObjectPool(5, m_FlagPrefab, new GameObject("FlagPool").transform);
     }
 }

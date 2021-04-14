@@ -2,7 +2,7 @@
     "name": "PlayerControls",
     "maps": [
         {
-            "name": "Player",
+            "name": "Mouse",
             "id": "03ab447f-7b8a-45e1-8034-7403f6b48162",
             "actions": [
                 {
@@ -37,6 +37,33 @@
                 {
                     "name": "",
                     "id": "1e8eb8a0-24e0-4623-94a4-1b00c77a991b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Structure",
+            "id": "0b10dc59-6aee-476e-b6c2-0059b9e1166d",
+            "actions": [
+                {
+                    "name": "RightMouse",
+                    "type": "Button",
+                    "id": "e8bdbee6-79e6-4f7a-ba6f-0187c54fee4b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "44b488dd-73a1-44ef-a700-7bfef51c9df9",
                     "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",

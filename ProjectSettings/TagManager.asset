@@ -14,8 +14,8 @@ TagManager:
   - InteractionLayer
   - Ground
   - 
-  - 
-  - MultiSelectionLayer
+  - UnitLayer
+  - StructureLayer
   - ImageLayer
   - 
   - 

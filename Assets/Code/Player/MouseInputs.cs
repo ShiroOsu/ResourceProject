@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
-public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
+public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 {
     [Header("General")]
-    [SerializeField] private PlayerData m_Data = null;
+    [SerializeField] private MouseData m_Data = null;
     [SerializeField] private Camera m_Camera = null;
+    [SerializeField] private Animator m_Animator = null;
 
     [Header("Multi Selection")]
     [SerializeField] private RectTransform m_SelectionImage;
@@ -14,41 +16,45 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     private float m_HoldTime = 0.05f;
 
     // Interaction
-    private LayerMask m_InteractionMask;
+    private LayerMask m_UnitMask;
+    private LayerMask m_StructureMask;
+    private LayerMask m_GroundMask;
     private List<GameObject> m_SelectedUnitsList = null;
     private Vector2 mousePosition;
 
     // Controls
-    private PlayerControls m_PlayerControls;
+    private MouseControls m_MouseControls;
 
-    [Header("Click Animator")]
-    [SerializeField] private Animator m_Animator;
+    // Stop click animation timer
     private float m_Timer = 1f;
 
-    // Current selected structure
-    private IStructure m_CurrentlySelected;
+    private IStructure m_CurrentStructure;
 
     private void Awake()
     {
         if (!m_Data)
         {
-            m_Data = ScriptableObject.CreateInstance<PlayerData>();
+            m_Data = ScriptableObject.CreateInstance<MouseData>();
         }
 
         m_SelectedUnitsList = new List<GameObject>();
 
-        m_InteractionMask = m_Data.interactionLayer;
+        m_UnitMask = m_Data.unitMask;
+        m_StructureMask = m_Data.structureMask;
+        m_GroundMask = m_Data.groundMask;
 
-        m_PlayerControls = new PlayerControls();
-        m_PlayerControls.Player.SetCallbacks(this);
-
+        m_MouseControls = new MouseControls();
+        m_MouseControls.Mouse.SetCallbacks(this);
     }
-
     private void Update()
     {
         mousePosition = Mouse.current.position.ReadValue();
 
-        IsLMBHoldingDown();
+        // Not a complete fix
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            IsLMBHoldingDown();
+        }
 
         if (m_Animator.gameObject.activeSelf)
         {
@@ -59,51 +65,81 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
     #region Enable PlayerControls
     private void OnEnable()
     {
-        m_PlayerControls.Enable();
+        m_MouseControls.Enable();
     }
 
     private void OnDisable()
     {
-        m_PlayerControls.Disable();
+        m_MouseControls.Disable();
     }
     #endregion
 
     public void OnLeftMouse(InputAction.CallbackContext context)
     {
+        // Context is checked to make sure it is clicked once
+        if (context.started)
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                Debug.Log("UI CLICK");
+            } 
+            else
+            {
+                ClickingOnUnitsAndStructures();
+            }
+        }
+    }
+
+    public void OnRightMouse(InputAction.CallbackContext context)
+    {
+        MovingSelectedUnits();
+    }
+
+    private void ClickingOnUnitsAndStructures()
+    {
         m_BoxStartPos = mousePosition;
 
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
+        if (Physics.Raycast(ray, Mathf.Infinity, m_GroundMask))
         {
-            // Ground click
-            if (!hit.transform.parent)
+            if (m_CurrentStructure != null)
             {
-                if (m_CurrentlySelected != null)
-                {
-                    m_CurrentlySelected.Unselect();
-                }
-
-                SelectUnits(false);
-                return;
+                m_CurrentStructure.Unselect();
+                m_CurrentStructure = null;
             }
 
-            if (hit.transform.parent.GetComponent<IUnit>() != null)
-            {
-                ClickOnUnit(hit.transform.parent.gameObject);
-            }
+            SelectUnits(false);
+        }
 
-            if (hit.transform.parent.TryGetComponent(out IStructure structure))
+        if (Physics.Raycast(ray, out RaycastHit s_Hit, Mathf.Infinity, m_StructureMask))
+        {
+            if (s_Hit.transform.parent.TryGetComponent(out IStructure structure))
             {
                 ClickOnBuilding(structure);
+            }
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit u_Hit, Mathf.Infinity, m_UnitMask))
+        {
+            if (u_Hit.transform.parent.GetComponent<IUnit>() != null)
+            {
+                ClickOnUnit(u_Hit.transform.parent.gameObject);
             }
         }
     }
 
     private void ClickOnBuilding(IStructure structure)
     {
-        m_CurrentlySelected = structure;
-        m_CurrentlySelected.Selected();
+        // When clicking on another building while another is currently selected
+        // unselect the previous building
+        if (m_CurrentStructure != null)
+        {
+            m_CurrentStructure.Unselect();
+        }
+
+        m_CurrentStructure = structure;
+        m_CurrentStructure.Selected();
     }
 
     private void ClickOnUnit(GameObject unit)
@@ -116,23 +152,20 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         else SelectUnits(false);
     }
 
-    public void OnRightMouse(InputAction.CallbackContext context)
+    private void MovingSelectedUnits()
     {
         if (m_SelectedUnitsList.Count < 1)
-        {
             return;
-        }
 
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
         Vector3 newPosition;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
         {
             newPosition = hit.point;
             PlayClickAnimation(true);
         }
         else { return; }
-
 
         foreach (var unit in m_SelectedUnitsList)
         {
@@ -152,8 +185,6 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                 MultiSelectionBox();
             }
         }
-        // This is called also OnLeftMouse when it should not
-        // Should only check released if LeftMouse was holding down
         else if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             if (m_SelectionImage.gameObject.activeInHierarchy)
@@ -185,6 +216,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
                     unitScreenPos.y > min.y &&
                     unitScreenPos.y < max.y)
                 {
+                    // Add a limit? ex. max group of 10,20, etc..
                     if (!m_SelectedUnitsList.Contains(unit))
                     {
                         m_SelectedUnitsList.Add(unit);
@@ -226,6 +258,19 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
         }
     }
 
+    public Vector3 SetStructureUnitSpawnFlag(GameObject flag)
+    {
+        Ray ray = m_Camera.ScreenPointToRay(mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
+        {
+            flag.transform.position = hit.point + new Vector3(0f, 1.5f, 0f);
+            return flag.transform.position;
+        }
+
+        return Vector3.zero;
+    }
+
     private void StopClickAnimation()
     {
         m_Timer -= Time.deltaTime;
@@ -248,7 +293,7 @@ public class PlayerInputs : MonoBehaviour, PlayerControls.IPlayerActions
 
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_InteractionMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
         {
             if (hit.transform.GetComponent<Terrain>() != null)
             {
