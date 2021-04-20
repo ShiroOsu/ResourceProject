@@ -13,14 +13,16 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     [Header("Multi Selection")]
     [SerializeField] private RectTransform m_SelectionImage;
     private Vector2 m_BoxStartPos;
-    private float m_HoldTime = 0.05f;
+    private float m_HoldTime = 0.1f;
 
     // Interaction
     private LayerMask m_UnitMask;
     private LayerMask m_StructureMask;
     private LayerMask m_GroundMask;
     private List<GameObject> m_SelectedUnitsList = null;
-    private Vector2 mousePosition;
+    private Vector2 m_MousePosition;
+    
+    public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
 
     // Controls
     private MouseControls m_MouseControls;
@@ -48,8 +50,8 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     }
     private void Update()
     {
-        mousePosition = Mouse.current.position.ReadValue();
-
+        m_MousePosition = Mouse.current.position.ReadValue();
+       
         // Not a complete fix
         if (!EventSystem.current.IsPointerOverGameObject())
         {
@@ -81,7 +83,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                Debug.Log("UI CLICK");
+                // Clicking on UI
             } 
             else
             {
@@ -97,9 +99,9 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
     private void ClickingOnUnitsAndStructures()
     {
-        m_BoxStartPos = mousePosition;
+        m_BoxStartPos = m_MousePosition;
 
-        Ray ray = m_Camera.ScreenPointToRay(mousePosition);
+        Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
 
         if (Physics.Raycast(ray, Mathf.Infinity, m_GroundMask))
         {
@@ -157,7 +159,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         if (m_SelectedUnitsList.Count < 1)
             return;
 
-        Ray ray = m_Camera.ScreenPointToRay(mousePosition);
+        Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
         Vector3 newPosition;
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
@@ -203,7 +205,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
         // Temp, because it finds ALL GameObjects in scene then loops through them,
         // then looking for the objects with the IUnit interface
-        // Would be ideal to only needing to loop through a list that only contains units
+        // Would be ideal to only needing to loop through a list that only contains selectable units
         GameObject[] allUnits = FindObjectsOfType<GameObject>();
         foreach (var unit in allUnits)
         {
@@ -216,7 +218,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
                     unitScreenPos.y > min.y &&
                     unitScreenPos.y < max.y)
                 {
-                    // Add a limit? ex. max group of 10,20, etc..
+                    // Add a limit, ex. max group of 10,20, etc..
                     if (!m_SelectedUnitsList.Contains(unit))
                     {
                         m_SelectedUnitsList.Add(unit);
@@ -230,10 +232,12 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     private void MultiSelectionBox()
     {
         if (!m_SelectionImage.gameObject.activeInHierarchy)
+        {
             m_SelectionImage.gameObject.SetActive(true);
+        }
 
-        float width = mousePosition.x - m_BoxStartPos.x;
-        float height = mousePosition.y - m_BoxStartPos.y;
+        float width = m_MousePosition.x - m_BoxStartPos.x;
+        float height = m_MousePosition.y - m_BoxStartPos.y;
 
         m_SelectionImage.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
         m_SelectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
@@ -258,19 +262,6 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         }
     }
 
-    public Vector3 SetStructureUnitSpawnFlag(GameObject flag)
-    {
-        Ray ray = m_Camera.ScreenPointToRay(mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
-        {
-            flag.transform.position = hit.point + new Vector3(0f, 1.5f, 0f);
-            return flag.transform.position;
-        }
-
-        return Vector3.zero;
-    }
-
     private void StopClickAnimation()
     {
         m_Timer -= Time.deltaTime;
@@ -291,7 +282,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
             return;
         }
 
-        Ray ray = m_Camera.ScreenPointToRay(mousePosition);
+        Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
         {

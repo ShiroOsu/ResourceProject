@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class ObjectPool
 {
     private readonly uint m_ExpandBy;
     private readonly GameObject m_Prefab;
     private readonly Transform m_Parent;
-    public readonly Stack<GameObject> objects = new Stack<GameObject>();  
+    public readonly Stack<GameObject> objects = new Stack<GameObject>();
+    public readonly Stack<GameObject> objectsWithID = new Stack<GameObject>(); // ??
 
-    public ObjectPool(uint initSize, GameObject prefab, Transform parent = null, uint expandBy = 1, bool checkParentForChildren = false)
+    public ObjectPool(uint initSize, GameObject prefab, Transform parent = null, uint expandBy = 1)
     {
         m_ExpandBy = expandBy < 1 ? 1 : expandBy;
         m_Prefab = prefab;
