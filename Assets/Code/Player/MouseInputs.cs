@@ -13,7 +13,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     [Header("Multi Selection")]
     [SerializeField] private RectTransform m_SelectionImage;
     private Vector2 m_BoxStartPos;
-    private float m_HoldTime = 0.1f;
+    private bool m_MultiSelect = false;
 
     // Interaction
     private LayerMask m_UnitMask;
@@ -21,7 +21,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     private LayerMask m_GroundMask;
     private List<GameObject> m_SelectedUnitsList = null;
     private Vector2 m_MousePosition;
-    
+
     public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
 
     // Controls
@@ -51,16 +51,15 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     private void Update()
     {
         m_MousePosition = Mouse.current.position.ReadValue();
-       
-        // Not a complete fix
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            IsLMBHoldingDown();
-        }
 
         if (m_Animator.gameObject.activeSelf)
         {
             StopClickAnimation();
+        }
+
+        if (m_MultiSelect)
+        {
+            MultiSelectionBox();
         }
     }
 
@@ -84,7 +83,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
             if (EventSystem.current.IsPointerOverGameObject())
             {
                 // Clicking on UI
-            } 
+            }
             else
             {
                 ClickingOnUnitsAndStructures();
@@ -95,6 +94,14 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     public void OnRightMouse(InputAction.CallbackContext context)
     {
         MovingSelectedUnits();
+    }
+
+    public void OnLeftMouseButtonHold(InputAction.CallbackContext context)
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && context.performed)
+        {
+            m_MultiSelect = true;
+        }
     }
 
     private void ClickingOnUnitsAndStructures()
@@ -176,28 +183,6 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         }
     }
 
-    private void IsLMBHoldingDown()
-    {
-        if (Mouse.current.leftButton.isPressed)
-        {
-            m_HoldTime -= Time.deltaTime;
-
-            if (m_HoldTime < 0f)
-            {
-                MultiSelectionBox();
-            }
-        }
-        else if (Mouse.current.leftButton.wasReleasedThisFrame)
-        {
-            if (m_SelectionImage.gameObject.activeInHierarchy)
-                m_SelectionImage.gameObject.SetActive(false);
-
-            AddUnitsInSelectionBox();
-
-            m_HoldTime = 0.05f;
-        }
-    }
-
     private void AddUnitsInSelectionBox()
     {
         Vector2 min = m_SelectionImage.anchoredPosition - (m_SelectionImage.sizeDelta * 0.5f);
@@ -226,6 +211,12 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
                 }
             }
         }
+
+        if (m_CurrentStructure != null)
+        {
+            m_CurrentStructure.Unselect();
+        }
+
         SelectUnits(true);
     }
 
@@ -241,6 +232,16 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
         m_SelectionImage.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
         m_SelectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
+
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            if (m_SelectionImage.gameObject.activeInHierarchy)
+                m_SelectionImage.gameObject.SetActive(false);
+
+            AddUnitsInSelectionBox();
+
+            m_MultiSelect = false;
+        }
     }
 
     private void SelectUnits(bool select)

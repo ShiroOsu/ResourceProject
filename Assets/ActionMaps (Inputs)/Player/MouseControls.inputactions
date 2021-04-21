@@ -1,5 +1,5 @@
 {
-    "name": "PlayerControls",
+    "name": "MouseControls",
     "maps": [
         {
             "name": "Mouse",
@@ -17,6 +17,14 @@
                     "name": "RightMouse",
                     "type": "Button",
                     "id": "2b842f97-fc42-498e-9f86-d0cc92e5d08e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LeftMouseButtonHold",
+                    "type": "Button",
+                    "id": "e52ed7ad-7453-441f-8e0c-0468ecd2eb2d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -42,6 +50,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RightMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea8f34d3-1cef-460b-8a1a-6299f8f93089",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftMouseButtonHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

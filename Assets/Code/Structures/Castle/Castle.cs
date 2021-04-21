@@ -1,7 +1,9 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Castle : MonoBehaviour, IStructure
+public class Castle : MonoBehaviour, IStructure, IHealth
 {
     [SerializeField] private GameObject m_MouseControls = null;
     [SerializeField] private CastleStats m_CastleData = null;
@@ -10,6 +12,11 @@ public class Castle : MonoBehaviour, IStructure
     [SerializeField] private GameObject m_CastleImage = null;
     [SerializeField] private GameObject m_CastleUI = null;
     [SerializeField] private GameObject m_CastleInfo = null;
+    [SerializeField] private GameObject m_HealthBar = null;
+
+    [SerializeField] private TextMeshPro m_AttackText = null;
+    [SerializeField] private TextMeshPro m_DefenseText = null;
+    [SerializeField] private TextMeshPro m_HealthNumbers = null;
 
     // Spawn location for builders
     private Vector3 m_UnitSpawnPoint;
@@ -18,6 +25,8 @@ public class Castle : MonoBehaviour, IStructure
     private MouseInputs m_MouseInputs = null;
 
     private bool ShowFlagPlacement = false;
+    private float m_CurrentHealth;
+    private float m_MaxHealth;
 
     private void Start()
     {
@@ -25,11 +34,17 @@ public class Castle : MonoBehaviour, IStructure
 
         m_MouseInputs = m_MouseControls.GetComponent<MouseInputs>();
 
+        m_MaxHealth = m_CastleData.maxHealth;
+        m_CurrentHealth = m_MaxHealth;
+
         m_Flag = ReferenceHolder.Instance.flagPool.Rent(false);
+        SetTextInfo();
     }
 
     private void Update()
     {
+        m_HealthNumbers.SetText(m_MaxHealth + " / " + m_CurrentHealth);
+        
         if (ShowFlagPlacement)
         {
             PlaceFlag();
@@ -47,7 +62,7 @@ public class Castle : MonoBehaviour, IStructure
         SpawnBuilder();
     }
 
-    // m_UnitSpawnPoint (for flag) Not working for more than one Castle structure
+    // m_UnitSpawnPoint (for flag) Not working for more than one Castle structure 
     private void PlaceFlag()
     {
         Ray ray = m_MouseInputs.PlacementRay;
@@ -93,6 +108,12 @@ public class Castle : MonoBehaviour, IStructure
     private void SpawnBuilder()
     {
         GameObject builder = ReferenceHolder.Instance.builderPool.Rent(true);
+        
+        // why
+        if (builder)
+        {
+            builder = ReferenceHolder.Instance.builderPool.Rent(true);
+        }
 
         // This will position the builder inside the Castle
         builder.transform.position = transform.position;
@@ -110,7 +131,7 @@ public class Castle : MonoBehaviour, IStructure
         Debug.Log(transform.name + " upgrade");
     }
 
-    // Buttons in the left corner of UI, what you can do (in a 5x3 pattern)
+    // Buttons in the right corner of UI, what you can do (in a 5x3 pattern)
     // ex. Spawn builder, Upgrade Castle, Upgrade other stuff etc...
     private void CastleUI()
     {
@@ -122,10 +143,26 @@ public class Castle : MonoBehaviour, IStructure
         m_CastleImage.SetActive(active);
         m_CastleUI.SetActive(active);
         m_CastleInfo.SetActive(active);
+        m_HealthBar.SetActive(active);
 
         if (m_UnitSpawnPoint != Vector3.zero)
         {
             m_Flag.SetActive(active);
         }
+    }
+
+    private void SetTextInfo()
+    {
+        m_AttackText.SetText("Attack " + m_CastleData.attack.ToString());
+        m_DefenseText.SetText("Defense " + m_CastleData.defense.ToString());
+    }
+
+    public void ModifyHealth(float amount)
+    {
+        m_CurrentHealth += amount;
+    }
+
+    public void RegenHealth()
+    {
     }
 }
