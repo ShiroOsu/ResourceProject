@@ -185,8 +185,11 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
     private void AddUnitsInSelectionBox()
     {
-        Vector2 min = m_SelectionImage.anchoredPosition - (m_SelectionImage.sizeDelta * 0.5f);
-        Vector2 max = m_SelectionImage.anchoredPosition + (m_SelectionImage.sizeDelta * 0.5f);
+        Vector2 rectPosition = new Vector2
+            (m_SelectionImage.anchoredPosition.x - m_SelectionImage.sizeDelta.x * 0.5f,
+             m_SelectionImage.anchoredPosition.y - m_SelectionImage.sizeDelta.y * 0.5f);
+
+        Rect rect = new Rect(rectPosition, m_SelectionImage.sizeDelta);
 
         // Temp, because it finds ALL GameObjects in scene then loops through them,
         // then looking for the objects with the IUnit interface
@@ -198,10 +201,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
             {
                 Vector3 unitScreenPos = m_Camera.WorldToScreenPoint(unit.transform.position);
 
-                if (unitScreenPos.x > min.x &&
-                    unitScreenPos.x < max.x &&
-                    unitScreenPos.y > min.y &&
-                    unitScreenPos.y < max.y)
+                if (rect.Contains(unitScreenPos))
                 {
                     // Add a limit, ex. max group of 10,20, etc..
                     if (!m_SelectedUnitsList.Contains(unit))
