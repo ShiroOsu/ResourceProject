@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ReferenceHolder : MonoBehaviour
@@ -22,7 +23,11 @@ public class ReferenceHolder : MonoBehaviour
     [Header("Castle")]
     public GameObject CastleImage = null;
     public GameObject CastleUI = null;
-    public GameObject CastleInfo = null;
+    public GameObject m_CastleStats = null;
+
+    [Header("Health")]
+    public GameObject MainHealthBar = null;
+    public TextMeshPro HealthNumbers = null;
 
     [Header("?")]
     public GameObject MouseControls = null;

@@ -4,7 +4,7 @@ using System;
 [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/Units/UnitData")]
 public class UnitData : ScriptableObject, ISerializationCallbackReceiver
 {
-    public float health = 10f;
+    public float maxHealth = 10f;
 
     [Tooltip("Amount of damage blocked from attacks")]
     public int defense = 2;
@@ -25,7 +25,7 @@ public class UnitData : ScriptableObject, ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
-        runTimeHealth = health;
+        runTimeHealth = maxHealth;
     }
     public void OnBeforeSerialize() { }
 }

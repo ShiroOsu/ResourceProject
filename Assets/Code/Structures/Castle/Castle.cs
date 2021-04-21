@@ -43,8 +43,6 @@ public class Castle : MonoBehaviour, IStructure, IHealth
 
     private void Update()
     {
-        m_HealthNumbers.SetText(m_MaxHealth + " / " + m_CurrentHealth);
-        
         if (ShowFlagPlacement)
         {
             PlaceFlag();
@@ -100,6 +98,7 @@ public class Castle : MonoBehaviour, IStructure, IHealth
 
     public void Selected()
     {
+        m_HealthNumbers.SetText(m_CurrentHealth.ToString());
         CastleUI();
     }
 
