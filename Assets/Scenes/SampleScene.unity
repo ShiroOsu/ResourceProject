@@ -1438,7 +1438,6 @@ MonoBehaviour:
   m_CastleStats: {fileID: 1417711592}
   MainHealthBar: {fileID: 586973618}
   HealthNumbers: {fileID: 724020141}
-  HPBar: {fileID: 1693297705}
   MouseControls: {fileID: 659079908}
 --- !u!1 &662906151
 GameObject:
@@ -3732,8 +3731,8 @@ MonoBehaviour:
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 9830
-    ctime1: 39321
+    ctime0: 13107
+    ctime1: 36044
     ctime2: 65535
     ctime3: 0
     ctime4: 0
