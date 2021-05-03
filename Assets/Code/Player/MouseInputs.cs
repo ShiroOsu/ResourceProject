@@ -45,6 +45,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         m_MouseControls = new MouseControls();
         m_MouseControls.Mouse.SetCallbacks(this);
     }
+
     private void Update()
     {
         m_MousePosition = Mouse.current.position.ReadValue();
@@ -191,10 +192,10 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         // Temp, because it finds ALL GameObjects in scene then loops through them,
         // then looking for the objects with the IUnit interface
         // Would be ideal to only needing to loop through a list that only contains selectable units
-        GameObject[] allUnits = FindObjectsOfType<GameObject>();
+        GameObject[] allUnits = FindObjectsOfType<GameObject>(false);
         foreach (var unit in allUnits)
         {
-            if (unit.activeInHierarchy && unit.GetComponent<IUnit>() != null)
+            if (unit.activeInHierarchy && unit.TryGetComponent(out IUnit _))
             {
                 Vector3 unitScreenPos = m_Camera.WorldToScreenPoint(unit.transform.position);
 

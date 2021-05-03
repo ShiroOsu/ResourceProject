@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -27,7 +26,7 @@ public class BuilderUnit : MonoBehaviour, IUnit
 
     private void Awake()
     {
-        m_Data ??= m_Data = ScriptableObject.CreateInstance<UnitData>();
+        m_Data ??= ScriptableObject.CreateInstance<UnitData>();
         m_MouseInputs ??= ReferenceHolder.Instance.MouseControls.GetComponent<MouseInputs>();
 
         m_Agent = GetComponent<NavMeshAgent>();
@@ -67,6 +66,8 @@ public class BuilderUnit : MonoBehaviour, IUnit
 
     private void Update()
     {
+        //Debug.Log(m_ShowStructurePlacement);
+
         if (m_ShowStructurePlacement)
         {
             BuildStructure();
@@ -95,6 +96,7 @@ public class BuilderUnit : MonoBehaviour, IUnit
     {
         m_ShowStructurePlacement = true;
         m_StructureToBuild = structure;
+        Instantiate(m_StructureToBuild);
     }
 
     public void Move(Vector3 destination)
@@ -122,12 +124,6 @@ public class BuilderUnit : MonoBehaviour, IUnit
 
     public void BuildAndMainPageActivation(bool active)
     {
-        if (!m_BuilderPage || !m_BuilderMainPage)
-        {
-            m_BuilderPage = ReferenceHolder.Instance.BuilderPage;
-            m_BuilderMainPage = ReferenceHolder.Instance.BuilderMainPage;
-        }
-
         m_BuilderPage.SetActive(active);
         m_BuilderMainPage.SetActive(!active);
     }

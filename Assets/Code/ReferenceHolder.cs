@@ -36,8 +36,6 @@ public class ReferenceHolder : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
-
         builderPool = new ObjectPool(5, m_BuilderPrefab, new GameObject("BuilderPool").transform);
         soldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);
         flagPool = new ObjectPool(1, m_FlagPrefab, new GameObject("FlagPool").transform);
