@@ -1,3 +1,6 @@
+// https://gist.github.com/krzys-h/76c518be0516fb1e94c7efbdcd028830
+// Just changed to TextureFormat.ARGB32 to get alpha
+
 using UnityEngine;
 using UnityEditor;
 
@@ -9,7 +12,7 @@ public class SaveRenderTextureToFile
         RenderTexture rt = Selection.activeObject as RenderTexture;
 
         RenderTexture.active = rt;
-        Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+        Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.ARGB32, false);
         tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
         RenderTexture.active = null;
 
