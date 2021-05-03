@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,13 +23,13 @@ public class Castle : MonoBehaviour, IStructure, IHealth
     private GameObject m_Flag = null;
     private MouseInputs m_MouseInputs = null;
 
-    private bool ShowFlagPlacement = false;
+    private bool m_ShowFlagPlacement = false;
     private float m_CurrentHealth;
     private float m_MaxHealth;
 
     private void Start()
     {
-        if (!m_CastleData) { m_CastleData = ScriptableObject.CreateInstance<CastleStats>(); }
+        m_CastleData ??= ScriptableObject.CreateInstance<CastleStats>();
 
         m_MouseInputs = m_MouseControls.GetComponent<MouseInputs>();
 
@@ -43,7 +42,7 @@ public class Castle : MonoBehaviour, IStructure, IHealth
 
     private void Update()
     {
-        if (ShowFlagPlacement)
+        if (m_ShowFlagPlacement)
         {
             PlaceFlag();
         }
@@ -51,7 +50,7 @@ public class Castle : MonoBehaviour, IStructure, IHealth
 
     public void OnFlagButton()
     {
-        ShowFlagPlacement = true;
+        m_ShowFlagPlacement = true;
         m_Flag.SetActive(true);
     }
 
@@ -81,7 +80,7 @@ public class Castle : MonoBehaviour, IStructure, IHealth
                     m_Flag.SetActive(false);
                 }
 
-                ShowFlagPlacement = false;
+                m_ShowFlagPlacement = false;
             }
         }
     }
@@ -89,17 +88,6 @@ public class Castle : MonoBehaviour, IStructure, IHealth
     public void Destroy()
     {
         Destroy();
-    }
-
-    public void Unselect()
-    {
-        EnableUIStuff(false);
-    }
-
-    public void Selected()
-    {
-        m_HealthNumbers.SetText(m_CurrentHealth.ToString());
-        CastleUI();
     }
 
     // This is instant spawning, but I want to implement a timer 'progress bar' later
@@ -152,6 +140,7 @@ public class Castle : MonoBehaviour, IStructure, IHealth
 
     private void SetTextInfo()
     {
+        // Very temp
         m_AttackText.SetText("Attack " + m_CastleData.attack.ToString());
         m_DefenseText.SetText("Defense " + m_CastleData.defense.ToString());
     }
@@ -163,5 +152,16 @@ public class Castle : MonoBehaviour, IStructure, IHealth
 
     public void RegenHealth()
     {
+    }
+
+    public void Select()
+    {
+        m_HealthNumbers.SetText(m_CurrentHealth.ToString());
+        CastleUI();
+    }
+
+    public void UnSelect()
+    {
+        EnableUIStuff(false);
     }
 }

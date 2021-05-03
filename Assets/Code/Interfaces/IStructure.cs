@@ -1,8 +1,7 @@
 public interface IStructure
 {
-    public void Unselect();
-
-    public void Selected();
+    public void Select();
+    public void UnSelect();
 
     public void Destroy();
 

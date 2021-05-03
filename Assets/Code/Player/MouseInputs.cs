@@ -34,10 +34,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
     private void Awake()
     {
-        if (!m_Data)
-        {
-            m_Data = ScriptableObject.CreateInstance<MouseData>();
-        }
+        m_Data ??= ScriptableObject.CreateInstance<MouseData>();
 
         m_SelectedUnitsList = new List<GameObject>();
 
@@ -114,7 +111,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         {
             if (m_CurrentStructure != null)
             {
-                m_CurrentStructure.Unselect();
+                m_CurrentStructure.UnSelect();
                 m_CurrentStructure = null;
             }
 
@@ -144,11 +141,11 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         // unselect the previous building
         if (m_CurrentStructure != null)
         {
-            m_CurrentStructure.Unselect();
+            m_CurrentStructure.UnSelect();
         }
 
         m_CurrentStructure = structure;
-        m_CurrentStructure.Selected();
+        m_CurrentStructure.Select();
     }
 
     private void ClickOnUnit(GameObject unit)
@@ -212,9 +209,10 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
             }
         }
 
+        // To prevent structure begin in selection mode 
         if (m_CurrentStructure != null)
         {
-            m_CurrentStructure.Unselect();
+            m_CurrentStructure.UnSelect();
         }
 
         SelectUnits(true);
@@ -252,9 +250,9 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
             if (select)
             {
-                u.Selected();
+                u.Select();
             }
-            else u.Unselect();
+            else u.UnSelect();
         }
 
         if (!select)

@@ -10,8 +10,7 @@ public class SoldierUnit : MonoBehaviour, IUnit
 
     private void Awake()
     {
-        if (!m_Stats)
-        { m_Stats = ScriptableObject.CreateInstance<UnitData>(); }
+        m_Stats ??= ScriptableObject.CreateInstance<UnitData>();
 
         m_Agent = GetComponent<NavMeshAgent>();
 
@@ -21,12 +20,12 @@ public class SoldierUnit : MonoBehaviour, IUnit
         //m_Agent.angularSpeed = m_Stats.turnSpeed;
     }
 
-    public void Unselect()
+    public void UnSelect()
     {
         m_SelectionCircle.SetActive(false);
     }
 
-    public void Selected()
+    public void Select()
     {
         m_SelectionCircle.SetActive(true);
     }

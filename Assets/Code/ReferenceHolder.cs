@@ -19,6 +19,8 @@ public class ReferenceHolder : MonoBehaviour
     [Header("Builder")]
     public GameObject BuilderImage = null;
     public GameObject BuilderUI = null;
+    public GameObject BuilderPage = null;
+    public GameObject BuilderMainPage = null;
 
     [Header("Castle")]
     public GameObject CastleImage = null;
@@ -40,5 +42,4 @@ public class ReferenceHolder : MonoBehaviour
         soldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);
         flagPool = new ObjectPool(1, m_FlagPrefab, new GameObject("FlagPool").transform);
     }
-
 }
