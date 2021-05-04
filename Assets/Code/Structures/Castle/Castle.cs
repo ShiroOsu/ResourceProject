@@ -156,8 +156,10 @@ public class Castle : MonoBehaviour, IStructure, IHealth
 
     public void Select()
     {
-        m_HealthNumbers.SetText(m_CurrentHealth.ToString());
-        CastleUI();
+        UIManager.Instance.StructureSelected(StructureType.Castle);
+
+        //m_HealthNumbers.SetText(m_CurrentHealth.ToString());
+        //CastleUI();
     }
 
     public void UnSelect()

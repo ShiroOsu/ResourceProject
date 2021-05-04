@@ -523,5 +523,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad0e11119111fa4f86226bac0adea8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GameManager: {fileID: 0}
+  m_MouseControls: {fileID: 0}
+  m_CastleData: {fileID: 0}
   m_CastleImage: {fileID: 0}
+  m_CastleUI: {fileID: 0}
+  m_CastleInfo: {fileID: 0}
+  m_HealthBar: {fileID: 0}
+  m_AttackText: {fileID: 0}
+  m_DefenseText: {fileID: 0}
+  m_HealthNumbers: {fileID: 0}

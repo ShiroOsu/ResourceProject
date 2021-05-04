@@ -54,8 +54,10 @@ public class BuilderUnit : MonoBehaviour, IUnit
 
     public void Select()
     {
-        m_HealthNumbers.SetText(m_CurrentHealth.ToString());
-        EnableUI(true);
+        UIManager.Instance.UnitSelected(UnitType.Builder);
+
+        //m_HealthNumbers.SetText(m_CurrentHealth.ToString());
+        //EnableUI(true);
     }
 
     public void Destroy()

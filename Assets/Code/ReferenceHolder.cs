@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ReferenceHolder : MonoBehaviour
 {
+    // Singleton
     private static ReferenceHolder s_Instance = null;
-
     public static ReferenceHolder Instance => s_Instance ??= FindObjectOfType<ReferenceHolder>();
 
     [Header("Pool Prefabs")]
