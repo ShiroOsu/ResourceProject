@@ -1,44 +1,13 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Castle : MonoBehaviour, IStructure, IHealth
+public class Castle : MonoBehaviour, IStructure
 {
-    [SerializeField] private GameObject m_MouseControls = null;
-    [SerializeField] private CastleStats m_CastleData = null;
-
-    [Header("UI")]
-    [SerializeField] private GameObject m_CastleImage = null;
-    [SerializeField] private GameObject m_CastleUI = null;
-    [SerializeField] private GameObject m_CastleInfo = null;
-    [SerializeField] private GameObject m_HealthBar = null;
-
-    [SerializeField] private TextMeshPro m_AttackText = null;
-    [SerializeField] private TextMeshPro m_DefenseText = null;
-    [SerializeField] private TextMeshPro m_HealthNumbers = null;
-
     // Spawn location for builders
     private Vector3 m_UnitSpawnPoint;
 
     private GameObject m_Flag = null;
-    private MouseInputs m_MouseInputs = null;
-
     private bool m_ShowFlagPlacement = false;
-    private float m_CurrentHealth;
-    private float m_MaxHealth;
-
-    private void Start()
-    {
-        m_CastleData ??= ScriptableObject.CreateInstance<CastleStats>();
-
-        m_MouseInputs = m_MouseControls.GetComponent<MouseInputs>();
-
-        m_MaxHealth = m_CastleData.maxHealth;
-        m_CurrentHealth = m_MaxHealth;
-
-        m_Flag = ReferenceHolder.Instance.flagPool.Rent(false);
-        SetTextInfo();
-    }
 
     private void Update()
     {
@@ -51,7 +20,7 @@ public class Castle : MonoBehaviour, IStructure, IHealth
     public void OnFlagButton()
     {
         m_ShowFlagPlacement = true;
-        m_Flag.SetActive(true);
+        m_Flag = PoolManager.Instance.flagPool.Rent(true);
     }
 
     public void OnSpawnBuilderButton()
@@ -59,10 +28,9 @@ public class Castle : MonoBehaviour, IStructure, IHealth
         SpawnBuilder();
     }
 
-    // m_UnitSpawnPoint (for flag) Not working for more than one Castle structure 
     private void PlaceFlag()
     {
-        Ray ray = m_MouseInputs.PlacementRay;
+        Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
         {
@@ -94,13 +62,11 @@ public class Castle : MonoBehaviour, IStructure, IHealth
     // for showing how long it takes to spawn a builder
     private void SpawnBuilder()
     {
-        GameObject builder = ReferenceHolder.Instance.builderPool.Rent(true);
-        
-        // why
-        if (builder)
-        {
-            builder = ReferenceHolder.Instance.builderPool.Rent(true);
-        }
+        GameObject builder = PoolManager.Instance.builderPool.Rent(true);
+        //if (builder)
+        //{
+        //    builder = ReferenceHolder.Instance.builderPool.Rent(true);
+        //}
 
         // This will position the builder inside the Castle
         builder.transform.position = transform.position;
@@ -118,52 +84,8 @@ public class Castle : MonoBehaviour, IStructure, IHealth
         Debug.Log(transform.name + " upgrade");
     }
 
-    // Buttons in the right corner of UI, what you can do (in a 5x3 pattern)
-    // ex. Spawn builder, Upgrade Castle, Upgrade other stuff etc...
-    private void CastleUI()
+    public void ShouldSelect(bool select)
     {
-        EnableUIStuff(true);
-    }
-
-    private void EnableUIStuff(bool active)
-    {
-        m_CastleImage.SetActive(active);
-        m_CastleUI.SetActive(active);
-        m_CastleInfo.SetActive(active);
-        m_HealthBar.SetActive(active);
-
-        if (m_UnitSpawnPoint != Vector3.zero)
-        {
-            m_Flag.SetActive(active);
-        }
-    }
-
-    private void SetTextInfo()
-    {
-        // Very temp
-        m_AttackText.SetText("Attack " + m_CastleData.attack.ToString());
-        m_DefenseText.SetText("Defense " + m_CastleData.defense.ToString());
-    }
-
-    public void ModifyHealth(float amount)
-    {
-        m_CurrentHealth += amount;
-    }
-
-    public void RegenHealth()
-    {
-    }
-
-    public void Select()
-    {
-        UIManager.Instance.StructureSelected(StructureType.Castle);
-
-        //m_HealthNumbers.SetText(m_CurrentHealth.ToString());
-        //CastleUI();
-    }
-
-    public void UnSelect()
-    {
-        EnableUIStuff(false);
+        UIManager.Instance.StructureSelected(StructureType.Castle, select, gameObject);
     }
 }

@@ -1,8 +1,7 @@
 public interface IUnit
 {
-
-    public void Select();
-    public void UnSelect();
+    public void ShouldSelect(bool select);
+   
     public void Destroy();
 
     public void Move(UnityEngine.Vector3 destination);

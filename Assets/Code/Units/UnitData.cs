@@ -19,6 +19,9 @@ public class UnitData : ScriptableObject, ISerializationCallbackReceiver
     public float acceleration = 16f;
     public float turnSpeed = 1f;
 
+    public int soldierID = -1372625422;
+    public int builderID = 0;
+
     // During game time the health & HpRegen of the unit data will be "runTimeHealth"
     // To prevent any overrides to the initial health the unit start with.
     [NonSerialized] public float runTimeHealth;

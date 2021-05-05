@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -6,70 +5,34 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(NavMeshAgent))]
 public class BuilderUnit : MonoBehaviour, IUnit
 {
-    [SerializeField] private UnitData m_Data = null;
     [SerializeField] private GameObject m_SelectionCircle;
 
-    [Header("UI")]
-    [SerializeField] private GameObject m_BuilderImage = null;
-    [SerializeField] private GameObject m_BuilderUI = null;
-    [SerializeField] private GameObject m_BuilderPage = null;
-    [SerializeField] private GameObject m_BuilderMainPage = null;
-    [SerializeField] private GameObject m_MainHealthBar = null;
-    [SerializeField] private TextMeshPro m_HealthNumbers = null;
-
     private NavMeshAgent m_Agent;
-    private float m_MaxHealth;
-    private float m_CurrentHealth;
-    private MouseInputs m_MouseInputs = null;
     private bool m_ShowStructurePlacement;
     private GameObject m_StructureToBuild = null;
 
     private void Awake()
     {
-        m_Data ??= ScriptableObject.CreateInstance<UnitData>();
-        m_MouseInputs ??= ReferenceHolder.Instance.MouseControls.GetComponent<MouseInputs>();
-
         m_Agent = GetComponent<NavMeshAgent>();
 
-        m_Agent.agentTypeID = 0; // Builder ID
-        m_Agent.speed = m_Data.movementSpeed;
-        m_Agent.acceleration = m_Data.acceleration;
-        //m_Agent.angularSpeed = m_Data.turnSpeed;
-
-        m_BuilderImage = ReferenceHolder.Instance.BuilderImage;
-        m_BuilderUI = ReferenceHolder.Instance.BuilderUI;
-        m_BuilderMainPage = ReferenceHolder.Instance.BuilderMainPage;
-        m_BuilderPage = ReferenceHolder.Instance.BuilderPage;
-        m_MainHealthBar = ReferenceHolder.Instance.MainHealthBar;                
-        m_HealthNumbers = ReferenceHolder.Instance.HealthNumbers;
-
-        m_MaxHealth = m_Data.maxHealth;
-        m_CurrentHealth = m_MaxHealth;
+        m_Agent.agentTypeID = DataManager.Instance.unitData.builderID;
+        m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
+        m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
     }
 
-    public void UnSelect()
+    public void ShouldSelect(bool select)
     {
-        EnableUI(false);
-    }
-
-    public void Select()
-    {
-        UIManager.Instance.UnitSelected(UnitType.Builder);
-
-        //m_HealthNumbers.SetText(m_CurrentHealth.ToString());
-        //EnableUI(true);
+        UIManager.Instance.UnitSelected(UnitType.Builder, select, gameObject);
+        m_SelectionCircle.SetActive(select);
     }
 
     public void Destroy()
     {
-        // ?
-        gameObject.SetActive(false);
+        Destroy();
     }
 
     private void Update()
     {
-        //Debug.Log(m_ShowStructurePlacement);
-
         if (m_ShowStructurePlacement)
         {
             BuildStructure();
@@ -78,7 +41,7 @@ public class BuilderUnit : MonoBehaviour, IUnit
 
     public void BuildStructure()
     {
-        Ray ray = m_MouseInputs.PlacementRay;
+        Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
 
         if (Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
         {
@@ -104,29 +67,5 @@ public class BuilderUnit : MonoBehaviour, IUnit
     public void Move(Vector3 destination)
     {
         m_Agent.SetDestination(destination);
-    }
-
-    private void EnableUI(bool active)
-    {
-        m_SelectionCircle.SetActive(active);
-        m_BuilderImage.SetActive(active);
-        m_BuilderUI.SetActive(active);
-        m_MainHealthBar.SetActive(active); // Temp
-    }
-
-    public void BuildButton()
-    {
-        BuildAndMainPageActivation(true);
-    }
-
-    public void BackButton()
-    {
-        BuildAndMainPageActivation(false);
-    }
-
-    public void BuildAndMainPageActivation(bool active)
-    {
-        m_BuilderPage.SetActive(active);
-        m_BuilderMainPage.SetActive(!active);
     }
 }

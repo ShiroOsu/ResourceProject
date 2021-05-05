@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 {
     [Header("General")]
-    [SerializeField] private MouseData m_Data = null;
     [SerializeField] private Camera m_Camera = null;
     [SerializeField] private Animator m_Animator = null;
 
@@ -34,13 +33,11 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
     private void Awake()
     {
-        m_Data ??= ScriptableObject.CreateInstance<MouseData>();
-
         m_SelectedUnitsList = new List<GameObject>();
 
-        m_UnitMask = m_Data.unitMask;
-        m_StructureMask = m_Data.structureMask;
-        m_GroundMask = m_Data.groundMask;
+        m_UnitMask = DataManager.Instance.mouseData.unitMask;
+        m_StructureMask = DataManager.Instance.mouseData.structureMask;
+        m_GroundMask = DataManager.Instance.mouseData.groundMask;
 
         m_MouseControls = new MouseControls();
         m_MouseControls.Mouse.SetCallbacks(this);
@@ -112,7 +109,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         {
             if (m_CurrentStructure != null)
             {
-                m_CurrentStructure.UnSelect();
+                m_CurrentStructure.ShouldSelect(false);
                 m_CurrentStructure = null;
             }
 
@@ -142,11 +139,11 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         // unselect the previous building
         if (m_CurrentStructure != null)
         {
-            m_CurrentStructure.UnSelect();
+            m_CurrentStructure.ShouldSelect(false);
         }
 
         m_CurrentStructure = structure;
-        m_CurrentStructure.Select();
+        m_CurrentStructure.ShouldSelect(true);
     }
 
     private void ClickOnUnit(GameObject unit)
@@ -195,7 +192,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         GameObject[] allUnits = FindObjectsOfType<GameObject>(false);
         foreach (var unit in allUnits)
         {
-            if (unit.activeInHierarchy && unit.TryGetComponent(out IUnit _))
+            if (unit.TryGetComponent(out IUnit _))
             {
                 Vector3 unitScreenPos = m_Camera.WorldToScreenPoint(unit.transform.position);
 
@@ -210,10 +207,10 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
             }
         }
 
-        // To prevent structure begin in selection mode 
+        // To prevent structure to be in selection mode 
         if (m_CurrentStructure != null)
         {
-            m_CurrentStructure.UnSelect();
+            m_CurrentStructure.ShouldSelect(false);
         }
 
         SelectUnits(true);
@@ -251,9 +248,9 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
             if (select)
             {
-                u.Select();
+                u.ShouldSelect(select);
             }
-            else u.UnSelect();
+            else u.ShouldSelect(select);
         }
 
         if (!select)
