@@ -23,7 +23,7 @@ public sealed class UIManager : MonoBehaviour
                 BuilderUI(select, unit);
                 break;
             case UnitType.Solider:
-                SoliderUI(select);
+                SoliderUI(select, unit);
                 break;
             default:
                 break;
@@ -38,9 +38,9 @@ public sealed class UIManager : MonoBehaviour
                 CastleUI(select, structure);
                 break;
             case StructureType.Barracks:
-                BarracksUI(select);
+                BarracksUI(select, structure);
                 break;
-            default:
+            case StructureType.None:
                 break;
         }
     }
@@ -50,9 +50,9 @@ public sealed class UIManager : MonoBehaviour
         m_Builder.EnableMainUI(activate, unit);
     }
 
-    private void SoliderUI(bool activate)
+    private void SoliderUI(bool activate, GameObject unit)
     {
-        m_Soldier.EnableMainUI(activate);
+        m_Soldier.EnableMainUI(activate, unit);
     }
 
     private void CastleUI(bool activate, GameObject structure)
@@ -60,8 +60,8 @@ public sealed class UIManager : MonoBehaviour
         m_Castle.EnableMainUI(activate, structure);
     }
 
-    private void BarracksUI(bool activate)
+    private void BarracksUI(bool activate, GameObject structure)
     {
-        m_Barracks.EnableMainUI(activate);
+        m_Barracks.EnableMainUI(activate, structure);
     }
 }

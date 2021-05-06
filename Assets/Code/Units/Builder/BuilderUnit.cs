@@ -1,15 +1,11 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class BuilderUnit : MonoBehaviour, IUnit
 {
     [SerializeField] private GameObject m_SelectionCircle;
-
     private NavMeshAgent m_Agent;
-    private bool m_ShowStructurePlacement;
-    private GameObject m_StructureToBuild = null;
 
     private void Awake()
     {
@@ -31,37 +27,19 @@ public class BuilderUnit : MonoBehaviour, IUnit
         Destroy();
     }
 
-    private void Update()
+    public void OnStructureBuildButton(StructureType type)
     {
-        if (m_ShowStructurePlacement)
+        switch (type)
         {
-            BuildStructure();
+            case StructureType.Castle:
+                BuildManager.Instance.InitBuild(type);
+                break;
+            case StructureType.Barracks:
+                BuildManager.Instance.InitBuild(type);
+                break;
+            default:
+                break;
         }
-    }
-
-    public void BuildStructure()
-    {
-        Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
-
-        if (Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
-        {
-            var groundPoint = hit.point;
-
-            m_StructureToBuild.transform.position = groundPoint;
-
-            if (Mouse.current.rightButton.isPressed || Mouse.current.leftButton.isPressed)
-            {
-                m_StructureToBuild.transform.position = groundPoint;
-                //m_ShowStructurePlacement = false;
-            }
-        }
-    }
-
-    public void OnStructureBuildButton(GameObject structure)
-    {
-        m_ShowStructurePlacement = true;
-        m_StructureToBuild = structure;
-        Instantiate(m_StructureToBuild);
     }
 
     public void Move(Vector3 destination)

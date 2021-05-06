@@ -25,8 +25,8 @@ public class CastleUIManager : MonoBehaviour
 
         if (active is false)
         {
-            m_FlagButton.onClick.RemoveListener(m_CastleRef.OnFlagButton);
-            m_SpawnBuilderButton.onClick.RemoveListener(m_CastleRef.OnSpawnBuilderButton);
+            m_FlagButton.onClick.RemoveAllListeners();
+            m_SpawnBuilderButton.onClick.RemoveAllListeners();
         }
     }
 }

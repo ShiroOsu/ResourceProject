@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Castle : MonoBehaviour, IStructure
+public class Barracks : MonoBehaviour, IStructure
 {
-    // Spawn location for builders
     private Vector3 m_UnitSpawnPoint;
 
     private GameObject m_Flag = null;
@@ -21,11 +20,6 @@ public class Castle : MonoBehaviour, IStructure
     {
         m_ShowFlagPlacement = true;
         m_Flag = PoolManager.Instance.flagPool.Rent(true);
-    }
-
-    public void OnSpawnBuilderButton()
-    {
-        SpawnBuilder();
     }
 
     private void PlaceFlag()
@@ -53,21 +47,14 @@ public class Castle : MonoBehaviour, IStructure
         }
     }
 
-    public void Destroy()
+    public void SpawnSoldier()
     {
-        Destroy();
-    }
+        GameObject soldier = PoolManager.Instance.soldierPool.Rent(true);
 
-    // This is instant spawning, but I want to implement a timer 'progress bar' later
-    // for showing how long it takes to spawn a builder
-    private void SpawnBuilder()
-    {
-        GameObject builder = PoolManager.Instance.builderPool.Rent(true);
-       
-        // This will position the builder inside the Castle
-        builder.transform.position = transform.position;
+        // This will position the soldier inside the Barracks
+        soldier.transform.position = transform.position;
 
-        builder.TryGetComponent(out IUnit unit);
+        soldier.TryGetComponent(out IUnit unit);
 
         if (m_UnitSpawnPoint != Vector3.zero)
         {
@@ -75,16 +62,18 @@ public class Castle : MonoBehaviour, IStructure
         }
     }
 
-    public void Upgrade()
+    public void Destroy()
     {
-        Debug.Log(transform.name + " upgrade");
     }
 
     public void ShouldSelect(bool select)
     {
-        UIManager.Instance.StructureSelected(StructureType.Castle, select, gameObject);
-
-        if (m_Flag != null) 
+        UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
+        if (m_Flag != null)
             m_Flag.SetActive(select);
+    }
+
+    public void Upgrade()
+    {
     }
 }

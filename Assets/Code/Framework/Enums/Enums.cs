@@ -6,6 +6,7 @@ public enum UnitType
 
 public enum StructureType
 {
+    None,
     Castle,
     Barracks,
 }
