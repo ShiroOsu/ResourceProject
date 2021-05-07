@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class SoldierUIManager : MonoBehaviour
 {
-    public void EnableMainUI(bool activate, GameObject unit)
-    {
+    [SerializeField] private GameObject m_Image;
+    [SerializeField] private GameObject m_UI;
 
+    public void EnableMainUI(bool active, GameObject unit)
+    {
+        //m_Image.SetActive(active);
+        m_UI.SetActive(active);
     }
 }

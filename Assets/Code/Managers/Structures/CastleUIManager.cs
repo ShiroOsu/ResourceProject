@@ -23,7 +23,7 @@ public class CastleUIManager : MonoBehaviour
         m_Info.SetActive(active);
         m_UI.SetActive(active);
 
-        if (active is false)
+        if (!active)
         {
             m_FlagButton.onClick.RemoveAllListeners();
             m_SpawnBuilderButton.onClick.RemoveAllListeners();

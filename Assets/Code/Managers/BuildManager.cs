@@ -12,21 +12,6 @@ public class BuildManager : MonoBehaviour
     private GameObject m_CurrentBuildObject = null;
     private StructureType m_CurrentStructureType = StructureType.None;
 
-    [SerializeField] private List<GameObject> m_Structures = new List<GameObject>();
-
-    private void Awake()
-    {
-        // Instantiate prefabs in m_Structures, then deactivate
-        // (First element is null)
-        for (int i = 1; i < m_Structures.Count; i++)
-        {
-            bool active = m_Structures[i].activeSelf;
-            m_Structures[i].SetActive(false);
-            GameObject preLoadedStructures = Instantiate(m_Structures[i]);
-            m_Structures[i].SetActive(active);
-            m_Structures[i] = preLoadedStructures;
-        }
-    }
 
     private void Update()
     {
@@ -35,8 +20,7 @@ public class BuildManager : MonoBehaviour
 
     public void InitBuild(StructureType type)
     {
-        m_CurrentBuildObject = m_Structures[(int)type];
-        m_CurrentBuildObject.SetActive(true);
+        m_CurrentBuildObject = PoolManager.Instance.GetPooledStructure(type, true);
         m_CurrentStructureType = type;
         m_DisplayStructurePlacement = true;
     }

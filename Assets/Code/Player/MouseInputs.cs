@@ -164,6 +164,10 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
         Vector3 newPosition;
 
+        // When building check if we hit a structure before ground, so we do not move inside the structure
+        if (Physics.Raycast(ray, Mathf.Infinity, m_StructureMask))
+            return;
+
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
         {
             newPosition = hit.point;
