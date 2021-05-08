@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358246abee08e114fbbcd112434da4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Stats: {fileID: 11400000, guid: fd914d685150a064ca45497afe128b02, type: 2}
   m_SelectionCircle: {fileID: 6409962247827486187}
 --- !u!195 &7389630584413174358
 NavMeshAgent:
@@ -131,7 +130,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 83fe5a3c600ed91479878c30ddbe24be, type: 2}
+  - {fileID: 2100000, guid: fd9bb5f263e3963448025013be85c3ab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
