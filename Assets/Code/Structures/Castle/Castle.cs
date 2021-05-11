@@ -1,79 +1,24 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Castle : MonoBehaviour, IStructure
 {
     // Spawn location for builders
-    private Vector3 m_UnitSpawnPoint;
-
+    public Vector3 UnitSpawnPoint { get; set; }
     private GameObject m_Flag = null;
-    private bool m_ShowFlagPlacement = false;
-
-    private void Update()
-    {
-        if (m_ShowFlagPlacement)
-        {
-            PlaceFlag();
-        }
-    }
 
     public void OnFlagButton()
     {
-        m_ShowFlagPlacement = true;
-        m_Flag = PoolManager.Instance.flagPool.Rent(true);
+        m_Flag = FlagManager.Instance.SetSpawnFlag(gameObject, StructureType.Castle);
     }
 
     public void OnSpawnBuilderButton()
     {
-        SpawnBuilder();
-    }
-
-    private void PlaceFlag()
-    {
-        if (Mouse.current.leftButton.isPressed)
-        {
-            m_Flag.SetActive(false);
-            Destroy(m_Flag);
-
-            m_ShowFlagPlacement = false;
-            return;
-        }
-
-        var ray = DataManager.Instance.mouseInputs.PlacementRay;
-
-        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground"))) return;
-        var groundPoint = hit.point + new Vector3(0f, 1.5f, 0f);
-
-        m_Flag.transform.position = groundPoint;
-
-        if (!Mouse.current.rightButton.isPressed) return;
-
-        m_Flag.transform.position = groundPoint;
-        m_UnitSpawnPoint = groundPoint;
-
-        m_ShowFlagPlacement = false;
+        SpawnManager.Instance.SpawnUnit(UnitType.Builder, gameObject.transform.position, UnitSpawnPoint);
     }
 
     public void Destroy()
     {
         Destroy();
-    }
-
-    // This is instant spawning, but I want to implement a timer 'progress bar' later
-    // for showing how long it takes to spawn a builder
-    private void SpawnBuilder()
-    {
-        var builder = PoolManager.Instance.builderPool.Rent(true);
-
-        // This will position the builder inside the Castle
-        builder.transform.position = transform.position;
-
-        builder.TryGetComponent(out IUnit unit);
-
-        if (m_UnitSpawnPoint != Vector3.zero)
-        {
-            unit.Move(m_UnitSpawnPoint);
-        }
     }
 
     public void Upgrade()

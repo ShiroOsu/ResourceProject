@@ -42,4 +42,14 @@ public class PoolManager : MonoBehaviour
             _ => null
         };
     }
+
+    public GameObject GetPooledUnit(UnitType type, bool rent)
+    {
+        return type switch
+        {
+            UnitType.Builder => builderPool.Rent(rent),
+            UnitType.Solider => soldierPool.Rent(rent),
+            _ => null
+        };
+    }
 }

@@ -36,7 +36,7 @@ public class BuildManager : MonoBehaviour
         if (!m_DisplayStructurePlacement)
             return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.isPressed)
         {
             DisableBuildPlacement(false);
             return;

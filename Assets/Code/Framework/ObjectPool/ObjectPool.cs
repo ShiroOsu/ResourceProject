@@ -41,7 +41,7 @@ public class ObjectPool
         }
 
         GameObject instance = objects.Pop();
-        instance = instance != null ? instance : Rent(activate);
+        instance ??= Rent(activate);
         instance.SetActive(activate);
         return instance;
     }
