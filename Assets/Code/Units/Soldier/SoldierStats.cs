@@ -1,8 +1,9 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "SoldierStats", menuName = "ScriptableObjects/Units/SoldierStats")]
-[Obsolete] public class SoldierStats : ScriptableObject, ISerializationCallbackReceiver
+[Obsolete]
+public class SoldierStats : ScriptableObject, ISerializationCallbackReceiver
 {
     // Initial Values of a SoldierUnit
     public string unitName = "Soldier";
@@ -10,7 +11,7 @@ using System;
 
     [Tooltip("Amount of damage blocked from attacks")]
     public int defense = 2;
-    
+
     [Tooltip("Health regeneration per 5s")]
     public float hpRegen = 1f;
 
@@ -26,7 +27,7 @@ using System;
     [NonSerialized] public float runTimeHealth;
     [NonSerialized] public float runTimeHpRegen;
 
-    public void OnAfterDeserialize() 
+    public void OnAfterDeserialize()
     {
         runTimeHealth = health;
         runTimeHpRegen = hpRegen;

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,13 +26,12 @@ public class BuilderUIManager : MonoBehaviour
         m_Image.SetActive(active);
         m_UI.SetActive(active);
 
-        if (active is false)
-        {
-            OnButtonBuildPage(active);
+        if (!(active is false)) return;
 
-            m_BuildButton.onClick.RemoveAllListeners();
-            m_BarracksButton.onClick.RemoveAllListeners();
-        }
+        OnButtonBuildPage(false);
+
+        m_BuildButton.onClick.RemoveAllListeners();
+        m_BarracksButton.onClick.RemoveAllListeners();
     }
 
     public void OnButtonBuildPage(bool active)

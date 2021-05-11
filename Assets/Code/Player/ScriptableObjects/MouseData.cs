@@ -1,4 +1,5 @@
 using UnityEngine;
+
 //using System;
 
 [CreateAssetMenu(fileName = "MouseData", menuName = "ScriptableObjects/Player/MouseData")]

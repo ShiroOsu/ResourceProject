@@ -30,27 +30,28 @@ public class Castle : MonoBehaviour, IStructure
 
     private void PlaceFlag()
     {
-        Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+        if (Mouse.current.leftButton.isPressed)
         {
-            var groundPoint = hit.point + new Vector3(0f, 1.5f, 0f);
+            m_Flag.SetActive(false);
+            Destroy(m_Flag);
 
-            m_Flag.transform.position = groundPoint;
-
-            if (Mouse.current.rightButton.isPressed)
-            {
-                m_Flag.transform.position = groundPoint;
-                m_UnitSpawnPoint = groundPoint;
-
-                if (Mouse.current.leftButton.wasPressedThisFrame)
-                {
-                    m_Flag.SetActive(false);
-                }
-
-                m_ShowFlagPlacement = false;
-            }
+            m_ShowFlagPlacement = false;
+            return;
         }
+
+        var ray = DataManager.Instance.mouseInputs.PlacementRay;
+
+        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground"))) return;
+        var groundPoint = hit.point + new Vector3(0f, 1.5f, 0f);
+
+        m_Flag.transform.position = groundPoint;
+
+        if (!Mouse.current.rightButton.isPressed) return;
+
+        m_Flag.transform.position = groundPoint;
+        m_UnitSpawnPoint = groundPoint;
+
+        m_ShowFlagPlacement = false;
     }
 
     public void Destroy()
@@ -62,8 +63,8 @@ public class Castle : MonoBehaviour, IStructure
     // for showing how long it takes to spawn a builder
     private void SpawnBuilder()
     {
-        GameObject builder = PoolManager.Instance.builderPool.Rent(true);
-       
+        var builder = PoolManager.Instance.builderPool.Rent(true);
+
         // This will position the builder inside the Castle
         builder.transform.position = transform.position;
 
@@ -84,7 +85,7 @@ public class Castle : MonoBehaviour, IStructure
     {
         UIManager.Instance.StructureSelected(StructureType.Castle, select, gameObject);
 
-        if (m_Flag != null) 
+        if (m_Flag != null)
             m_Flag.SetActive(select);
     }
 }

@@ -11,7 +11,7 @@ public class CastleUIManager : MonoBehaviour
     [SerializeField] private Button m_SpawnBuilderButton = null;
 
     private Castle m_CastleRef;
-    
+
     public void EnableMainUI(bool active, GameObject structure)
     {
         m_CastleRef = structure.GetComponent<Castle>();

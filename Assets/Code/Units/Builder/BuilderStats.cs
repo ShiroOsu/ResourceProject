@@ -1,8 +1,9 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "BuilderStats", menuName = "ScriptableObjects/Units/BuilderStats")]
-[Obsolete] public class BuilderStats : ScriptableObject, ISerializationCallbackReceiver
+[Obsolete]
+public class BuilderStats : ScriptableObject, ISerializationCallbackReceiver
 {
     // Initial Values of a SoldierUnit
     public string unitName = "Builder";

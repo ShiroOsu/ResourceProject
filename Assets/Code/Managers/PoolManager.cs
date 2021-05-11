@@ -13,7 +13,7 @@ public class PoolManager : MonoBehaviour
     [Header("Units")]
     [SerializeField] private GameObject m_BuilderPrefab = null;
     [SerializeField] private GameObject m_SoldierPrefab = null;
-    
+
     [Header("Misc")]
     [SerializeField] private GameObject m_FlagPrefab = null;
 
@@ -34,16 +34,12 @@ public class PoolManager : MonoBehaviour
 
     public GameObject GetPooledStructure(StructureType type, bool rent)
     {
-        switch (type)
+        return type switch
         {
-            case StructureType.Castle:
-                return castlePool.Rent(rent);
-            case StructureType.Barracks:
-                return barracksPool.Rent(rent);
-            case StructureType.None:
-                return null;
-        }
-
-        return null;
+            StructureType.Castle => castlePool.Rent(rent),
+            StructureType.Barracks => barracksPool.Rent(rent),
+            StructureType.None => null,
+            _ => null
+        };
     }
 }

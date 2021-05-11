@@ -14,7 +14,7 @@ public sealed class UIManager : MonoBehaviour
     [Header("Structures")]
     [SerializeField] private CastleUIManager m_Castle;
     [SerializeField] private BarracksUIManager m_Barracks;
-   
+
     public void UnitSelected(UnitType type, bool select, GameObject unit)
     {
         switch (type)
@@ -44,7 +44,7 @@ public sealed class UIManager : MonoBehaviour
                 break;
         }
     }
-    
+
     private void BuilderUI(bool activate, GameObject unit)
     {
         m_Builder.EnableMainUI(activate, unit);

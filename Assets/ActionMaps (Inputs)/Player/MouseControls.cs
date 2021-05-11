@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @MouseControls : IInputActionCollection, IDisposable
+namespace Player
 {
-    public InputActionAsset asset { get; }
-    public @MouseControls()
+    public class @MouseControls : IInputActionCollection, IDisposable
     {
-        asset = InputActionAsset.FromJson(@"{
+        public InputActionAsset asset { get; }
+        public @MouseControls()
+        {
+            asset = InputActionAsset.FromJson(@"{
     ""name"": ""MouseControls"",
     ""maps"": [
         {
@@ -109,149 +111,150 @@ public class @MouseControls : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": []
 }");
+            // Mouse
+            m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
+            m_Mouse_LeftMouse = m_Mouse.FindAction("LeftMouse", throwIfNotFound: true);
+            m_Mouse_RightMouse = m_Mouse.FindAction("RightMouse", throwIfNotFound: true);
+            m_Mouse_LeftMouseButtonHold = m_Mouse.FindAction("LeftMouseButtonHold", throwIfNotFound: true);
+            // Structure
+            m_Structure = asset.FindActionMap("Structure", throwIfNotFound: true);
+            m_Structure_RightMouse = m_Structure.FindAction("RightMouse", throwIfNotFound: true);
+        }
+
+        public void Dispose()
+        {
+            UnityEngine.Object.Destroy(asset);
+        }
+
+        public InputBinding? bindingMask
+        {
+            get => asset.bindingMask;
+            set => asset.bindingMask = value;
+        }
+
+        public ReadOnlyArray<InputDevice>? devices
+        {
+            get => asset.devices;
+            set => asset.devices = value;
+        }
+
+        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+        public bool Contains(InputAction action)
+        {
+            return asset.Contains(action);
+        }
+
+        public IEnumerator<InputAction> GetEnumerator()
+        {
+            return asset.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Enable()
+        {
+            asset.Enable();
+        }
+
+        public void Disable()
+        {
+            asset.Disable();
+        }
+
         // Mouse
-        m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
-        m_Mouse_LeftMouse = m_Mouse.FindAction("LeftMouse", throwIfNotFound: true);
-        m_Mouse_RightMouse = m_Mouse.FindAction("RightMouse", throwIfNotFound: true);
-        m_Mouse_LeftMouseButtonHold = m_Mouse.FindAction("LeftMouseButtonHold", throwIfNotFound: true);
+        private readonly InputActionMap m_Mouse;
+        private IMouseActions m_MouseActionsCallbackInterface;
+        private readonly InputAction m_Mouse_LeftMouse;
+        private readonly InputAction m_Mouse_RightMouse;
+        private readonly InputAction m_Mouse_LeftMouseButtonHold;
+        public struct MouseActions
+        {
+            private @MouseControls m_Wrapper;
+            public MouseActions(@MouseControls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @LeftMouse => m_Wrapper.m_Mouse_LeftMouse;
+            public InputAction @RightMouse => m_Wrapper.m_Mouse_RightMouse;
+            public InputAction @LeftMouseButtonHold => m_Wrapper.m_Mouse_LeftMouseButtonHold;
+            public InputActionMap Get() { return m_Wrapper.m_Mouse; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(MouseActions set) { return set.Get(); }
+            public void SetCallbacks(IMouseActions instance)
+            {
+                if (m_Wrapper.m_MouseActionsCallbackInterface != null)
+                {
+                    @LeftMouse.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouse;
+                    @LeftMouse.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouse;
+                    @LeftMouse.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouse;
+                    @RightMouse.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnRightMouse;
+                    @RightMouse.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnRightMouse;
+                    @RightMouse.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnRightMouse;
+                    @LeftMouseButtonHold.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouseButtonHold;
+                    @LeftMouseButtonHold.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouseButtonHold;
+                    @LeftMouseButtonHold.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouseButtonHold;
+                }
+                m_Wrapper.m_MouseActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @LeftMouse.started += instance.OnLeftMouse;
+                    @LeftMouse.performed += instance.OnLeftMouse;
+                    @LeftMouse.canceled += instance.OnLeftMouse;
+                    @RightMouse.started += instance.OnRightMouse;
+                    @RightMouse.performed += instance.OnRightMouse;
+                    @RightMouse.canceled += instance.OnRightMouse;
+                    @LeftMouseButtonHold.started += instance.OnLeftMouseButtonHold;
+                    @LeftMouseButtonHold.performed += instance.OnLeftMouseButtonHold;
+                    @LeftMouseButtonHold.canceled += instance.OnLeftMouseButtonHold;
+                }
+            }
+        }
+        public MouseActions @Mouse => new MouseActions(this);
+
         // Structure
-        m_Structure = asset.FindActionMap("Structure", throwIfNotFound: true);
-        m_Structure_RightMouse = m_Structure.FindAction("RightMouse", throwIfNotFound: true);
-    }
-
-    public void Dispose()
-    {
-        UnityEngine.Object.Destroy(asset);
-    }
-
-    public InputBinding? bindingMask
-    {
-        get => asset.bindingMask;
-        set => asset.bindingMask = value;
-    }
-
-    public ReadOnlyArray<InputDevice>? devices
-    {
-        get => asset.devices;
-        set => asset.devices = value;
-    }
-
-    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-    public bool Contains(InputAction action)
-    {
-        return asset.Contains(action);
-    }
-
-    public IEnumerator<InputAction> GetEnumerator()
-    {
-        return asset.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Enable()
-    {
-        asset.Enable();
-    }
-
-    public void Disable()
-    {
-        asset.Disable();
-    }
-
-    // Mouse
-    private readonly InputActionMap m_Mouse;
-    private IMouseActions m_MouseActionsCallbackInterface;
-    private readonly InputAction m_Mouse_LeftMouse;
-    private readonly InputAction m_Mouse_RightMouse;
-    private readonly InputAction m_Mouse_LeftMouseButtonHold;
-    public struct MouseActions
-    {
-        private @MouseControls m_Wrapper;
-        public MouseActions(@MouseControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @LeftMouse => m_Wrapper.m_Mouse_LeftMouse;
-        public InputAction @RightMouse => m_Wrapper.m_Mouse_RightMouse;
-        public InputAction @LeftMouseButtonHold => m_Wrapper.m_Mouse_LeftMouseButtonHold;
-        public InputActionMap Get() { return m_Wrapper.m_Mouse; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MouseActions set) { return set.Get(); }
-        public void SetCallbacks(IMouseActions instance)
+        private readonly InputActionMap m_Structure;
+        private IStructureActions m_StructureActionsCallbackInterface;
+        private readonly InputAction m_Structure_RightMouse;
+        public struct StructureActions
         {
-            if (m_Wrapper.m_MouseActionsCallbackInterface != null)
+            private @MouseControls m_Wrapper;
+            public StructureActions(@MouseControls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @RightMouse => m_Wrapper.m_Structure_RightMouse;
+            public InputActionMap Get() { return m_Wrapper.m_Structure; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(StructureActions set) { return set.Get(); }
+            public void SetCallbacks(IStructureActions instance)
             {
-                @LeftMouse.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouse;
-                @LeftMouse.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouse;
-                @LeftMouse.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouse;
-                @RightMouse.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnRightMouse;
-                @RightMouse.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnRightMouse;
-                @RightMouse.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnRightMouse;
-                @LeftMouseButtonHold.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouseButtonHold;
-                @LeftMouseButtonHold.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouseButtonHold;
-                @LeftMouseButtonHold.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnLeftMouseButtonHold;
-            }
-            m_Wrapper.m_MouseActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @LeftMouse.started += instance.OnLeftMouse;
-                @LeftMouse.performed += instance.OnLeftMouse;
-                @LeftMouse.canceled += instance.OnLeftMouse;
-                @RightMouse.started += instance.OnRightMouse;
-                @RightMouse.performed += instance.OnRightMouse;
-                @RightMouse.canceled += instance.OnRightMouse;
-                @LeftMouseButtonHold.started += instance.OnLeftMouseButtonHold;
-                @LeftMouseButtonHold.performed += instance.OnLeftMouseButtonHold;
-                @LeftMouseButtonHold.canceled += instance.OnLeftMouseButtonHold;
+                if (m_Wrapper.m_StructureActionsCallbackInterface != null)
+                {
+                    @RightMouse.started -= m_Wrapper.m_StructureActionsCallbackInterface.OnRightMouse;
+                    @RightMouse.performed -= m_Wrapper.m_StructureActionsCallbackInterface.OnRightMouse;
+                    @RightMouse.canceled -= m_Wrapper.m_StructureActionsCallbackInterface.OnRightMouse;
+                }
+                m_Wrapper.m_StructureActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @RightMouse.started += instance.OnRightMouse;
+                    @RightMouse.performed += instance.OnRightMouse;
+                    @RightMouse.canceled += instance.OnRightMouse;
+                }
             }
         }
-    }
-    public MouseActions @Mouse => new MouseActions(this);
-
-    // Structure
-    private readonly InputActionMap m_Structure;
-    private IStructureActions m_StructureActionsCallbackInterface;
-    private readonly InputAction m_Structure_RightMouse;
-    public struct StructureActions
-    {
-        private @MouseControls m_Wrapper;
-        public StructureActions(@MouseControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @RightMouse => m_Wrapper.m_Structure_RightMouse;
-        public InputActionMap Get() { return m_Wrapper.m_Structure; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(StructureActions set) { return set.Get(); }
-        public void SetCallbacks(IStructureActions instance)
+        public StructureActions @Structure => new StructureActions(this);
+        public interface IMouseActions
         {
-            if (m_Wrapper.m_StructureActionsCallbackInterface != null)
-            {
-                @RightMouse.started -= m_Wrapper.m_StructureActionsCallbackInterface.OnRightMouse;
-                @RightMouse.performed -= m_Wrapper.m_StructureActionsCallbackInterface.OnRightMouse;
-                @RightMouse.canceled -= m_Wrapper.m_StructureActionsCallbackInterface.OnRightMouse;
-            }
-            m_Wrapper.m_StructureActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @RightMouse.started += instance.OnRightMouse;
-                @RightMouse.performed += instance.OnRightMouse;
-                @RightMouse.canceled += instance.OnRightMouse;
-            }
+            void OnLeftMouse(InputAction.CallbackContext context);
+            void OnRightMouse(InputAction.CallbackContext context);
+            void OnLeftMouseButtonHold(InputAction.CallbackContext context);
         }
-    }
-    public StructureActions @Structure => new StructureActions(this);
-    public interface IMouseActions
-    {
-        void OnLeftMouse(InputAction.CallbackContext context);
-        void OnRightMouse(InputAction.CallbackContext context);
-        void OnLeftMouseButtonHold(InputAction.CallbackContext context);
-    }
-    public interface IStructureActions
-    {
-        void OnRightMouse(InputAction.CallbackContext context);
+        public interface IStructureActions
+        {
+            void OnRightMouse(InputAction.CallbackContext context);
+        }
     }
 }

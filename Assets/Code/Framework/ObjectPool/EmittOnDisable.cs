@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 [ExecuteAlways]
 public class EmittOnDisable : MonoBehaviour

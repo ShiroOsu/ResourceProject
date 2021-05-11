@@ -24,6 +24,15 @@ public class Barracks : MonoBehaviour, IStructure
 
     private void PlaceFlag()
     {
+        if (Mouse.current.leftButton.isPressed)
+        {
+            m_Flag.SetActive(false);
+            Destroy(m_Flag);
+
+            m_ShowFlagPlacement = false;
+            return;
+        }
+
         Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
@@ -36,11 +45,6 @@ public class Barracks : MonoBehaviour, IStructure
             {
                 m_Flag.transform.position = groundPoint;
                 m_UnitSpawnPoint = groundPoint;
-
-                if (Mouse.current.leftButton.wasPressedThisFrame)
-                {
-                    m_Flag.SetActive(false);
-                }
 
                 m_ShowFlagPlacement = false;
             }
@@ -69,6 +73,7 @@ public class Barracks : MonoBehaviour, IStructure
     public void ShouldSelect(bool select)
     {
         UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
+
         if (m_Flag != null)
             m_Flag.SetActive(select);
     }

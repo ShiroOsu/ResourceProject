@@ -1,8 +1,8 @@
 // https://gist.github.com/krzys-h/76c518be0516fb1e94c7efbdcd028830
 // Just changed to TextureFormat.ARGB32 to get alpha
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 public class SaveRenderTextureToFile
 {

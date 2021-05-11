@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 {
     [Header("General")]
-    [SerializeField] private Camera m_Camera = null;
+    [SerializeField] private UnityEngine.Camera m_Camera = null;
     [SerializeField] private Animator m_Animator = null;
 
     [Header("Multi Selection")]
@@ -185,8 +186,8 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     private void AddUnitsInSelectionBox()
     {
         Vector2 rectPosition = new Vector2
-            (m_SelectionImage.anchoredPosition.x - m_SelectionImage.sizeDelta.x * 0.5f,
-             m_SelectionImage.anchoredPosition.y - m_SelectionImage.sizeDelta.y * 0.5f);
+        (m_SelectionImage.anchoredPosition.x - m_SelectionImage.sizeDelta.x * 0.5f,
+            m_SelectionImage.anchoredPosition.y - m_SelectionImage.sizeDelta.y * 0.5f);
 
         Rect rect = new Rect(rectPosition, m_SelectionImage.sizeDelta);
 

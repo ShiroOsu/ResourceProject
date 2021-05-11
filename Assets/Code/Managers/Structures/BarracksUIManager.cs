@@ -5,7 +5,7 @@ public class BarracksUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject m_Image;
     [SerializeField] private GameObject m_UI;
-    
+
     [SerializeField] private Button m_SpawnSoldier;
     [SerializeField] private Button m_FlagButton;
 
@@ -24,7 +24,7 @@ public class BarracksUIManager : MonoBehaviour
         if (!active)
         {
             m_SpawnSoldier.onClick.RemoveAllListeners();
-            m_FlagButton.onClick.RemoveAllListeners();                    
+            m_FlagButton.onClick.RemoveAllListeners();
         }
     }
 }

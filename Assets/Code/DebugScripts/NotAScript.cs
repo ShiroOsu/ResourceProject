@@ -1,4 +1,5 @@
 using System.Diagnostics;
+
 public class NotAScript
 {
     private void VoidFunction()
