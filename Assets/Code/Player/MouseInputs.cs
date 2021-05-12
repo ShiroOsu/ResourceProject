@@ -106,17 +106,6 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
         Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
 
-        if (Physics.Raycast(ray, Mathf.Infinity, m_GroundMask))
-        {
-            if (m_CurrentStructure != null)
-            {
-                m_CurrentStructure.ShouldSelect(false);
-                m_CurrentStructure = null;
-            }
-
-            SelectUnits(false);
-        }
-
         if (Physics.Raycast(ray, out RaycastHit s_Hit, Mathf.Infinity, m_StructureMask))
         {
             if (s_Hit.transform.parent.TryGetComponent(out IStructure structure))
@@ -143,12 +132,19 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
             m_CurrentStructure.ShouldSelect(false);
         }
 
+        SelectUnits(false);
+
         m_CurrentStructure = structure;
         m_CurrentStructure.ShouldSelect(true);
     }
 
     private void ClickOnUnit(GameObject unit)
     {
+        if (m_CurrentStructure != null)
+        {
+            m_CurrentStructure.ShouldSelect(false);
+        }
+
         if (!m_SelectedUnitsList.Contains(unit))
         {
             m_SelectedUnitsList.Add(unit);
