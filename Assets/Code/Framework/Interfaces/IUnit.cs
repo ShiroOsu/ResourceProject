@@ -4,6 +4,8 @@ public interface IUnit
 
     public void Destroy();
 
+    public int GetUnitID();
+
     public void Move(UnityEngine.Vector3 destination);
 }
 

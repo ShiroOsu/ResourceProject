@@ -3,6 +3,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using System;
 
 public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 {
@@ -23,7 +24,10 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     //private GameObject m_CurrentUnit = null;
     private Vector2 m_MousePosition;
 
+    // Public stuff
     public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
+    public List<GameObject> ListOfSelectedUnits => m_SelectedUnitsList; // Temp
+    public event Action<List<GameObject>> OnUpdateUnitList;
 
     // Controls
     private MouseControls m_MouseControls;
@@ -263,6 +267,11 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
     private void SetUnitGroup()
     {
+        if (m_SelectedUnitsList.Count < 1)
+            return;
+
+        OnUpdateUnitList?.Invoke(m_SelectedUnitsList);
+
         var firstUnit = m_SelectedUnitsList[0];
 
         SelectUnits(true);

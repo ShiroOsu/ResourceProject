@@ -16,6 +16,11 @@ public class SoldierUnit : MonoBehaviour, IUnit
         m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
     }
 
+    public int GetUnitID()
+    {
+        return m_Agent.agentTypeID;
+    }
+
     public void ShouldSelect(bool select)
     {
         UIManager.Instance.UnitSelected(UnitType.Solider, select, gameObject);

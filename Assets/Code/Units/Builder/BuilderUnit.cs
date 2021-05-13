@@ -22,6 +22,11 @@ public class BuilderUnit : MonoBehaviour, IUnit
         m_SelectionCircle.SetActive(select);
     }
 
+    public int GetUnitID()
+    {
+        return m_Agent.agentTypeID;
+    }
+
     public void Destroy()
     {
         Destroy();
