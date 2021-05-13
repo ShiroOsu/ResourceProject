@@ -7,7 +7,6 @@ public class CastleUIManager : MonoBehaviour
     [SerializeField] private GameObject m_Info = null;
     [SerializeField] private GameObject m_UI = null;
 
-    [SerializeField] private Button m_FlagButton = null;
     [SerializeField] private Button m_SpawnBuilderButton = null;
 
     private Castle m_CastleRef;
@@ -16,7 +15,6 @@ public class CastleUIManager : MonoBehaviour
     {
         m_CastleRef = structure.GetComponent<Castle>();
 
-        m_FlagButton.onClick.AddListener(m_CastleRef.OnFlagButton);
         m_SpawnBuilderButton.onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
 
         m_Image.SetActive(active);
@@ -25,7 +23,6 @@ public class CastleUIManager : MonoBehaviour
 
         if (!active)
         {
-            m_FlagButton.onClick.RemoveAllListeners();
             m_SpawnBuilderButton.onClick.RemoveAllListeners();
         }
     }

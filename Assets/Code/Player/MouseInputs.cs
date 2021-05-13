@@ -20,6 +20,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     private LayerMask m_StructureMask;
     private LayerMask m_GroundMask;
     private List<GameObject> m_SelectedUnitsList = null;
+    //private GameObject m_CurrentUnit = null;
     private Vector2 m_MousePosition;
 
     public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
@@ -125,12 +126,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
     private void ClickOnBuilding(IStructure structure)
     {
-        // When clicking on another building while another is currently selected
-        // unselect the previous building
-        if (m_CurrentStructure != null)
-        {
-            m_CurrentStructure.ShouldSelect(false);
-        }
+        ClearCurrentStructure();
 
         SelectUnits(false);
 
@@ -140,17 +136,20 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
 
     private void ClickOnUnit(GameObject unit)
     {
-        if (m_CurrentStructure != null)
-        {
-            m_CurrentStructure.ShouldSelect(false);
-        }
+        ClearCurrentStructure();
 
         if (!m_SelectedUnitsList.Contains(unit))
         {
             m_SelectedUnitsList.Add(unit);
             SelectUnits(true);
         }
-        else SelectUnits(false);
+        else
+        {
+            ClearUnitList();
+
+            m_SelectedUnitsList.Add(unit);
+            SelectUnits(true);
+        }
     }
 
     private void MovingSelectedUnits()
@@ -161,7 +160,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
         Vector3 newPosition;
 
-        // When building check if we hit a structure before ground, so we do not move inside the structure
+        // When building, check if we hit a structure before ground, so builder unit does not move inside the structure
         if (Physics.Raycast(ray, Mathf.Infinity, m_StructureMask))
             return;
 
@@ -208,13 +207,9 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
             }
         }
 
-        // To prevent structure to be in selection mode 
-        if (m_CurrentStructure != null)
-        {
-            m_CurrentStructure.ShouldSelect(false);
-        }
+        ClearCurrentStructure();
 
-        SelectUnits(true);
+        SetUnitGroup();
     }
 
     private void MultiSelectionBox()
@@ -258,6 +253,28 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
         {
             m_SelectedUnitsList.Clear();
         }
+    }
+
+    private void ClearUnitList()
+    {
+        SelectUnits(false);
+        m_SelectedUnitsList.Clear();
+    }
+
+    private void ClearCurrentStructure()
+    {
+        // To prevent structure to be in selection mode 
+        if (m_CurrentStructure != null)
+        {
+            m_CurrentStructure.ShouldSelect(false);
+        }
+    }
+
+    private void SetUnitGroup()
+    {
+        var firstUnit = m_SelectedUnitsList[0];
+
+        SelectUnits(true);
     }
 
     private void StopClickAnimation()

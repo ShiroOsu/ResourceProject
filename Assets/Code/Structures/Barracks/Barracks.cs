@@ -1,18 +1,28 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Barracks : MonoBehaviour, IStructure
 {
-    public Vector3 UnitSpawnPoint { get; set; }
+    private Vector3 m_UnitSpawnPoint;
     private GameObject m_Flag = null;
 
-    public void OnFlagButton()
+    private void Update()
     {
-        m_Flag = FlagManager.Instance.SetSpawnFlag(gameObject, StructureType.Barracks);
+        if (Mouse.current.rightButton.isPressed)
+        {
+            SetFlagPosition();
+        }
+    }
+
+    private void SetFlagPosition()
+    {
+        m_Flag = FlagManager.Instance.SetSpawnFlag();
+        m_UnitSpawnPoint = m_Flag.transform.position;
     }
 
     public void SpawnSoldier()
     {
-        SpawnManager.Instance.SpawnUnit(UnitType.Solider, gameObject.transform.position, UnitSpawnPoint);
+        SpawnManager.Instance.SpawnUnit(UnitType.Solider, gameObject.transform.position, m_UnitSpawnPoint);
     }
 
     public void Destroy()

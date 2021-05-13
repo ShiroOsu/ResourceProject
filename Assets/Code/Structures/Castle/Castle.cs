@@ -1,19 +1,29 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Castle : MonoBehaviour, IStructure
 {
     // Spawn location for builders
-    public Vector3 UnitSpawnPoint { get; set; }
+    private Vector3 m_UnitSpawnPoint;
     private GameObject m_Flag = null;
 
-    public void OnFlagButton()
+    private void Update()
     {
-        m_Flag = FlagManager.Instance.SetSpawnFlag(gameObject, StructureType.Castle);
+        if (Mouse.current.rightButton.isPressed)
+        {
+            SetFlagPosition();
+        }
+    }
+
+    private void SetFlagPosition()
+    {
+        m_Flag = FlagManager.Instance.SetSpawnFlag();
+        m_UnitSpawnPoint = m_Flag.transform.position;
     }
 
     public void OnSpawnBuilderButton()
     {
-        SpawnManager.Instance.SpawnUnit(UnitType.Builder, gameObject.transform.position, UnitSpawnPoint);
+        SpawnManager.Instance.SpawnUnit(UnitType.Builder, gameObject.transform.position, m_UnitSpawnPoint);
     }
 
     public void Destroy()
