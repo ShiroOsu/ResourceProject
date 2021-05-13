@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BuilderStats", menuName = "ScriptableObjects/Units/BuilderStats")]
-[Obsolete]
 public class BuilderStats : ScriptableObject, ISerializationCallbackReceiver
 {
     // Initial Values of a SoldierUnit
     public string unitName = "Builder";
     public float health = 10f;
+    public float mana = 5f;
 
     [Tooltip("Amount of damage blocked from attacks")]
     public int defense = 0;

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// Remove scriptable object and make it a base class that specific unit classes can inherit
 [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/Units/UnitData")]
 public class UnitData : ScriptableObject, ISerializationCallbackReceiver
 {
@@ -20,12 +21,12 @@ public class UnitData : ScriptableObject, ISerializationCallbackReceiver
     public float turnSpeed = 1f;
 
     public int soldierID = -1372625422;
-    public int builderID = 0;
+    public int builderID = 0;                 
 
     // During game time the health & HpRegen of the unit data will be "runTimeHealth"
     // To prevent any overrides to the initial health the unit start with.
     [NonSerialized] public float runTimeHealth;
-
+               
     public void OnAfterDeserialize()
     {
         runTimeHealth = maxHealth;

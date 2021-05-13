@@ -137,19 +137,10 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     private void ClickOnUnit(GameObject unit)
     {
         ClearCurrentStructure();
+        ClearUnitList();
 
-        if (!m_SelectedUnitsList.Contains(unit))
-        {
-            m_SelectedUnitsList.Add(unit);
-            SelectUnits(true);
-        }
-        else
-        {
-            ClearUnitList();
-
-            m_SelectedUnitsList.Add(unit);
-            SelectUnits(true);
-        }
+        m_SelectedUnitsList.Add(unit);
+        SelectUnits(true);
     }
 
     private void MovingSelectedUnits()
