@@ -6,10 +6,9 @@ public class GroupUIManager : MonoBehaviour
 {
     [SerializeField] private Texture m_BuilderTex = null;
     [SerializeField] private Texture m_SoldierTex = null;
-    [SerializeField] private RawImage m_RawImage = null;
+    [SerializeField] private GameObject m_GetParent = null;
 
     private GameObject m_ParentObject = null;
-    private List<RawImage> m_RawImageList = new List<RawImage>();
     private List<Texture> m_TextureList = new List<Texture>();
 
     private int m_BuilderID;
@@ -22,7 +21,7 @@ public class GroupUIManager : MonoBehaviour
         m_BuilderID = DataManager.Instance.unitData.builderID;
         m_SoldierID = DataManager.Instance.unitData.soldierID;
 
-        m_ParentObject = m_RawImage.transform.parent.gameObject;
+        m_ParentObject = m_GetParent.transform.parent.gameObject;
 
     }
 
@@ -49,22 +48,46 @@ public class GroupUIManager : MonoBehaviour
 
     private void ShowTextureList()
     {
+        int index = 0;
+        int yMod = 0;
+        int ySpacing = 0;
+        int xSpacing = 30;
+
         foreach (var tex in m_TextureList)
         {
-            m_RawImage.texture = tex;
-            m_RawImageList.Add(m_RawImage);
+            var newObject = CreateNewImage(tex, m_ParentObject.transform);
+            SetPositions(index, xSpacing, ySpacing, newObject);
+            
+            index++;
+
+            yMod = index % 10;
+
+            if (yMod == 0)
+            {
+                ySpacing = 60;
+                index = 0;
+            }
         }
+    }
 
-        for (int i = 0; i < m_RawImageList.Count; i++)
-        {
-            var newGo = new GameObject();
-            newGo.transform.SetParent(m_ParentObject.transform);
+    private void SetPositions(int index, int xSpacing, int ySpacing, GameObject newObject)
+    {
+        newObject.TryGetComponent(out RectTransform rect);
+        rect.sizeDelta = new Vector2(50f, 50f);
+        rect.localPosition = new Vector3(rect.sizeDelta.x + index * xSpacing, -rect.sizeDelta.y + -(ySpacing), 0f);
+        rect.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+        rect.localScale = new Vector3(1f, 1f, 1f);
+    }
 
-            newGo.AddComponent<RawImage>();
-            newGo.TryGetComponent(out RawImage raw);
+    private GameObject CreateNewImage(Texture tex, Transform parentTransform)
+    {
+        var newObject = new GameObject();
+        newObject.transform.SetParent(parentTransform);
+        newObject.layer = 5; // UI layer
+        newObject.AddComponent<RawImage>();
+        newObject.TryGetComponent(out RawImage raw);
+        raw.texture = tex;
 
-            raw.texture = m_RawImageList[i].texture;
-            raw.uvRect = new UnityEngine.Rect(i * 50, 0, 50, 50);
-        }
+        return newObject;
     }
 }

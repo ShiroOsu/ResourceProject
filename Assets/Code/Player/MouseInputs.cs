@@ -194,7 +194,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
                 if (rect.Contains(unitScreenPos))
                 {
                     // Add a limit, ex. max group of 10,20, etc..
-                    if (!m_SelectedUnitsList.Contains(unit))
+                    if (!m_SelectedUnitsList.Contains(unit) && m_SelectedUnitsList.Count < 20)
                     {
                         m_SelectedUnitsList.Add(unit);
                     }
