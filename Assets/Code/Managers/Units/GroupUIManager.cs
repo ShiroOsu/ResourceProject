@@ -10,6 +10,7 @@ public class GroupUIManager : MonoBehaviour
 
     private GameObject m_ParentObject = null;
     private List<Texture> m_TextureList = new List<Texture>();
+    private List<GameObject> m_ListOfNewObjects = new List<GameObject>();
 
     private int m_BuilderID;
     private int m_SoldierID;
@@ -17,6 +18,7 @@ public class GroupUIManager : MonoBehaviour
     private void Awake()
     {
         DataManager.Instance.mouseInputs.OnUpdateUnitList += HandleUnitList;
+        DataManager.Instance.mouseInputs.OnDisableUnitImages += DisableUnitImages;
 
         m_BuilderID = DataManager.Instance.unitData.builderID;
         m_SoldierID = DataManager.Instance.unitData.soldierID;
@@ -67,6 +69,8 @@ public class GroupUIManager : MonoBehaviour
                 ySpacing = 60;
                 index = 0;
             }
+
+            m_ListOfNewObjects.Add(newObject);
         }
     }
 
@@ -89,5 +93,19 @@ public class GroupUIManager : MonoBehaviour
         raw.texture = tex;
 
         return newObject;
+    }
+
+    private void DisableUnitImages()
+    {
+        if (m_ListOfNewObjects.Count < 1)
+            return;
+
+        for (int i = m_ListOfNewObjects.Count - 1; i >= 0; i--)
+        {
+            var obj = m_ListOfNewObjects[i];
+            m_ListOfNewObjects.RemoveAt(i);
+
+            Destroy(obj);
+        }
     }
 }

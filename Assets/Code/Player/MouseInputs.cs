@@ -28,6 +28,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
     public List<GameObject> ListOfSelectedUnits => m_SelectedUnitsList; // Temp
     public event Action<List<GameObject>> OnUpdateUnitList;
+    public event Action OnDisableUnitImages;
 
     // Controls
     private MouseControls m_MouseControls;
@@ -254,6 +255,7 @@ public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     {
         SelectUnits(false);
         m_SelectedUnitsList.Clear();
+        OnDisableUnitImages.Invoke();
     }
 
     private void ClearCurrentStructure()
