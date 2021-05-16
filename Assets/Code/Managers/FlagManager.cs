@@ -1,35 +1,38 @@
-using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class FlagManager : MonoBehaviour
+namespace Code.Managers
 {
-    private static FlagManager s_Instance = null;
-    public static FlagManager Instance => s_Instance ??= FindObjectOfType<FlagManager>();
-
-    private GameObject m_Flag = null;
-
-    public GameObject SetSpawnFlag()
+    public class FlagManager : MonoBehaviour
     {
-        m_Flag ??= PoolManager.Instance.flagPool.Rent(true);
-        
-        PlaceFlag();
+        private static FlagManager s_Instance = null;
+        public static FlagManager Instance => s_Instance ??= FindObjectOfType<FlagManager>();
 
-        return m_Flag;
-    }
+        private GameObject m_Flag = null;
 
-    private void PlaceFlag()
-    {
-        Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
-
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+        public GameObject SetSpawnFlag()
         {
-            var groundPoint = hit.point + new Vector3(0f, 1.5f, 0f);
+            m_Flag ??= PoolManager.Instance.flagPool.Rent(true);
+        
+            PlaceFlag();
 
-            m_Flag.transform.position = groundPoint;
+            return m_Flag;
+        }
 
-            if (Mouse.current.rightButton.isPressed)
+        private void PlaceFlag()
+        {
+            Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
+
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
+                var groundPoint = hit.point + new Vector3(0f, 1.5f, 0f);
+
                 m_Flag.transform.position = groundPoint;
+
+                if (Mouse.current.rightButton.isPressed)
+                {
+                    m_Flag.transform.position = groundPoint;
+                }
             }
         }
     }

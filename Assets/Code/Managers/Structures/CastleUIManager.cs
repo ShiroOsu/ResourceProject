@@ -1,29 +1,33 @@
+using Code.Structures.Castle;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CastleUIManager : MonoBehaviour
+namespace Code.Managers.Structures
 {
-    [SerializeField] private GameObject m_Image = null;
-    [SerializeField] private GameObject m_Info = null;
-    [SerializeField] private GameObject m_UI = null;
-
-    [SerializeField] private Button m_SpawnBuilderButton = null;
-
-    private Castle m_CastleRef;
-
-    public void EnableMainUI(bool active, GameObject structure)
+    public class CastleUIManager : MonoBehaviour
     {
-        m_CastleRef = structure.GetComponent<Castle>();
+        [SerializeField] private GameObject m_Image = null;
+        [SerializeField] private GameObject m_Info = null;
+        [SerializeField] private GameObject m_UI = null;
 
-        m_SpawnBuilderButton.onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
+        [SerializeField] private Button m_SpawnBuilderButton = null;
 
-        m_Image.SetActive(active);
-        m_Info.SetActive(active);
-        m_UI.SetActive(active);
+        private Castle m_CastleRef;
 
-        if (!active)
+        public void EnableMainUI(bool active, GameObject structure)
         {
-            m_SpawnBuilderButton.onClick.RemoveAllListeners();
+            m_CastleRef = structure.GetComponent<Castle>();
+
+            m_SpawnBuilderButton.onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
+
+            m_Image.SetActive(active);
+            m_Info.SetActive(active);
+            m_UI.SetActive(active);
+
+            if (!active)
+            {
+                m_SpawnBuilderButton.onClick.RemoveAllListeners();
+            }
         }
     }
 }

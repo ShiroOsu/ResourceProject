@@ -1,18 +1,21 @@
 using System;
 using UnityEngine;
 
-[ExecuteAlways]
-public class EmittOnDisable : MonoBehaviour
+namespace Code.Framework.ObjectPool
 {
-    public event Action<GameObject> OnDisableGameObject;
-
-    private void OnDisable()
+    [ExecuteAlways]
+    public class EmittOnDisable : MonoBehaviour
     {
-        OnDisableGameObject?.Invoke(gameObject);
-    }
+        public event Action<GameObject> OnDisableGameObject;
 
-    public void ClearAction()
-    {
-        OnDisableGameObject = null;
+        private void OnDisable()
+        {
+            OnDisableGameObject?.Invoke(gameObject);
+        }
+
+        public void ClearAction()
+        {
+            OnDisableGameObject = null;
+        }
     }
 }

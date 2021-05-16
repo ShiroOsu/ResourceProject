@@ -1,8 +1,11 @@
-public interface IStructure
+namespace Code.Framework.Interfaces
 {
-    public void ShouldSelect(bool select);
+    public interface IStructure
+    {
+        public void ShouldSelect(bool select);
 
-    public void Destroy();
+        public void Destroy();
 
-    public void Upgrade();
+        public void Upgrade();
+    }
 }

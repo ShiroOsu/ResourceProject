@@ -1,11 +1,14 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CameraData", menuName = "ScriptableObjects/Player/CameraData")]
-public class CameraData : ScriptableObject
+namespace Code.Player.Camera.ScriptableObjects
 {
-    // This might be moved to the ScriptableObject 'PlayerData'
+    [CreateAssetMenu(fileName = "CameraData", menuName = "ScriptableObjects/Player/CameraData")]
+    public class CameraData : ScriptableObject
+    {
+        // This might be moved to the ScriptableObject 'PlayerData'
 
-    public float cameraSpeed;
-    public float rotationSpeed;
-    public float zoomSpeed;
+        public float cameraSpeed;
+        public float rotationSpeed;
+        public float zoomSpeed;
+    }
 }

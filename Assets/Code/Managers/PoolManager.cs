@@ -1,55 +1,60 @@
+using Code.Framework.Enums;
+using Code.Framework.ObjectPool;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+namespace Code.Managers
 {
-    // Singleton
-    private static PoolManager s_Instance = null;
-    public static PoolManager Instance => s_Instance ??= FindObjectOfType<PoolManager>();
-
-    [Header("Structures")]
-    [SerializeField] private GameObject m_CastlePrefab = null;
-    [SerializeField] private GameObject m_BarracksPrefab = null;
-
-    [Header("Units")]
-    [SerializeField] private GameObject m_BuilderPrefab = null;
-    [SerializeField] private GameObject m_SoldierPrefab = null;
-
-    [Header("Misc")]
-    [SerializeField] private GameObject m_FlagPrefab = null;
-
-    public ObjectPool castlePool = null;
-    public ObjectPool barracksPool = null;
-    public ObjectPool builderPool = null;
-    public ObjectPool soldierPool = null;
-    public ObjectPool flagPool = null;
-
-    private void Awake()
+    public class PoolManager : MonoBehaviour
     {
-        castlePool = new ObjectPool(5, m_CastlePrefab, new GameObject("CastlePool").transform);
-        barracksPool = new ObjectPool(5, m_BarracksPrefab, new GameObject("BarracksPool").transform);
-        builderPool = new ObjectPool(5, m_BuilderPrefab, new GameObject("BuilderPool").transform);
-        soldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);
-        flagPool = new ObjectPool(1, m_FlagPrefab, new GameObject("FlagPool").transform);
-    }
+        // Singleton
+        private static PoolManager s_Instance = null;
+        public static PoolManager Instance => s_Instance ??= FindObjectOfType<PoolManager>();
 
-    public GameObject GetPooledStructure(StructureType type, bool rent)
-    {
-        return type switch
+        [Header("Structures")]
+        [SerializeField] private GameObject m_CastlePrefab = null;
+        [SerializeField] private GameObject m_BarracksPrefab = null;
+
+        [Header("Units")]
+        [SerializeField] private GameObject m_BuilderPrefab = null;
+        [SerializeField] private GameObject m_SoldierPrefab = null;
+
+        [Header("Misc")]
+        [SerializeField] private GameObject m_FlagPrefab = null;
+
+        public ObjectPool castlePool = null;
+        public ObjectPool barracksPool = null;
+        public ObjectPool builderPool = null;
+        public ObjectPool soldierPool = null;
+        public ObjectPool flagPool = null;
+
+        private void Awake()
         {
-            StructureType.Castle => castlePool.Rent(rent),
-            StructureType.Barracks => barracksPool.Rent(rent),
-            StructureType.None => null,
-            _ => null
-        };
-    }
+            castlePool = new ObjectPool(5, m_CastlePrefab, new GameObject("CastlePool").transform);
+            barracksPool = new ObjectPool(5, m_BarracksPrefab, new GameObject("BarracksPool").transform);
+            builderPool = new ObjectPool(5, m_BuilderPrefab, new GameObject("BuilderPool").transform);
+            soldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);
+            flagPool = new ObjectPool(1, m_FlagPrefab, new GameObject("FlagPool").transform);
+        }
 
-    public GameObject GetPooledUnit(UnitType type, bool rent)
-    {
-        return type switch
+        public GameObject GetPooledStructure(StructureType type, bool rent)
         {
-            UnitType.Builder => builderPool.Rent(rent),
-            UnitType.Solider => soldierPool.Rent(rent),
-            _ => null
-        };
+            return type switch
+            {
+                StructureType.Castle => castlePool.Rent(rent),
+                StructureType.Barracks => barracksPool.Rent(rent),
+                StructureType.None => null,
+                _ => null
+            };
+        }
+
+        public GameObject GetPooledUnit(UnitType type, bool rent)
+        {
+            return type switch
+            {
+                UnitType.Builder => builderPool.Rent(rent),
+                UnitType.Solider => soldierPool.Rent(rent),
+                _ => null
+            };
+        }
     }
 }

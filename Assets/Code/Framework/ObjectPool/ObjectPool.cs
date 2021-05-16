@@ -1,48 +1,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool
+namespace Code.Framework.ObjectPool
 {
-    private readonly uint m_ExpandBy;
-    private readonly GameObject m_Prefab;
-    private readonly Transform m_Parent;
-    public readonly Stack<GameObject> objects = new Stack<GameObject>();
-
-    public ObjectPool(uint initSize, GameObject prefab, Transform parent = null, uint expandBy = 1)
+    public class ObjectPool
     {
-        m_ExpandBy = expandBy < 1 ? 1 : expandBy;
-        m_Prefab = prefab;
-        m_Parent = parent;
-        Expand(initSize < 1 ? 1 : initSize);
-    }
+        private readonly uint m_ExpandBy;
+        private readonly GameObject m_Prefab;
+        private readonly Transform m_Parent;
+        public readonly Stack<GameObject> objects = new Stack<GameObject>();
 
-    private void Expand(uint amount)
-    {
-        for (int i = 0; i < amount; i++)
+        public ObjectPool(uint initSize, GameObject prefab, Transform parent = null, uint expandBy = 1)
         {
-            GameObject instance = Object.Instantiate(m_Prefab, m_Parent);
-            EmittOnDisable emittOnDisable = instance.AddComponent<EmittOnDisable>();
-            emittOnDisable.OnDisableGameObject += UnRent;
-            instance.SetActive(false);
-            objects.Push(instance);
-        }
-    }
-
-    private void UnRent(GameObject gameObject)
-    {
-        objects.Push(gameObject);
-    }
-
-    public GameObject Rent(bool activate)
-    {
-        if (objects.Count == 0)
-        {
-            Expand(m_ExpandBy);
+            m_ExpandBy = expandBy < 1 ? 1 : expandBy;
+            m_Prefab = prefab;
+            m_Parent = parent;
+            Expand(initSize < 1 ? 1 : initSize);
         }
 
-        GameObject instance = objects.Pop();
-        instance ??= Rent(activate);
-        instance.SetActive(activate);
-        return instance;
+        private void Expand(uint amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                GameObject instance = Object.Instantiate(m_Prefab, m_Parent);
+                EmittOnDisable emittOnDisable = instance.AddComponent<EmittOnDisable>();
+                emittOnDisable.OnDisableGameObject += UnRent;
+                instance.SetActive(false);
+                objects.Push(instance);
+            }
+        }
+
+        private void UnRent(GameObject gameObject)
+        {
+            objects.Push(gameObject);
+        }
+
+        public GameObject Rent(bool activate)
+        {
+            if (objects.Count == 0)
+            {
+                Expand(m_ExpandBy);
+            }
+
+            GameObject instance = objects.Pop();
+            instance ??= Rent(activate);
+            instance.SetActive(activate);
+            return instance;
+        }
     }
 }

@@ -1,15 +1,18 @@
 using System.Diagnostics;
 
-public class NotAScript
+namespace Code.DebugScripts
 {
-    private void VoidFunction()
+    public class NotAScript
     {
-        // Start
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
+        private void VoidFunction()
+        {
+            // Start
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
-        // End
-        sw.Stop();
-        UnityEngine.Debug.Log(sw.ElapsedTicks);
+            // End
+            sw.Stop();
+            UnityEngine.Debug.Log(sw.ElapsedTicks);
+        }
     }
 }

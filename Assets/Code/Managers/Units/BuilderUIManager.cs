@@ -1,42 +1,47 @@
+using Code.Framework.Enums;
+using Code.Units.Builder;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuilderUIManager : MonoBehaviour
+namespace Code.Managers.Units
 {
-    [Header("UI")]
-    [SerializeField] private GameObject m_BuildingsPage = null;
-    [SerializeField] private GameObject m_MainPage = null;
-    [SerializeField] private GameObject m_Image = null;
-    [SerializeField] private GameObject m_UI = null;
-    [SerializeField] private Button m_BuildButton = null;
-
-    [Header("Buildings")]
-    [SerializeField] private Button m_BarracksButton = null;
-
-    private BuilderUnit m_BuilderUnit = null;
-
-    public void EnableMainUI(bool active, GameObject unit)
+    public class BuilderUIManager : MonoBehaviour
     {
-        m_BuilderUnit = unit.GetComponent<BuilderUnit>();
-        m_BuildButton.onClick.AddListener(() => OnButtonBuildPage(active));
+        [Header("UI")]
+        [SerializeField] private GameObject m_BuildingsPage = null;
+        [SerializeField] private GameObject m_MainPage = null;
+        [SerializeField] private GameObject m_Image = null;
+        [SerializeField] private GameObject m_UI = null;
+        [SerializeField] private Button m_BuildButton = null;
 
-        m_BarracksButton.onClick.AddListener(() => m_BuilderUnit.OnStructureBuildButton(StructureType.Barracks));
+        [Header("Buildings")]
+        [SerializeField] private Button m_BarracksButton = null;
 
-        m_MainPage.SetActive(active);
-        m_Image.SetActive(active);
-        m_UI.SetActive(active);
+        private BuilderUnit m_BuilderUnit = null;
 
-        if (!(active is false)) return;
+        public void EnableMainUI(bool active, GameObject unit)
+        {
+            m_BuilderUnit = unit.GetComponent<BuilderUnit>();
+            m_BuildButton.onClick.AddListener(() => OnButtonBuildPage(active));
 
-        OnButtonBuildPage(false);
+            m_BarracksButton.onClick.AddListener(() => m_BuilderUnit.OnStructureBuildButton(StructureType.Barracks));
 
-        m_BuildButton.onClick.RemoveAllListeners();
-        m_BarracksButton.onClick.RemoveAllListeners();
-    }
+            m_MainPage.SetActive(active);
+            m_Image.SetActive(active);
+            m_UI.SetActive(active);
 
-    public void OnButtonBuildPage(bool active)
-    {
-        m_BuildingsPage.SetActive(active);
-        m_MainPage.SetActive(!active);
+            if (!(active is false)) return;
+
+            OnButtonBuildPage(false);
+
+            m_BuildButton.onClick.RemoveAllListeners();
+            m_BarracksButton.onClick.RemoveAllListeners();
+        }
+
+        public void OnButtonBuildPage(bool active)
+        {
+            m_BuildingsPage.SetActive(active);
+            m_MainPage.SetActive(!active);
+        }
     }
 }

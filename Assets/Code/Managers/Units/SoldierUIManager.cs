@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class SoldierUIManager : MonoBehaviour
+namespace Code.Managers.Units
 {
-    [SerializeField] private GameObject m_Image;
-    [SerializeField] private GameObject m_UI;
-
-    public void EnableMainUI(bool active, GameObject unit)
+    public class SoldierUIManager : MonoBehaviour
     {
-        //m_Image.SetActive(active);
-        m_UI.SetActive(active);
+        [SerializeField] private GameObject m_Image;
+        [SerializeField] private GameObject m_UI;
+
+        public void EnableMainUI(bool active, GameObject unit)
+        {
+            //m_Image.SetActive(active);
+            m_UI.SetActive(active);
+        }
     }
 }

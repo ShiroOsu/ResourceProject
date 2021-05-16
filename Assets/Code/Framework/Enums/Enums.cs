@@ -1,12 +1,15 @@
-public enum UnitType
+namespace Code.Framework.Enums
 {
-    Builder,
-    Solider,
-}
+    public enum UnitType
+    {
+        Builder,
+        Solider,
+    }
 
-public enum StructureType
-{
-    None,
-    Castle,
-    Barracks,
+    public enum StructureType
+    {
+        None,
+        Castle,
+        Barracks,
+    }
 }

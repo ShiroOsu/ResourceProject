@@ -1,43 +1,49 @@
+using Code.Framework.Enums;
+using Code.Framework.Interfaces;
+using Code.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Barracks : MonoBehaviour, IStructure
+namespace Code.Structures.Barracks
 {
-    private Vector3 m_UnitSpawnPoint;
-    private GameObject m_Flag = null;
-
-    private void Update()
+    public class Barracks : MonoBehaviour, IStructure
     {
-        if (Mouse.current.rightButton.isPressed)
+        private Vector3 m_UnitSpawnPoint;
+        private GameObject m_Flag = null;
+
+        private void Update()
         {
-            SetFlagPosition();
+            if (Mouse.current.rightButton.isPressed)
+            {
+                SetFlagPosition();
+            }
         }
-    }
 
-    private void SetFlagPosition()
-    {
-        m_Flag = FlagManager.Instance.SetSpawnFlag();
-        m_UnitSpawnPoint = m_Flag.transform.position;
-    }
+        private void SetFlagPosition()
+        {
+            m_Flag = FlagManager.Instance.SetSpawnFlag();
+            m_UnitSpawnPoint = m_Flag.transform.position;
+        }
 
-    public void SpawnSoldier()
-    {
-        SpawnManager.Instance.SpawnUnit(UnitType.Solider, gameObject.transform.position, m_UnitSpawnPoint);
-    }
+        public void SpawnSoldier()
+        {
+            SpawnManager.Instance.SpawnUnit(UnitType.Solider, gameObject.transform.position, m_UnitSpawnPoint);
+        }
 
-    public void Destroy()
-    {
-    }
+        public void Destroy()
+        {
+        }
 
-    public void ShouldSelect(bool select)
-    {
-        UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
+        public void ShouldSelect(bool select)
+        {
+            UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
 
-        if (m_Flag != null)
-            m_Flag.SetActive(select);
-    }
+            if (m_Flag != null)
+                m_Flag.SetActive(select);
+        }
 
-    public void Upgrade()
-    {
+        public void Upgrade()
+        {
+        }
     }
 }

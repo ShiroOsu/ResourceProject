@@ -1,27 +1,31 @@
+using Code.Structures.Barracks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BarracksUIManager : MonoBehaviour
+namespace Code.Managers.Structures
 {
-    [SerializeField] private GameObject m_Image;
-    [SerializeField] private GameObject m_UI;
-
-    [SerializeField] private Button m_SpawnSoldier;
-
-    private Barracks m_BarracksRef;
-
-    public void EnableMainUI(bool active, GameObject structure)
+    public class BarracksUIManager : MonoBehaviour
     {
-        m_BarracksRef = structure.GetComponent<Barracks>();
+        [SerializeField] private GameObject m_Image;
+        [SerializeField] private GameObject m_UI;
 
-        m_SpawnSoldier.onClick.AddListener(m_BarracksRef.SpawnSoldier);
+        [SerializeField] private Button m_SpawnSoldier;
 
-        m_Image.SetActive(active);
-        m_UI.SetActive(active);
+        private Barracks m_BarracksRef;
 
-        if (!active)
+        public void EnableMainUI(bool active, GameObject structure)
         {
-            m_SpawnSoldier.onClick.RemoveAllListeners();
+            m_BarracksRef = structure.GetComponent<Barracks>();
+
+            m_SpawnSoldier.onClick.AddListener(m_BarracksRef.SpawnSoldier);
+
+            m_Image.SetActive(active);
+            m_UI.SetActive(active);
+
+            if (!active)
+            {
+                m_SpawnSoldier.onClick.RemoveAllListeners();
+            }
         }
     }
 }

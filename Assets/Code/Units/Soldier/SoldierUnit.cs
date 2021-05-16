@@ -1,39 +1,45 @@
+using Code.Framework.Enums;
+using Code.Framework.Interfaces;
+using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class SoldierUnit : MonoBehaviour, IUnit
+namespace Code.Units.Soldier
 {
-    [SerializeField] private GameObject m_SelectionCircle;
-    private NavMeshAgent m_Agent;
-
-    private void Awake()
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class SoldierUnit : MonoBehaviour, IUnit
     {
-        m_Agent = GetComponent<NavMeshAgent>();
+        [SerializeField] private GameObject m_SelectionCircle;
+        private NavMeshAgent m_Agent;
 
-        m_Agent.agentTypeID = DataManager.Instance.unitData.soldierID;
-        m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
-        m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
-    }
+        private void Awake()
+        {
+            m_Agent = GetComponent<NavMeshAgent>();
 
-    public int GetUnitID()
-    {
-        return m_Agent.agentTypeID;
-    }
+            m_Agent.agentTypeID = DataManager.Instance.unitData.soldierID;
+            m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
+            m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
+        }
 
-    public void ShouldSelect(bool select)
-    {
-        UIManager.Instance.UnitSelected(UnitType.Solider, select, gameObject);
-        m_SelectionCircle.SetActive(select);
-    }
+        public int GetUnitID()
+        {
+            return m_Agent.agentTypeID;
+        }
 
-    public void Destroy()
-    {
-        Destroy();
-    }
+        public void ShouldSelect(bool select)
+        {
+            UIManager.Instance.UnitSelected(UnitType.Solider, select, gameObject);
+            m_SelectionCircle.SetActive(select);
+        }
 
-    public void Move(Vector3 destination)
-    {
-        m_Agent.SetDestination(destination);
+        public void Destroy()
+        {
+            Destroy();
+        }
+
+        public void Move(Vector3 destination)
+        {
+            m_Agent.SetDestination(destination);
+        }
     }
 }

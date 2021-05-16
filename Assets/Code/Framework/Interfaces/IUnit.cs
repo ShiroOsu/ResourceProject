@@ -1,11 +1,14 @@
-public interface IUnit
+namespace Code.Framework.Interfaces
 {
-    public void ShouldSelect(bool select);
+    public interface IUnit
+    {
+        public void ShouldSelect(bool select);
 
-    public void Destroy();
+        public void Destroy();
 
-    public int GetUnitID();
+        public int GetUnitID();
 
-    public void Move(UnityEngine.Vector3 destination);
+        public void Move(UnityEngine.Vector3 destination);
+    }
 }
 

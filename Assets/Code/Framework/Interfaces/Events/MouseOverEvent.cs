@@ -2,24 +2,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseOverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+namespace Code.Framework.Interfaces.Events
 {
-    public GameObject inGameTextArea = null;
-    public TextMeshPro inGameTextToolTip;
-    public string textArea;
-
-    public void OnPointerEnter(PointerEventData eventData)
+    public class MouseOverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        inGameTextArea.SetActive(true);
-    }
+        public GameObject inGameTextArea = null;
+        public TextMeshPro inGameTextToolTip;
+        public string textArea;
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        inGameTextArea.SetActive(false);
-    }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            inGameTextArea.SetActive(true);
+        }
 
-    public void SetToolTipText()
-    {
-        inGameTextToolTip.SetText(textArea);
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            inGameTextArea.SetActive(false);
+        }
+
+        public void SetToolTipText()
+        {
+            inGameTextToolTip.SetText(textArea);
+        }
     }
 }
