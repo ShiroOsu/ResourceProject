@@ -4,7 +4,7 @@ namespace Code.Framework.Interfaces
     {
         public void ShouldSelect(bool select);
 
-        public void Destroy();
+        public void OnDestroy();
 
         public int GetUnitID();
 

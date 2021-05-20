@@ -32,9 +32,9 @@ namespace Code.Units.Soldier
             m_SelectionCircle.SetActive(select);
         }
 
-        public void Destroy()
+        public void OnDestroy()
         {
-            Destroy();
+            Destroy(this);
         }
 
         public void Move(Vector3 destination)

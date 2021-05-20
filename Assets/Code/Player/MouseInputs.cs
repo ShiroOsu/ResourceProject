@@ -12,25 +12,24 @@ namespace Code.Player
     public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     {
         [Header("General")]
-        [SerializeField] private UnityEngine.Camera m_Camera = null;
-        [SerializeField] private Animator m_Animator = null;
+        [SerializeField] private UnityEngine.Camera m_Camera;
+        [SerializeField] private Animator m_Animator;
 
         [Header("Multi Selection")]
         [SerializeField] private RectTransform m_SelectionImage;
         private Vector2 m_BoxStartPos;
-        private bool m_MultiSelect = false;
+        private bool m_MultiSelect;
 
         // Interaction
         private LayerMask m_UnitMask;
         private LayerMask m_StructureMask;
         private LayerMask m_GroundMask;
-        private List<GameObject> m_SelectedUnitsList = null;
+        private List<GameObject> m_SelectedUnitsList;
         //private GameObject m_CurrentUnit = null;
         private Vector2 m_MousePosition;
 
         // Public stuff
         public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
-        public List<GameObject> ListOfSelectedUnits => m_SelectedUnitsList; // Temp
         public event Action<List<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;
 
@@ -41,6 +40,7 @@ namespace Code.Player
         private float m_Timer = 1f;
 
         private IStructure m_CurrentStructure;
+        private static readonly int Clicked = Animator.StringToHash("Clicked");
 
         private void Awake()
         {
@@ -114,9 +114,9 @@ namespace Code.Player
         {
             m_BoxStartPos = m_MousePosition;
 
-            Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
+            var ray = m_Camera.ScreenPointToRay(m_MousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit s_Hit, Mathf.Infinity, m_StructureMask))
+            if (Physics.Raycast(ray, out var s_Hit, Mathf.Infinity, m_StructureMask))
             {
                 if (s_Hit.transform.parent.TryGetComponent(out IStructure structure))
                 {
@@ -124,12 +124,12 @@ namespace Code.Player
                 }
             }
 
-            if (Physics.Raycast(ray, out RaycastHit u_Hit, Mathf.Infinity, m_UnitMask))
+            if (!Physics.Raycast(ray, out var u_Hit, Mathf.Infinity, m_UnitMask)) 
+                return;
+            
+            if (u_Hit.transform.parent.GetComponent<IUnit>() != null)
             {
-                if (u_Hit.transform.parent.GetComponent<IUnit>() != null)
-                {
-                    ClickOnUnit(u_Hit.transform.parent.gameObject);
-                }
+                ClickOnUnit(u_Hit.transform.parent.gameObject);
             }
         }
 
@@ -157,14 +157,14 @@ namespace Code.Player
             if (m_SelectedUnitsList.Count < 1)
                 return;
 
-            Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
+            var ray = m_Camera.ScreenPointToRay(m_MousePosition);
             Vector3 newPosition;
 
             // When building, check if we hit a structure before ground, so builder unit does not move inside the structure
             if (Physics.Raycast(ray, Mathf.Infinity, m_StructureMask))
                 return;
 
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask))
             {
                 newPosition = hit.point;
                 PlayClickAnimation(true);
@@ -180,30 +180,31 @@ namespace Code.Player
 
         private void AddUnitsInSelectionBox()
         {
-            Vector2 rectPosition = new Vector2
+            Vector2 sizeDelta;
+            
+            var rectPosition = new Vector2
             (m_SelectionImage.anchoredPosition.x - m_SelectionImage.sizeDelta.x * 0.5f,
-                m_SelectionImage.anchoredPosition.y - m_SelectionImage.sizeDelta.y * 0.5f);
+                m_SelectionImage.anchoredPosition.y - (sizeDelta = m_SelectionImage.sizeDelta).y * 0.5f);
 
-            Rect rect = new Rect(rectPosition, m_SelectionImage.sizeDelta);
+            var rect = new Rect(rectPosition, sizeDelta);
 
             // Temp, because it finds ALL GameObjects in scene then loops through them,
             // then looking for the objects with the IUnit interface
             // Would be ideal to only needing to loop through a list that only contains selectable units
-            GameObject[] allUnits = FindObjectsOfType<GameObject>(false);
+            var allUnits = FindObjectsOfType<GameObject>(false);
+            
             foreach (var unit in allUnits)
             {
-                if (unit.TryGetComponent(out IUnit _))
-                {
-                    Vector3 unitScreenPos = m_Camera.WorldToScreenPoint(unit.transform.position);
+                if (!unit.TryGetComponent(out IUnit _)) continue;
+                
+                var unitScreenPos = m_Camera.WorldToScreenPoint(unit.transform.position);
 
-                    if (rect.Contains(unitScreenPos))
-                    {
-                        // Add a limit, ex. max group of 10,20, etc..
-                        if (!m_SelectedUnitsList.Contains(unit) && m_SelectedUnitsList.Count < 20)
-                        {
-                            m_SelectedUnitsList.Add(unit);
-                        }
-                    }
+                if (!rect.Contains(unitScreenPos)) continue;
+                
+                // Add a limit, ex. max group of 10,20, etc..
+                if (!m_SelectedUnitsList.Contains(unit) && m_SelectedUnitsList.Count < 20)
+                {
+                    m_SelectedUnitsList.Add(unit);
                 }
             }
 
@@ -242,33 +243,25 @@ namespace Code.Player
             {
                 unit.TryGetComponent(out IUnit u);
 
-                if (select)
-                {
-                    u.ShouldSelect(select);
-                }
-                else u.ShouldSelect(select);
+                u.ShouldSelect(select);
             }
 
-            if (!select)
-            {
-                m_SelectedUnitsList.Clear();
-            }
+            if (select) { return; }
+            
+            m_SelectedUnitsList.Clear();
         }
 
         private void ClearUnitList()
         {
             SelectUnits(false);
             m_SelectedUnitsList.Clear();
-            OnDisableUnitImages.Invoke();
+            OnDisableUnitImages?.Invoke();
         }
 
         private void ClearCurrentStructure()
         {
             // To prevent structure to be in selection mode 
-            if (m_CurrentStructure != null)
-            {
-                m_CurrentStructure.ShouldSelect(false);
-            }
+            m_CurrentStructure?.ShouldSelect(false);
         }
 
         private void SetUnitGroup()
@@ -277,9 +270,6 @@ namespace Code.Player
                 return;
 
             OnUpdateUnitList?.Invoke(m_SelectedUnitsList);
-
-            var firstUnit = m_SelectedUnitsList[0];
-
             SelectUnits(true);
         }
 
@@ -298,23 +288,23 @@ namespace Code.Player
         {
             if (!active)
             {
-                m_Animator.gameObject.SetActive(active);
-                m_Animator.SetBool("Clicked", active);
+                m_Animator.gameObject.SetActive(false);
+                m_Animator.SetBool(Clicked, false);
                 return;
             }
 
-            Ray ray = m_Camera.ScreenPointToRay(m_MousePosition);
+            var ray = m_Camera.ScreenPointToRay(m_MousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, m_GroundMask))
-            {
-                if (hit.transform.GetComponent<Terrain>() != null)
-                {
-                    m_Animator.gameObject.transform.position = hit.point + new Vector3(0f, 0.1f, 0f);
-                    m_Animator.gameObject.transform.rotation = Quaternion.LookRotation(-hit.normal);
-                    m_Animator.gameObject.SetActive(true);
-                    m_Animator.SetBool("Clicked", true);
-                }
-            }
+            if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask)) 
+                return;
+
+            if (hit.transform.GetComponent<Terrain>() == null) 
+                return;
+            
+            m_Animator.gameObject.transform.position = hit.point + new Vector3(0f, 0.1f, 0f);
+            m_Animator.gameObject.transform.rotation = Quaternion.LookRotation(-hit.normal);
+            m_Animator.gameObject.SetActive(true);
+            m_Animator.SetBool(Clicked, true);
         }
     }
 }

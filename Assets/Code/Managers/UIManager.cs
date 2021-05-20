@@ -1,3 +1,4 @@
+using System;
 using Code.Framework.Enums;
 using Code.Managers.Structures;
 using Code.Managers.Units;
@@ -7,7 +8,7 @@ namespace Code.Managers
 {
     public sealed class UIManager : MonoBehaviour
     {
-        private static UIManager s_Instance = null;
+        private static UIManager s_Instance;
         public static UIManager Instance => s_Instance ??= FindObjectOfType<UIManager>();
 
         private UIManager() { }
@@ -31,7 +32,7 @@ namespace Code.Managers
                     SoliderUI(select, unit);
                     break;
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 
@@ -47,6 +48,8 @@ namespace Code.Managers
                     break;
                 case StructureType.None:
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 

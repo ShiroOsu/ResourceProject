@@ -1,3 +1,4 @@
+using System;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Managers;
@@ -32,12 +33,12 @@ namespace Code.Units.Builder
             return m_Agent.agentTypeID;
         }
 
-        public void Destroy()
+        public void OnDestroy()
         {
-            Destroy();
+            Destroy(this);
         }
 
-        public void OnStructureBuildButton(StructureType type)
+        public static void OnStructureBuildButton(StructureType type)
         {
             switch (type)
             {
@@ -47,8 +48,10 @@ namespace Code.Units.Builder
                 case StructureType.Barracks:
                     BuildManager.Instance.InitBuild(type);
                     break;
-                default:
+                case StructureType.None:
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 

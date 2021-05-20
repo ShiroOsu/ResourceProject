@@ -8,11 +8,11 @@ namespace Code.Managers.Units
 {
     public class GroupUIManager : MonoBehaviour
     {
-        [SerializeField] private Texture m_BuilderTex = null;
-        [SerializeField] private Texture m_SoldierTex = null;
-        [SerializeField] private GameObject m_GetParent = null;
+        [SerializeField] private Texture m_BuilderTex;
+        [SerializeField] private Texture m_SoldierTex;
+        [SerializeField] private GameObject m_GetParent;
 
-        private GameObject m_ParentObject = null;
+        private GameObject m_ParentObject;
         private readonly List<Texture> m_TextureList = new List<Texture>();
         private readonly List<GameObject> m_ListOfNewObjects = new List<GameObject>();
 
@@ -31,7 +31,6 @@ namespace Code.Managers.Units
 
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
         private void HandleUnitList(List<GameObject> unitList)
         {
             foreach (var unit in unitList)
