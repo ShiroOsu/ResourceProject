@@ -49,7 +49,6 @@ namespace Code.Managers.Units
             }
 
             ShowTextureList();
-
         }
 
         private void ShowTextureList()
@@ -91,25 +90,33 @@ namespace Code.Managers.Units
             var newObject = new GameObject();
             newObject.transform.SetParent(parentTransform);
             newObject.layer = 5; // UI layer
-            newObject.AddComponent<RawImage>();
-            newObject.TryGetComponent(out RawImage raw);
+            
+            var raw = newObject.AddComponent<RawImage>();
             raw.texture = tex;
 
             return newObject;
         }
 
+        // Clear list of images to show and texture
         private void DisableUnitImages()
         {
-            if (m_ListOfNewObjects.Count < 1)
-                return;
+            if (m_ListOfNewObjects.Count < 1) return;
 
             for (var i = m_ListOfNewObjects.Count - 1; i >= 0; i--)
             {
                 // i = index at the end of list
                 var obj = m_ListOfNewObjects[i];
                 m_ListOfNewObjects.RemoveAt(i);
-
+                
                 Destroy(obj);
+            }
+
+            if (m_TextureList.Count < 1) return;
+
+            for (int i = m_TextureList.Count - 1; i >= 0; i--)
+            {
+                var tex = m_TextureList[i];
+                m_TextureList.RemoveAt(i);
             }
         }
     }

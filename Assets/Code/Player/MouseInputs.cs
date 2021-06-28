@@ -193,6 +193,9 @@ namespace Code.Player
             // Would be ideal to only needing to loop through a list that only contains selectable units
             var allUnits = FindObjectsOfType<GameObject>(false);
             
+            // If multiSelecting when last action was multiSelect it will not clear lists 
+            ClearUnitList();
+            
             foreach (var unit in allUnits)
             {
                 if (!unit.TryGetComponent(out IUnit _)) continue;
