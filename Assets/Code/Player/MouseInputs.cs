@@ -136,6 +136,7 @@ namespace Code.Player
         private void ClickOnBuilding(IStructure structure)
         {
             ClearCurrentStructure();
+            ClearUnitList();
 
             SelectUnits(false);
 
