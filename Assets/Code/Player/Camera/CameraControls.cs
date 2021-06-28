@@ -62,6 +62,7 @@ namespace Code.Player.Camera
             m_ZoomVector.y = scrollValue;
         }
 
+        // TODO: SMOOTH ZOOMING
         private void Zoom(float deltaTime)
         {
             // Add a limit

@@ -105,6 +105,7 @@ namespace Code.Managers.Units
 
             for (var i = m_ListOfNewObjects.Count - 1; i >= 0; i--)
             {
+                // i = index at the end of list
                 var obj = m_ListOfNewObjects[i];
                 m_ListOfNewObjects.RemoveAt(i);
 

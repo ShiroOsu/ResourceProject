@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358246abee08e114fbbcd112434da4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Stats: {fileID: 11400000, guid: fd914d685150a064ca45497afe128b02, type: 2}
   m_SelectionCircle: {fileID: 6409962247827486187}
 --- !u!195 &7389630584413174358
 NavMeshAgent:

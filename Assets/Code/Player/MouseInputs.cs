@@ -207,8 +207,16 @@ namespace Code.Player
                     m_SelectedUnitsList.Add(unit);
                 }
             }
-
+            
+            // From structure selection to unit, un select current structure
             ClearCurrentStructure();
+            
+            // If there is only one unit in selected, single select that unit, do not multi select
+            if (m_SelectedUnitsList.Count == 1)
+            {
+                SelectUnits(true);
+                return;
+            }
 
             SetUnitGroup();
         }
