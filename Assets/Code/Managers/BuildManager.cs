@@ -6,7 +6,7 @@ namespace Code.Managers
 {
     public class BuildManager : MonoBehaviour
     {
-        private static BuildManager s_Instance = null;
+        private static BuildManager s_Instance;
         public static BuildManager Instance => s_Instance ??= FindObjectOfType<BuildManager>();
 
         private bool m_DisplayStructurePlacement = false;

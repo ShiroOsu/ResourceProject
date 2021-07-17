@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,34 +6,39 @@ namespace Code.Managers
 {
     public class FlagManager : MonoBehaviour
     {
-        private static FlagManager s_Instance = null;
+        private static FlagManager s_Instance;
         public static FlagManager Instance => s_Instance ??= FindObjectOfType<FlagManager>();
 
-        private GameObject m_Flag = null;
+        [SerializeField] private GameObject m_FlagPrefab;
 
-        public GameObject SetSpawnFlag()
+        public void SetFlagPosition(GameObject flag)
         {
-            m_Flag ??= PoolManager.Instance.flagPool.Rent(true);
-        
-            PlaceFlag();
-
-            return m_Flag;
+            flag.SetActive(true);
+            PlaceFlag(flag);
         }
 
-        private void PlaceFlag()
+        public GameObject InstaniateNewFlag()
         {
-            Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
+            var newFlag = Instantiate(m_FlagPrefab);
+            newFlag.SetActive(false);
+            
+            return newFlag;
+        }
 
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+        private void PlaceFlag(GameObject flag)
+        {
+            var ray = DataManager.Instance.mouseInputs.PlacementRay;
+
+            if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+                return;
+            
+            var groundPoint = hit.point + new Vector3(0f, 1.5f, 0f);
+
+            flag.transform.position = groundPoint;
+
+            if (Mouse.current.rightButton.isPressed)
             {
-                var groundPoint = hit.point + new Vector3(0f, 1.5f, 0f);
-
-                m_Flag.transform.position = groundPoint;
-
-                if (Mouse.current.rightButton.isPressed)
-                {
-                    m_Flag.transform.position = groundPoint;
-                }
+                flag.transform.position = groundPoint;
             }
         }
     }

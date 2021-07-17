@@ -18,14 +18,10 @@ namespace Code.Managers
         [SerializeField] private GameObject m_BuilderPrefab = null;
         [SerializeField] private GameObject m_SoldierPrefab = null;
 
-        [Header("Misc")]
-        [SerializeField] private GameObject m_FlagPrefab = null;
-
         public ObjectPool castlePool = null;
         public ObjectPool barracksPool = null;
         public ObjectPool builderPool = null;
         public ObjectPool soldierPool = null;
-        public ObjectPool flagPool = null;
 
         private void Awake()
         {
@@ -33,7 +29,6 @@ namespace Code.Managers
             barracksPool = new ObjectPool(5, m_BarracksPrefab, new GameObject("BarracksPool").transform);
             builderPool = new ObjectPool(5, m_BuilderPrefab, new GameObject("BuilderPool").transform);
             soldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);
-            flagPool = new ObjectPool(1, m_FlagPrefab, new GameObject("FlagPool").transform);
         }
 
         public GameObject GetPooledStructure(StructureType type, bool rent)

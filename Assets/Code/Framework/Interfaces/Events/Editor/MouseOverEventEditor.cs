@@ -1,33 +1,35 @@
-using Code.Framework.Interfaces.Events;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-[CustomEditor(typeof(MouseOverEvent))]
-public class MouseOverEventEditor : Editor
+namespace Code.Framework.Interfaces.Events.Editor
 {
-    SerializedProperty m_TextArea;
-    SerializedProperty m_InGameTextArea;
-    SerializedProperty m_TextMeshPro;
-
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(MouseOverEvent))]
+    public class MouseOverEventEditor : UnityEditor.Editor
     {
-        MouseOverEvent m_MouseOverEvent = (MouseOverEvent)target;
+        private SerializedProperty m_TextArea;
+        private SerializedProperty m_InGameTextArea;
+        private SerializedProperty m_TextMeshPro;
 
-        m_TextArea = serializedObject.FindProperty("textArea");
-        m_InGameTextArea = serializedObject.FindProperty("inGameTextArea");
-        m_TextMeshPro = serializedObject.FindProperty("inGameTextToolTip");
-        
-        EditorGUILayout.PropertyField(m_InGameTextArea);
-        EditorGUILayout.PropertyField(m_TextMeshPro);
-        EditorGUILayout.Space();
-        EditorGUILayout.PropertyField(m_TextArea);
-
-
-        if (GUILayout.Button("Set tool tip text"))
+        public override void OnInspectorGUI()
         {
-            m_MouseOverEvent.SetToolTipText();
-        }
+            var m_MouseOverEvent = (MouseOverEvent)target;
 
-        serializedObject.ApplyModifiedProperties();
+            m_TextArea = serializedObject.FindProperty("textArea");
+            m_InGameTextArea = serializedObject.FindProperty("inGameTextArea");
+            m_TextMeshPro = serializedObject.FindProperty("inGameTextToolTip");
+        
+            EditorGUILayout.PropertyField(m_InGameTextArea);
+            EditorGUILayout.PropertyField(m_TextMeshPro);
+            EditorGUILayout.Space();
+            EditorGUILayout.PropertyField(m_TextArea);
+
+
+            if (GUILayout.Button("Set tool tip text"))
+            {
+                m_MouseOverEvent.SetToolTipText();
+            }
+
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }

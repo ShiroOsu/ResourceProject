@@ -11,10 +11,16 @@ namespace Code.Structures.Castle
         // Spawn location for builders
         private Vector3 m_UnitSpawnPoint;
         private GameObject m_Flag = null;
+        private bool m_SetSpawnFlag = false;
 
         private void Update()
         {
             if (Mouse.current.rightButton.isPressed)
+            {
+                m_SetSpawnFlag = false;
+            }
+
+            if (m_SetSpawnFlag)
             {
                 SetFlagPosition();
             }
@@ -22,8 +28,14 @@ namespace Code.Structures.Castle
 
         private void SetFlagPosition()
         {
-            m_Flag = FlagManager.Instance.SetSpawnFlag();
+            FlagManager.Instance.SetFlagPosition(m_Flag);
             m_UnitSpawnPoint = m_Flag.transform.position;
+        }
+
+        public void OnSetSpawnFlagPosition()
+        {
+            m_Flag ??= FlagManager.Instance.InstaniateNewFlag();
+            m_SetSpawnFlag = true;
         }
 
         public void OnSpawnBuilderButton()
@@ -33,7 +45,7 @@ namespace Code.Structures.Castle
 
         public void Destroy()
         {
-            Destroy();
+            Destroy(this);
         }
 
         public void Upgrade()

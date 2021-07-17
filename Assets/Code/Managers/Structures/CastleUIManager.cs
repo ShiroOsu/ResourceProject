@@ -11,6 +11,7 @@ namespace Code.Managers.Structures
         [SerializeField] private GameObject m_UI = null;
 
         [SerializeField] private Button m_SpawnBuilderButton = null;
+        [SerializeField] private Button m_SetSpawnFlagButton = null;
 
         private Castle m_CastleRef;
 
@@ -19,15 +20,11 @@ namespace Code.Managers.Structures
             m_CastleRef = structure.GetComponent<Castle>();
 
             m_SpawnBuilderButton.onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
+            m_SetSpawnFlagButton.onClick.AddListener(m_CastleRef.OnSetSpawnFlagPosition);
 
             m_Image.SetActive(active);
             m_Info.SetActive(active);
             m_UI.SetActive(active);
-
-            if (!active)
-            {
-                m_SpawnBuilderButton.onClick.RemoveAllListeners();
-            }
         }
     }
 }
