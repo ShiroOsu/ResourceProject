@@ -22,7 +22,6 @@ namespace Code.Structures.Barracks
         private void SetFlagPosition()
         {
             m_Flag ??= FlagManager.Instance.InstaniateNewFlag();
-            Debug.Log(m_Flag.gameObject.GetInstanceID());
             FlagManager.Instance.SetFlagPosition(m_Flag);
             
             m_UnitSpawnPoint = m_Flag.transform.position;

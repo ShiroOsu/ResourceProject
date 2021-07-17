@@ -127,7 +127,7 @@ namespace Code.Player
             if (!Physics.Raycast(ray, out var u_Hit, Mathf.Infinity, m_UnitMask)) 
                 return;
             
-            if (u_Hit.transform.parent.GetComponent<IUnit>() != null)
+            if (u_Hit.transform.parent.TryGetComponent(out IUnit _))
             {
                 ClickOnUnit(u_Hit.transform.parent.gameObject);
             }
@@ -269,7 +269,6 @@ namespace Code.Player
         private void ClearUnitList()
         {
             SelectUnits(false);
-            m_SelectedUnitsList.Clear();
             OnDisableUnitImages?.Invoke();
         }
 
@@ -277,6 +276,7 @@ namespace Code.Player
         {
             // To prevent structure to be in selection mode 
             m_CurrentStructure?.ShouldSelect(false);
+            m_CurrentStructure = null;
         }
 
         private void SetUnitGroup()
@@ -313,7 +313,7 @@ namespace Code.Player
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask)) 
                 return;
 
-            if (hit.transform.GetComponent<Terrain>() == null) 
+            if (!hit.transform.TryGetComponent(out Terrain _)) 
                 return;
             
             m_Animator.gameObject.transform.position = hit.point + new Vector3(0f, 0.1f, 0f);

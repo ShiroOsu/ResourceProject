@@ -59,6 +59,11 @@ namespace Code.Structures.Castle
 
             if (m_Flag != null)
                 m_Flag.SetActive(select);
+
+            if (!select && m_SetSpawnFlag)
+            {
+                m_SetSpawnFlag = false;
+            }
         }
     }
 }

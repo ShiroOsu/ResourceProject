@@ -29,6 +29,7 @@ namespace Code.Managers
         {
             var ray = DataManager.Instance.mouseInputs.PlacementRay;
 
+            // Might want to set default position if this happens ?
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 return;
             
