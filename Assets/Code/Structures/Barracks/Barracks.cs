@@ -10,10 +10,16 @@ namespace Code.Structures.Barracks
     {
         private Vector3 m_UnitSpawnPoint;
         private GameObject m_Flag = null;
+        private bool m_SetSpawnFlag = false;
 
         private void Update()
         {
             if (Mouse.current.rightButton.isPressed)
+            {
+                m_SetSpawnFlag = false;
+            }
+
+            if (m_SetSpawnFlag)
             {
                 SetFlagPosition();
             }
@@ -21,10 +27,14 @@ namespace Code.Structures.Barracks
 
         private void SetFlagPosition()
         {
-            m_Flag ??= FlagManager.Instance.InstaniateNewFlag();
             FlagManager.Instance.SetFlagPosition(m_Flag);
-            
             m_UnitSpawnPoint = m_Flag.transform.position;
+        }
+
+        public void OnSetSpawnFlagPosition()
+        {
+            m_Flag ??= FlagManager.Instance.InstaniateNewFlag();
+            m_SetSpawnFlag = true;
         }
 
         public void SpawnSoldier()
@@ -42,6 +52,11 @@ namespace Code.Structures.Barracks
 
             if (m_Flag != null)
                 m_Flag.SetActive(select);
+
+            if (!select && m_SetSpawnFlag)
+            {
+                m_SetSpawnFlag = false;
+            }
         }
 
         public void Upgrade()
