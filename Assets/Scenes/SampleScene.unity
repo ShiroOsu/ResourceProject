@@ -2100,7 +2100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7666923751037039378, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7666923751037039378, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2384,6 +2384,22 @@ PrefabInstance:
       propertyPath: m_SpawnBuilderButton
       value: 
       objectReference: {fileID: 184138798}
+    - target: {fileID: 7880901558430606490, guid: c4cdaa824b726ef4ea2a8204494e1654, type: 3}
+      propertyPath: m_ButtonList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7880901558430606490, guid: c4cdaa824b726ef4ea2a8204494e1654, type: 3}
+      propertyPath: m_ButtonList.Array.data[0]
+      value: 
+      objectReference: {fileID: 184138798}
+    - target: {fileID: 7880901558430606490, guid: c4cdaa824b726ef4ea2a8204494e1654, type: 3}
+      propertyPath: m_ButtonList.Array.data[1]
+      value: 
+      objectReference: {fileID: 601948399}
+    - target: {fileID: 7880901558430606490, guid: c4cdaa824b726ef4ea2a8204494e1654, type: 3}
+      propertyPath: m_ButtonList.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7880901558430606492, guid: c4cdaa824b726ef4ea2a8204494e1654, type: 3}
       propertyPath: m_Name
       value: Castle
