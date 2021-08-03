@@ -115,7 +115,7 @@ namespace Code.Managers.Units
 
             for (int i = m_TextureList.Count - 1; i >= 0; i--)
             {
-                var tex = m_TextureList[i];
+                //var tex = m_TextureList[i];
                 m_TextureList.RemoveAt(i);
             }
         }
