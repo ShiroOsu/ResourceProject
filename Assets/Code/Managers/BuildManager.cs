@@ -1,4 +1,5 @@
 using Code.Framework.Enums;
+using Code.Logger;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -41,6 +42,7 @@ namespace Code.Managers
 
             if (Mouse.current.leftButton.isPressed)
             {
+                Log.Message("BuildManager.cs", "DisableBuildPlacement by left click is this intended?");
                 DisableBuildPlacement(false);
                 return;
             }

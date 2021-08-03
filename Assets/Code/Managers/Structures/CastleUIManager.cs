@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Code.Framework.SerializedButtonList;
 using Code.Logger;
 using Code.Structures.Castle;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,15 +16,10 @@ namespace Code.Managers.Structures
         [SerializeField] private List<Button> m_ButtonList = new List<Button>();
 
         private Castle m_CastleRef;
-
+        
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_CastleRef = structure.GetComponent<Castle>();
-
-            if (m_ButtonList.Count < 1)
-            {
-                Log.Error("CastleUIManager.cs", "Button List length is 0, Can't add Listeners.");
-            }
             
             m_ButtonList[0].onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
             m_ButtonList[1].onClick.AddListener(m_CastleRef.OnSetSpawnFlagPosition);
@@ -34,7 +29,6 @@ namespace Code.Managers.Structures
             m_UI.SetActive(active);
 
             // When de-select remove listeners so don't add them more than once
-            // Could probably be done with checking if buttons has a active listener or not
             if (!active)
             {
                 RemoveAllListeners();    

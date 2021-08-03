@@ -12,6 +12,13 @@ namespace Code.Framework.Enums
         Castle,
         Barracks,
     }
+
+    public enum ButtonName
+    {
+        SpawnBuilder,
+        SpawnSoldier,
+        SpawnFlag,
+    }
     
     public enum LogMaskThreshold
     {
