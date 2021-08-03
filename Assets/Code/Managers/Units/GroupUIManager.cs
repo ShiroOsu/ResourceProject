@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Code.Framework.Enums;
 using Code.Framework.Interfaces;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -89,7 +91,7 @@ namespace Code.Managers.Units
         {
             var newObject = new GameObject();
             newObject.transform.SetParent(parentTransform);
-            newObject.layer = 5; // UI layer
+            newObject.layer = (int)UnityLayer.UI;
             
             var raw = newObject.AddComponent<RawImage>();
             raw.texture = tex;

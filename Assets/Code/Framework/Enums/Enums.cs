@@ -1,3 +1,5 @@
+using System;
+
 namespace Code.Framework.Enums
 {
     public enum UnitType
@@ -12,7 +14,14 @@ namespace Code.Framework.Enums
         Castle,
         Barracks,
     }
+    
+    // Unity layers
+    public enum UnityLayer
+    {
+        UI = 5,
+    }
 
+    // Temp
     public enum ButtonName
     {
         SpawnBuilder,
