@@ -29,7 +29,12 @@ namespace Code.Units.Soldier
         public void ShouldSelect(bool select)
         {
             UIManager.Instance.UnitSelected(UnitType.Solider, select, gameObject);
-            m_SelectionCircle.SetActive(select);
+            ActivateSelectionCircle(select);
+        }
+        
+        public void ActivateSelectionCircle(bool active)
+        {
+            m_SelectionCircle.SetActive(active);
         }
 
         public void OnDestroy()

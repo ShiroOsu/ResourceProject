@@ -3,6 +3,7 @@ namespace Code.Framework.Interfaces
     public interface IUnit
     {
         public void ShouldSelect(bool select);
+        public void ActivateSelectionCircle(bool active);
 
         public void OnDestroy();
 

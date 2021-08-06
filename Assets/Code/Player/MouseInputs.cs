@@ -225,7 +225,7 @@ namespace Code.Player
                 return;
             }
 
-            SetUnitGroup();
+            SetUnitGroup(true);
         }
 
         private void MultiSelectionBox()
@@ -266,6 +266,23 @@ namespace Code.Player
             m_SelectedUnitsList.Clear();
         }
 
+        private void MultiSelectUnits(bool select)
+        {
+            foreach (var unit in m_SelectedUnitsList)
+            {
+                unit.TryGetComponent(out IUnit u);
+                u.ActivateSelectionCircle(true);
+            }
+
+            var firstUnit = m_SelectedUnitsList[0];
+            firstUnit.TryGetComponent(out IUnit iu);
+            iu.ShouldSelect(true);
+            
+            if (select) { return; }
+            
+            m_SelectedUnitsList.Clear();
+        }
+
         private void ClearUnitList()
         {
             SelectUnits(false);
@@ -279,13 +296,13 @@ namespace Code.Player
             m_CurrentStructure = null;
         }
 
-        private void SetUnitGroup()
+        private void SetUnitGroup(bool select)
         {
             if (m_SelectedUnitsList.Count < 1)
                 return;
 
             OnUpdateUnitList?.Invoke(m_SelectedUnitsList);
-            SelectUnits(true);
+            MultiSelectUnits(select);
         }
 
         private void StopClickAnimation()
