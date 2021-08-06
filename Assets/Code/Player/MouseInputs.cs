@@ -208,8 +208,8 @@ namespace Code.Player
 
                 if (!rect.Contains(unitScreenPos)) continue;
                 
-                // Add a limit, ex. max group of 10,20, etc..
-                if (!m_SelectedUnitsList.Contains(unit) && m_SelectedUnitsList.Count < 20)
+                // Limit determined by amount on units fits on the UI middle border (35x3)
+                if (!m_SelectedUnitsList.Contains(unit) && m_SelectedUnitsList.Count < 105)
                 {
                     m_SelectedUnitsList.Add(unit);
                 }

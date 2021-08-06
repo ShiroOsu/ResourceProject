@@ -55,20 +55,22 @@ namespace Code.Managers.Units
 
         private void ShowTextureList()
         {
-            int index = 0;
+            int index = 0; // Current row
             int ySpacing = 0;
             const int xSpacing = 30;
+            const int x = 35;
 
             foreach (var newObject in m_TextureList.Select(tex => CreateNewImage(tex, m_ParentObject.transform)))
             {
                 SetPositions(index, xSpacing, ySpacing, newObject);
                 index++;
 
-                int yMod = index % 10;
+                // After x amount of units, create new row
+                int yMod = index % x;
 
                 if (yMod == 0)
                 {
-                    ySpacing = 60;
+                    ySpacing += 60; // Amount to space for next row
                     index = 0;
                 }
 
@@ -82,7 +84,7 @@ namespace Code.Managers.Units
             rect.sizeDelta = new Vector2(50f, 50f);
             var sizeDelta = rect.sizeDelta;
         
-            rect.localPosition = new Vector3(sizeDelta.x + index * xSpacing, -sizeDelta.y + -(ySpacing), 0f);
+            rect.localPosition = new Vector3(sizeDelta.x + index * xSpacing, -sizeDelta.y + -(ySpacing), 0f); // ?
             rect.localRotation = new Quaternion(0f, 0f, 0f, 0f);
             rect.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -117,7 +119,7 @@ namespace Code.Managers.Units
 
             for (int i = m_TextureList.Count - 1; i >= 0; i--)
             {
-                //var tex = m_TextureList[i];
+                //var tex = m_TextureList[i]; // destroy?
                 m_TextureList.RemoveAt(i);
             }
         }

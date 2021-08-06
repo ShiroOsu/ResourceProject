@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Code.Structures.Barracks;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +11,7 @@ namespace Code.Managers.Structures
         [SerializeField] private GameObject m_Image;
         [SerializeField] private GameObject m_UI;
 
-        [SerializeField] private Button m_SpawnSoldier;
+        [SerializeField] private List<Button> m_ButtonList = new List<Button>();
 
         private Barracks m_BarracksRef;
 
@@ -17,14 +19,23 @@ namespace Code.Managers.Structures
         {
             m_BarracksRef = structure.GetComponent<Barracks>();
 
-            m_SpawnSoldier.onClick.AddListener(m_BarracksRef.SpawnSoldier);
+            m_ButtonList[0].onClick.AddListener(m_BarracksRef.SpawnSoldier);
+            m_ButtonList[1].onClick.AddListener(m_BarracksRef.OnSetSpawnFlagPosition);
 
             m_Image.SetActive(active);
             m_UI.SetActive(active);
 
             if (!active)
             {
-                m_SpawnSoldier.onClick.RemoveAllListeners();
+                RemoveAllListeners();
+            }
+        }
+        
+        private void RemoveAllListeners()
+        {
+            foreach (var button in m_ButtonList)
+            {
+                button.onClick.RemoveAllListeners();
             }
         }
     }
