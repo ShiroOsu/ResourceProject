@@ -2898,5 +2898,33 @@ PrefabInstance:
       propertyPath: m_GetParent
       value: 
       objectReference: {fileID: 422795565}
+    - target: {fileID: 9095835531819905653, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
+      propertyPath: m_TextureAssetList
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b9cdf7a4d9a2f646b90cf72f69910d0, type: 2}
+    - target: {fileID: 9095835531819905653, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
+      propertyPath: m_TextureAsset.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095835531819905653, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
+      propertyPath: m_TextureAssets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095835531819905653, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
+      propertyPath: m_TextureAsset.Array.data[0]
+      value: 
+      objectReference: {fileID: 2800000, guid: 22ee30d95ddab8c46907a765cb4b1e2d, type: 3}
+    - target: {fileID: 9095835531819905653, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
+      propertyPath: m_TextureAsset.Array.data[1]
+      value: 
+      objectReference: {fileID: 2800000, guid: e3167cd8fa475b74fa948c4f5390e050, type: 3}
+    - target: {fileID: 9095835531819905653, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
+      propertyPath: m_TextureAssets.Array.data[0]
+      value: 
+      objectReference: {fileID: 2800000, guid: 22ee30d95ddab8c46907a765cb4b1e2d, type: 3}
+    - target: {fileID: 9095835531819905653, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
+      propertyPath: m_TextureAssets.Array.data[1]
+      value: 
+      objectReference: {fileID: 2800000, guid: e3167cd8fa475b74fa948c4f5390e050, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}

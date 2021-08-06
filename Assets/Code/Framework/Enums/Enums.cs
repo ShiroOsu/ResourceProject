@@ -28,6 +28,12 @@ namespace Code.Framework.Enums
         SpawnSoldier,
         SpawnFlag,
     }
+
+    public enum TextureAssetType
+    {
+        Builder,
+        Solider,
+    }
     
     public enum LogMaskThreshold
     {

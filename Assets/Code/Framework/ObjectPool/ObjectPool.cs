@@ -8,7 +8,7 @@ namespace Code.Framework.ObjectPool
         private readonly uint m_ExpandBy;
         private readonly GameObject m_Prefab;
         private readonly Transform m_Parent;
-        public readonly Stack<GameObject> objects = new Stack<GameObject>();
+        private readonly Stack<GameObject> objects = new Stack<GameObject>();
 
         public ObjectPool(uint initSize, GameObject prefab, Transform parent = null, uint expandBy = 1)
         {
@@ -42,8 +42,8 @@ namespace Code.Framework.ObjectPool
                 Expand(m_ExpandBy);
             }
 
-            GameObject instance = objects.Pop();
-            instance ??= Rent(activate);
+            var instance = objects.Pop();
+            instance = instance != null ? instance : Rent(activate);
             instance.SetActive(activate);
             return instance;
         }

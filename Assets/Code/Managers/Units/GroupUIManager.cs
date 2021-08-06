@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
+using Code.Framework.TextureListByEnum;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +11,7 @@ namespace Code.Managers.Units
 {
     public class GroupUIManager : MonoBehaviour
     {
-        [SerializeField] private Texture m_BuilderTex;
-        [SerializeField] private Texture m_SoldierTex;
+        [SerializeField] private TextureList m_TextureAssetList;
         [SerializeField] private GameObject m_GetParent;
 
         private GameObject m_ParentObject;
@@ -41,12 +41,12 @@ namespace Code.Managers.Units
 
                 if (u.GetUnitID() == m_BuilderID)
                 {
-                    m_TextureList.Add(m_BuilderTex);
+                    m_TextureList.Add(m_TextureAssetList[TextureAssetType.Builder]);
                 }
 
                 if (u.GetUnitID() == m_SoldierID)
                 {
-                    m_TextureList.Add(m_SoldierTex);
+                    m_TextureList.Add(m_TextureAssetList[TextureAssetType.Solider]);
                 }
             }
 

@@ -14,6 +14,12 @@ namespace Code.Managers
             var unit = PoolManager.Instance.GetPooledUnit(type, true);
             unit.transform.position = startPos;
 
+            // Spawn flag not set
+            if (endPos == Vector3.zero)
+            {
+                endPos = (startPos + new Vector3(10f, 0f, 0f));
+            }
+
             unit.TryGetComponent(out IUnit u);
             u?.Move(endPos);
         }
