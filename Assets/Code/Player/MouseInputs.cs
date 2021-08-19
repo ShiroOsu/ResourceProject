@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Code.Framework.Interfaces;
+using Code.Logger;
 using Code.Managers;
 using Player;
 using UnityEngine;
@@ -118,7 +119,8 @@ namespace Code.Player
 
             if (Physics.Raycast(ray, out var s_Hit, Mathf.Infinity, m_StructureMask))
             {
-                if (s_Hit.transform.parent.TryGetComponent(out IStructure structure))
+                // yikes
+                if (s_Hit.transform.parent.parent.TryGetComponent(out IStructure structure))
                 {
                     ClickOnBuilding(structure);
                 }

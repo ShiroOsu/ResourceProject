@@ -1,16 +1,28 @@
+using System;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Managers;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 namespace Code.Structures.Barracks
 {
     public class Barracks : MonoBehaviour, IStructure
     {
+        [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
+        [SerializeField] private CustomSizer3D m_Sizer3D;
+        
+        // Soldier Spawning
         private Vector3 m_UnitSpawnPoint;
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
+
+        private void Awake()
+        {
+            m_NavMeshObstacle.shape = NavMeshObstacleShape.Box;
+            m_NavMeshObstacle.size = m_Sizer3D.GetSize(gameObject.transform.lossyScale);
+        }
 
         private void Update()
         {
@@ -42,10 +54,6 @@ namespace Code.Structures.Barracks
             SpawnManager.Instance.SpawnUnit(UnitType.Solider, gameObject.transform.position, m_UnitSpawnPoint);
         }
 
-        public void Destroy()
-        {
-        }
-
         public void ShouldSelect(bool select)
         {
             UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
@@ -62,5 +70,8 @@ namespace Code.Structures.Barracks
         public void Upgrade()
         {
         }
+        
+        public void Destroy()
+        {}
     }
 }

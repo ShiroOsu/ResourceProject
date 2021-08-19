@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: e6e36790ba0677c468a8f0244a780a30, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: b140431a3453fb5468da2e4e965b2ac9, type: 2}
 --- !u!4 &2869924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9095835531819905652, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
@@ -143,6 +143,11 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7666923750833306599, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
   m_PrefabInstance: {fileID: 7666923750933712700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &223342314 stripped
+NavMeshObstacle:
+  m_CorrespondingSourceObject: {fileID: 256301526081307544, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+  m_PrefabInstance: {fileID: 840475090}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &271067339 stripped
 MonoBehaviour:
@@ -760,6 +765,10 @@ PrefabInstance:
       propertyPath: m_MouseControls
       value: 
       objectReference: {fileID: 659079908}
+    - target: {fileID: -2113485979895984729, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_NavMeshObstacle
+      value: 
+      objectReference: {fileID: 223342314}
     - target: {fileID: 233707905148037387, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -780,6 +789,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3418518123001675853, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418518123001675853, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968773079027195983, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_Dimensions.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968773079027195983, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_Dimensions.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968773079027195983, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_Dimensions.z
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8918257048631504733, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_Name
       value: Castle
@@ -797,12 +826,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8918257048631504737, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918257048631504737, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918257048631504737, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8918257048631504737, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 154.18884
       objectReference: {fileID: 0}
     - target: {fileID: 8918257048631504737, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 4.81
       objectReference: {fileID: 0}
     - target: {fileID: 8918257048631504737, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_LocalPosition.z

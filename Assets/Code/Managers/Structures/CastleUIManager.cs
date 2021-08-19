@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Code.Framework.SerializedButtonList;
-using Code.Logger;
 using Code.Structures.Castle;
 using UnityEngine;
 using UnityEngine.UI;
