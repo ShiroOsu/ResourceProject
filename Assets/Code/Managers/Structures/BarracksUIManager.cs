@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Code.Structures.Barracks;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 

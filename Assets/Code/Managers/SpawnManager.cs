@@ -1,5 +1,7 @@
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
+using Code.Logger;
+using UnityEditor.Connect;
 using UnityEngine;
 
 namespace Code.Managers
@@ -17,11 +19,12 @@ namespace Code.Managers
             // Spawn flag not set
             if (endPos == Vector3.zero)
             {
+                Log.Message("SpawnManager", "Spawn flag not set for " + type);
                 endPos = (startPos + new Vector3(10f, 0f, 0f));
             }
 
             unit.TryGetComponent(out IUnit u);
-            u?.Move(endPos);
+            u.Move(endPos);
         }
     }
 }

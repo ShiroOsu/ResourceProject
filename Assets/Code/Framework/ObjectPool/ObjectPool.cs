@@ -23,9 +23,10 @@ namespace Code.Framework.ObjectPool
             for (int i = 0; i < amount; i++)
             {
                 GameObject instance = Object.Instantiate(m_Prefab, m_Parent);
+                instance.SetActive(false);
+
                 EmittOnDisable emittOnDisable = instance.AddComponent<EmittOnDisable>();
                 emittOnDisable.OnDisableGameObject += UnRent;
-                instance.SetActive(false);
                 objects.Push(instance);
             }
         }
