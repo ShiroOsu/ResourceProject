@@ -1936,6 +1936,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2850923382959329389, guid: 444c971a602a03c41ad7969a75e8f702, type: 3}
+      propertyPath: m_Blueprints
+      value: 
+      objectReference: {fileID: 11400000, guid: bad3b77aa4072494e8528e80c66f9e3c, type: 2}
+    - target: {fileID: 2850923382959329389, guid: 444c971a602a03c41ad7969a75e8f702, type: 3}
+      propertyPath: m_Blueprints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850923382959329389, guid: 444c971a602a03c41ad7969a75e8f702, type: 3}
+      propertyPath: m_Blueprints.Array.data[0]
+      value: 
+      objectReference: {fileID: 8918257048631504733, guid: eb9f4accfaf6f6a4ca12896d1e9d10d0, type: 3}
+    - target: {fileID: 2850923382959329389, guid: 444c971a602a03c41ad7969a75e8f702, type: 3}
+      propertyPath: m_Blueprints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1082441569872595318, guid: 7f81501d6d09dd943b6171eaf91dc3d4, type: 3}
     - target: {fileID: 2850923382959329390, guid: 444c971a602a03c41ad7969a75e8f702, type: 3}
       propertyPath: m_RootOrder
       value: 4
