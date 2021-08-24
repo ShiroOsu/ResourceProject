@@ -1,3 +1,4 @@
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Logger;
 using UnityEngine;
@@ -10,7 +11,9 @@ namespace Code.Managers
         private static BuildManager s_Instance;
         public static BuildManager Instance => s_Instance ??= FindObjectOfType<BuildManager>();
 
+        [SerializeField] private BlueprintByEnum m_Blueprints;
         private bool m_DisplayStructurePlacement = false;
+        private GameObject m_CurrentBlueprintObject = null;
         private GameObject m_CurrentBuildObject = null;
         private StructureType m_CurrentStructureType = StructureType.None;
 
@@ -22,15 +25,23 @@ namespace Code.Managers
 
         public void InitBuild(StructureType type)
         {
-            m_CurrentBuildObject = PoolManager.Instance.GetPooledStructure(type, true);
+            m_CurrentBlueprintObject = Instantiate(m_Blueprints[type]);
+            Log.Message("Initialize Build", "build type: " + type);
+            m_CurrentBuildObject = PoolManager.Instance.GetPooledStructure(type, false);
+
             m_CurrentStructureType = type;
             m_DisplayStructurePlacement = true;
         }
 
         private void DisableBuildPlacement(bool deActivateBuild)
         {
-            m_CurrentBuildObject.SetActive(deActivateBuild);
+            m_CurrentBlueprintObject.SetActive(deActivateBuild);
             m_DisplayStructurePlacement = false;
+
+            if (deActivateBuild)
+            {
+                m_CurrentBuildObject.SetActive(true);
+            }
 
             UIManager.Instance.StructureSelected(m_CurrentStructureType, false, m_CurrentBuildObject);
         }
@@ -53,8 +64,8 @@ namespace Code.Managers
             {
                 var groundPoint = hit.point;
 
-                m_CurrentBuildObject.transform.position = groundPoint;
-                m_CurrentBuildObject.SetActive(true);
+                m_CurrentBlueprintObject.transform.position = m_CurrentBuildObject.transform.position = groundPoint;
+                m_CurrentBlueprintObject.SetActive(true);
 
                 if (Mouse.current.rightButton.wasPressedThisFrame)
                 {
@@ -63,7 +74,7 @@ namespace Code.Managers
             }
             else
             {
-                m_CurrentBuildObject.SetActive(false);
+                m_CurrentBlueprintObject.SetActive(false);
             }
         }
 
