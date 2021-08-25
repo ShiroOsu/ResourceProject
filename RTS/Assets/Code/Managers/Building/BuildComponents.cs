@@ -25,7 +25,6 @@ namespace Code.Managers.Building
 
         private void OnTriggerStay(Collider other)
         {
-            Log.Message("trigger", "other: " + other.name);
             if (!other.TryGetComponent(out TerrainCollider _))
             {
                 m_InTrigger = true;
