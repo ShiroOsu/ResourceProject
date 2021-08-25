@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CastlePrefab: {fileID: 8918257048631504733, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
-  m_BarracksPrefab: {fileID: 1082441569872595318, guid: f5e1880590821cc4b960419f49e862ec, type: 3}
+  m_BarracksPrefab: {fileID: 1082441569872595318, guid: 5c4363a12fde95e4698a3179a7f87f14, type: 3}
   m_BuilderPrefab: {fileID: 8717004148852162051, guid: 53015e7ed2b33c7439aca0dd67a44a13, type: 3}
   m_SoldierPrefab: {fileID: 2669723595896632583, guid: 2a99a8fefe6ff0943879edf0dc9509ec, type: 3}
 --- !u!1 &662906151 stripped
@@ -1179,6 +1179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Data: {fileID: 11400000, guid: b9cab1ec934ead94e9943134849f15d5, type: 2}
+  m_CanZoom: 1
 --- !u!1 &1316068356
 GameObject:
   m_ObjectHideFlags: 0
