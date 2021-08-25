@@ -29,7 +29,9 @@ public class CustomSizer3D : MonoBehaviour
 
     /// <summary>
     /// When getting the size it will be divided by GameObjects world scale
-    /// So the actual size will correct even if object has been scaled. 
+    /// So the actual size will correct even if object has been scaled.
+    ///
+    /// Mainly used for buildings that will have a NavMeshObstacle, that's why scale is needed.
     /// </summary>
     /// <param name="worldScale">GameObjects scale in world (LossyScale)</param>
     /// <returns></returns>
@@ -40,6 +42,17 @@ public class CustomSizer3D : MonoBehaviour
         float avgOfWorldScale = (worldScale.x + worldScale.y + worldScale.z) / 3f;
         
         return m_Bounds.size / avgOfWorldScale;
+    }
+
+    /// <summary>
+    /// No Scale
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetSize()
+    {
+        SetArea();
+
+        return m_Bounds.size;
     }
 
     public void OnDrawGizmosSelected()

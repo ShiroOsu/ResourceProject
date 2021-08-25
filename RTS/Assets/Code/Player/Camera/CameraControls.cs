@@ -8,15 +8,16 @@ namespace Code.Player.Camera
     public class CameraControls : MonoBehaviour, Controls.ICameraActions
     {
         // Values set in CameraData
-        public CameraData m_Data = null;
+        public CameraData m_Data;
         private float m_CameraSpeed;
         private float m_RotationSpeed;
         private float m_ZoomSpeed;
 
-        private Controls m_CameraControls = null;
+        private Controls m_CameraControls;
         private Vector3 m_ForwardVector;
         private Vector3 m_RotationDirection;
         private Vector3 m_ZoomVector;
+        [HideInInspector] public bool m_CanZoom = true;
 
         public void Awake()
         {
@@ -58,11 +59,14 @@ namespace Code.Player.Camera
 
         public void OnZoom(InputAction.CallbackContext context)
         {
+            if (!m_CanZoom)
+                return;
+            
             var scrollValue = context.ReadValue<float>();
             m_ZoomVector.y = scrollValue;
         }
 
-        // TODO: SMOOTH ZOOMING?
+        // TODO: SMOOTH ZOOMING?, CLAMP ZOOM
         private void Zoom(float deltaTime)
         {
             // Add a limit
@@ -71,11 +75,11 @@ namespace Code.Player.Camera
 
             if (m_ZoomVector.y > 0f)
             {
-                transform.position -= m_ZoomVector * m_ZoomSpeed * deltaTime;
+                transform.position -= m_ZoomVector * (m_ZoomSpeed * deltaTime);
             }
             else
             {
-                transform.position -= m_ZoomVector * m_ZoomSpeed * deltaTime;
+                transform.position -= m_ZoomVector * (m_ZoomSpeed * deltaTime);
             }
         }
 
@@ -88,10 +92,10 @@ namespace Code.Player.Camera
         private void MoveCamera(float deltaTime)
         {
             Zoom(deltaTime);
-            transform.Rotate(m_RotationDirection * m_RotationSpeed * deltaTime, Space.Self);
+            transform.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
 
-            Vector3 forwardDirection = transform.rotation * m_ForwardVector;
-            transform.position += forwardDirection.normalized * m_CameraSpeed * deltaTime;
+            var forwardDirection = transform.rotation * m_ForwardVector;
+            transform.position += forwardDirection.normalized * (m_CameraSpeed * deltaTime);
         }
     }
 }

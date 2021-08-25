@@ -4,6 +4,7 @@ using Code.Framework;
 using Code.Framework.Enums;
 using Code.Logger;
 using Code.Managers.Building;
+using Code.Player.Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,23 +19,30 @@ namespace Code.Managers
         [SerializeField] private Material m_BlueprintMaterialCanNotBuild;
         [SerializeField] private Material m_BlueprintMaterialCanBuild;
 
+        private CameraControls m_CameraControls; 
+        
         private List<GameObject> m_BuildComponentsList = new List<GameObject>();
-        private bool m_CanBuild = false;
-        private bool m_DisplayStructurePlacement = false;
-        private GameObject m_CurrentBlueprintObject = null;
-        private GameObject m_CurrentBuildObject = null;
+        private bool m_CanBuild;
+        private bool m_DisplayStructurePlacement;
+        private GameObject m_CurrentBlueprintObject;
+        private BuildComponents m_CurrentBlueprintBuildComponents;
+        private GameObject m_CurrentBuildObject;
         private StructureType m_CurrentStructureType = StructureType.None;
 
-        // Might do return m_CanBuild;
-        private void CanBuild()
+        private void Awake()
         {
-            Log.Message("BuildManager.cs", "CanBuild: " + m_CanBuild); 
+            m_CameraControls = FindObjectOfType<CameraControls>();
+        }
 
+        private bool CanBuild()
+        {
             foreach (var component in m_BuildComponentsList)
             {
                 component.TryGetComponent(out MeshRenderer meshRenderer);
                 meshRenderer.material = m_CanBuild ? m_BlueprintMaterialCanBuild : m_BlueprintMaterialCanNotBuild;
             }
+
+            return m_CanBuild;
         }
 
         private void Update()
@@ -49,12 +57,13 @@ namespace Code.Managers
             m_CurrentBuildObject = PoolManager.Instance.GetPooledStructure(type, false);
 
             m_CurrentBlueprintObject.TryGetComponent(out BuildComponents bc);
+            m_CurrentBlueprintBuildComponents = bc;
             
             foreach (Transform child in bc.m_BuildComponents.transform)
             {
                 m_BuildComponentsList.Add(child.gameObject);
             }
-            
+
             m_CurrentStructureType = type;
             m_DisplayStructurePlacement = true;
         }
@@ -63,13 +72,20 @@ namespace Code.Managers
         {
             m_CurrentBlueprintObject.SetActive(deActivateBuild);
             m_DisplayStructurePlacement = false;
+            m_CameraControls.m_CanZoom = true;
 
             if (deActivateBuild)
             {
+                m_CurrentBuildObject.transform.rotation = m_CurrentBlueprintObject.transform.rotation;
                 m_CurrentBuildObject.SetActive(true);
             }
 
             UIManager.Instance.StructureSelected(m_CurrentStructureType, false, m_CurrentBuildObject);
+        }
+
+        private void RotateBuilding(Vector2 v)
+        {
+            m_CurrentBlueprintObject.transform.Rotate(Vector3.up, v.normalized.y * 20f);
         }
 
         private void HandleBuild()
@@ -88,23 +104,39 @@ namespace Code.Managers
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
+                m_CameraControls.m_CanZoom = false;
+
                 var groundPoint = hit.point;
 
                 m_CurrentBlueprintObject.transform.position = m_CurrentBuildObject.transform.position = groundPoint;
                 m_CurrentBlueprintObject.SetActive(true);
 
-                // Logic for when can/can not build
-                CanBuild();
+                m_CanBuild = !m_CurrentBlueprintBuildComponents.m_InTrigger;
 
-                if (Mouse.current.rightButton.wasPressedThisFrame)
+                var scroll = Mouse.current.scroll.ReadValue();
+
+                RotateBuilding(scroll);
+                
+                if (CanBuild())
                 {
-                    DisableBuildPlacement(true);
-
-                    if (m_CurrentBlueprintObject != null)
+                    if (Mouse.current.rightButton.wasPressedThisFrame)
                     {
-                        Destroy(m_CurrentBlueprintObject);
-                        m_BuildComponentsList.Clear();
+                        DisableBuildPlacement(true);
+
+                        if (m_CurrentBlueprintObject != null)
+                        {
+                            Destroy(m_CurrentBlueprintObject);
+                            m_BuildComponentsList.Clear();
+                        }
                     }
+                }
+
+                if (!CanBuild())
+                {
+                    if (Mouse.current.rightButton.wasPressedThisFrame)
+                    {
+                       Log.Error("BuildManager.cs", "Can not place building here!");
+                    }               
                 }
             }
             else
@@ -112,6 +144,5 @@ namespace Code.Managers
                 m_CurrentBlueprintObject.SetActive(false);
             }
         }
-
     }
 }
