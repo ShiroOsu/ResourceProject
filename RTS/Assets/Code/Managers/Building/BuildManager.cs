@@ -1,14 +1,12 @@
-using System;
 using System.Collections.Generic;
 using Code.Framework;
 using Code.Framework.Enums;
 using Code.Logger;
-using Code.Managers.Building;
 using Code.Player.Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Code.Managers
+namespace Code.Managers.Building
 {
     public class BuildManager : MonoBehaviour
     {
@@ -107,6 +105,10 @@ namespace Code.Managers
                 m_CameraControls.m_CanZoom = false;
 
                 var groundPoint = hit.point;
+                if (m_CurrentStructureType == StructureType.Castle)
+                {
+                    groundPoint.y += 5f;
+                }
 
                 m_CurrentBlueprintObject.transform.position = m_CurrentBuildObject.transform.position = groundPoint;
                 m_CurrentBlueprintObject.SetActive(true);

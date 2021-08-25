@@ -1,3 +1,4 @@
+using Code.Logger;
 using UnityEngine;
 
 namespace Code.Managers.Building
@@ -24,6 +25,7 @@ namespace Code.Managers.Building
 
         private void OnTriggerStay(Collider other)
         {
+            Log.Message("trigger", "other: " + other.name);
             if (!other.TryGetComponent(out TerrainCollider _))
             {
                 m_InTrigger = true;
@@ -41,7 +43,17 @@ namespace Code.Managers.Building
         private void SetupColliderBounds()
         {
             m_BoxCollider.center = m_BuildingBounds.m_CenterOfArea.position;
-            m_BoxCollider.size = m_BuildingBounds.GetSize();
+
+            if (transform.localScale.x > 1f
+            || transform.localScale.y > 1f
+            || transform.localScale.z > 1f)
+            {
+                m_BoxCollider.size = m_BuildingBounds.GetSize(transform.lossyScale);
+            }
+            else
+            {
+                m_BoxCollider.size = m_BuildingBounds.GetSize();
+            }
         }
     }
 }

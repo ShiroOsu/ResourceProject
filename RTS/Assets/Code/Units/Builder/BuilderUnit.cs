@@ -2,6 +2,7 @@ using System;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Managers;
+using Code.Managers.Building;
 using UnityEngine;
 using UnityEngine.AI;
 
