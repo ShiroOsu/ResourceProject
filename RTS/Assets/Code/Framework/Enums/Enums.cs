@@ -4,12 +4,14 @@ namespace Code.Framework.Enums
 {
     public enum UnitType
     {
+        Null,
         Builder,
         Solider,
     }
 
     public enum StructureType
     {
+        Null,
         Castle,
         Barracks,
     }

@@ -1,6 +1,7 @@
 using System;
 using Code.Framework.Enums;
 using Code.Framework.TextureListByEnum;
+using Code.Logger;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ namespace Code.Framework
         [SerializeField] private RawImage m_CreateImage;
         [SerializeField] private Slider m_TimerFill;
         [SerializeField] private TextureList m_CreatableTextures;
-
+        
         private bool m_TimerFinished;
         private bool m_TimerStarted;
         public bool TimerFinished { get; private set; }
@@ -30,6 +31,7 @@ namespace Code.Framework
             
             if (u_Type != default)
             {
+                Log.Message("CreateTimer", "type: " + u_Type);
                 UnitCreate(u_Type);
             }
             else if (s_Type != default)
@@ -41,6 +43,7 @@ namespace Code.Framework
         private void UnitCreate(UnitType type)
         {
             m_CreateImage.texture = GetUnitTexture(type);
+            Log.Message("CreateTimer", "type: " + GetUnitTexture(type));
             ShowImage(true);
             
             // stuff...
