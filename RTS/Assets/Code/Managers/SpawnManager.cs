@@ -1,3 +1,4 @@
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Logger;
@@ -13,6 +14,8 @@ namespace Code.Managers
 
         public void SpawnUnit(UnitType type, Vector3 startPos, Vector3 endPos)
         {
+            CreateTimer.Instance.Create(type);
+
             var unit = PoolManager.Instance.GetPooledUnit(type, true);
             unit.transform.position = startPos;
 

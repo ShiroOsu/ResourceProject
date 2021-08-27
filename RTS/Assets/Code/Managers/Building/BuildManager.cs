@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Code.Framework;
 using Code.Framework.Enums;
 using Code.Logger;
+using Code.Player;
 using Code.Player.Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,7 +18,8 @@ namespace Code.Managers.Building
         [SerializeField] private Material m_BlueprintMaterialCanNotBuild;
         [SerializeField] private Material m_BlueprintMaterialCanBuild;
 
-        private CameraControls m_CameraControls; 
+        private CameraControls m_CameraControls;
+        private MouseInputs m_MouseInputs;
         
         private List<GameObject> m_BuildComponentsList = new List<GameObject>();
         private bool m_CanBuild;
@@ -25,11 +27,12 @@ namespace Code.Managers.Building
         private GameObject m_CurrentBlueprintObject;
         private BuildComponents m_CurrentBlueprintBuildComponents;
         private GameObject m_CurrentBuildObject;
-        private StructureType m_CurrentStructureType = StructureType.None;
+        private StructureType m_CurrentStructureType;
 
         private void Awake()
         {
             m_CameraControls = FindObjectOfType<CameraControls>();
+            m_MouseInputs = DataManager.Instance.mouseInputs;
         }
 
         private bool CanBuild()
@@ -50,6 +53,8 @@ namespace Code.Managers.Building
 
         public void InitBuild(StructureType type)
         {
+            m_MouseInputs.IsBuilding = true;
+            
             m_CurrentBlueprintObject = Instantiate(m_Blueprints[type]);
             Log.Message("Initialize Build", "build type: " + type);
             m_CurrentBuildObject = PoolManager.Instance.GetPooledStructure(type, false);
@@ -79,6 +84,7 @@ namespace Code.Managers.Building
             }
 
             UIManager.Instance.StructureSelected(m_CurrentStructureType, false, m_CurrentBuildObject);
+            m_MouseInputs.IsBuilding = false;
         }
 
         private void RotateBuilding(Vector2 v)

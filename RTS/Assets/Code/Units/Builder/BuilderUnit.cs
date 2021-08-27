@@ -34,6 +34,10 @@ namespace Code.Units.Builder
             m_SelectionCircle.SetActive(active);
         }
 
+        /// <summary>
+        /// ID of the type
+        /// </summary>
+        /// <returns></returns>
         public int GetUnitID()
         {
             return m_Agent.agentTypeID;
@@ -53,8 +57,6 @@ namespace Code.Units.Builder
                     break;
                 case StructureType.Barracks:
                     BuildManager.Instance.InitBuild(type);
-                    break;
-                case StructureType.None:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

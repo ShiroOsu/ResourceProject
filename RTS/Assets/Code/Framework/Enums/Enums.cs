@@ -10,7 +10,6 @@ namespace Code.Framework.Enums
 
     public enum StructureType
     {
-        None,
         Castle,
         Barracks,
     }
@@ -33,6 +32,8 @@ namespace Code.Framework.Enums
     {
         Builder,
         Solider,
+        Castle,
+        Barracks,
     }
     
     public enum LogMaskThreshold

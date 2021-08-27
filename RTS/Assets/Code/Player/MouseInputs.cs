@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Code.Framework;
 using Code.Framework.Interfaces;
 using Code.Logger;
 using Code.Managers;
@@ -31,6 +32,7 @@ namespace Code.Player
 
         // Public stuff
         public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
+        public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;
 
@@ -119,7 +121,6 @@ namespace Code.Player
 
             if (Physics.Raycast(ray, out var s_Hit, Mathf.Infinity, m_StructureMask))
             {
-                // yikes
                 if (s_Hit.transform.parent.parent.TryGetComponent(out IStructure structure))
                 {
                     ClickOnBuilding(structure);
@@ -147,6 +148,7 @@ namespace Code.Player
 
             m_CurrentStructure = structure;
             m_CurrentStructure.ShouldSelect(true);
+            CreateTimer.Instance.ShowTimer(true);
         }
 
         private void ClickOnUnit(GameObject unit)
@@ -166,10 +168,10 @@ namespace Code.Player
             var ray = m_Camera.ScreenPointToRay(m_MousePosition);
             Vector3 newPosition;
 
-            // When building, check if we hit a structure before ground, so builder unit does not move inside the structure
-            if (Physics.Raycast(ray, Mathf.Infinity, m_StructureMask))
+            // When building, Temp
+            if (IsBuilding)
                 return;
-
+            
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask))
             {
                 newPosition = hit.point;
@@ -296,6 +298,7 @@ namespace Code.Player
             // To prevent structure to be in selection mode 
             m_CurrentStructure?.ShouldSelect(false);
             m_CurrentStructure = null;
+            CreateTimer.Instance.ShowTimer(false);            
         }
 
         private void SetUnitGroup(bool select)

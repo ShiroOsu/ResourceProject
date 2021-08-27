@@ -38,7 +38,6 @@ namespace Code.Managers
             {
                 StructureType.Castle => castlePool.Rent(rent),
                 StructureType.Barracks => barracksPool.Rent(rent),
-                StructureType.None => null,
                 _ => null
             };
         }

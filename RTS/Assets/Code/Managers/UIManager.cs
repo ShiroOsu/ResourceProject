@@ -46,8 +46,6 @@ namespace Code.Managers
                 case StructureType.Barracks:
                     BarracksUI(select, structure);
                     break;
-                case StructureType.None:
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
