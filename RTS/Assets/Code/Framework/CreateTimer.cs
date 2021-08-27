@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 namespace Code.Framework
 {
+    // Temp
+    // Each structure needs own Timer + timerUI for so they can store a buffer of creations.
+    // Some structures buffer upgrades, other units etc..
     public class CreateTimer : MonoBehaviour
     {
         private static CreateTimer s_Instance;
@@ -21,7 +24,6 @@ namespace Code.Framework
         public bool TimerFinished { get; private set; }
         public bool TimerStarted { get; private set; }
 
-        // Temp
         public void Create(UnitType u_Type = default, StructureType s_Type = default)
         {
             TimerStarted = true;
