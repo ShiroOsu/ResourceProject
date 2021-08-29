@@ -92,6 +92,8 @@ namespace Code.Managers.Building
             m_CurrentBlueprintObject.transform.Rotate(Vector3.up, v.normalized.y * 20f);
         }
 
+        // When building place blueprint first, do a TimeEvent
+        // when TimeEvent.IsEventDone() == true, remove blueprint and place buildObject
         private void HandleBuild()
         {
             if (!m_DisplayStructurePlacement)

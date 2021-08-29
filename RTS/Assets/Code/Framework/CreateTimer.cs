@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Code.Framework
 {
     // Temp
-    // Each structure needs own Timer + timerUI for so they can store a buffer of creations.
+    // Each structure needs own Timer + timerUI, so they can store a buffer of creations
     // Some structures buffer upgrades, other units etc..
     public class CreateTimer : MonoBehaviour
     {

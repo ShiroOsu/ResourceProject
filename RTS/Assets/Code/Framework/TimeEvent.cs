@@ -257,5 +257,10 @@ namespace Code.Framework
         {
             m_OverTime += time;
         }
+
+        public bool IsEventDone(TimeEvent te)
+        {
+            return te.m_Done;
+        }
     }
 }
