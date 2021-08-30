@@ -1,7 +1,6 @@
 using System;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
-using Code.Logger;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,11 +12,12 @@ namespace Code.Structures.Castle
     {
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private CustomSizer3D m_Sizer3D;
-        
-        // Spawn location for builders
-        private Vector3 m_UnitSpawnPoint;
+        public Transform m_UnitSpawnPoint;
+
+        public Vector3 m_FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
+        public event Action<UnitType> OnSpawn;
 
         private void Awake()
         {
@@ -41,18 +41,18 @@ namespace Code.Structures.Castle
         private void SetFlagPosition()
         {
             FlagManager.Instance.SetFlagPosition(m_Flag);
-            m_UnitSpawnPoint = m_Flag.transform.position;
+            m_FlagPoint = m_Flag.transform.position;
         }
 
         public void OnSetSpawnFlagPosition()
         {
-            m_Flag ??= FlagManager.Instance.InstaniateNewFlag();
+            m_Flag ??= FlagManager.Instance.InstantiateNewFlag();
             m_SetSpawnFlag = true;
         }
 
         public void OnSpawnBuilderButton()
         {
-            SpawnManager.Instance.SpawnUnit(UnitType.Builder, gameObject.transform.position, m_UnitSpawnPoint);
+            OnSpawn?.Invoke(UnitType.Builder);
         }
 
         public void Destroy()

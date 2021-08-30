@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Code.Framework;
 using Code.Framework.Interfaces;
-using Code.Logger;
 using Code.Managers;
 using Player;
 using UnityEngine;
@@ -148,7 +146,6 @@ namespace Code.Player
 
             m_CurrentStructure = structure;
             m_CurrentStructure.ShouldSelect(true);
-            CreateTimer.Instance.ShowTimer(true);
         }
 
         private void ClickOnUnit(GameObject unit)
@@ -298,7 +295,6 @@ namespace Code.Player
             // To prevent structure to be in selection mode 
             m_CurrentStructure?.ShouldSelect(false);
             m_CurrentStructure = null;
-            CreateTimer.Instance.ShowTimer(false);            
         }
 
         private void SetUnitGroup(bool select)

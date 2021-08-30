@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Code.Framework;
 using Code.Structures.Castle;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,14 +11,23 @@ namespace Code.Managers.Structures
         [SerializeField] private GameObject m_Image = null;
         [SerializeField] private GameObject m_Info = null;
         [SerializeField] private GameObject m_UI = null;
-
+        
+        [SerializeField] private CastleTimer m_CreateTimer;
+        
         [SerializeField] private List<Button> m_ButtonList = new List<Button>();
 
         private Castle m_CastleRef;
-        
+
+        private void Update()
+        {
+            m_CreateTimer.TimerUpdate();
+        }
+
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_CastleRef = structure.GetComponent<Castle>();
+            m_CreateTimer.m_Castle = m_CastleRef;
+            m_CreateTimer.AddActionOnSpawn();
             
             m_ButtonList[0].onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
             m_ButtonList[1].onClick.AddListener(m_CastleRef.OnSetSpawnFlagPosition);

@@ -17,7 +17,7 @@ namespace Code.Managers
             PlaceFlag(flag);
         }
 
-        public GameObject InstaniateNewFlag()
+        public GameObject InstantiateNewFlag()
         {
             var newFlag = Instantiate(m_FlagPrefab);
             newFlag.SetActive(false);

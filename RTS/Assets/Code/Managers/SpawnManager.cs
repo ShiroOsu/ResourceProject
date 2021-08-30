@@ -1,7 +1,5 @@
-using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
-using Code.Logger;
 using UnityEngine;
 
 namespace Code.Managers
@@ -13,41 +11,10 @@ namespace Code.Managers
 
         public void SpawnUnit(UnitType type, Vector3 startPos, Vector3 endPos)
         {
-
-            // ?? 
-            FutureFunction(type, startPos, endPos);
-            
             var unit = PoolManager.Instance.GetPooledUnit(type, true);
             unit.transform.position = startPos;
-
-            // Spawn flag not set
-            if (endPos == Vector3.zero)
-            {
-                Log.Message("SpawnManager", "Spawn flag not set for " + type);
-                endPos = (startPos + new Vector3(10f, 0f, 0f));
-            }
-
             unit.TryGetComponent(out IUnit u);
             u.Move(endPos);
-        }
-
-        private void FutureFunction(UnitType type, Vector3 startPos, Vector3 endPos)
-        {
-            return;
-            
-            var spawnUnit = TimeEvent.EventCall(() =>
-            {
-                var unit = PoolManager.Instance.GetPooledUnit(type, true);
-                unit.transform.position = startPos;
-
-                if (endPos == Vector3.zero)
-                {
-                    endPos = (startPos + new Vector3(10f, 0f, 0f));
-                }
-
-                unit.TryGetComponent(out IUnit u);
-                u.Move(endPos);
-            }, this, 0.1f);
         }
     }
 }

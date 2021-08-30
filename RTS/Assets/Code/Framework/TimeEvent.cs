@@ -258,9 +258,9 @@ namespace Code.Framework
             m_OverTime += time;
         }
 
-        public bool IsEventDone(TimeEvent te)
+        public bool IsEventDone()
         {
-            return te.m_Done;
+            return m_Done;
         }
     }
 }

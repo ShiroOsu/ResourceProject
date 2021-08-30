@@ -44,7 +44,7 @@ namespace Code.Structures.Barracks
 
         public void OnSetSpawnFlagPosition()
         {
-            m_Flag ??= FlagManager.Instance.InstaniateNewFlag();
+            m_Flag ??= FlagManager.Instance.InstantiateNewFlag();
             m_SetSpawnFlag = true;
         }
 
