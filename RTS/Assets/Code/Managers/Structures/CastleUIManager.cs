@@ -8,9 +8,9 @@ namespace Code.Managers.Structures
 {
     public class CastleUIManager : MonoBehaviour
     {
-        [SerializeField] private GameObject m_Image = null;
-        [SerializeField] private GameObject m_Info = null;
-        [SerializeField] private GameObject m_UI = null;
+        [SerializeField] private GameObject m_Image;
+        [SerializeField] private GameObject m_Info;
+        [SerializeField] private GameObject m_UI;
         
         [SerializeField] private CastleTimer m_CastleTimer;
         
@@ -18,9 +18,20 @@ namespace Code.Managers.Structures
 
         private Castle m_CastleRef;
 
-        private void Update()
+        private void Update() 
         {
             m_CastleTimer.TimerUpdate();
+
+            // Probably works when prefab is setup correctly in scene
+            // Currently m_Info is the root of everything in middleUI
+            // if (m_CastleTimer.IsSpawning)
+            // {
+            //     m_Info.SetActive(false);
+            // } 
+            // else if (m_CastleTimer.m_Timer.activeInHierarchy)
+            // {
+            //     m_Info.SetActive(true);
+            // }
         }
 
         public void EnableMainUI(bool active, GameObject structure)

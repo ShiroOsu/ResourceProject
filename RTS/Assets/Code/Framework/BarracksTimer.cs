@@ -6,7 +6,6 @@ using Code.Framework.TextureListByEnum;
 using Code.Logger;
 using Code.Managers;
 using Code.Structures.Barracks;
-using Code.Structures.Castle;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +21,7 @@ namespace Code.Framework
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
         private UnitType m_CurrentTypeToSpawn;
-        private bool m_IsSpawning;
+        public bool IsSpawning { get; private set; }
         private float m_CurrentTimeOnSpawn;
 
         public Barracks m_Barracks { get; set; }
@@ -51,7 +50,7 @@ namespace Code.Framework
             
             m_TimerFill.maxValue = m_SpawnTimeSoldier;
             
-            if (m_IsSpawning)
+            if (IsSpawning)
             {
                 m_CreateImage.texture = GetUnitTexture(m_CurrentTypeToSpawn);
                 ShowTimer(true);
@@ -67,7 +66,7 @@ namespace Code.Framework
         {
             m_SpawnQueue.Enqueue(type);
 
-            if (!m_IsSpawning)
+            if (!IsSpawning)
             {
                 StartCoroutine(SpawnRoutine());
             }
@@ -75,7 +74,7 @@ namespace Code.Framework
         
         private IEnumerator SpawnRoutine()
         {
-            m_IsSpawning = true;
+            IsSpawning = true;
             
             while (m_SpawnQueue.Count > 0)
             {
@@ -95,7 +94,7 @@ namespace Code.Framework
                      m_Barracks.FlagPoint);
             }
 
-            m_IsSpawning = false;
+            IsSpawning = false;
         }
 
         private void ShowTimer(bool show)

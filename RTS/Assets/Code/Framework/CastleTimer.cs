@@ -13,16 +13,17 @@ namespace Code.Framework
 {
     public class CastleTimer : MonoBehaviour
     {
-        [SerializeField] private GameObject m_Timer;
-        [SerializeField] private RawImage m_CreateImage;
+        public GameObject m_Timer;
         [SerializeField] private Slider m_TimerFill;
         [SerializeField] private TextureList m_CreatableTextures;
         [SerializeField] private float m_SpawnTimeBuilder;
+        [SerializeField] private RawImage[] m_ImageQueue;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
         private UnitType m_CurrentTypeToSpawn;
-        private bool m_IsSpawning;
+        public bool IsSpawning { get; private set; }
         private float m_CurrentTimeOnSpawn;
+        private int i = 0;
 
         public Castle m_Castle { get; set; }
 
@@ -50,9 +51,20 @@ namespace Code.Framework
             
             m_TimerFill.maxValue = m_SpawnTimeBuilder;
             
-            if (m_IsSpawning)
+            if (IsSpawning)
             {
-                m_CreateImage.texture = GetUnitTexture(m_CurrentTypeToSpawn);
+                foreach (var image in m_ImageQueue)
+                {
+                    if (image.texture == null)
+                    {
+                        image.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        image.gameObject.SetActive(true);
+                    }
+                }
+                
                 ShowTimer(true);
                 m_TimerFill.value = m_CurrentTimeOnSpawn;
             }
@@ -64,9 +76,17 @@ namespace Code.Framework
 
         private void Spawn(UnitType type)
         {
+            if (i >= m_ImageQueue.Length)
+            {
+                Log.Message("CastleTimer.cs", "Queue is full!");
+                return;
+            }
+            
             m_SpawnQueue.Enqueue(type);
+            m_ImageQueue[i].texture = GetUnitTexture(type);
+            i++;
 
-            if (!m_IsSpawning)
+            if (!IsSpawning)
             {
                 StartCoroutine(SpawnRoutine());
             }
@@ -74,13 +94,13 @@ namespace Code.Framework
         
         private IEnumerator SpawnRoutine()
         {
-            m_IsSpawning = true;
+            IsSpawning = true;
             
             while (m_SpawnQueue.Count > 0)
             {
                 float timeToSpawn = m_SpawnTimeBuilder;
                 m_CurrentTimeOnSpawn = 0f;
-            
+
                 var unitType = m_SpawnQueue.Dequeue();
                 m_CurrentTypeToSpawn = unitType;
             
@@ -92,31 +112,26 @@ namespace Code.Framework
                 
                 SpawnManager.Instance.SpawnUnit(unitType, m_Castle.m_UnitSpawnPoint.position, 
                     m_Castle.FlagPoint);
+
+                RemoveImageInQueue();
             }
 
-            m_IsSpawning = false;
+            IsSpawning = false;
+        }
+
+        private void RemoveImageInQueue()
+        {
+            i--;
+            m_ImageQueue[i].gameObject.SetActive(false);
+            m_ImageQueue[i].texture = null;
         }
 
         private void ShowTimer(bool show)
         {
             m_Timer.SetActive(show);
-
-            if (!m_CreateImage.texture)
-            {
-                ShowImage(false);
-            }
-            else
-            {
-                ShowImage(true);
-            }
         }
 
-        private void ShowImage(bool show)
-        {
-            m_CreateImage.gameObject.SetActive(show);
-        }
-
-        // Temp
+        // Temp ? : Make Singleton with ScriptableObject containing all textures
         private Texture GetUnitTexture(UnitType type)
         {
             var unitTexture = type switch
