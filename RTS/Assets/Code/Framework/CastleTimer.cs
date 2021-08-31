@@ -54,14 +54,7 @@ namespace Code.Framework
             {
                 foreach (var image in m_ImageQueue)
                 {
-                    if (image.texture == null)
-                    {
-                        image.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        image.gameObject.SetActive(true);
-                    }
+                    image.gameObject.SetActive(image.texture != null);
                 }
                 
                 ShowTimer(true);
@@ -82,7 +75,7 @@ namespace Code.Framework
             }
             
             m_SpawnQueue.Enqueue(type);
-            m_ImageQueue[i].texture = GetUnitTexture(type);
+            m_ImageQueue[i].texture = AllTextures.Instance.GetUnitTexture(type);
             i++;
 
             if (!IsSpawning)
@@ -127,19 +120,6 @@ namespace Code.Framework
         private void ShowTimer(bool show)
         {
             m_Timer.SetActive(show);
-        }
-
-        // Temp ? : Make Singleton with ScriptableObject containing all textures
-        private Texture GetUnitTexture(UnitType type)
-        {
-            var unitTexture = type switch
-            {
-                UnitType.Builder => m_CreatableTextures[TextureAssetType.Builder],
-                UnitType.Solider => m_CreatableTextures[TextureAssetType.Solider],
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-            };
-        
-            return unitTexture;
         }
     }
 }
