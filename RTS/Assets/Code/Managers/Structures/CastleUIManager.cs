@@ -12,7 +12,7 @@ namespace Code.Managers.Structures
         [SerializeField] private GameObject m_Info = null;
         [SerializeField] private GameObject m_UI = null;
         
-        [SerializeField] private CastleTimer m_CreateTimer;
+        [SerializeField] private CastleTimer m_CastleTimer;
         
         [SerializeField] private List<Button> m_ButtonList = new List<Button>();
 
@@ -20,14 +20,14 @@ namespace Code.Managers.Structures
 
         private void Update()
         {
-            m_CreateTimer.TimerUpdate();
+            m_CastleTimer.TimerUpdate();
         }
 
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_CastleRef = structure.GetComponent<Castle>();
-            m_CreateTimer.m_Castle = m_CastleRef;
-            m_CreateTimer.AddActionOnSpawn();
+            m_CastleTimer.m_Castle = m_CastleRef;
+            m_CastleTimer.AddActionOnSpawn(active);
             
             m_ButtonList[0].onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
             m_ButtonList[1].onClick.AddListener(m_CastleRef.OnSetSpawnFlagPosition);

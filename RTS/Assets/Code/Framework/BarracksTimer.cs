@@ -5,26 +5,27 @@ using Code.Framework.Enums;
 using Code.Framework.TextureListByEnum;
 using Code.Logger;
 using Code.Managers;
+using Code.Structures.Barracks;
 using Code.Structures.Castle;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Code.Framework
 {
-    public class CastleTimer : MonoBehaviour
+    public class BarracksTimer : MonoBehaviour
     {
         [SerializeField] private GameObject m_Timer;
         [SerializeField] private RawImage m_CreateImage;
         [SerializeField] private Slider m_TimerFill;
         [SerializeField] private TextureList m_CreatableTextures;
-        [SerializeField] private float m_SpawnTimeBuilder;
+        [SerializeField] private float m_SpawnTimeSoldier;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
         private UnitType m_CurrentTypeToSpawn;
         private bool m_IsSpawning;
         private float m_CurrentTimeOnSpawn;
 
-        public Castle m_Castle { get; set; }
+        public Barracks m_Barracks { get; set; }
 
         private void Awake()
         {
@@ -35,20 +36,20 @@ namespace Code.Framework
         {
             if (add)
             {
-                m_Castle.OnSpawn += Spawn;
+                m_Barracks.OnSpawn += Spawn;
             }
             else
             {
-                m_Castle.OnSpawn -= Spawn;
+                m_Barracks.OnSpawn -= Spawn;
             }
         }
 
         public void TimerUpdate()
         {
-            if (!m_Castle || !(m_CurrentTimeOnSpawn > 0f))
+            if (!m_Barracks || !(m_CurrentTimeOnSpawn > 0f))
                 return;
             
-            m_TimerFill.maxValue = m_SpawnTimeBuilder;
+            m_TimerFill.maxValue = m_SpawnTimeSoldier;
             
             if (m_IsSpawning)
             {
@@ -78,7 +79,7 @@ namespace Code.Framework
             
             while (m_SpawnQueue.Count > 0)
             {
-                float timeToSpawn = m_SpawnTimeBuilder;
+                float timeToSpawn = m_SpawnTimeSoldier;
                 m_CurrentTimeOnSpawn = 0f;
             
                 var unitType = m_SpawnQueue.Dequeue();
@@ -90,8 +91,8 @@ namespace Code.Framework
                     yield return null;
                 }
                 
-                SpawnManager.Instance.SpawnUnit(unitType, m_Castle.m_UnitSpawnPoint.position, 
-                    m_Castle.FlagPoint);
+                SpawnManager.Instance.SpawnUnit(unitType, m_Barracks.m_UnitSpawnPoint.position, 
+                     m_Barracks.FlagPoint);
             }
 
             m_IsSpawning = false;

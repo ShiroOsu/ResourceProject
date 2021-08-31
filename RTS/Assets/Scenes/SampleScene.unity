@@ -2010,6 +2010,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barracks
       objectReference: {fileID: 0}
+    - target: {fileID: 2490625688140769572, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2490625688140769573, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2059,6 +2063,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 643214863}
     - target: {fileID: 2490625688140769574, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_Info
+      value: 
+      objectReference: {fileID: 7666923750933712708}
+    - target: {fileID: 2490625688140769574, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
       propertyPath: m_Image
       value: 
       objectReference: {fileID: 1892052341}
@@ -2066,6 +2074,10 @@ PrefabInstance:
       propertyPath: m_SpawnSoldier
       value: 
       objectReference: {fileID: 1656802554}
+    - target: {fileID: 2490625688140769574, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_BarracksTimer
+      value: 
+      objectReference: {fileID: 2490625689852621985}
     - target: {fileID: 2490625688140769574, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
       propertyPath: m_ButtonList.Array.size
       value: 2
@@ -2078,8 +2090,43 @@ PrefabInstance:
       propertyPath: m_ButtonList.Array.data[1]
       value: 
       objectReference: {fileID: 271733068}
+    - target: {fileID: 7004004397777367530, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_Timer
+      value: 
+      objectReference: {fileID: 7666923750933712706}
+    - target: {fileID: 7004004397777367530, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_TimerFill
+      value: 
+      objectReference: {fileID: 7666923750933712707}
+    - target: {fileID: 7004004397777367530, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_CreateImage
+      value: 
+      objectReference: {fileID: 7666923750933712705}
+    - target: {fileID: 7004004397777367530, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_SpawnTimeBuilder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004004397777367530, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_SpawnTimeSoldier
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7004004397777367530, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+      propertyPath: m_CreatableTextures
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d08953aeb610bb46a02c2597149cd16, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+--- !u!114 &2490625689852621985 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7004004397777367530, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
+  m_PrefabInstance: {fileID: 2490625689852621984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3210f0c058b34fe4588146438456f44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2850923382761263468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2332,7 +2379,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2390585687737926775, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2676067811590156957, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2353,6 +2400,14 @@ PrefabInstance:
     - target: {fileID: 3251763478086143918, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3601337032390508450, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3717961684603117109, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3876866353383686654, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_LocalScale.x
@@ -2429,6 +2484,38 @@ PrefabInstance:
     - target: {fileID: 5501049096396229912, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 14.900002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1105
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623359108431752909, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7666923749773590482, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_Pivot.x
@@ -3054,6 +3141,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7666923750933712705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 381453990287765354, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+  m_PrefabInstance: {fileID: 7666923750933712700}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7666923750933712706 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1158633269316199229, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+  m_PrefabInstance: {fileID: 7666923750933712700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7666923750933712707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 350726999995287798, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+  m_PrefabInstance: {fileID: 7666923750933712700}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666923750933712706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7666923750933712708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3717961684603117109, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+  m_PrefabInstance: {fileID: 7666923750933712700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7880901557956406054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3097,6 +3216,10 @@ PrefabInstance:
       propertyPath: m_ButtonList
       value: 
       objectReference: {fileID: 11400000, guid: b8566ebeba4d6b6418a72c96453789aa, type: 2}
+    - target: {fileID: 7880901558430606490, guid: c4cdaa824b726ef4ea2a8204494e1654, type: 3}
+      propertyPath: m_CastleTimer
+      value: 
+      objectReference: {fileID: 7880901557956406055}
     - target: {fileID: 7880901558430606490, guid: c4cdaa824b726ef4ea2a8204494e1654, type: 3}
       propertyPath: m_CreateTimer
       value: 

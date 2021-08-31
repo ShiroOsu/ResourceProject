@@ -14,7 +14,7 @@ namespace Code.Structures.Castle
         [SerializeField] private CustomSizer3D m_Sizer3D;
         public Transform m_UnitSpawnPoint;
 
-        public Vector3 m_FlagPoint { get; private set; }
+        public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
         public event Action<UnitType> OnSpawn;
@@ -41,7 +41,7 @@ namespace Code.Structures.Castle
         private void SetFlagPosition()
         {
             FlagManager.Instance.SetFlagPosition(m_Flag);
-            m_FlagPoint = m_Flag.transform.position;
+            FlagPoint = m_Flag.transform.position;
         }
 
         public void OnSetSpawnFlagPosition()

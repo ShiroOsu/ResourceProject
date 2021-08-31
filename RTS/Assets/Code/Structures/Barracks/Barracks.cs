@@ -1,3 +1,4 @@
+using System;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Managers;
@@ -11,11 +12,14 @@ namespace Code.Structures.Barracks
     {
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private CustomSizer3D m_Sizer3D;
+        public Transform m_UnitSpawnPoint;
         
         // Soldier Spawning
-        private Vector3 m_UnitSpawnPoint;
+        public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
+
+        public event Action<UnitType> OnSpawn;
 
         private void Awake()
         {
@@ -39,7 +43,7 @@ namespace Code.Structures.Barracks
         private void SetFlagPosition()
         {
             FlagManager.Instance.SetFlagPosition(m_Flag);
-            m_UnitSpawnPoint = m_Flag.transform.position;
+            FlagPoint = m_Flag.transform.position;
         }
 
         public void OnSetSpawnFlagPosition()
@@ -50,7 +54,7 @@ namespace Code.Structures.Barracks
 
         public void SpawnSoldier()
         {
-            SpawnManager.Instance.SpawnUnit(UnitType.Solider, gameObject.transform.position, m_UnitSpawnPoint);
+            OnSpawn?.Invoke(UnitType.Solider);
         }
 
         public void ShouldSelect(bool select)
