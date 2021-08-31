@@ -20,7 +20,6 @@ namespace Code.Framework
         [SerializeField] private RawImage[] m_ImageQueue;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
-        private UnitType m_CurrentTypeToSpawn;
         public bool IsSpawning { get; private set; }
         private float m_CurrentTimeOnSpawn;
         private int i = 0;
@@ -102,7 +101,6 @@ namespace Code.Framework
                 m_CurrentTimeOnSpawn = 0f;
 
                 var unitType = m_SpawnQueue.Dequeue();
-                m_CurrentTypeToSpawn = unitType;
             
                 while (m_CurrentTimeOnSpawn < timeToSpawn)
                 {
