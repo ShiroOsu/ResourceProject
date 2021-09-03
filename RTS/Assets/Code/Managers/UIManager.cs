@@ -16,6 +16,7 @@ namespace Code.Managers
         [Header("Units")]
         [SerializeField] private BuilderUIManager m_Builder;
         [SerializeField] private SoldierUIManager m_Soldier;
+        [SerializeField] private HorseUIManager m_Horse;
 
         [Header("Structures")]
         [SerializeField] private CastleUIManager m_Castle;
@@ -30,6 +31,9 @@ namespace Code.Managers
                     break;
                 case UnitType.Solider:
                     SoliderUI(select, unit);
+                    break;
+                case UnitType.Horse:
+                    HorseUI(select, unit);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -59,6 +63,11 @@ namespace Code.Managers
         private void SoliderUI(bool activate, GameObject unit)
         {
             m_Soldier.EnableMainUI(activate, unit);
+        }
+
+        private void HorseUI(bool activate, GameObject unit)
+        {
+            m_Horse.EnableMainUI(activate, unit);
         }
 
         private void CastleUI(bool activate, GameObject structure)

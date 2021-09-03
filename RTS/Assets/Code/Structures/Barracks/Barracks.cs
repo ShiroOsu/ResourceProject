@@ -57,6 +57,11 @@ namespace Code.Structures.Barracks
             OnSpawn?.Invoke(UnitType.Solider);
         }
 
+        public void SpawnHorse()
+        {
+            OnSpawn?.Invoke(UnitType.Horse);
+        }
+
         public void ShouldSelect(bool select)
         {
             UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);

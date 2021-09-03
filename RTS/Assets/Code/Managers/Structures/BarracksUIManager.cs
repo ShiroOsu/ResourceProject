@@ -31,6 +31,7 @@ namespace Code.Managers.Structures
 
             m_ButtonList[0].onClick.AddListener(m_BarracksRef.SpawnSoldier);
             m_ButtonList[1].onClick.AddListener(m_BarracksRef.OnSetSpawnFlagPosition);
+            m_ButtonList[2].onClick.AddListener(m_BarracksRef.SpawnHorse);
 
             m_Image.SetActive(active);
             m_Info.SetActive(active);

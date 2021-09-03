@@ -7,6 +7,7 @@ namespace Code.Framework.Enums
         Null, // default
         Builder,
         Solider,
+        Horse,
     }
 
     public enum StructureType
@@ -34,6 +35,7 @@ namespace Code.Framework.Enums
     {
         Builder,
         Solider,
+        Horse,
         Castle,
         Barracks,
     }

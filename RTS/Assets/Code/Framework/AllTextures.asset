@@ -21,3 +21,5 @@ MonoBehaviour:
     type: 3
   - tex: {fileID: 2800000, guid: d70fc63896ed02441bcc4733e110ee2e, type: 3}
     type: 2
+  - tex: {fileID: 2800000, guid: a0f5dfaeb6f765f499317c95bc60779a, type: 3}
+    type: 2

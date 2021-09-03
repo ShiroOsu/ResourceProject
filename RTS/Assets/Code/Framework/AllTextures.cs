@@ -2,6 +2,7 @@ using System;
 using Code.Framework.Enums;
 using Code.Framework.TextureListByEnum;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Code.Framework
 {
@@ -18,6 +19,7 @@ namespace Code.Framework
             {
                 UnitType.Builder => m_Textures[TextureAssetType.Builder],
                 UnitType.Solider => m_Textures[TextureAssetType.Solider],
+                UnitType.Horse => m_Textures[TextureAssetType.Horse],
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 

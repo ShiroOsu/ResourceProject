@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Framework.TextureListByEnum;
@@ -11,7 +12,6 @@ namespace Code.Managers.Units
 {
     public class GroupUIManager : MonoBehaviour
     {
-        [SerializeField] private TextureList m_TextureAssetList;
         [SerializeField] private GameObject m_GetParent;
 
         private GameObject m_ParentObject;
@@ -20,6 +20,7 @@ namespace Code.Managers.Units
 
         private int m_BuilderID;
         private int m_SoldierID;
+        private int m_HorseID;
 
         private void Awake()
         {
@@ -28,6 +29,7 @@ namespace Code.Managers.Units
 
             m_BuilderID = DataManager.Instance.unitData.builderID;
             m_SoldierID = DataManager.Instance.unitData.soldierID;
+            m_HorseID = DataManager.Instance.unitData.horseID;
 
             m_ParentObject = m_GetParent.transform.parent.gameObject;
 
@@ -41,12 +43,17 @@ namespace Code.Managers.Units
 
                 if (u.GetUnitID() == m_BuilderID)
                 {
-                    m_TextureList.Add(m_TextureAssetList[TextureAssetType.Builder]);
+                    m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Builder));
                 }
 
                 if (u.GetUnitID() == m_SoldierID)
                 {
-                    m_TextureList.Add(m_TextureAssetList[TextureAssetType.Solider]);
+                    m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Solider));
+                }
+
+                if (u.GetUnitID() == m_HorseID)
+                {
+                    m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Horse));
                 }
             }
 
@@ -57,7 +64,7 @@ namespace Code.Managers.Units
         {
             int index = 0; // Current row
             int ySpacing = 0;
-            const int xSpacing = 30;
+            const int xSpacing = 31;
             const int x = 35;
 
             foreach (var newObject in m_TextureList.Select(tex => CreateNewImage(tex, m_ParentObject.transform)))

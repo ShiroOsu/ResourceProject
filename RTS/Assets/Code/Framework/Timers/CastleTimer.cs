@@ -1,22 +1,19 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Framework.Enums;
-using Code.Framework.TextureListByEnum;
 using Code.Logger;
 using Code.Managers;
-using Code.Structures.Barracks;
+using Code.Structures.Castle;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Code.Framework
 {
-    public class BarracksTimer : MonoBehaviour
+    public class CastleTimer : MonoBehaviour
     {
-        [SerializeField] private GameObject m_Timer;
+        public GameObject m_Timer;
         [SerializeField] private Slider m_TimerFill;
-        [SerializeField] private TextureList m_CreatableTextures;
-        [SerializeField] private float m_SpawnTimeSoldier;
+        [SerializeField] private float m_SpawnTimeBuilder;
         [SerializeField] private RawImage[] m_ImageQueue;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
@@ -24,7 +21,7 @@ namespace Code.Framework
         private float m_CurrentTimeOnSpawn;
         private int i = 0;
 
-        public Barracks m_Barracks { get; set; }
+        public Castle m_Castle { get; set; }
 
         private void Awake()
         {
@@ -35,21 +32,20 @@ namespace Code.Framework
         {
             if (add)
             {
-                m_Barracks.OnSpawn += Spawn;
+                m_Castle.OnSpawn += Spawn;
             }
             else
             {
-                m_Barracks.OnSpawn -= Spawn;
+                m_Castle.OnSpawn -= Spawn;
             }
         }
 
         public void TimerUpdate()
         {
-            if (!m_Barracks || !(m_CurrentTimeOnSpawn > 0f))
+            if (!m_Castle || !(m_CurrentTimeOnSpawn > 0f))
                 return;
             
-            // TODO: Change depending on what is in queue to spawn
-            m_TimerFill.maxValue = m_SpawnTimeSoldier;
+            m_TimerFill.maxValue = m_SpawnTimeBuilder;
             
             if (IsSpawning)
             {
@@ -71,7 +67,7 @@ namespace Code.Framework
         {
             if (i >= m_ImageQueue.Length)
             {
-                Log.Message("BarracksTimer.cs", "Queue is full!");
+                Log.Message("CastleTimer.cs", "Queue is full!");
                 return;
             }
             
@@ -91,9 +87,9 @@ namespace Code.Framework
             
             while (m_SpawnQueue.Count > 0)
             {
-                float timeToSpawn = m_SpawnTimeSoldier;
+                float timeToSpawn = m_SpawnTimeBuilder;
                 m_CurrentTimeOnSpawn = 0f;
-            
+
                 var unitType = m_SpawnQueue.Dequeue();
             
                 while (m_CurrentTimeOnSpawn < timeToSpawn)
@@ -102,9 +98,9 @@ namespace Code.Framework
                     yield return null;
                 }
                 
-                SpawnManager.Instance.SpawnUnit(unitType, m_Barracks.m_UnitSpawnPoint.position, 
-                     m_Barracks.FlagPoint);
-                
+                SpawnManager.Instance.SpawnUnit(unitType, m_Castle.m_UnitSpawnPoint.position, 
+                    m_Castle.FlagPoint);
+
                 RemoveImageInQueue();
             }
 
