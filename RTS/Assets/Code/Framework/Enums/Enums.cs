@@ -1,7 +1,6 @@
-using System;
-
 namespace Code.Framework.Enums
 {
+    
     public enum UnitType
     {
         Null, // default

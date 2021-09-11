@@ -19,6 +19,11 @@ namespace Code.Managers.Units
 
         private BuilderUnit m_BuilderUnit;
 
+        // Have UI Manager have a list for all buttons in menu
+        // make it take in a list from selected GameObject which will determine 
+        // what buttons will be active and set to what it should be
+        // some buttons will be already set for some, such as flag, stop, attack, etc. 
+        
         public void EnableMainUI(bool active, GameObject unit)
         {
             m_BuilderUnit = unit.GetComponent<BuilderUnit>();

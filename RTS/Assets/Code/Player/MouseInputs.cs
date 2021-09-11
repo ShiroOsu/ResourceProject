@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Code.Framework.Interfaces;
 using Code.Managers;
+using Code.Managers.Building;
 using Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -119,6 +120,12 @@ namespace Code.Player
 
             if (Physics.Raycast(ray, out var s_Hit, Mathf.Infinity, m_StructureMask))
             {
+                // Click on blueprint prefab, return to avoid error on mouse callback
+                if (s_Hit.transform.TryGetComponent(out BuildComponents _))
+                {
+                    return;
+                }
+                
                 if (s_Hit.transform.parent.parent.TryGetComponent(out IStructure structure))
                 {
                     ClickOnBuilding(structure);

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Code.Framework;
 using Code.Framework.Enums;
+using Code.Framework.Extensions;
 using Code.Logger;
 using Code.Player;
 using Code.Player.Camera;
@@ -92,16 +93,14 @@ namespace Code.Managers.Building
             m_CurrentBlueprintObject.transform.Rotate(Vector3.up, v.normalized.y * 20f);
         }
 
-        // When building place blueprint first, do a TimeEvent
-        // when TimeEvent.IsEventDone() == true, remove blueprint and place buildObject
         private void HandleBuild()
         {
             if (!m_DisplayStructurePlacement)
                 return;
 
-            if (Mouse.current.leftButton.isPressed)
+            if (Keyboard.current.escapeKey.isPressed)
             {
-                Log.Message("BuildManager.cs", "DisableBuildPlacement by left click is this intended?");
+                Log.Message("BuildManager.cs", "DisableBuildPlacement by ESC key");
                 DisableBuildPlacement(false);
                 return;
             }
@@ -129,7 +128,7 @@ namespace Code.Managers.Building
                 
                 if (CanBuild())
                 {
-                    if (Mouse.current.rightButton.wasPressedThisFrame)
+                    if (Extensions.WasMousePressedThisFrame())
                     {
                         DisableBuildPlacement(true);
 
@@ -143,7 +142,7 @@ namespace Code.Managers.Building
 
                 if (!CanBuild())
                 {
-                    if (Mouse.current.rightButton.wasPressedThisFrame)
+                    if (Extensions.WasMousePressedThisFrame())
                     {
                        Log.Error("BuildManager.cs", "Can not place building here!");
                     }               
