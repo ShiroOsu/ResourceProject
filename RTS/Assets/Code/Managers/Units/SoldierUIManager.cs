@@ -9,7 +9,7 @@ namespace Code.Managers.Units
 
         public void EnableMainUI(bool active, GameObject unit)
         {
-            //m_Image.SetActive(active);
+            m_Image.SetActive(active);
             m_UI.SetActive(active);
         }
     }
