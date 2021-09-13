@@ -1,25 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net;
 using Code.Framework.Enums;
+using Code.Framework.Timers;
 using Code.Logger;
 using Code.Managers;
 using Code.Structures.Barracks;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 namespace Code.Framework
 {
     public class BarracksTimer : MonoBehaviour
     {
-        [SerializeField] private GameObject m_Timer;
-        [SerializeField] private Slider m_TimerFill;
-        [SerializeField] private float m_SpawnTimeSoldier;
-        [SerializeField] private float m_SpawnTimeHorse;
-        [SerializeField] private RawImage[] m_ImageQueue;
+        public GameObject m_Timer;
+        public Slider m_TimerFill;
+        public float m_SpawnTimeSoldier;
+        public float m_SpawnTimeHorse;
+        public RawImage[] m_ImageQueue;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
         public bool IsSpawning { get; private set; }
@@ -28,28 +26,25 @@ namespace Code.Framework
         private float m_CurrentUnitTimeSpawn;
         private int i = 0;
 
-        public Barracks m_Barracks { get; set; }
+        public Barracks Barracks { get; set; }
 
-        private void Awake()
-        {
-            ShowTimer(false);
-        }
-
+        public CreateTimer CreateTimer { get; set; }
+        
         public void AddActionOnSpawn(bool add)
         {
             if (add)
             {
-                m_Barracks.OnSpawn += Spawn;
+                Barracks.OnSpawn += Spawn;
             }
             else
             {
-                m_Barracks.OnSpawn -= Spawn;
+                Barracks.OnSpawn -= Spawn;
             }
         }
 
         public void TimerUpdate()
         {
-            if (!m_Barracks || !(m_CurrentTimeOnSpawn > 0f))
+            if (!Barracks || !(m_CurrentTimeOnSpawn > 0f))
                 return;
 
             m_TimerFill.maxValue = m_CurrentUnitTimeSpawn;
@@ -119,8 +114,8 @@ namespace Code.Framework
                     yield return null;
                 }
                 
-                SpawnManager.Instance.SpawnUnit(unitType, m_Barracks.m_UnitSpawnPoint.position, 
-                     m_Barracks.FlagPoint);
+                SpawnManager.Instance.SpawnUnit(unitType, Barracks.m_UnitSpawnPoint.position, 
+                     Barracks.FlagPoint);
                 
                 RemoveImageInQueue();
             }
@@ -146,7 +141,7 @@ namespace Code.Framework
             }
         }
 
-        private void ShowTimer(bool show)
+        public void ShowTimer(bool show)
         {
             m_Timer.SetActive(show);
         }

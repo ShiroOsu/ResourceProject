@@ -520,6 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450992237114013124}
   - component: {fileID: 8241956571997181237}
+  - component: {fileID: 5900715489661084611}
   m_Layer: 5
   m_Name: CreateTimer
   m_TagString: Untagged
@@ -609,6 +610,30 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5900715489661084611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7398021507534274302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bdd92fe88ad93e40a029447d26479b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TimerFill: {fileID: 8241956571997181237}
+  m_ImageQueue:
+  - {fileID: 8355432876200489641}
+  - {fileID: 7653623056473202238}
+  - {fileID: 293968185183458202}
+  - {fileID: 6904451862697526499}
+  - {fileID: 4752420685199156811}
+  - {fileID: 1848496902484875275}
+  - {fileID: 1019995182796724443}
+  - {fileID: 410648015494205388}
+  - {fileID: 310318973518897151}
+  - {fileID: 2638877694183124477}
 --- !u!1 &8346543388089986248
 GameObject:
   m_ObjectHideFlags: 0

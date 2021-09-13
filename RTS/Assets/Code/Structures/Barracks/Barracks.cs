@@ -1,4 +1,5 @@
 using System;
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Managers;
@@ -12,14 +13,16 @@ namespace Code.Structures.Barracks
     {
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private CustomSizer3D m_Sizer3D;
+        public float m_SpawnTimeSoldier;
+        public float m_SpawnTimeHorse;
         public Transform m_UnitSpawnPoint;
-        
-        // Soldier Spawning
+        public event Action<UnitType> OnSpawn;
+
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
-
-        public event Action<UnitType> OnSpawn;
+        public BarracksTimer BarracksTimer { get; set; }
+        public bool HasCreateTimer { get; set; }
 
         private void Awake()
         {
@@ -29,6 +32,11 @@ namespace Code.Structures.Barracks
 
         private void Update()
         {
+            if (BarracksTimer)
+            {
+                BarracksTimer.TimerUpdate();
+            }
+            
             if (Mouse.current.rightButton.isPressed)
             {
                 m_SetSpawnFlag = false;
@@ -65,6 +73,9 @@ namespace Code.Structures.Barracks
         public void ShouldSelect(bool select)
         {
             UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
+            BarracksTimer.Barracks = this;
+            BarracksTimer.ShowTimer(false);
+            BarracksTimer.AddActionOnSpawn(select);
 
             if (m_Flag != null)
                 m_Flag.SetActive(select);

@@ -1787,5 +1787,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NavMeshObstacle: {fileID: 256301526081307544}
   m_Sizer3D: {fileID: 4968773079027195983}
+  m_SpawnTimeBuilder: 2
   m_UnitSpawnPoint: {fileID: 3674316510783639331}
-  m_Slider: {fileID: 0}

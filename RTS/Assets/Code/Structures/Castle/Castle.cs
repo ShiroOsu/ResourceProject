@@ -1,4 +1,5 @@
 using System;
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Managers;
@@ -12,12 +13,14 @@ namespace Code.Structures.Castle
     {
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private CustomSizer3D m_Sizer3D;
+        public float m_SpawnTimeBuilder;
         public Transform m_UnitSpawnPoint;
 
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
         public event Action<UnitType> OnSpawn;
+        public CastleTimer CastleTimer { get; set; }
 
         private void Awake()
         {
@@ -27,6 +30,11 @@ namespace Code.Structures.Castle
 
         private void Update()
         {
+            if (CastleTimer)
+            {
+                CastleTimer.TimerUpdate();
+            }
+            
             if (Mouse.current.rightButton.isPressed)
             {
                 m_SetSpawnFlag = false;
@@ -68,7 +76,10 @@ namespace Code.Structures.Castle
         public void ShouldSelect(bool select)
         {
             UIManager.Instance.StructureSelected(StructureType.Castle, select, gameObject);
-
+            CastleTimer.Castle = this;
+            CastleTimer.ShowTimer(false);
+            CastleTimer.AddActionOnSpawn(select);
+            
             if (m_Flag != null)
                 m_Flag.SetActive(select);
 

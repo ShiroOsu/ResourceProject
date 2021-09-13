@@ -1569,6 +1569,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NavMeshObstacle: {fileID: 6792374039735579664}
   m_Sizer3D: {fileID: 8574918964120335587}
+  m_SpawnTimeSoldier: 3
+  m_SpawnTimeHorse: 5
   m_UnitSpawnPoint: {fileID: 1703809821687144157}
 --- !u!1 &1082441569887178159
 GameObject:

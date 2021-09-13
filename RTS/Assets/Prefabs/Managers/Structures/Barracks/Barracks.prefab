@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2490625688140769573}
   - component: {fileID: 2490625688140769574}
-  - component: {fileID: 7004004397777367530}
   m_Layer: 0
   m_Name: Barracks
   m_TagString: Untagged
@@ -45,23 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Image: {fileID: 0}
+  m_Info: {fileID: 0}
   m_UI: {fileID: 0}
   m_BarracksTimer: {fileID: 0}
   m_ButtonList: []
---- !u!114 &7004004397777367530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2490625688140769572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3210f0c058b34fe4588146438456f44b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Timer: {fileID: 0}
-  m_CreateImage: {fileID: 0}
-  m_TimerFill: {fileID: 0}
-  m_CreatableTextures: {fileID: 0}
-  m_SpawnTimeBuilder: 0

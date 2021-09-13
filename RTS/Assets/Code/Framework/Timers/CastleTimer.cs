@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Code.Framework.Enums;
+using Code.Framework.Timers;
 using Code.Logger;
 using Code.Managers;
 using Code.Structures.Castle;
@@ -12,37 +13,33 @@ namespace Code.Framework
     public class CastleTimer : MonoBehaviour
     {
         public GameObject m_Timer;
-        [SerializeField] private Slider m_TimerFill;
-        [SerializeField] private float m_SpawnTimeBuilder;
-        [SerializeField] private RawImage[] m_ImageQueue;
+        public Slider m_TimerFill;
+        public float m_SpawnTimeBuilder;
+        public RawImage[] m_ImageQueue;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
         public bool IsSpawning { get; private set; }
         private float m_CurrentTimeOnSpawn;
         private int i = 0;
 
-        public Castle m_Castle { get; set; }
-
-        private void Awake()
-        {
-            ShowTimer(false);
-        }
+        public Castle Castle { get; set; }
+        public CreateTimer CreateTimer { get; set; }
 
         public void AddActionOnSpawn(bool add)
         {
             if (add)
             {
-                m_Castle.OnSpawn += Spawn;
+                Castle.OnSpawn += Spawn;
             }
             else
             {
-                m_Castle.OnSpawn -= Spawn;
+                Castle.OnSpawn -= Spawn;
             }
         }
 
         public void TimerUpdate()
         {
-            if (!m_Castle || !(m_CurrentTimeOnSpawn > 0f))
+            if (!Castle || !(m_CurrentTimeOnSpawn > 0f))
                 return;
             
             m_TimerFill.maxValue = m_SpawnTimeBuilder;
@@ -98,8 +95,8 @@ namespace Code.Framework
                     yield return null;
                 }
                 
-                SpawnManager.Instance.SpawnUnit(unitType, m_Castle.m_UnitSpawnPoint.position, 
-                    m_Castle.FlagPoint);
+                SpawnManager.Instance.SpawnUnit(unitType, Castle.m_UnitSpawnPoint.position, 
+                    Castle.FlagPoint);
 
                 RemoveImageInQueue();
             }
@@ -114,7 +111,7 @@ namespace Code.Framework
             m_ImageQueue[i].texture = null;
         }
 
-        private void ShowTimer(bool show)
+        public void ShowTimer(bool show)
         {
             m_Timer.SetActive(show);
         }
