@@ -22,7 +22,6 @@ namespace Code.Structures.Barracks
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
         public BarracksTimer BarracksTimer { get; set; }
-        public bool HasCreateTimer { get; set; }
 
         private void Awake()
         {
