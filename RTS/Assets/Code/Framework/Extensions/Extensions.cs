@@ -16,31 +16,9 @@ namespace Code.Framework.Extensions
             return (Mouse.current.rightButton.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame);
         }
 
-        private static GameObject FindInactiveObject(string name)
+        public static GameObject FindInactiveObject(string name)
         {
             return Object.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
-        }
-        
-        public static void SetUpCreateTimer(GameObject createTimer, string inactiveGameObject)
-        {
-            createTimer.TryGetComponent<RectTransform>(out var rt);
-            var UIObject = FindInactiveObject(inactiveGameObject);
-            
-            // There is already a timer on that type of building
-            if (UIObject.transform.GetComponentInChildren<CreateTimer>())
-            {
-                var newUIObject = Object.Instantiate(UIObject);
-                rt.SetParent(newUIObject.transform);
-                rt.localScale = Vector3.one;
-                rt.anchoredPosition3D = newUIObject.GetComponent<RectTransform>().anchoredPosition3D;
-                rt.localRotation = Quaternion.identity;
-                return;
-            }
-            
-            rt.SetParent(UIObject.transform);
-            rt.localScale = Vector3.one;
-            rt.anchoredPosition3D = UIObject.GetComponent<RectTransform>().anchoredPosition3D;
-            rt.localRotation = Quaternion.identity;
         }
     }
 }

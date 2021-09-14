@@ -19,29 +19,13 @@ namespace Code.Managers.Structures
         [SerializeField] private List<Button> m_ButtonList = new List<Button>();
 
         private Barracks m_BarracksRef;
+        private const string c_NameOfUIObjectInScene = "BarracksUIMiddle";
 
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_BarracksRef = structure.GetComponent<Barracks>();
             
-            if (!structure.TryGetComponent(out BarracksTimer _))
-            {
-                m_BarracksRef.BarracksTimer = structure.AddComponent<BarracksTimer>();
-            }
-
-            if (!structure.TryGetComponent(out EmptyScript _))
-            {
-                structure.AddComponent<EmptyScript>();
-                
-                m_BarracksRef.BarracksTimer.m_Timer = Instantiate(m_BarracksTimer, structure.transform);
-                Extensions.SetUpCreateTimer(m_BarracksRef.BarracksTimer.m_Timer, "BarracksUIMiddle");
-                m_BarracksRef.BarracksTimer.CreateTimer = m_BarracksRef.BarracksTimer.m_Timer.GetComponent<CreateTimer>();
-
-                m_BarracksRef.BarracksTimer.m_TimerFill = m_BarracksRef.BarracksTimer.CreateTimer.m_TimerFill;
-                m_BarracksRef.BarracksTimer.m_ImageQueue = m_BarracksRef.BarracksTimer.CreateTimer.m_ImageQueue;
-                m_BarracksRef.BarracksTimer.m_SpawnTimeSoldier = m_BarracksRef.m_SpawnTimeSoldier;
-                m_BarracksRef.BarracksTimer.m_SpawnTimeHorse = m_BarracksRef.m_SpawnTimeHorse;
-            }
+            UIManager.AddTimerToUI(m_BarracksRef.BarracksTimer.m_Timer, c_NameOfUIObjectInScene);
 
             m_ButtonList[0].onClick.AddListener(m_BarracksRef.SpawnSoldier);
             m_ButtonList[1].onClick.AddListener(m_BarracksRef.OnSetSpawnFlagPosition);

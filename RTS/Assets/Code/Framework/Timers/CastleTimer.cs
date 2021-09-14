@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Framework.Enums;
-using Code.Framework.Timers;
 using Code.Logger;
 using Code.Managers;
 using Code.Structures.Castle;
@@ -13,17 +13,16 @@ namespace Code.Framework
     public class CastleTimer : MonoBehaviour
     {
         public GameObject m_Timer;
-        public Slider m_TimerFill;
-        public float m_SpawnTimeBuilder;
-        public RawImage[] m_ImageQueue;
+        [SerializeField] private Slider m_TimerFill;
+        [SerializeField] private float m_SpawnTimeBuilder;
+        [SerializeField] private RawImage[] m_ImageQueue;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
-        public bool IsSpawning { get; private set; }
+        private bool IsSpawning { get; set; }
         private float m_CurrentTimeOnSpawn;
         private int i = 0;
 
         public Castle Castle { get; set; }
-        public CreateTimer CreateTimer { get; set; }
 
         public void AddActionOnSpawn(bool add)
         {
@@ -39,7 +38,7 @@ namespace Code.Framework
 
         public void TimerUpdate()
         {
-            if (!Castle || !(m_CurrentTimeOnSpawn > 0f))
+            if (!Castle || (m_CurrentTimeOnSpawn <= 0f))
                 return;
             
             m_TimerFill.maxValue = m_SpawnTimeBuilder;
@@ -81,7 +80,7 @@ namespace Code.Framework
         private IEnumerator SpawnRoutine()
         {
             IsSpawning = true;
-            
+
             while (m_SpawnQueue.Count > 0)
             {
                 float timeToSpawn = m_SpawnTimeBuilder;
@@ -111,7 +110,7 @@ namespace Code.Framework
             m_ImageQueue[i].texture = null;
         }
 
-        public void ShowTimer(bool show)
+        private void ShowTimer(bool show)
         {
             m_Timer.SetActive(show);
         }

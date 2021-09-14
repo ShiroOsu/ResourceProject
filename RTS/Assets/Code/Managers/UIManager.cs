@@ -1,8 +1,11 @@
 using System;
+using Code.Framework;
 using Code.Framework.Enums;
+using Code.Framework.Extensions;
 using Code.Managers.Structures;
 using Code.Managers.Units;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Code.Managers
 {
@@ -35,6 +38,8 @@ namespace Code.Managers
                 case UnitType.Horse:
                     HorseUI(select, unit);
                     break;
+                case UnitType.Null:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -49,6 +54,8 @@ namespace Code.Managers
                     break;
                 case StructureType.Barracks:
                     BarracksUI(select, structure);
+                    break;
+                case StructureType.Null:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -78,6 +85,27 @@ namespace Code.Managers
         private void BarracksUI(bool activate, GameObject structure)
         {
             m_Barracks.EnableMainUI(activate, structure);
+        }
+        
+        // ------------------------------------------------------------------------
+        // Timers
+        // ------------------------------------------------------------------------
+
+        private static void SetUpTimer(GameObject timerObject, string name)
+        {
+            timerObject.TryGetComponent<RectTransform>(out var rectTransform);
+            Extensions.FindInactiveObject(name).TryGetComponent(out RectTransform UIRectTransform);
+            
+            rectTransform.SetParent(UIRectTransform.transform);
+            rectTransform.localScale = Vector3.one;
+            rectTransform.anchoredPosition3D = UIRectTransform.anchoredPosition3D;
+            rectTransform.localRotation = Quaternion.identity;
+        }
+        
+        public static void AddTimerToUI(GameObject timerObject, string nameOfUIObjectInScene)
+        {
+            timerObject.SetActive(false);
+            SetUpTimer(timerObject, nameOfUIObjectInScene);
         }
     }
 }

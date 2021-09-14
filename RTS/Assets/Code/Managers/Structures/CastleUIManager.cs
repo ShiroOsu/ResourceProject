@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using Code.Framework;
-using Code.Framework.Extensions;
-using Code.Framework.Timers;
 using Code.Structures.Castle;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,34 +11,18 @@ namespace Code.Managers.Structures
         [SerializeField] private GameObject m_Image;
         [SerializeField] private GameObject m_Info;
         [SerializeField] private GameObject m_UI;
-        [SerializeField] private GameObject m_CastleTimer;
-        
+
         [SerializeField] private List<Button> m_ButtonList = new List<Button>();
 
         private Castle m_CastleRef;
+        private const string c_NameOfUIObjectInScene = "CastleUIMiddle";
 
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_CastleRef = structure.GetComponent<Castle>();
 
-            if (!structure.TryGetComponent(out CastleTimer _))
-            {
-                m_CastleRef.CastleTimer = structure.AddComponent<CastleTimer>();
-            }
+            UIManager.AddTimerToUI(m_CastleRef.CastleTimer.m_Timer, c_NameOfUIObjectInScene);
 
-            if (!structure.TryGetComponent(out EmptyScript _))
-            {
-                structure.AddComponent<EmptyScript>();
-                
-                m_CastleRef.CastleTimer.m_Timer = Instantiate(m_CastleTimer, structure.transform);
-                Extensions.SetUpCreateTimer(m_CastleRef.CastleTimer.m_Timer, "CastleUIMiddle");
-                m_CastleRef.CastleTimer.CreateTimer = m_CastleRef.CastleTimer.m_Timer.GetComponent<CreateTimer>();
-
-                m_CastleRef.CastleTimer.m_TimerFill = m_CastleRef.CastleTimer.CreateTimer.m_TimerFill;
-                m_CastleRef.CastleTimer.m_ImageQueue = m_CastleRef.CastleTimer.CreateTimer.m_ImageQueue;
-                m_CastleRef.CastleTimer.m_SpawnTimeBuilder = m_CastleRef.m_SpawnTimeBuilder;
-            }
-            
             m_ButtonList[0].onClick.AddListener(m_CastleRef.OnSpawnBuilderButton);
             m_ButtonList[1].onClick.AddListener(m_CastleRef.OnSetSpawnFlagPosition);
 
@@ -51,7 +33,7 @@ namespace Code.Managers.Structures
             // When de-select remove listeners so don't add them more than once
             if (!active)
             {
-                RemoveAllListeners();    
+                RemoveAllListeners();
             }
         }
 

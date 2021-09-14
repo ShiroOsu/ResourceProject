@@ -1015,6 +1015,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 495617981}
+    - target: {fileID: 8204193086180681406, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8918257048631504733, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_Name
       value: Castle

@@ -2,10 +2,11 @@ using System;
 using Code.Framework.Enums;
 using Code.Framework.TextureListByEnum;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Code.Framework
 {
+    
+    // TEMP
     public class AllTextures : MonoBehaviour
     {
         private static AllTextures s_Instance;

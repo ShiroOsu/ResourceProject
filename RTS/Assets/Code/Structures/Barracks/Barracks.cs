@@ -13,15 +13,13 @@ namespace Code.Structures.Barracks
     {
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private CustomSizer3D m_Sizer3D;
-        public float m_SpawnTimeSoldier;
-        public float m_SpawnTimeHorse;
         public Transform m_UnitSpawnPoint;
         public event Action<UnitType> OnSpawn;
 
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
-        public BarracksTimer BarracksTimer { get; set; }
+        public BarracksTimer BarracksTimer;
 
         private void Awake()
         {
@@ -73,8 +71,12 @@ namespace Code.Structures.Barracks
         {
             UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
             BarracksTimer.Barracks = this;
-            BarracksTimer.ShowTimer(false);
             BarracksTimer.AddActionOnSpawn(select);
+
+            if (!select)
+            {
+                BarracksTimer.m_Timer.transform.SetParent(transform);
+            }
 
             if (m_Flag != null)
                 m_Flag.SetActive(select);

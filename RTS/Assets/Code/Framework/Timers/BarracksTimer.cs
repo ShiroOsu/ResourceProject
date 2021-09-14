@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Framework.Enums;
-using Code.Framework.Timers;
 using Code.Logger;
 using Code.Managers;
 using Code.Structures.Barracks;
@@ -14,21 +13,19 @@ namespace Code.Framework
     public class BarracksTimer : MonoBehaviour
     {
         public GameObject m_Timer;
-        public Slider m_TimerFill;
-        public float m_SpawnTimeSoldier;
-        public float m_SpawnTimeHorse;
-        public RawImage[] m_ImageQueue;
+        [SerializeField] private Slider m_TimerFill;
+        [SerializeField] private float m_SpawnTimeSoldier;
+        [SerializeField] private float m_SpawnTimeHorse;
+        [SerializeField] private RawImage[] m_ImageQueue;
 
         private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
-        public bool IsSpawning { get; private set; }
+        private bool IsSpawning { get; set; }
         private float m_CurrentTimeOnSpawn;
         private UnitType m_CurrentUnitToSpawn;
         private float m_CurrentUnitTimeSpawn;
         private int i = 0;
 
         public Barracks Barracks { get; set; }
-
-        public CreateTimer CreateTimer { get; set; }
         
         public void AddActionOnSpawn(bool add)
         {
