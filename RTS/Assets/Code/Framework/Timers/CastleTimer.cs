@@ -1,30 +1,17 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Code.Framework.Enums;
 using Code.Logger;
 using Code.Managers;
 using Code.Structures.Castle;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Code.Framework
+namespace Code.Framework.Timers
 {
-    public class CastleTimer : MonoBehaviour
+    public class CastleTimer : CreateTimer
     {
-        public GameObject m_Timer;
-        [SerializeField] private Slider m_TimerFill;
-        [SerializeField] private float m_SpawnTimeBuilder;
-        [SerializeField] private RawImage[] m_ImageQueue;
-
-        private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
-        private bool IsSpawning { get; set; }
-        private float m_CurrentTimeOnSpawn;
-        private int i = 0;
-
         public Castle Castle { get; set; }
 
-        public void AddActionOnSpawn(bool add)
+        public override void AddActionOnSpawn(bool add)
         {
             if (add)
             {
@@ -36,14 +23,14 @@ namespace Code.Framework
             }
         }
 
-        public void TimerUpdate()
+        public override void TimerUpdate()
         {
-            if (!Castle || (m_CurrentTimeOnSpawn <= 0f))
+            if (!Castle)
                 return;
             
-            m_TimerFill.maxValue = m_SpawnTimeBuilder;
+            m_TimerFill.maxValue = GetUnitSpawnTime(UnitType.Builder);
             
-            if (IsSpawning)
+            if (m_IsSpawning)
             {
                 foreach (var image in m_ImageQueue)
                 {
@@ -59,7 +46,7 @@ namespace Code.Framework
             }
         }
 
-        private void Spawn(UnitType type)
+        protected override void Spawn(UnitType type)
         {
             if (i >= m_ImageQueue.Length)
             {
@@ -71,19 +58,19 @@ namespace Code.Framework
             m_ImageQueue[i].texture = AllTextures.Instance.GetUnitTexture(type);
             i++;
 
-            if (!IsSpawning)
+            if (!m_IsSpawning)
             {
-                StartCoroutine(SpawnRoutine());
+                StartCoroutine(SpawnRoutine(Castle.m_UnitSpawnPoint.position, Castle.FlagPoint));
             }
         }
         
-        private IEnumerator SpawnRoutine()
+        protected override IEnumerator SpawnRoutine(Vector3 startPos, Vector3 endPos)
         {
-            IsSpawning = true;
+            m_IsSpawning = true;
 
             while (m_SpawnQueue.Count > 0)
             {
-                float timeToSpawn = m_SpawnTimeBuilder;
+                float timeToSpawn = GetUnitSpawnTime(UnitType.Builder);
                 m_CurrentTimeOnSpawn = 0f;
 
                 var unitType = m_SpawnQueue.Dequeue();
@@ -93,26 +80,13 @@ namespace Code.Framework
                     m_CurrentTimeOnSpawn += Time.deltaTime;
                     yield return null;
                 }
-                
-                SpawnManager.Instance.SpawnUnit(unitType, Castle.m_UnitSpawnPoint.position, 
-                    Castle.FlagPoint);
+
+                SpawnManager.Instance.SpawnUnit(unitType, startPos, endPos);  
 
                 RemoveImageInQueue();
             }
 
-            IsSpawning = false;
-        }
-
-        private void RemoveImageInQueue()
-        {
-            i--;
-            m_ImageQueue[i].gameObject.SetActive(false);
-            m_ImageQueue[i].texture = null;
-        }
-
-        private void ShowTimer(bool show)
-        {
-            m_Timer.SetActive(show);
+            m_IsSpawning = false;
         }
     }
 }

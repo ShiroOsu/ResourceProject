@@ -5,8 +5,6 @@ using UnityEngine;
 
 namespace Code.Framework
 {
-    
-    // TEMP
     public class AllTextures : MonoBehaviour
     {
         private static AllTextures s_Instance;

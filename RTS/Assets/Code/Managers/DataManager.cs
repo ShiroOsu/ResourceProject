@@ -1,3 +1,4 @@
+using Code.Managers.Units;
 using Code.Player;
 using Code.Player.Camera.ScriptableObjects;
 using Code.Player.ScriptableObjects;
@@ -16,6 +17,8 @@ namespace Code.Managers
         //public SoldierStats soldierData;
         [Header("Units")]
         public UnitData unitData;
+
+        public UnitSpawnData SpawnData;
 
         [Header("Structures")]
         public CastleData castleData;

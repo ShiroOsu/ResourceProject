@@ -1003,6 +1003,10 @@ PrefabInstance:
       propertyPath: m_Dimensions.z
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5779780811214633505, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6234580181167300042, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1885,6 +1889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: fd914d685150a064ca45497afe128b02, type: 2}
+  SpawnData: {fileID: 11400000, guid: ef5f7d19ef5419644a1e335bc6b81736, type: 2}
   castleData: {fileID: 11400000, guid: c9ebbcbd2ac83624494fe3ac9db6e577, type: 2}
   mouseData: {fileID: 11400000, guid: 0a89b7ac4383e254b8e6b5ce8aba97c5, type: 2}
   cameraData: {fileID: 11400000, guid: b9cab1ec934ead94e9943134849f15d5, type: 2}

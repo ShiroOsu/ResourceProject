@@ -1,8 +1,7 @@
 using System;
-using Code.Framework;
 using Code.Framework.Enums;
-using Code.Framework.Extensions;
 using Code.Framework.Interfaces;
+using Code.Framework.Timers;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;

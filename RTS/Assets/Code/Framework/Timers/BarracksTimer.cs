@@ -1,33 +1,19 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Code.Framework.Enums;
 using Code.Logger;
 using Code.Managers;
 using Code.Structures.Barracks;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Code.Framework
+namespace Code.Framework.Timers
 {
-    public class BarracksTimer : MonoBehaviour
+    public class BarracksTimer : CreateTimer
     {
-        public GameObject m_Timer;
-        [SerializeField] private Slider m_TimerFill;
-        [SerializeField] private float m_SpawnTimeSoldier;
-        [SerializeField] private float m_SpawnTimeHorse;
-        [SerializeField] private RawImage[] m_ImageQueue;
-
-        private readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
-        private bool IsSpawning { get; set; }
-        private float m_CurrentTimeOnSpawn;
         private UnitType m_CurrentUnitToSpawn;
-        private float m_CurrentUnitTimeSpawn;
-        private int i = 0;
-
+        
         public Barracks Barracks { get; set; }
         
-        public void AddActionOnSpawn(bool add)
+        public override void AddActionOnSpawn(bool add)
         {
             if (add)
             {
@@ -39,14 +25,14 @@ namespace Code.Framework
             }
         }
 
-        public void TimerUpdate()
+        public override void TimerUpdate()
         {
-            if (!Barracks || !(m_CurrentTimeOnSpawn > 0f))
+            if (!Barracks)
                 return;
 
             m_TimerFill.maxValue = m_CurrentUnitTimeSpawn;
             
-            if (IsSpawning)
+            if (m_IsSpawning)
             {
                 foreach (var image in m_ImageQueue)
                 {
@@ -62,19 +48,7 @@ namespace Code.Framework
             }
         }
 
-        private float GetUnitSpawnTime(UnitType type)
-        {
-            var unitTimer = type switch
-            {
-                UnitType.Solider => m_SpawnTimeSoldier,
-                UnitType.Horse => m_SpawnTimeHorse,
-                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-            };
-
-            return unitTimer;
-        }
-
-        private void Spawn(UnitType type)
+        protected override void Spawn(UnitType type)
         {
             if (i >= m_ImageQueue.Length)
             {
@@ -86,15 +60,15 @@ namespace Code.Framework
             m_ImageQueue[i].texture = AllTextures.Instance.GetUnitTexture(type);
             i++;
 
-            if (!IsSpawning)
+            if (!m_IsSpawning)
             {
-                StartCoroutine(SpawnRoutine());
+                StartCoroutine(SpawnRoutine(Barracks.m_UnitSpawnPoint.position, Barracks.FlagPoint));
             }
         }
         
-        private IEnumerator SpawnRoutine()
+        protected override IEnumerator SpawnRoutine(Vector3 startPos, Vector3 endPos)
         {
-            IsSpawning = true;
+            m_IsSpawning = true;
             
             while (m_SpawnQueue.Count > 0)
             {
@@ -117,30 +91,7 @@ namespace Code.Framework
                 RemoveImageInQueue();
             }
 
-            IsSpawning = false;
-        }
-
-        private void RemoveImageInQueue()
-        {
-            i--; // i is equal to the length of m_SpawnQueue
-            // Remove last texture
-            m_ImageQueue[i].gameObject.SetActive(false);
-            m_ImageQueue[i].texture = null;
-            
-            // Grab m_SpawnQueue as Array
-            var spawnQueue = m_SpawnQueue.ToArray();
-            
-            // Shifts all items in m_ImageQueue to the left 
-            // and set texture to the next items in spawnQueue
-            for (int j = 0; j < i; j++)
-            {
-                m_ImageQueue[j].texture = AllTextures.Instance.GetUnitTexture(spawnQueue[j]);
-            }
-        }
-
-        public void ShowTimer(bool show)
-        {
-            m_Timer.SetActive(show);
+            m_IsSpawning = false;
         }
     }
 }
