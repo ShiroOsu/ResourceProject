@@ -37,6 +37,16 @@ namespace Code.Framework.Enums
         Horse,
         Castle,
         Barracks,
+        Flag,
+        Build,
+        Back,
+    }
+
+    public enum ButtonTexture
+    {
+        Flag,
+        Build,
+        Back,
     }
     
     public enum LogMaskThreshold

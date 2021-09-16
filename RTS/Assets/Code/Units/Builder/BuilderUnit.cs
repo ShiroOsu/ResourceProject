@@ -48,7 +48,7 @@ namespace Code.Units.Builder
             Destroy(this);
         }
 
-        public static void OnStructureBuildButton(StructureType type)
+        public void OnStructureBuildButton(StructureType type)
         {
             switch (type)
             {

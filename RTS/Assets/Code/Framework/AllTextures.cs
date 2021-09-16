@@ -11,6 +11,7 @@ namespace Code.Framework
         public static AllTextures Instance => s_Instance ??= FindObjectOfType<AllTextures>();
 
         [SerializeField] private TextureList m_Textures;
+        [SerializeField] private TextureList m_ButtonTextures;
 
         public Texture GetUnitTexture(UnitType type)
         {
@@ -35,6 +36,18 @@ namespace Code.Framework
             };
 
             return structureTex;
+        }
+
+        public Texture GetButtonTexture(ButtonTexture type)
+        {
+            var buttonTex = type switch
+            {
+                ButtonTexture.Flag => m_ButtonTextures[TextureAssetType.Flag],
+                ButtonTexture.Build => m_ButtonTextures[TextureAssetType.Build],
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+
+            return buttonTex;
         }
     }
 }
