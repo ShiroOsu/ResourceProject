@@ -4,7 +4,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace UI
+namespace Textures
 {
     public class SaveRenderTextureToFile
     {

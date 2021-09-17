@@ -7,24 +7,25 @@ namespace Code.Units
     [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/Units/UnitData")]
     public class UnitData : ScriptableObject, ISerializationCallbackReceiver
     {
+        public string unitName;
         public float maxHealth = 10f;
 
         [Tooltip("Amount of damage blocked from attacks")]
-        public int defense = 2;
+        public int armor = 2;
 
         [Tooltip("Health regeneration per 5s")]
-        public float hpRegen = 1f;
+        [HideInInspector] public float hpRegen = 1f;
 
-        public float damage = 1f;
+        public int attack = 1;
         public float attackSpeed = 1f;
 
         public float movementSpeed = 10f;
-        public float acceleration = 16f;
-        public float turnSpeed = 1f;
+        [HideInInspector] public float acceleration = 16f;
+        [HideInInspector] public float turnSpeed = 1f;
 
-        public int soldierID = -1372625422;
-        public int builderID = 0;
-        public int horseID = -334000983;
+        [HideInInspector] public int soldierID = -1372625422;
+        [HideInInspector] public int builderID = 0;
+        [HideInInspector] public int horseID = -334000983;
 
         // During game time the health & HpRegen of the unit data will be "runTimeHealth"
         // To prevent any overrides to the initial health the unit start with.

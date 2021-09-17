@@ -4,6 +4,7 @@ using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Extensions;
 using Code.Framework.Timers;
+using Code.Structures;
 using Code.Structures.Barracks;
 using UnityEditor;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Code.Managers.Structures
     {
         [SerializeField] private GameObject m_Image;
         [SerializeField] private GameObject m_Info;
+        [SerializeField] private StructureData m_Data;
 
         private Barracks m_BarracksRef;
         private const string c_NameOfUIObjectInScene = "BarracksUIMiddle";
@@ -22,7 +24,8 @@ namespace Code.Managers.Structures
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_BarracksRef = structure.GetComponent<Barracks>();
-            UIManager.AddTimerToUI(m_BarracksRef.BarracksTimer.m_Timer, c_NameOfUIObjectInScene);
+            UIManager.Instance.AddTimerToUI(m_BarracksRef.BarracksTimer.m_Timer, c_NameOfUIObjectInScene);
+            UIManager.Instance.SetStructureStatsInfo(m_Data);
             
             if (active)
             {

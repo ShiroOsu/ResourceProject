@@ -1,6 +1,7 @@
 using Code.Framework;
 using Code.Framework.Enums;
 using Code.Logger;
+using Code.Units;
 using Code.Units.Builder;
 using UnityEditor;
 using UnityEngine;
@@ -13,10 +14,13 @@ namespace Code.Managers.Units
         [Header("UI")]
         [SerializeField] private GameObject m_Image;
 
+        [SerializeField] private UnitData m_Data;
+
         private BuilderUnit m_Builder;
         public void EnableMainUI(bool active, GameObject unit)
         {
             m_Builder = unit.GetComponent<BuilderUnit>();
+            UIManager.Instance.SetUnitStatsInfo(m_Data);
 
             if (active)
             {

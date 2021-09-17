@@ -1,11 +1,18 @@
 using System;
+using System.Globalization;
 using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Extensions;
 using Code.Managers.Structures;
 using Code.Managers.Units;
+using Code.Structures;
+using Code.Structures.Castle;
+using Code.Units;
+using NUnit.Compatibility;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 namespace Code.Managers
 {
@@ -13,8 +20,6 @@ namespace Code.Managers
     {
         private static UIManager s_Instance;
         public static UIManager Instance => s_Instance ??= FindObjectOfType<UIManager>();
-
-        private UIManager() { }
 
         [Header("Units")]
         [SerializeField] private BuilderUIManager m_Builder;
@@ -25,18 +30,54 @@ namespace Code.Managers
         [SerializeField] private CastleUIManager m_Castle;
         [SerializeField] private BarracksUIManager m_Barracks;
 
+        [Header("UI")] 
+        [SerializeField] private GameObject m_ObjectWithStructureInfo;
+        [SerializeField] private GameObject m_ObjectWithUnitInfo;
+        [SerializeField] private StructureInfo m_StructureInfo;
+        [SerializeField] private UnitInfo m_UnitInfo;
+        
+        [Serializable] 
+        public struct StructureInfo
+        {
+            public TMP_Text Name;
+            public TMP_Text Armor;
+            
+            public void SetValues(string name, int armor)
+            {
+                Name.SetText(name);
+                Armor.SetText(armor.ToString());
+            }
+        }
+        
+        [Serializable]
+        public struct UnitInfo
+        {
+            public TMP_Text Name;
+            public TMP_Text Attack;
+            public TMP_Text AttackSpeed;
+            public TMP_Text Armor;
+            
+            public void SetValues(string name, int attack, float attackSpeed, int armor)
+            {
+                Name.SetText(name);
+                Attack.SetText(attack.ToString());
+                AttackSpeed.SetText(attackSpeed.ToString());
+                Armor.SetText(armor.ToString());
+            }
+        }
+
         public void UnitSelected(UnitType type, bool select, GameObject unit)
         {
             switch (type)
             {
                 case UnitType.Builder:
-                    BuilderUI(select, unit);
+                    m_Builder.EnableMainUI(select, unit);
                     break;
                 case UnitType.Solider:
-                    SoliderUI(select, unit);
+                    m_Soldier.EnableMainUI(select, unit);
                     break;
                 case UnitType.Horse:
-                    HorseUI(select, unit);
+                    m_Horse.EnableMainUI(select, unit);
                     break;
                 case UnitType.Null:
                     break;
@@ -50,10 +91,10 @@ namespace Code.Managers
             switch (type)
             {
                 case StructureType.Castle:
-                    CastleUI(select, structure);
+                    m_Castle.EnableMainUI(select, structure);
                     break;
                 case StructureType.Barracks:
-                    BarracksUI(select, structure);
+                    m_Barracks.EnableMainUI(select, structure);
                     break;
                 case StructureType.Null:
                     break;
@@ -61,37 +102,12 @@ namespace Code.Managers
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
-
-        private void BuilderUI(bool activate, GameObject unit)
-        {
-            m_Builder.EnableMainUI(activate, unit);
-        }
-
-        private void SoliderUI(bool activate, GameObject unit)
-        {
-            m_Soldier.EnableMainUI(activate, unit);
-        }
-
-        private void HorseUI(bool activate, GameObject unit)
-        {
-            m_Horse.EnableMainUI(activate, unit);
-        }
-
-        private void CastleUI(bool activate, GameObject structure)
-        {
-            m_Castle.EnableMainUI(activate, structure);
-        }
-
-        private void BarracksUI(bool activate, GameObject structure)
-        {
-            m_Barracks.EnableMainUI(activate, structure);
-        }
         
         // ------------------------------------------------------------------------
         // Timers
         // ------------------------------------------------------------------------
 
-        private static void SetUpTimer(GameObject timerObject, string name)
+        private void SetUpTimer(GameObject timerObject, string name)
         {
             timerObject.TryGetComponent<RectTransform>(out var rectTransform);
             Extensions.FindInactiveObject(name).TryGetComponent(out RectTransform UIRectTransform);
@@ -102,10 +118,34 @@ namespace Code.Managers
             rectTransform.localRotation = Quaternion.identity;
         }
         
-        public static void AddTimerToUI(GameObject timerObject, string nameOfUIObjectInScene)
+        public void AddTimerToUI(GameObject timerObject, string nameOfUIObjectInScene)
         {
             timerObject.SetActive(false);
             SetUpTimer(timerObject, nameOfUIObjectInScene);
+        }
+        
+        // ------------------------------------------------------------------------
+        // Info (Stats etc ... )
+        // ------------------------------------------------------------------------
+
+        public void SetUnitStatsInfo(UnitData data)
+        {
+            SwitchBetweenInfo(false);
+            
+            m_UnitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor);
+        }
+        
+        public void SetStructureStatsInfo(StructureData data)
+        {
+            SwitchBetweenInfo(true);
+            
+            m_StructureInfo.SetValues(data.structureName, data.armor);
+        }
+
+        private void SwitchBetweenInfo(bool b)
+        {
+            m_ObjectWithStructureInfo.SetActive(b);
+            m_ObjectWithUnitInfo.SetActive(!b);
         }
     }
 }
