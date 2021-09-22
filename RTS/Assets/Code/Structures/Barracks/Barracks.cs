@@ -1,4 +1,5 @@
 using System;
+using Code.Framework.Custom;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Framework.Timers;
@@ -14,6 +15,7 @@ namespace Code.Structures.Barracks
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private CustomSizer3D m_Sizer3D;
         public Transform m_UnitSpawnPoint;
+        [SerializeField] private GameObject m_OutlineRenderer;
         public event Action<UnitType> OnSpawn;
 
         public Vector3 FlagPoint { get; private set; }
@@ -72,6 +74,7 @@ namespace Code.Structures.Barracks
             UIManager.Instance.StructureSelected(StructureType.Barracks, select, gameObject);
             BarracksTimer.Barracks = this;
             BarracksTimer.AddActionOnSpawn(select);
+            m_OutlineRenderer.SetActive(select);
 
             if (!select)
             {

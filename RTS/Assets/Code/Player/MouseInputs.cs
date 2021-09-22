@@ -172,9 +172,14 @@ namespace Code.Player
             var ray = m_Camera.ScreenPointToRay(m_MousePosition);
             Vector3 newPosition;
 
-            // When building, Temp
+            // When building, Temp?
             if (IsBuilding)
                 return;
+
+            if (Physics.Raycast(ray, out _, Mathf.Infinity, m_StructureMask))
+            {
+                return;
+            }
             
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask))
             {

@@ -1,4 +1,5 @@
 using System;
+using Code.Framework.Custom;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using Code.Framework.Timers;
@@ -14,6 +15,7 @@ namespace Code.Structures.Castle
         [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
         [SerializeField] private CustomSizer3D m_Sizer3D;
         public Transform m_UnitSpawnPoint;
+        [SerializeField] private GameObject m_OutlineRenderer;
 
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
@@ -77,6 +79,7 @@ namespace Code.Structures.Castle
             UIManager.Instance.StructureSelected(StructureType.Castle, select, gameObject);
             CastleTimer.Castle = this;
             CastleTimer.AddActionOnSpawn(select);
+            m_OutlineRenderer.SetActive(select);
 
             if (!select)
             {

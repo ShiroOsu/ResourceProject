@@ -1,49 +1,72 @@
 using System;
 using UnityEngine;
 
-public class CustomSizer : MonoBehaviour
+namespace Code.Framework.Custom
 {
-    private Rect m_SizeArea;
-    public Vector2 m_WidthAndHeight;
-    public Transform m_CenterOfArea;
-
-    private void DrawArea(Color color)
+    public class CustomSizer : MonoBehaviour
     {
-        Gizmos.color = color;
+        private Rect m_SizeArea;
+        public Vector2 m_WidthAndHeight; // width & length
+        public Transform m_CenterOfArea;
+        public float angle;
+        private Vector3[] m_Corners;
 
-        if (!m_CenterOfArea)
-            return;
-        
-        // Show Area in Scene view
-        ShowAreaInScene();
+        private void DrawArea(Color color, bool draw)
+        {
+            if (!m_CenterOfArea)
+                return;
 
-        var y = m_CenterOfArea.position.y;
-        var a = new Vector3(m_SizeArea.xMin, y, m_SizeArea.yMin);
-        var b = new Vector3(m_SizeArea.xMax, y, m_SizeArea.yMin);
-        var c = new Vector3(m_SizeArea.xMax, y, m_SizeArea.yMax);
-        var d = new Vector3(m_SizeArea.xMin, y, m_SizeArea.yMax);
-        Gizmos.DrawLine(a, b);
-        Gizmos.DrawLine(b, c);
-        Gizmos.DrawLine(c, d);
-        Gizmos.DrawLine(d, a);
-    }
+            var centerPoint = m_CenterOfArea.position;
+            var quaternion = Quaternion.AngleAxis(angle, Vector3.up);
+            
+            // Show Area in Scene view
+            ShowAreaInScene();
 
-    private void ShowAreaInScene()
-    {
-        var centerPos = m_CenterOfArea.position;
+            var a = quaternion * new Vector3(m_SizeArea.xMin, centerPoint.y, m_SizeArea.yMin);
+            var b = quaternion * new Vector3(m_SizeArea.xMax, centerPoint.y, m_SizeArea.yMin);
+            var c = quaternion * new Vector3(m_SizeArea.xMax, centerPoint.y, m_SizeArea.yMax);
+            var d = quaternion * new Vector3(m_SizeArea.xMin, centerPoint.y, m_SizeArea.yMax);
+            
+            SetCorners(new[] { a,b,c,d });
 
-        m_SizeArea.width = m_WidthAndHeight.x;
-        m_SizeArea.height = m_WidthAndHeight.y;
-        m_SizeArea.center = new Vector2(centerPos.x, centerPos.z);
-    }
+            if (!draw)
+                return;
+            
+            Gizmos.color = color;
+            Gizmos.DrawLine(a, b);
+            Gizmos.DrawLine(b, c);
+            Gizmos.DrawLine(c, d);
+            Gizmos.DrawLine(d, a);
+        }
 
-    public Rect GetSizeArea()
-    {
-        return m_SizeArea;
-    }
+        private void ShowAreaInScene()
+        {
+            var centerPos = m_CenterOfArea.position;
 
-    public void OnDrawGizmosSelected()
-    {
-        DrawArea(Color.magenta);
+            m_SizeArea.width = m_WidthAndHeight.x;
+            m_SizeArea.height = m_WidthAndHeight.y;
+            m_SizeArea.center = new Vector2(centerPos.x, centerPos.z);
+        }
+
+        private void SetCorners(Vector3[] corners)
+        {
+            m_Corners = corners;
+        }
+
+        public Vector3[] GetCorners()
+        {
+            DrawArea(Color.magenta, false);
+            return m_Corners;
+        }
+
+        public Rect GetSizeArea()
+        {
+            return m_SizeArea;
+        }
+
+        public void OnDrawGizmosSelected()
+        {
+            DrawArea(Color.magenta, true);
+        }
     }
 }

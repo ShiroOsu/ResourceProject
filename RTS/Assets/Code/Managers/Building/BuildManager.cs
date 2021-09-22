@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Code.Framework;
+using Code.Framework.Custom;
 using Code.Framework.Enums;
 using Code.Framework.Extensions;
 using Code.Logger;
@@ -84,7 +85,11 @@ namespace Code.Managers.Building
                 m_CurrentBuildObject.SetActive(true);
             }
 
-            UIManager.Instance.StructureSelected(m_CurrentStructureType, false, m_CurrentBuildObject);
+            var drawOutline = m_CurrentBuildObject.GetComponentInChildren<DrawOutlineSelection>();
+            drawOutline.SetRotation(m_CurrentBuildObject.transform.eulerAngles.y);
+            drawOutline.SetLineCorners();
+            drawOutline.gameObject.SetActive(false);
+            
             m_MouseInputs.IsBuilding = false;
         }
 
