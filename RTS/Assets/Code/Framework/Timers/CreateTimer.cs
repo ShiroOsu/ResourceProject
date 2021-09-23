@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Framework.Enums;
+using Code.Framework.UI;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.UI;

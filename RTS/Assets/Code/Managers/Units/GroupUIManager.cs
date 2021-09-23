@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
-using Code.Framework.TextureListByEnum;
-using UnityEditor.Experimental.GraphView;
+using Code.Framework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +39,7 @@ namespace Code.Managers.Units
             {
                 unit.TryGetComponent(out IUnit u);
 
+                // TODO: make it better
                 if (u.GetUnitID() == m_BuilderID)
                 {
                     m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Builder));

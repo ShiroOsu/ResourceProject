@@ -3,7 +3,7 @@ using Code.Framework.Enums;
 using Code.Framework.TextureListByEnum;
 using UnityEngine;
 
-namespace Code.Framework
+namespace Code.Framework.UI
 {
     public class AllTextures : MonoBehaviour
     {

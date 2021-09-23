@@ -3,7 +3,7 @@ using System.Text;
 using Code.Framework.Enums;
 using UnityEngine;
 
-namespace Code.Logger
+namespace Code.Framework.Logger
 {
   public static class Log
   {

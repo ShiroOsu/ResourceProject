@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Code.Framework.Custom
@@ -6,9 +5,8 @@ namespace Code.Framework.Custom
     public class CustomSizer : MonoBehaviour
     {
         private Rect m_SizeArea;
-        public Vector2 m_WidthAndHeight; // width & length
+        public Vector2 m_WidthAndLength;
         public Transform m_CenterOfArea;
-        public float angle;
         private Vector3[] m_Corners;
 
         private void DrawArea(Color color, bool draw)
@@ -16,16 +14,15 @@ namespace Code.Framework.Custom
             if (!m_CenterOfArea)
                 return;
 
-            var centerPoint = m_CenterOfArea.position;
-            var quaternion = Quaternion.AngleAxis(angle, Vector3.up);
+            var centerPoint = m_CenterOfArea.localPosition;
             
             // Show Area in Scene view
             ShowAreaInScene();
 
-            var a = quaternion * new Vector3(m_SizeArea.xMin, centerPoint.y, m_SizeArea.yMin);
-            var b = quaternion * new Vector3(m_SizeArea.xMax, centerPoint.y, m_SizeArea.yMin);
-            var c = quaternion * new Vector3(m_SizeArea.xMax, centerPoint.y, m_SizeArea.yMax);
-            var d = quaternion * new Vector3(m_SizeArea.xMin, centerPoint.y, m_SizeArea.yMax);
+            var a = new Vector3(m_SizeArea.xMin, centerPoint.y, m_SizeArea.yMin);
+            var b = new Vector3(m_SizeArea.xMax, centerPoint.y, m_SizeArea.yMin);
+            var c = new Vector3(m_SizeArea.xMax, centerPoint.y, m_SizeArea.yMax);
+            var d = new Vector3(m_SizeArea.xMin, centerPoint.y, m_SizeArea.yMax);
             
             SetCorners(new[] { a,b,c,d });
 
@@ -41,11 +38,8 @@ namespace Code.Framework.Custom
 
         private void ShowAreaInScene()
         {
-            var centerPos = m_CenterOfArea.position;
-
-            m_SizeArea.width = m_WidthAndHeight.x;
-            m_SizeArea.height = m_WidthAndHeight.y;
-            m_SizeArea.center = new Vector2(centerPos.x, centerPos.z);
+            m_SizeArea.size = new Vector2(m_WidthAndLength.x, m_WidthAndLength.y);
+            m_SizeArea.center = Vector2.zero;
         }
 
         private void SetCorners(Vector3[] corners)

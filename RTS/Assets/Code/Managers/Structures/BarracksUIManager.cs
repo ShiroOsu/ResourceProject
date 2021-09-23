@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using Code.Framework;
 using Code.Framework.Enums;
-using Code.Framework.Extensions;
-using Code.Framework.Timers;
+using Code.Framework.UI;
 using Code.Structures;
 using Code.Structures.Barracks;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Code.Managers.Structures
 {

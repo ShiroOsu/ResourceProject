@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Code.Framework;
-using Code.Framework.Custom;
+using Code.Framework.Blueprint;
 using Code.Framework.Enums;
 using Code.Framework.Extensions;
-using Code.Logger;
+using Code.Framework.Logger;
 using Code.Player;
 using Code.Player.Camera;
 using UnityEngine;
@@ -23,7 +22,7 @@ namespace Code.Managers.Building
         private CameraControls m_CameraControls;
         private MouseInputs m_MouseInputs;
         
-        private List<GameObject> m_BuildComponentsList = new List<GameObject>();
+        private readonly List<GameObject> m_BuildComponentsList = new List<GameObject>();
         private bool m_CanBuild;
         private bool m_DisplayStructurePlacement;
         private GameObject m_CurrentBlueprintObject;
@@ -84,18 +83,13 @@ namespace Code.Managers.Building
                 m_CurrentBuildObject.transform.rotation = m_CurrentBlueprintObject.transform.rotation;
                 m_CurrentBuildObject.SetActive(true);
             }
-
-            var drawOutline = m_CurrentBuildObject.GetComponentInChildren<DrawOutlineSelection>();
-            drawOutline.SetRotation(m_CurrentBuildObject.transform.eulerAngles.y);
-            drawOutline.SetLineCorners();
-            drawOutline.gameObject.SetActive(false);
-            
             m_MouseInputs.IsBuilding = false;
         }
 
-        private void RotateBuilding(Vector2 v)
+        // 20f is just a random amount of degrees it should rotate each time
+        private void RotateBuilding(Vector2 scroll)
         {
-            m_CurrentBlueprintObject.transform.Rotate(Vector3.up, v.normalized.y * 20f);
+            m_CurrentBlueprintObject.transform.Rotate(Vector3.up, scroll.normalized.y * 20f);
         }
 
         private void HandleBuild()
@@ -110,15 +104,16 @@ namespace Code.Managers.Building
                 return;
             }
 
-            Ray ray = DataManager.Instance.mouseInputs.PlacementRay;
+            var ray = DataManager.Instance.mouseInputs.PlacementRay;
 
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
                 m_CameraControls.m_CanZoom = false;
 
                 var groundPoint = hit.point;
                 if (m_CurrentStructureType == StructureType.Castle)
                 {
+                    // Because 0,0,0 in Castle transform is the middle and not on the ground
                     groundPoint.y += 5f;
                 }
 

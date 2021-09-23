@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Code.Framework
+namespace Code.Framework.Timers
 {
     [Serializable]
     public class TimeEvent

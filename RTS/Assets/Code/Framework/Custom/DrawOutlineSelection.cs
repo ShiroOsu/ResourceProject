@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Code.Framework.Custom
@@ -13,21 +12,15 @@ namespace Code.Framework.Custom
             SetLineCorners();
         }
 
-        public void SetRotation(float angle)
-        {
-            m_CustomSizer.angle = angle;
-        }
-
         public void SetLineCorners()
         {
             var corners = m_CustomSizer.GetCorners();
             m_LineRenderer.loop = true;
             m_LineRenderer.numCornerVertices = 5;
+            m_LineRenderer.useWorldSpace = false;
 
             for (int i = 0; i < corners.Length; i++)
             {
-                corners[i].y += 0.5f;
-
                 m_LineRenderer.SetPosition(i, corners[i]);
             }
         }

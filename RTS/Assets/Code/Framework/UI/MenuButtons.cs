@@ -1,8 +1,7 @@
-using Code.Framework.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Code.Framework
+namespace Code.Framework.UI
 {
     public class MenuButtons : MonoBehaviour
     {

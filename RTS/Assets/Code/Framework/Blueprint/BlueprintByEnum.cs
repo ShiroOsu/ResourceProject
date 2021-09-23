@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Code.Framework.Enums;
 using UnityEngine;
 
-namespace Code.Framework
+namespace Code.Framework.Blueprint
 {
     [CreateAssetMenu(fileName = "BlueprintByEnum", menuName = "ScriptableObjects/BlueprintByEnum")]
     public class BlueprintByEnum : ScriptableObject

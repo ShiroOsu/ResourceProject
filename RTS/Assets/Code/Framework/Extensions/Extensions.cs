@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
 namespace Code.Framework.Extensions
 {
@@ -20,7 +19,7 @@ namespace Code.Framework.Extensions
 
         public static GameObject FindInactiveObject(string name)
         {
-            return Object.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
+            return UnityEngine.Object.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
         }
         
         [Serializable]

@@ -1,18 +1,12 @@
 using System;
-using System.Globalization;
-using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Extensions;
 using Code.Managers.Structures;
 using Code.Managers.Units;
 using Code.Structures;
-using Code.Structures.Castle;
 using Code.Units;
-using NUnit.Compatibility;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.WSA;
 
 namespace Code.Managers
 {
@@ -107,10 +101,10 @@ namespace Code.Managers
         // Timers
         // ------------------------------------------------------------------------
 
-        private void SetUpTimer(GameObject timerObject, string name)
+        private void SetUpTimer(GameObject timerObject, string _name)
         {
             timerObject.TryGetComponent<RectTransform>(out var rectTransform);
-            Extensions.FindInactiveObject(name).TryGetComponent(out RectTransform UIRectTransform);
+            Extensions.FindInactiveObject(_name).TryGetComponent(out RectTransform UIRectTransform);
             
             rectTransform.SetParent(UIRectTransform.transform);
             rectTransform.localScale = Vector3.one;
