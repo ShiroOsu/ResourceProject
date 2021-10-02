@@ -39,7 +39,7 @@ namespace Code.Managers.Units
             {
                 unit.TryGetComponent(out IUnit u);
 
-                // TODO: make it better
+                // TODO: refactor
                 if (u.GetUnitID() == m_BuilderID)
                 {
                     m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Builder));

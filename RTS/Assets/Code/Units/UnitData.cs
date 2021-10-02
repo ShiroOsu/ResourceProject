@@ -1,11 +1,9 @@
-using System;
 using UnityEngine;
 
-// Remove scriptable object and make it a base class that specific unit classes can inherit
 namespace Code.Units
 {
     [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/Units/UnitData")]
-    public class UnitData : ScriptableObject, ISerializationCallbackReceiver
+    public class UnitData : ScriptableObject
     {
         public string unitName;
         public float maxHealth = 10f;
@@ -26,15 +24,5 @@ namespace Code.Units
         [HideInInspector] public int soldierID = -1372625422;
         [HideInInspector] public int builderID = 0;
         [HideInInspector] public int horseID = -334000983;
-
-        // During game time the health & HpRegen of the unit data will be "runTimeHealth"
-        // To prevent any overrides to the initial health the unit start with.
-        [NonSerialized] public float runTimeHealth;
-               
-        public void OnAfterDeserialize()
-        {
-            runTimeHealth = maxHealth;
-        }
-        public void OnBeforeSerialize() { }
     }
 }
