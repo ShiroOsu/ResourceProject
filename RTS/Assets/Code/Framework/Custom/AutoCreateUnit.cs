@@ -1,6 +1,8 @@
+using System;
 using System.IO;
 using Code.Framework.Logger;
 using UnityEditor;
+using UnityEngine;
 
 namespace Code.Framework.Custom
 {
@@ -23,8 +25,9 @@ namespace Code.Framework.Custom
             Log.Message("AutoCreateUnit.cs", "Create " + m_UnitName + " Unit Begin");
             SetUp();
             CreateFolderWithNewUnit();
-            AutoCreateWindowPopup.BeginCreation -= CreateUnitBegin;
+            CreateSO();
             AssetDatabase.Refresh();
+            AutoCreateWindowPopup.BeginCreation -= CreateUnitBegin;
         }
 
         private static void CreateFolderWithNewUnit()
@@ -37,7 +40,7 @@ namespace Code.Framework.Custom
             }
 
             Log.Message("AutoCreateUnit.cs", "Creating Folder and Script file");
-            
+
             var newFolder = AssetDatabase.CreateFolder("Assets/Code/Units", m_UnitName);
             var folderPath = AssetDatabase.GUIDToAssetPath(newFolder) + "/";
             var scriptFileName = m_UnitName + ".cs";
@@ -50,7 +53,7 @@ namespace Code.Framework.Custom
         private static void AddPreCode(string path, string fileName)
         {
             Log.Message("AutoCreateUnit.cs", "Writing to script file");
-            
+
             using (var outfile = new StreamWriter(File.Open(path, FileMode.Append)))
             {
                 outfile.WriteLine("using Code.Framework.Interfaces;");
@@ -60,7 +63,7 @@ namespace Code.Framework.Custom
                 outfile.WriteLine("{");
                 outfile.WriteLine("public class " + fileName + " : MonoBehaviour, IUnit");
                 outfile.WriteLine("{");
-                outfile.Write(m_Unit.preCode);                
+                outfile.Write(m_Unit.preCode);
             }
         }
 
@@ -68,13 +71,36 @@ namespace Code.Framework.Custom
         {
             Log.Message("AutoCreateUnit.cs", "Window Popup");
             AutoCreateWindowPopup.Init();
-            
-            if (Directory.Exists("Assets/Code/Framework/ScriptableObjects/AutoScriptableObjects"))
+
+            if (!Directory.Exists("Assets/Code/Framework/ScriptableObjects/AutoScriptableObjects"))
             {
-                return;
+                AssetDatabase.CreateFolder("Assets/Code/Framework/ScriptableObjects", "AutoScriptableObjects");
             }
+        }
+
+        private static void CreateSO()
+        {
+            Log.Message("AutoCreateUnit", "Creating SO");
             
-            var AutoSOFolder = AssetDatabase.CreateFolder("Assets/Code/Framework/ScriptableObjects", "AutoScriptableObjects");
+            var folderPath = Application.dataPath + "/Code/Units/" + m_UnitName + "/";
+            var scriptFileName = m_UnitName + "SO.cs";
+            var scriptFile = File.Create(folderPath + scriptFileName);
+            scriptFile.Close();
+
+            using (var outfile = new StreamWriter(File.Open(scriptFile.Name, FileMode.Append)))
+            {
+                var unitName = m_UnitName + "SO";
+                
+                outfile.WriteLine("using UnityEngine;");
+                outfile.WriteLine(" ");
+                outfile.WriteLine("namespace Code.Units." + m_UnitName);
+                outfile.WriteLine("{");
+                outfile.WriteLine("[CreateAssetMenu(fileName = \"" + unitName + "\", menuName = " + "\"ScriptableObjects/" + unitName + "\"" + ")]");
+                outfile.WriteLine("public class " + unitName + " : ScriptableObject");
+                outfile.WriteLine("{");
+                outfile.WriteLine("}");
+                outfile.WriteLine("}");
+            }
         }
 
         private static void SetUp()
