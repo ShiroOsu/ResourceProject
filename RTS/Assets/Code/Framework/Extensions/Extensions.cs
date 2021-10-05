@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -20,6 +21,11 @@ namespace Code.Framework.Extensions
         public static GameObject FindInactiveObject(string name)
         {
             return UnityEngine.Object.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
+        }
+        
+        public static UnityEngine.Object LoadAsset<T>(string path)
+        {
+            return AssetDatabase.LoadAssetAtPath(path, typeof(T));
         }
         
         [Serializable]

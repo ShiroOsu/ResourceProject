@@ -7,7 +7,8 @@ namespace Code.Framework.Enums
         Builder,
         Solider,
         Horse,
-    }
+		testName,
+	}
 
     public enum StructureType
     {

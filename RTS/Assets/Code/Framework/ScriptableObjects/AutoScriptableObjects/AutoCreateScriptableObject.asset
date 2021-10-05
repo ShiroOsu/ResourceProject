@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2218e8ceef4af6c439b331ca406bb400, type: 3}
   m_Name: AutoCreateScriptableObject
   m_EditorClassIdentifier: 
-  UnitName: TestUnit
   preCode: "        public void ShouldSelect(bool select)\r\n        {\r\n           
     throw new System.NotImplementedException();\r\n        }\r\n\r\n        public
     void ActivateSelectionCircle(bool active)\r\n        {\r\n            throw new
@@ -21,3 +20,7 @@ MonoBehaviour:
     public int GetUnitID()\r\n        {\r\n            throw new System.NotImplementedException();\r\n       
     }\r\n\r\n        public void Move(Vector3 destination)\r\n        {\r\n           
     throw new System.NotImplementedException();\r\n        }\r\n    }\r\n}"
+  managerCode: "{\r\n        [SerializeField] private GameObject m_Image;\r\n       
+    [SerializeField] private UnitData m_Data;\r\n\r\n        public void EnableMainUI(bool
+    active, GameObject unit)\r\n        {\r\n            UIManager.Instance.SetUnitStatsInfo(m_Data);\r\n           
+    m_Image.SetActive(active);\r\n        }\r\n    }\r\n}"

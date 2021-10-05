@@ -27,6 +27,7 @@ namespace Code.Framework.Custom
                 if (unitNameToSet != string.Empty)
                 {
                     unitNameToSet = unitNameToSet.Replace(' ', '_');
+                    
                     Log.Message("AutoCreateWindowPopup", "UnitName = " + unitNameToSet);
                     AutoCreateUnit.m_UnitName = unitNameToSet;
                     BeginCreation?.Invoke();

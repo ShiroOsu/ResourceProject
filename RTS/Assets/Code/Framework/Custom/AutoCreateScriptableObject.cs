@@ -7,5 +7,8 @@ namespace Code.Framework.Custom
     {
         [Multiline(30)]
         public string preCode;
+
+        [Multiline(20)]
+        public string managerCode;
     }
 }
