@@ -7,7 +7,6 @@ namespace Code.Framework.Enums
         Builder,
         Solider,
         Horse,
-		testName,
 	}
 
     public enum StructureType
@@ -15,13 +14,13 @@ namespace Code.Framework.Enums
         Null, // default
         Castle,
         Barracks,
-    }
+	}
     
     // Unity layers
     public enum UnityLayer
-    {
+	{
         UI = 5,
-    }
+	}
 
     // Temp
     public enum ButtonName
@@ -29,7 +28,7 @@ namespace Code.Framework.Enums
         SpawnBuilder,
         SpawnSoldier,
         SpawnFlag,
-    }
+	}
 
     public enum TextureAssetType
     {
@@ -40,8 +39,8 @@ namespace Code.Framework.Enums
         Barracks,
         Flag,
         Build,
-        Back,
-    }
+        Back, // Not made yet
+	}
 
     public enum ButtonTexture
     {
@@ -53,7 +52,7 @@ namespace Code.Framework.Enums
     public enum LogMaskThreshold
     {
         Undefined = -1, // 0xFFFFFFFF
-        Debuging = 0,
+        Debugging = 0,
         Normal = 1,
         Critical = 2,
         Nothing = 3,
@@ -61,7 +60,7 @@ namespace Code.Framework.Enums
   
     public enum LogMask
     {
-        Debuging,
+        Debugging,
         Normal,
         Critical,
     }

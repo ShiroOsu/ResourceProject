@@ -1,4 +1,5 @@
 using System;
+using Code.Framework.Extensions;
 using Code.Framework.Logger;
 using UnityEditor;
 using UnityEngine;
@@ -28,7 +29,6 @@ namespace Code.Framework.Custom
                 {
                     unitNameToSet = unitNameToSet.Replace(' ', '_');
                     
-                    Log.Message("AutoCreateWindowPopup", "UnitName = " + unitNameToSet);
                     AutoCreateUnit.m_UnitName = unitNameToSet;
                     BeginCreation?.Invoke();
                     Close();

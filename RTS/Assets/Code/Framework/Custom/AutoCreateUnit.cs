@@ -22,9 +22,8 @@ namespace Code.Framework.Custom
 
         private static void CreateUnitBegin()
         {
-            Log.Message("AutoCreateUnit.cs", "Create " + m_UnitName + " Unit Begin");
             SetUp();
-            CreateFolderWithNewUnit();
+            CreateUnitScript();
             CreateSO();
             CreateUnitManager();
             AddUnitEnum();
@@ -32,28 +31,20 @@ namespace Code.Framework.Custom
             AutoCreateWindowPopup.BeginCreation -= CreateUnitBegin;
         }
 
-        private static void CreateFolderWithNewUnit()
+        private static void CreateUnitScript()
         {
-            if (Directory.Exists(Application.dataPath + "/Code/Units/" + m_UnitName) && EditorUtility.DisplayDialog("Unit exists",
-                "Unit with the name " + m_UnitName + " already exists.", "Cancel"))
-            {
-                Log.Error("AutoCreateUnit", "Stopping Creation");
-                return;
-            }
+            Log.Message("AutoCreateUnit.cs", "Creating unit script");
+            var path = Application.dataPath + "/Code/Units/";
 
-            var newFolder = AssetDatabase.CreateFolder("Assets/Code/Units", m_UnitName);
-            var folderPath = AssetDatabase.GUIDToAssetPath(newFolder) + "/";
-            var scriptFileName = m_UnitName + ".cs";
-            var scriptFile = File.Create(folderPath + scriptFileName);
+            AutoCreate.UnitFolder(path, m_UnitName);
+
+            var scriptName = m_UnitName + ".cs";
+            path += m_UnitName + "/";
+            
+            var scriptFile = File.Create(path + scriptName);
             scriptFile.Close();
 
-            AddPreCode(scriptFile.Name, m_UnitName);
-        }
-
-        private static void AddPreCode(string path, string fileName)
-        {
-            Log.Message("AutoCreateUnit.cs", "Writing to script file");
-            AutoCreate.UnitScript(path, m_Unit.preCode, fileName);
+            AutoCreate.UnitCode(scriptFile.Name, m_Unit.preCode, m_UnitName);
         }
 
         private static void InitializeAutoCreateWindowPopup()
@@ -63,28 +54,35 @@ namespace Code.Framework.Custom
 
         private static void CreateSO()
         {
-            Log.Message("AutoCreateUnit", "Creating Scriptable Object");
-            
-            var path = Application.dataPath + "/Code/Units/" + m_UnitName + "/" + m_UnitName + "SO.cs";
+            Log.Message("AutoCreateUnit.cs", "Creating Scriptable Object");
+
+            var scriptName = m_UnitName + "SO.cs";
+            var path = Application.dataPath + "/Code/Units/" + m_UnitName + "/" + scriptName;
             AutoCreate.UnitScriptableObject(path, m_UnitName);
         }
 
         private static void CreateUnitManager()
         {
-            var path = Application.dataPath + "/Code/Managers/Units/" + m_UnitName + "UIManager.cs";
-            AutoCreate.UnitManager(path, m_UnitName, m_Unit.managerCode);
+            Log.Message("AutoCreateUnit.cs", "Creating UnitUIManager");
+            
+            var scriptName = m_UnitName + "UIManager.cs";
+            var path = Application.dataPath + "/Code/Managers/Units/" + scriptName;
+            AutoCreate.UnitManager(path, m_Unit.managerCode, m_UnitName);
         }
 
         private static void AddUnitEnum()
         {
+            Log.Message("AutoCreateUnit.cs", "Creating Enum");
+            
             var path = Application.dataPath + "/Code/Framework/Enums/Enums.cs";
             AutoCreate.UnitEnum(path, m_UnitName);
         }
 
         private static void SetUp()
         {
-            const string path = "Assets/Code/Framework/ScriptableObjects/AutoScriptableObjects/AutoCreateScriptableObject.asset";
-            m_Unit = (AutoCreateScriptableObject)Extensions.Extensions.LoadAsset<AutoCreateScriptableObject>(path);
+            const string path =
+                "Assets/Code/Framework/ScriptableObjects/AutoScriptableObjects/AutoCreateScriptableObject.asset";
+            m_Unit = Extensions.Extensions.LoadAsset<AutoCreateScriptableObject>(path);
         }
     }
 }

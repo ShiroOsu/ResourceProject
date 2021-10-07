@@ -1,11 +1,12 @@
+using System;
 using System.IO;
-using NUnit.Framework.Internal.Filters;
+using UnityEditor;
 
 namespace Code.Framework.Extensions
 {
     public static class AutoCreate
     {
-        public static void UnitScript(string path, string preCode, string unitName)
+        public static void UnitCode(string path, string preCode, string unitName)
         {
             using (var outfile = new StreamWriter(File.Open(path, FileMode.Append)))
             {
@@ -38,7 +39,7 @@ namespace Code.Framework.Extensions
             }
         }
 
-        public static void UnitManager(string path, string unitName, string managerPreCode)
+        public static void UnitManager(string path, string managerPreCode, string unitName)
         {
             using (var outfile = new StreamWriter(File.Create(path)))
             {
@@ -51,8 +52,18 @@ namespace Code.Framework.Extensions
                 outfile.Write(managerPreCode);
             }
         }
-        
-        // Not complete yet
+
+        public static void UnitFolder(string path, string unitName)
+        {
+            if (Directory.Exists(path + unitName) && EditorUtility.DisplayDialog("Unit exists",
+                "Unit with the name " + unitName + " already exists.", "Cancel"))
+            {
+                return;
+            }
+
+            AssetDatabase.CreateFolder("Assets/Code/Units", unitName);
+        }
+
         public static void UnitEnum(string path, string unitName)
         {
             var newString = "";
@@ -60,14 +71,30 @@ namespace Code.Framework.Extensions
             using (var sr = File.OpenText(path))
             {
                 string text = sr.ReadToEnd();
-                int i = text.IndexOf('}');
-                newString = text.Insert(i, $"\t{unitName + ","}\n\t");
+                newString = InsertNewEnum(text, unitName);
             }
             
             using (var outfile = new StreamWriter(File.Open(path, FileMode.Create)))
             {
                 outfile.Write(newString);
             }
+        }
+
+        private static string InsertNewEnum(string text, string unitName)
+        {
+            foreach (var type in Enum.GetNames(typeof(EnumTypeIndex)))
+            {
+                int index = text.IndexOf('}', text.IndexOf(type));
+                text = text.Insert(index, $"\t{unitName + ","}\n\t");
+            }
+            
+            return text;
+        }
+        
+        private enum EnumTypeIndex
+        {
+            UnitType = 0,
+            TextureAssetType = 4,
         }
     }
 }

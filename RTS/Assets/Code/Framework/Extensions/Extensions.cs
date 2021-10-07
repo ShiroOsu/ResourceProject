@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,9 +25,9 @@ namespace Code.Framework.Extensions
             return UnityEngine.Object.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
         }
         
-        public static UnityEngine.Object LoadAsset<T>(string path)
+        public static T LoadAsset<T>(string path) where T : ScriptableObject
         {
-            return AssetDatabase.LoadAssetAtPath(path, typeof(T));
+            return (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
         }
         
         [Serializable]
@@ -35,7 +37,7 @@ namespace Code.Framework.Extensions
             public Button Button;
             public RawImage Image;
             public int Key; // Temp
-            // Add ToolTip
+            // Add ToolTip ?
         }
     }
 }

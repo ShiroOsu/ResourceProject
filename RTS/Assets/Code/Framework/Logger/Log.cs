@@ -7,8 +7,7 @@ namespace Code.Framework.Logger
 {
   public static class Log
   {
-    // Was public ?
-    private static LogMaskThreshold CurrentLogMaskThreshold = LogMaskThreshold.Debuging;
+    private static LogMaskThreshold CurrentLogMaskThreshold = LogMaskThreshold.Debugging;
     private static readonly StringBuilder m_StringBuilder = new StringBuilder(500);
 
     private static bool PrepareLog(string header, string msg, LogMask logMask, string[] tags)
@@ -41,63 +40,63 @@ namespace Code.Framework.Logger
       return true;
     }
 
-    public static void Message(string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void Message(string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog( null, msg, logMask, tags))
         return;
       Debug.Log(Log.m_StringBuilder.ToString());
     }
 
-    public static void Message(string header, string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void Message(string header, string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(header, msg, logMask, tags))
         return;
       Debug.Log(Log.m_StringBuilder.ToString());
     }
 
-    public static void Warning(string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void Warning(string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(null, msg, logMask, tags))
         return;
       Debug.LogWarning(Log.m_StringBuilder.ToString());
     }
 
-    public static void Warning(string header, string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void Warning(string header, string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(header, msg, logMask, tags))
         return;
       Debug.LogWarning(Log.m_StringBuilder.ToString());
     }
 
-    public static void Error(string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void Error(string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(null, msg, logMask, tags))
         return;
       Debug.LogError(Log.m_StringBuilder.ToString());
     }
 
-    public static void Error(string header, string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void Error(string header, string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(header, msg, logMask, tags))
         return;
       Debug.LogError(Log.m_StringBuilder.ToString());
     }
 
-    public static void ExceptionString(string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void ExceptionString(string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(null, msg, logMask, tags))
         return;
       Debug.LogException(new Exception(Log.m_StringBuilder.ToString()));
     }
 
-    public static void ExceptionString(string header, string msg, LogMask logMask = LogMask.Debuging, string[] tags = null)
+    public static void ExceptionString(string header, string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(header, msg, logMask, tags))
         return;
       Debug.LogException(new Exception(Log.m_StringBuilder.ToString()));
     }
 
-    public static void Exception(Exception exception, LogMask logMask = LogMask.Debuging)
+    public static void Exception(Exception exception, LogMask logMask = LogMask.Debugging)
     {
       if (Log.CurrentLogMaskThreshold > (LogMaskThreshold) logMask)
         return;
