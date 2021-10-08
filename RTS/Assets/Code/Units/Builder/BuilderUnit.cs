@@ -18,7 +18,6 @@ namespace Code.Units.Builder
         {
             m_Agent = GetComponent<NavMeshAgent>();
 
-            m_Agent.agentTypeID = DataManager.Instance.unitData.builderID;
             m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
             m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
         }
@@ -34,13 +33,9 @@ namespace Code.Units.Builder
             m_SelectionCircle.SetActive(active);
         }
 
-        /// <summary>
-        /// ID of the type
-        /// </summary>
-        /// <returns></returns>
-        public int GetUnitID()
+        public UnitType GetUnitType()
         {
-            return m_Agent.agentTypeID;
+            return UnitType.Builder;
         }
 
         public void OnDestroy()

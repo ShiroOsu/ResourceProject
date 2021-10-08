@@ -21,8 +21,6 @@ namespace Code.Units
         [HideInInspector] public float acceleration = 16f;
         [HideInInspector] public float turnSpeed = 1f;
 
-        [HideInInspector] public int soldierID = -1372625422;
-        [HideInInspector] public int builderID = 0;
-        [HideInInspector] public int horseID = -334000983;
+        [HideInInspector] public int navMeshSurfaceUnitID = 1479372276;
     }
 }

@@ -1,3 +1,5 @@
+using Code.Framework.Enums;
+
 namespace Code.Framework.Interfaces
 {
     public interface IUnit
@@ -7,7 +9,7 @@ namespace Code.Framework.Interfaces
 
         public void OnDestroy();
 
-        public int GetUnitID();
+        public UnitType GetUnitType();
 
         public void Move(UnityEngine.Vector3 destination);
     }

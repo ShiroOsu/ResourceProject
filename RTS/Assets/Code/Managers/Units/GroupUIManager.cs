@@ -16,21 +16,12 @@ namespace Code.Managers.Units
         private readonly List<Texture> m_TextureList = new List<Texture>();
         private readonly List<GameObject> m_ListOfNewObjects = new List<GameObject>();
 
-        private int m_BuilderID;
-        private int m_SoldierID;
-        private int m_HorseID;
-
         private void Awake()
         {
             DataManager.Instance.mouseInputs.OnUpdateUnitList += HandleUnitList;
             DataManager.Instance.mouseInputs.OnDisableUnitImages += DisableUnitImages;
 
-            m_BuilderID = DataManager.Instance.unitData.builderID;
-            m_SoldierID = DataManager.Instance.unitData.soldierID;
-            m_HorseID = DataManager.Instance.unitData.horseID;
-
             m_ParentObject = m_GetParent.transform.parent.gameObject;
-
         }
 
         private void HandleUnitList(List<GameObject> unitList)
@@ -38,22 +29,7 @@ namespace Code.Managers.Units
             foreach (var unit in unitList)
             {
                 unit.TryGetComponent(out IUnit u);
-
-                // TODO: refactor
-                if (u.GetUnitID() == m_BuilderID)
-                {
-                    m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Builder));
-                }
-
-                if (u.GetUnitID() == m_SoldierID)
-                {
-                    m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Solider));
-                }
-
-                if (u.GetUnitID() == m_HorseID)
-                {
-                    m_TextureList.Add(AllTextures.Instance.GetUnitTexture(UnitType.Horse));
-                }
+                m_TextureList.Add(AllTextures.Instance.GetUnitTexture(u.GetUnitType()));
             }
 
             ShowTextureList();

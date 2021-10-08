@@ -16,7 +16,6 @@ namespace Code.Units.Horse
         {
             m_Agent = GetComponent<NavMeshAgent>();
 
-            m_Agent.agentTypeID = DataManager.Instance.unitData.horseID;
             m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
             m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
         }
@@ -37,9 +36,9 @@ namespace Code.Units.Horse
             Destroy(this);
         }
 
-        public int GetUnitID()
+        public UnitType GetUnitType()
         {
-            return m_Agent.agentTypeID;
+            return UnitType.Horse;
         }
 
         public void Move(Vector3 destination)

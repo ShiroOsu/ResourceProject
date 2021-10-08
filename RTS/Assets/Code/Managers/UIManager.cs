@@ -50,13 +50,15 @@ namespace Code.Managers
             public TMP_Text Attack;
             public TMP_Text AttackSpeed;
             public TMP_Text Armor;
+            //public TMP_Text MovementSpeed; TODO
             
-            public void SetValues(string name, int attack, float attackSpeed, int armor)
+            public void SetValues(string name, int attack, float attackSpeed, int armor, float movementSpeed)
             {
                 Name.SetText(name);
                 Attack.SetText(attack.ToString());
                 AttackSpeed.SetText(attackSpeed.ToString());
                 Armor.SetText(armor.ToString());
+                //MovementSpeed.SetText(movementSpeed.ToString());
             }
         }
 
@@ -126,7 +128,7 @@ namespace Code.Managers
         {
             SwitchBetweenInfo(false);
             
-            m_UnitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor);
+            m_UnitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor, data.movementSpeed);
         }
         
         public void SetStructureStatsInfo(StructureData data)

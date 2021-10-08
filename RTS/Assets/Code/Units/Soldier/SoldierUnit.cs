@@ -16,14 +16,13 @@ namespace Code.Units.Soldier
         {
             m_Agent = GetComponent<NavMeshAgent>();
 
-            m_Agent.agentTypeID = DataManager.Instance.unitData.soldierID;
             m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
             m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
         }
 
-        public int GetUnitID()
+        public UnitType GetUnitType()
         {
-            return m_Agent.agentTypeID;
+            return UnitType.Solider;
         }
 
         public void ShouldSelect(bool select)
