@@ -1,6 +1,7 @@
 using System;
 using Code.Framework.Enums;
 using Code.Framework.Extensions;
+using Code.Framework.Interfaces;
 using Code.Managers.Structures;
 using Code.Managers.Units;
 using Code.Structures;
@@ -62,8 +63,11 @@ namespace Code.Managers
             }
         }
 
-        public void UnitSelected(UnitType type, bool select, GameObject unit)
+        public void UnitSelected(bool select, GameObject unit)
         {
+            unit.TryGetComponent(out IUnit IU);
+            var type = IU.GetUnitType();
+            
             switch (type)
             {
                 case UnitType.Builder:

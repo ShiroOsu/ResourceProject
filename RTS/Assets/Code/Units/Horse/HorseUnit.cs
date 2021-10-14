@@ -22,7 +22,7 @@ namespace Code.Units.Horse
 
         public void ShouldSelect(bool select)
         {
-            UIManager.Instance.UnitSelected(UnitType.Horse, select, gameObject);
+            UIManager.Instance.UnitSelected(select, gameObject);
             ActivateSelectionCircle(select);
         }
 

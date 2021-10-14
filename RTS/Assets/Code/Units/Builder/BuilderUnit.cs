@@ -24,7 +24,7 @@ namespace Code.Units.Builder
 
         public void ShouldSelect(bool select)
         {
-            UIManager.Instance.UnitSelected(UnitType.Builder, select, gameObject);
+            UIManager.Instance.UnitSelected(select, gameObject);
             ActivateSelectionCircle(select);
         }
 

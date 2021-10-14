@@ -27,6 +27,7 @@ namespace Code.Framework.Custom
             CreateSO();
             CreateUnitManager();
             AddUnitEnum();
+            AddToUIManager();
             AssetDatabase.Refresh();
             AutoCreateWindowPopup.BeginCreation -= CreateUnitBegin;
         }
@@ -40,7 +41,7 @@ namespace Code.Framework.Custom
 
             var scriptName = m_UnitName + ".cs";
             path += m_UnitName + "/";
-            
+
             var scriptFile = File.Create(path + scriptName);
             scriptFile.Close();
 
@@ -64,7 +65,7 @@ namespace Code.Framework.Custom
         private static void CreateUnitManager()
         {
             Log.Message("AutoCreateUnit.cs", "Creating UnitUIManager");
-            
+
             var scriptName = m_UnitName + "UIManager.cs";
             var path = Application.dataPath + "/Code/Managers/Units/" + scriptName;
             AutoCreate.UnitManager(path, m_Unit.managerCode, m_UnitName);
@@ -73,9 +74,17 @@ namespace Code.Framework.Custom
         private static void AddUnitEnum()
         {
             Log.Message("AutoCreateUnit.cs", "Creating Enum");
-            
+
             var path = Application.dataPath + "/Code/Framework/Enums/Enums.cs";
             AutoCreate.UnitEnum(path, m_UnitName);
+        }
+
+        private static void AddToUIManager()
+        {
+            Log.Message("AutoCreateUnit.cs", "Adding new unit to UIManager");
+
+            var path = Application.dataPath + "/Code/Managers/UIManager.cs";
+            AutoCreate.UIManagerCode(path, m_UnitName);
         }
 
         private static void SetUp()

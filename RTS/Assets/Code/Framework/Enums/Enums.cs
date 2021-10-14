@@ -7,6 +7,7 @@ namespace Code.Framework.Enums
         Builder,
         Solider,
         Horse,
+		Rat,
 	}
 
     public enum StructureType
@@ -40,6 +41,7 @@ namespace Code.Framework.Enums
         Flag,
         Build,
         Back, // Not made yet
+		Rat,
 	}
 
     public enum ButtonTexture

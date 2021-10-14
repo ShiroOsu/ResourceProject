@@ -27,7 +27,7 @@ namespace Code.Units.Soldier
 
         public void ShouldSelect(bool select)
         {
-            UIManager.Instance.UnitSelected(UnitType.Solider, select, gameObject);
+            UIManager.Instance.UnitSelected(select, gameObject);
             ActivateSelectionCircle(select);
         }
         
