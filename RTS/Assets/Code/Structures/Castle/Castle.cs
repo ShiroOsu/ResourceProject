@@ -20,7 +20,7 @@ namespace Code.Structures.Castle
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
-        public event Action<UnitType> OnSpawn;
+        public event Action<TextureAssetType> OnSpawn;
         public CastleTimer CastleTimer;
 
         private void Awake()
@@ -61,7 +61,7 @@ namespace Code.Structures.Castle
 
         public void OnSpawnBuilderButton()
         {
-            OnSpawn?.Invoke(UnitType.Builder);
+            OnSpawn?.Invoke(TextureAssetType.Builder);
         }
 
         public void Destroy()

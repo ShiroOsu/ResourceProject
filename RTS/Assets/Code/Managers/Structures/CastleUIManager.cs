@@ -39,10 +39,10 @@ namespace Code.Managers.Structures
         private void BindCastleButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSetSpawnFlagPosition, 0, 
-                AllTextures.Instance.GetButtonTexture(ButtonTexture.Flag));
+                AllTextures.Instance.GetTexture(TextureAssetType.Flag));
             
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSpawnBuilderButton, 4, 
-                AllTextures.Instance.GetUnitTexture(UnitType.Builder));
+                AllTextures.Instance.GetTexture(TextureAssetType.Builder));
         }
     }
 }

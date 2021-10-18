@@ -33,9 +33,9 @@ namespace Code.Units.Builder
             m_SelectionCircle.SetActive(active);
         }
 
-        public UnitType GetUnitType()
+        public TextureAssetType GetUnitType()
         {
-            return UnitType.Builder;
+            return TextureAssetType.Builder;
         }
 
         public void OnDestroy()

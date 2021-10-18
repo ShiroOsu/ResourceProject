@@ -10,7 +10,7 @@ namespace Code.Framework.Timers
 {
     public class BarracksTimer : CreateTimer
     {
-        private UnitType m_CurrentUnitToSpawn;
+        private TextureAssetType m_CurrentUnitToSpawn;
         
         public Barracks Barracks { get; set; }
         
@@ -49,7 +49,7 @@ namespace Code.Framework.Timers
             }
         }
 
-        protected override void Spawn(UnitType type)
+        protected override void Spawn(TextureAssetType type)
         {
             if (i >= m_ImageQueue.Length)
             {
@@ -58,7 +58,7 @@ namespace Code.Framework.Timers
             }
             
             m_SpawnQueue.Enqueue(type);
-            m_ImageQueue[i].texture = AllTextures.Instance.GetUnitTexture(type);
+            m_ImageQueue[i].texture = AllTextures.Instance.GetTexture(type);
             i++;
 
             if (!m_IsSpawning)

@@ -10,7 +10,6 @@ namespace Code.Managers.Units
     {
         [Header("UI")]
         [SerializeField] private GameObject m_Image;
-
         [SerializeField] private UnitData m_Data;
 
         private BuilderUnit m_Builder;
@@ -47,15 +46,15 @@ namespace Code.Managers.Units
         private void BindBuilderButtons()
         {
             MenuButtons.Instance.BindMenuButton(OpenBuildPage, 15, 
-                AllTextures.Instance.GetButtonTexture(ButtonTexture.Build));
+                AllTextures.Instance.GetTexture(TextureAssetType.Build));
         }
 
         private void BindBuildings()
         {
-            MenuButtons.Instance.BindMenuButton(BackToMainPage, 15, AllTextures.Instance.GetUnitTexture(UnitType.Builder));
+            MenuButtons.Instance.BindMenuButton(BackToMainPage, 15, AllTextures.Instance.GetTexture(TextureAssetType.Builder));
             
             MenuButtons.Instance.BindMenuButton(() => m_Builder.OnStructureBuildButton(StructureType.Barracks), 4, 
-                AllTextures.Instance.GetStructureTexture(StructureType.Barracks));
+                AllTextures.Instance.GetTexture(TextureAssetType.Barracks));
         }
     }
 }

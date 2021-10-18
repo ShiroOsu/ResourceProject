@@ -20,9 +20,9 @@ namespace Code.Units.Soldier
             m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
         }
 
-        public UnitType GetUnitType()
+        public TextureAssetType GetUnitType()
         {
-            return UnitType.Solider;
+            return TextureAssetType.Solider;
         }
 
         public void ShouldSelect(bool select)

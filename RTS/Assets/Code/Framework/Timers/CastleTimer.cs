@@ -29,7 +29,7 @@ namespace Code.Framework.Timers
             if (!Castle)
                 return;
             
-            m_TimerFill.maxValue = GetUnitSpawnTime(UnitType.Builder);
+            m_TimerFill.maxValue = GetUnitSpawnTime(TextureAssetType.Builder);
             
             if (m_IsSpawning)
             {
@@ -47,7 +47,7 @@ namespace Code.Framework.Timers
             }
         }
 
-        protected override void Spawn(UnitType type)
+        protected override void Spawn(TextureAssetType type)
         {
             if (i >= m_ImageQueue.Length)
             {
@@ -56,7 +56,7 @@ namespace Code.Framework.Timers
             }
             
             m_SpawnQueue.Enqueue(type);
-            m_ImageQueue[i].texture = AllTextures.Instance.GetUnitTexture(type);
+            m_ImageQueue[i].texture = AllTextures.Instance.GetTexture(type);
             i++;
 
             if (!m_IsSpawning)
@@ -71,7 +71,7 @@ namespace Code.Framework.Timers
 
             while (m_SpawnQueue.Count > 0)
             {
-                float timeToSpawn = GetUnitSpawnTime(UnitType.Builder);
+                float timeToSpawn = GetUnitSpawnTime(TextureAssetType.Builder);
                 m_CurrentTimeOnSpawn = 0f;
 
                 var unitType = m_SpawnQueue.Dequeue();

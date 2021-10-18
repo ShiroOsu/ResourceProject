@@ -70,16 +70,14 @@ namespace Code.Managers
             
             switch (type)
             {
-                case UnitType.Builder:
+                case TextureAssetType.Builder:
                     m_Builder.EnableMainUI(select, unit);
                     break;
-                case UnitType.Solider:
+                case TextureAssetType.Solider:
                     m_Soldier.EnableMainUI(select, unit);
                     break;
-                case UnitType.Horse:
+                case TextureAssetType.Horse:
                     m_Horse.EnableMainUI(select, unit);
-                    break;
-                case UnitType.Null:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -131,14 +129,12 @@ namespace Code.Managers
         public void SetUnitStatsInfo(UnitData data)
         {
             SwitchBetweenInfo(false);
-            
             m_UnitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor, data.movementSpeed);
         }
         
         public void SetStructureStatsInfo(StructureData data)
         {
             SwitchBetweenInfo(true);
-            
             m_StructureInfo.SetValues(data.structureName, data.armor);
         }
 

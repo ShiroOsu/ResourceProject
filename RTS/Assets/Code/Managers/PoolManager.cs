@@ -44,13 +44,13 @@ namespace Code.Managers
             };
         }
 
-        public GameObject GetPooledUnit(UnitType type, bool rent)
+        public GameObject GetPooledUnit(TextureAssetType type, bool rent)
         {
             return type switch
             {
-                UnitType.Builder => builderPool.Rent(rent),
-                UnitType.Solider => soldierPool.Rent(rent),
-                UnitType.Horse => horseUnitPool.Rent(rent),
+                TextureAssetType.Builder => builderPool.Rent(rent),
+                TextureAssetType.Solider => soldierPool.Rent(rent),
+                TextureAssetType.Horse => horseUnitPool.Rent(rent),
                 _ => null
             };
         }

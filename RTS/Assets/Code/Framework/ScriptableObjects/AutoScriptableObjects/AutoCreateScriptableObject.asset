@@ -17,9 +17,9 @@ MonoBehaviour:
     }\r\n\r\n        public void ActivateSelectionCircle(bool active)\r\n       
     {\r\n            throw new System.NotImplementedException();\r\n        }\r\n\r\n       
     public void OnDestroy()\r\n        {\r\n            throw new System.NotImplementedException();\r\n       
-    }\r\n\r\n        public UnitType GetUnitType()\r\n        {\r\n            throw
-    new System.NotImplementedException();\r\n        }\r\n\r\n        public void
-    Move(Vector3 destination)\r\n        {\r\n            throw new System.NotImplementedException();\r\n       
+    }\r\n\r\n        public TextureAssetType GetUnitType()\r\n        {\r\n           
+    throw new System.NotImplementedException();\r\n        }\r\n\r\n        public
+    void Move(Vector3 destination)\r\n        {\r\n            throw new System.NotImplementedException();\r\n       
     }\r\n    }\r\n}"
   managerCode: "{\r\n        [SerializeField] private GameObject m_Image;\r\n       
     [SerializeField] private UnitData m_Data;\r\n\r\n        public void EnableMainUI(bool

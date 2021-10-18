@@ -1,15 +1,5 @@
 namespace Code.Framework.Enums
 {
-    
-    public enum UnitType
-    {
-        Null, // default
-        Builder,
-        Solider,
-        Horse,
-		Rat,
-	}
-
     public enum StructureType
     {
         Null, // default
@@ -23,14 +13,6 @@ namespace Code.Framework.Enums
         UI = 5,
 	}
 
-    // Temp
-    public enum ButtonName
-    {
-        SpawnBuilder,
-        SpawnSoldier,
-        SpawnFlag,
-	}
-
     public enum TextureAssetType
     {
         Builder,
@@ -41,16 +23,8 @@ namespace Code.Framework.Enums
         Flag,
         Build,
         Back, // Not made yet
-		Rat,
 	}
 
-    public enum ButtonTexture
-    {
-        Flag,
-        Build,
-        Back,
-    }
-    
     public enum LogMaskThreshold
     {
         Undefined = -1, // 0xFFFFFFFF

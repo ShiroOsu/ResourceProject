@@ -23,3 +23,7 @@ MonoBehaviour:
     type: 3
   - tex: {fileID: 2800000, guid: a0f5dfaeb6f765f499317c95bc60779a, type: 3}
     type: 2
+  - tex: {fileID: 2800000, guid: 3d4f1219dc84e314eb247414672cf1e1, type: 3}
+    type: 5
+  - tex: {fileID: 2800000, guid: 18a5400f5460c1a4c811419b7051fbcb, type: 3}
+    type: 6

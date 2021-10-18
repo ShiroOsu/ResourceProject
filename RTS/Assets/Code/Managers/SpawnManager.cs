@@ -9,7 +9,7 @@ namespace Code.Managers
         private static SpawnManager s_Instance = null;
         public static SpawnManager Instance => s_Instance ??= FindObjectOfType<SpawnManager>();
 
-        public void SpawnUnit(UnitType type, Vector3 startPos, Vector3 endPos)
+        public void SpawnUnit(TextureAssetType type, Vector3 startPos, Vector3 endPos)
         {
             var unit = PoolManager.Instance.GetPooledUnit(type, true);
             unit.transform.position = startPos;

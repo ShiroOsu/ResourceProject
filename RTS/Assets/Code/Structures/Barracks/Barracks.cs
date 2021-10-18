@@ -16,7 +16,7 @@ namespace Code.Structures.Barracks
         [SerializeField] private CustomSizer3D m_Sizer3D;
         public Transform m_UnitSpawnPoint;
         [SerializeField] private GameObject m_OutlineRenderer;
-        public event Action<UnitType> OnSpawn;
+        public event Action<TextureAssetType> OnSpawn;
 
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
@@ -61,12 +61,12 @@ namespace Code.Structures.Barracks
 
         public void SpawnSoldier()
         {
-            OnSpawn?.Invoke(UnitType.Solider);
+            OnSpawn?.Invoke(TextureAssetType.Solider);
         }
 
         public void SpawnHorse()
         {
-            OnSpawn?.Invoke(UnitType.Horse);
+            OnSpawn?.Invoke(TextureAssetType.Horse);
         }
 
         public void ShouldSelect(bool select)

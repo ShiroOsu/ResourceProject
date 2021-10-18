@@ -15,7 +15,7 @@ namespace Code.Framework.Timers
         public Slider m_TimerFill;
         public RawImage[] m_ImageQueue;
 
-        protected readonly Queue<UnitType> m_SpawnQueue = new Queue<UnitType>();
+        protected readonly Queue<TextureAssetType> m_SpawnQueue = new Queue<TextureAssetType>();
         protected float m_CurrentUnitTimeSpawn;
         protected bool m_IsSpawning;
         protected float m_CurrentTimeOnSpawn;
@@ -31,7 +31,7 @@ namespace Code.Framework.Timers
             
         }
 
-        protected virtual void Spawn(UnitType type)
+        protected virtual void Spawn(TextureAssetType type)
         {
             
         }
@@ -55,7 +55,7 @@ namespace Code.Framework.Timers
             // and set texture to the next items in spawnQueue
             for (int j = 0; j < i; j++)
             {
-                m_ImageQueue[j].texture = AllTextures.Instance.GetUnitTexture(spawnQueue[j]);
+                m_ImageQueue[j].texture = AllTextures.Instance.GetTexture(spawnQueue[j]);
             }
         }
 
@@ -64,13 +64,13 @@ namespace Code.Framework.Timers
             m_Timer.SetActive(show);
         }
 
-        protected static float GetUnitSpawnTime(UnitType type)
+        protected static float GetUnitSpawnTime(TextureAssetType type)
         {
             var unitTime = type switch
             {
-                UnitType.Builder => DataManager.Instance.SpawnData.BuilderSpawnTime,
-                UnitType.Solider => DataManager.Instance.SpawnData.SoldierSpawnTime,
-                UnitType.Horse => DataManager.Instance.SpawnData.HorseSpawnTime,
+                TextureAssetType.Builder => DataManager.Instance.SpawnData.BuilderSpawnTime,
+                TextureAssetType.Solider => DataManager.Instance.SpawnData.SoldierSpawnTime,
+                TextureAssetType.Horse => DataManager.Instance.SpawnData.HorseSpawnTime,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
             return unitTime;

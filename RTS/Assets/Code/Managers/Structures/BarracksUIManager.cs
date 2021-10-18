@@ -38,13 +38,13 @@ namespace Code.Managers.Structures
         private void BindBarracksButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.OnSetSpawnFlagPosition, 0, 
-                AllTextures.Instance.GetButtonTexture(ButtonTexture.Flag));
+                AllTextures.Instance.GetTexture(TextureAssetType.Flag));
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnSoldier, 4, 
-                AllTextures.Instance.GetUnitTexture(UnitType.Solider));
+                AllTextures.Instance.GetTexture(TextureAssetType.Solider));
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnHorse, 3, 
-                AllTextures.Instance.GetUnitTexture(UnitType.Horse));
+                AllTextures.Instance.GetTexture(TextureAssetType.Horse));
         }
     }
 }

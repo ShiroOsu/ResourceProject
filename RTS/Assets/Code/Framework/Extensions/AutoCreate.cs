@@ -98,17 +98,23 @@ namespace Code.Framework.Extensions
 
         private enum EnumTypeIndex
         {
-            UnitType = 0,
-            TextureAssetType = 4,
+            TextureAssetType = 3,
         }
 
         #endregion
 
 
-        private static string InsertAfterHeader(string text, string stringToInsert)
+        private static string InsertAfterHeader(string text, string insertString)
         {
             int index = text.IndexOf(']');
-            text = text.Insert(index + 1, $"\n\t\t{stringToInsert}");
+            text = text.Insert(index + 1, $"\n\t\t{insertString}");
+            return text;
+        }
+        
+        private static string InsertUnitToSwitch(string text, string insertString)
+        {
+            int index = text.IndexOf('{', text.IndexOf("type"));
+            text = text.Insert(index + 1, $"\n\t\t\t\t{insertString}");
             return text;
         }
 
@@ -116,11 +122,15 @@ namespace Code.Framework.Extensions
         {
             var newString = "";
             var insertString = "[SerializeField] private "+ unitName +"UIManager " + "m_" + unitName + ";";
+            
+            var str = "case TextureAssetType." + unitName + ":" + "\n\t\t\t\t\tm_" + unitName 
+                      + ".EnableMainUI(select, unit);" + "\n\t\t\t\t\tbreak;";
 
             using (var sr = File.OpenText(path))
             {
                 string text = sr.ReadToEnd();
-                newString = InsertAfterHeader(text, insertString);
+                var tempStr = InsertAfterHeader(text, insertString);
+                newString = InsertUnitToSwitch(tempStr, str);
             }
 
             using (var outfile = new StreamWriter(File.Open(path, FileMode.Create)))

@@ -36,9 +36,9 @@ namespace Code.Units.Horse
             Destroy(this);
         }
 
-        public UnitType GetUnitType()
+        public TextureAssetType GetUnitType()
         {
-            return UnitType.Horse;
+            return TextureAssetType.Horse;
         }
 
         public void Move(Vector3 destination)

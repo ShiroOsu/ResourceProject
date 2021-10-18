@@ -9,7 +9,7 @@ namespace Code.Framework.Interfaces
 
         public void OnDestroy();
 
-        public UnitType GetUnitType();
+        public TextureAssetType GetUnitType();
 
         public void Move(UnityEngine.Vector3 destination);
     }
