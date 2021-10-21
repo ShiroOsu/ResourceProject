@@ -1,5 +1,5 @@
 using System.IO;
-using Code.Framework.Extensions;
+using Code.Framework.ExtensionFolder;
 using Code.Framework.Logger;
 using UnityEditor;
 using UnityEngine;
@@ -10,7 +10,6 @@ namespace Code.Framework.Custom
     {
         private static AutoCreateScriptableObject m_Unit;
         public static string m_UnitName { get; set; }
-
 
         [MenuItem("Auto Create/Unit")]
         private static void CreateUnitInit()
@@ -37,7 +36,8 @@ namespace Code.Framework.Custom
             Log.Message("AutoCreateUnit.cs", "Creating unit script");
             var path = Application.dataPath + "/Code/Units/";
 
-            AutoCreate.UnitFolder(path, m_UnitName);
+            AutoCreate.UnitFolder(m_UnitName);
+            AutoCreate.UnitPrefabFolder(m_UnitName);
 
             var scriptName = m_UnitName + ".cs";
             path += m_UnitName + "/";
@@ -91,7 +91,7 @@ namespace Code.Framework.Custom
         {
             const string path =
                 "Assets/Code/Framework/ScriptableObjects/AutoScriptableObjects/AutoCreateScriptableObject.asset";
-            m_Unit = Extensions.Extensions.LoadAsset<AutoCreateScriptableObject>(path);
+            m_Unit = Extensions.LoadAsset<AutoCreateScriptableObject>(path);
         }
     }
 }

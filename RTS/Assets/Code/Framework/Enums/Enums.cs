@@ -22,7 +22,7 @@ namespace Code.Framework.Enums
         Barracks,
         Flag,
         Build,
-        Back, // Not made yet
+        Back, // No texture for this yet
 	}
 
     public enum LogMaskThreshold

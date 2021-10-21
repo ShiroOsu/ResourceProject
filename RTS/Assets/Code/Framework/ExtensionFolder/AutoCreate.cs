@@ -1,8 +1,10 @@
 using System;
 using System.IO;
 using UnityEditor;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace Code.Framework.Extensions
+namespace Code.Framework.ExtensionFolder
 {
     public static class AutoCreate
     {
@@ -56,15 +58,33 @@ namespace Code.Framework.Extensions
             }
         }
 
-        public static void UnitFolder(string path, string unitName)
+        public static void UnitFolder(string unitName)
         {
-            if (Directory.Exists(path + unitName) && EditorUtility.DisplayDialog("Unit exists",
+            if (Directory.Exists("Assets/Code/Units/" + unitName) && EditorUtility.DisplayDialog("Unit exists",
                 "Unit with the name " + unitName + " already exists.", "Cancel"))
             {
                 return;
             }
 
             AssetDatabase.CreateFolder("Assets/Code/Units", unitName);
+        }
+
+        public static void UnitPrefabFolder(string unitName)
+        {
+            if (Directory.Exists("Assets/Prefabs/Units/" + unitName) && EditorUtility.DisplayDialog(
+                unitName + " prefab folder exists", "", "Ok"))
+            {
+                return;
+            }
+            
+            AssetDatabase.CreateFolder("Assets/Prefabs/Units", unitName);
+            string path = "Assets/Prefabs/Units/" + unitName + ".prefab";
+            var newObj = new GameObject {name = unitName};
+            PrefabUtility.SaveAsPrefabAsset(newObj, path);
+            var asset = AssetDatabase.FindAssets($"{unitName}", new []{"Assets/Prefabs/Units"});
+            var oldPath = AssetDatabase.GUIDToAssetPath(asset[1]);
+            AssetDatabase.MoveAsset(oldPath, $"Assets/Prefabs/Units/{unitName}/{unitName}.prefab");
+            Object.DestroyImmediate(GameObject.Find($"{unitName}"));
         }
 
         #region AddEnum

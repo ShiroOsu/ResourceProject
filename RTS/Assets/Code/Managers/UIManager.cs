@@ -1,6 +1,6 @@
 using System;
 using Code.Framework.Enums;
-using Code.Framework.Extensions;
+using Code.Framework.ExtensionFolder;
 using Code.Framework.Interfaces;
 using Code.Managers.Structures;
 using Code.Managers.Units;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Code.Framework.Blueprint;
 using Code.Framework.Enums;
-using Code.Framework.Extensions;
+using Code.Framework.ExtensionFolder;
 using Code.Framework.Logger;
 using Code.Player;
 using Code.Player.Camera;

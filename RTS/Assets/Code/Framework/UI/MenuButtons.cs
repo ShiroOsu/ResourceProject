@@ -8,7 +8,7 @@ namespace Code.Framework.UI
         private static MenuButtons s_Instance;
         public static MenuButtons Instance => s_Instance ??= FindObjectOfType<MenuButtons>();
 
-        [SerializeField] private Extensions.Extensions.ButtonByKey[] m_ButtonByKey;
+        [SerializeField] private ExtensionFolder.Extensions.ButtonByKey[] m_ButtonByKey;
 
         public void BindMenuButton(UnityAction action, int buttonIndex, Texture texture)
         {

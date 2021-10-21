@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Code.Framework.Extensions
+namespace Code.Framework.ExtensionFolder
 {
     public static class Extensions
     {

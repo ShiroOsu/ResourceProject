@@ -3158,7 +3158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Textures: {fileID: 11400000, guid: d1a8f5ab5a296344da7ee60c2e329773, type: 2}
-  m_ButtonTextures: {fileID: 11400000, guid: 2c2162b117349d74095f0ef6683d8e50, type: 2}
 --- !u!1 &2080367865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6927240256314294603, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
