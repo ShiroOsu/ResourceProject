@@ -69,7 +69,7 @@ namespace Code.Framework.ExtensionFolder
             AssetDatabase.CreateFolder("Assets/Code/Units", unitName);
         }
 
-        public static void UnitPrefabFolder(string unitName)
+        public static void UnitPrefab(string unitName)
         {
             if (Directory.Exists("Assets/Prefabs/Units/" + unitName) && EditorUtility.DisplayDialog(
                 unitName + " prefab folder exists", "", "Ok"))

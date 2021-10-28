@@ -37,7 +37,7 @@ namespace Code.Framework.Custom
             var path = Application.dataPath + "/Code/Units/";
 
             AutoCreate.UnitFolder(m_UnitName);
-            AutoCreate.UnitPrefabFolder(m_UnitName);
+            AutoCreate.UnitPrefab(m_UnitName);
 
             var scriptName = m_UnitName + ".cs";
             path += m_UnitName + "/";
