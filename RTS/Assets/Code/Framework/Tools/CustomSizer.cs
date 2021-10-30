@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code.Framework.Custom
+namespace Code.Framework.Tools
 {
     public class CustomSizer : MonoBehaviour
     {

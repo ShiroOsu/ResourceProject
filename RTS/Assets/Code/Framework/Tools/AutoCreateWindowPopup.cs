@@ -3,7 +3,7 @@ using Code.Framework.Logger;
 using UnityEditor;
 using UnityEngine;
 
-namespace Code.Framework.Custom
+namespace Code.Framework.Tools
 {
     public class AutoCreateWindowPopup : EditorWindow
     {

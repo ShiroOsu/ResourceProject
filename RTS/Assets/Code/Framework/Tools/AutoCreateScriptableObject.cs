@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code.Framework.Custom
+namespace Code.Framework.Tools
 {
     [CreateAssetMenu(fileName = "AutoCreateScriptableObject", menuName = "ScriptableObjects/AutoCreateScriptableObject")]
     public class AutoCreateScriptableObject : ScriptableObject
