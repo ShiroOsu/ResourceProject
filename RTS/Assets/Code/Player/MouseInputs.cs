@@ -92,12 +92,12 @@ namespace Code.Player
             // Context is checked to make sure it is clicked once
             if (context.started)
             {
-                //TODO: Calling IsPointerOverGameObject will query UI state from last frame
-                if (EventSystem.current.IsPointerOverGameObject())
-                {
-                    // Clicking on UI
-                }
-                else
+                // //TODO: Calling IsPointerOverGameObject will query UI state from last frame
+                // if (EventSystem.current.IsPointerOverGameObject())
+                // {
+                //     // Clicking on UI
+                // }
+                // else
                 {
                     ClickingOnUnitsAndStructures();
                 }
@@ -111,11 +111,11 @@ namespace Code.Player
 
         public void OnLeftMouseButtonHold(InputAction.CallbackContext context)
         {
-            // TODO: Calling IsPointerOverGameObject will query UI state from last frame
-            if (!EventSystem.current.IsPointerOverGameObject() && context.performed)
-            {
-                m_MultiSelect = true;
-            }
+            // // TODO: Calling IsPointerOverGameObject will query UI state from last frame
+            // if (!EventSystem.current.IsPointerOverGameObject() && context.performed)
+            // {
+            //     m_MultiSelect = true;
+            // }
         }
 
         private void ClickingOnUnitsAndStructures()

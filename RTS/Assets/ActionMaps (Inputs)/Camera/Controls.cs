@@ -160,7 +160,24 @@ namespace Camera
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Desktop"",
+            ""bindingGroup"": ""Desktop"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<VirtualMouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
             // Camera
             m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
@@ -271,6 +288,15 @@ namespace Camera
             }
         }
         public CameraActions @Camera => new CameraActions(this);
+        private int m_DesktopSchemeIndex = -1;
+        public InputControlScheme DesktopScheme
+        {
+            get
+            {
+                if (m_DesktopSchemeIndex == -1) m_DesktopSchemeIndex = asset.FindControlSchemeIndex("Desktop");
+                return asset.controlSchemes[m_DesktopSchemeIndex];
+            }
+        }
         public interface ICameraActions
         {
             void OnMovement(InputAction.CallbackContext context);

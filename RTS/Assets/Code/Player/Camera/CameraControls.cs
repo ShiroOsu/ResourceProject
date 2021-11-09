@@ -49,19 +49,27 @@ namespace Code.Player.Camera
             MoveCamera(Time.deltaTime);
         }
 
-        public void OnMovement(InputAction.CallbackContext context)
+        // WASD
+        private void UpdateCameraDirection()
         {
-            var direction = context.ReadValue<Vector2>();
+            var direction = m_CameraControls.Camera.Movement.ReadValue<Vector2>();
 
             m_ForwardVector.x = direction.x;
             m_ForwardVector.z = direction.y;
+        }
+
+        public void OnMovement(InputAction.CallbackContext context)
+        {
+            // var direction = context.ReadValue<Vector2>();
+            // m_ForwardVector.x = direction.x;
+            // m_ForwardVector.z = direction.y;
         }
 
         public void OnZoom(InputAction.CallbackContext context)
         {
             if (!m_CanZoom)
                 return;
-            
+
             var scrollValue = context.ReadValue<float>();
             m_ZoomVector.y = scrollValue;
         }
@@ -91,6 +99,8 @@ namespace Code.Player.Camera
 
         private void MoveCamera(float deltaTime)
         {
+            UpdateCameraDirection();
+
             Zoom(deltaTime);
             transform.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
 

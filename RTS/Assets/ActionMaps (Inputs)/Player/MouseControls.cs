@@ -122,7 +122,24 @@ namespace Player
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Desktop"",
+            ""bindingGroup"": ""Desktop"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<VirtualMouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
             // Mouse
             m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
@@ -269,6 +286,15 @@ namespace Player
             }
         }
         public StructureActions @Structure => new StructureActions(this);
+        private int m_DesktopSchemeIndex = -1;
+        public InputControlScheme DesktopScheme
+        {
+            get
+            {
+                if (m_DesktopSchemeIndex == -1) m_DesktopSchemeIndex = asset.FindControlSchemeIndex("Desktop");
+                return asset.controlSchemes[m_DesktopSchemeIndex];
+            }
+        }
         public interface IMouseActions
         {
             void OnLeftMouse(InputAction.CallbackContext context);
