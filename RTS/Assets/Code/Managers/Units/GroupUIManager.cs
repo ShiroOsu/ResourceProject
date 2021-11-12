@@ -13,13 +13,15 @@ namespace Code.Managers.Units
         [SerializeField] private GameObject m_GetParent;
 
         private GameObject m_ParentObject;
-        private readonly List<Texture> m_TextureList = new List<Texture>();
-        private readonly List<GameObject> m_ListOfNewObjects = new List<GameObject>();
+        private readonly List<Texture> m_TextureList = new();
+        private readonly List<GameObject> m_ListOfNewObjects = new();
+        private DataManager m_Data;
 
         private void Awake()
         {
-            DataManager.Instance.mouseInputs.OnUpdateUnitList += HandleUnitList;
-            DataManager.Instance.mouseInputs.OnDisableUnitImages += DisableUnitImages;
+            m_Data = DataManager.Instance;
+            m_Data.mouseInputs.OnUpdateUnitList += HandleUnitList;
+            m_Data.mouseInputs.OnDisableUnitImages += DisableUnitImages;
 
             m_ParentObject = m_GetParent.transform.parent.gameObject;
         }

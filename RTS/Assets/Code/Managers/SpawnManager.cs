@@ -1,14 +1,12 @@
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
 using UnityEngine;
 
 namespace Code.Managers
 {
-    public class SpawnManager : MonoBehaviour
+    public class SpawnManager : Singleton<SpawnManager>
     {
-        private static SpawnManager s_Instance = null;
-        public static SpawnManager Instance => s_Instance ??= FindObjectOfType<SpawnManager>();
-
         public void SpawnUnit(TextureAssetType type, Vector3 startPos, Vector3 endPos)
         {
             var unit = PoolManager.Instance.GetPooledUnit(type, true);

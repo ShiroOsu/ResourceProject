@@ -5,11 +5,8 @@ using UnityEngine;
 
 namespace Code.Framework.UI
 {
-    public class AllTextures : MonoBehaviour
+    public class AllTextures : Singleton<AllTextures>
     {
-        private static AllTextures s_Instance;
-        public static AllTextures Instance => s_Instance ??= FindObjectOfType<AllTextures>();
-
         [SerializeField] private TextureList m_Textures;
 
         public Texture GetTexture(TextureAssetType type)

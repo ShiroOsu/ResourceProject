@@ -1,4 +1,5 @@
 using System;
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.ExtensionFolder;
 using Code.Framework.Interfaces;
@@ -11,11 +12,8 @@ using UnityEngine;
 
 namespace Code.Managers
 {
-    public sealed class UIManager : MonoBehaviour
+    public sealed class UIManager : Singleton<UIManager>
     {
-        private static UIManager s_Instance;
-        public static UIManager Instance => s_Instance ??= FindObjectOfType<UIManager>();
-
         [Header("Units")]
         [SerializeField] private BuilderUIManager m_Builder;
         [SerializeField] private SoldierUIManager m_Soldier;

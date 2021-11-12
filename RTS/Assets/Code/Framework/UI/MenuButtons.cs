@@ -3,11 +3,8 @@ using UnityEngine.Events;
 
 namespace Code.Framework.UI
 {
-    public class MenuButtons : MonoBehaviour
+    public class MenuButtons : Singleton<MenuButtons>
     {
-        private static MenuButtons s_Instance;
-        public static MenuButtons Instance => s_Instance ??= FindObjectOfType<MenuButtons>();
-
         [SerializeField] private ExtensionFolder.Extensions.ButtonByKey[] m_ButtonByKey;
 
         public void BindMenuButton(UnityAction action, int buttonIndex, Texture texture)

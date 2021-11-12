@@ -28,7 +28,6 @@ namespace Code.Player
 
         private List<GameObject> m_SelectedUnitsList;
 
-        //private GameObject m_CurrentUnit = null;
         private Vector2 m_MousePosition;
 
         // Public stuff
@@ -46,13 +45,16 @@ namespace Code.Player
         private IStructure m_CurrentStructure;
         private static readonly int Clicked = Animator.StringToHash("Clicked");
 
+        private DataManager m_Data;
+        
         private void Awake()
         {
+            m_Data = DataManager.Instance;
             m_SelectedUnitsList = new List<GameObject>();
 
-            m_UnitMask = DataManager.Instance.mouseData.unitMask;
-            m_StructureMask = DataManager.Instance.mouseData.structureMask;
-            m_GroundMask = DataManager.Instance.mouseData.groundMask;
+            m_UnitMask = m_Data.mouseData.unitMask;
+            m_StructureMask = m_Data.mouseData.structureMask;
+            m_GroundMask = m_Data.mouseData.groundMask;
 
             m_MouseControls = new MouseControls();
             m_MouseControls.Mouse.SetCallbacks(this);

@@ -1,17 +1,12 @@
-using System;
+using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.ObjectPool;
-using Code.Units.Builder;
 using UnityEngine;
 
 namespace Code.Managers
 {
-    public class PoolManager : MonoBehaviour
+    public class PoolManager : Singleton<PoolManager>
     {
-        // Singleton
-        private static PoolManager s_Instance = null;
-        public static PoolManager Instance => s_Instance ??= FindObjectOfType<PoolManager>();
-
         [Header("Structures")]
         [SerializeField] private GameObject m_CastlePrefab = null;
         [SerializeField] private GameObject m_BarracksPrefab = null;
@@ -55,25 +50,6 @@ namespace Code.Managers
                 TextureAssetType.Horse => horseUnitPool.Rent(rent),
                 _ => null
             };
-        }
-    }
-
-    public class BuilderSpawner : ObjectPoolBase<BuilderUnit>
-    {
-        [SerializeField] private BuilderUnit m_Prefab;
-
-        private void Start()
-        {
-            InitPool(m_Prefab); // Initialize pool
-            var builder = Get(); // pull from pool
-            Release(builder); // return to pool
-        }
-
-        // Optionally override setup components
-        protected override void GetSetup(BuilderUnit builderUnit)
-        {
-            base.GetSetup(builderUnit);
-            builderUnit.name = "TestUnit001";
         }
     }
 }

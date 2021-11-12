@@ -1,13 +1,11 @@
+using Code.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Code.Managers
 {
-    public class FlagManager : MonoBehaviour
+    public class FlagManager : Singleton<FlagManager>
     {
-        private static FlagManager s_Instance;
-        public static FlagManager Instance => s_Instance ??= FindObjectOfType<FlagManager>();
-
         [SerializeField] private GameObject m_FlagPrefab;
 
         public void SetFlagPosition(GameObject flag)

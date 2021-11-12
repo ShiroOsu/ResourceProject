@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Code.Framework;
 using Code.Framework.Blueprint;
 using Code.Framework.Enums;
 using Code.Framework.ExtensionFolder;
@@ -10,11 +11,8 @@ using UnityEngine.InputSystem;
 
 namespace Code.Managers.Building
 {
-    public class BuildManager : MonoBehaviour
+    public class BuildManager : Singleton<BuildManager>
     {
-        private static BuildManager s_Instance;
-        public static BuildManager Instance => s_Instance ??= FindObjectOfType<BuildManager>();
-
         [SerializeField] private BlueprintByEnum m_Blueprints;
         [SerializeField] private Material m_BlueprintMaterialCanNotBuild;
         [SerializeField] private Material m_BlueprintMaterialCanBuild;
@@ -113,6 +111,7 @@ namespace Code.Managers.Building
                 var groundPoint = hit.point;
                 if (m_CurrentStructureType == StructureType.Castle)
                 {
+                    // Temp, stuff changed in 2021.2.0f1 update
                     // Because 0,0,0 in Castle transform is the middle and not on the ground
                     groundPoint.y += 5f;
                 }

@@ -1,3 +1,4 @@
+using Code.Framework;
 using Code.Managers.Units;
 using Code.Player;
 using Code.Player.Camera.ScriptableObjects;
@@ -7,11 +8,8 @@ using UnityEngine;
 
 namespace Code.Managers
 {
-    public class DataManager : MonoBehaviour
+    public class DataManager : Singleton<DataManager>
     {
-        private static DataManager s_Instance = null;
-        public static DataManager Instance => s_Instance ??= FindObjectOfType<DataManager>();
-
         [Header("Units")]
         public UnitData unitData;
 
