@@ -49,7 +49,7 @@ namespace Code.Managers.Units
                 SetPositions(index, xSpacing, ySpacing, newObject);
                 index++;
 
-                // After x amount of units, create new row
+                // After x count of units, create new row
                 int yMod = index % x;
 
                 if (yMod == 0)

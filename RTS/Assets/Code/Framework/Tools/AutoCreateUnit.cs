@@ -34,6 +34,7 @@ namespace Code.Framework.Tools
         private static void CreateUnitScript()
         {
             Log.Message("AutoCreateUnit.cs", "Creating unit script");
+            Log.Message("AutoCreateUnit.cs", "Creating unit prefab");
             var path = Application.dataPath + "/Code/Units/";
 
             AutoCreate.UnitFolder(m_UnitName);
