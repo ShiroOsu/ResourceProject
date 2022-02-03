@@ -1,4 +1,5 @@
 using System;
+#if UNITY_EDITOR
 using Code.Framework.Logger;
 using UnityEditor;
 using UnityEngine;
@@ -40,3 +41,4 @@ namespace Code.Framework.Tools
         }
     }
 }
+#endif

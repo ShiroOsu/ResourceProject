@@ -1,4 +1,5 @@
 using System.IO;
+#if UNITY_EDITOR
 using Code.Framework.ExtensionFolder;
 using Code.Framework.Logger;
 using UnityEditor;
@@ -96,3 +97,4 @@ namespace Code.Framework.Tools
         }
     }
 }
+#endif

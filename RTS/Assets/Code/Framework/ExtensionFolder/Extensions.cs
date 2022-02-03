@@ -1,9 +1,13 @@
 using System;
 using System.Linq;
+using Code.Framework.FlowField;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UEObject = UnityEngine.Object;
 
 namespace Code.Framework.ExtensionFolder
 {
@@ -20,13 +24,15 @@ namespace Code.Framework.ExtensionFolder
 
         public static GameObject FindInactiveObject(string name)
         {
-            return UnityEngine.Object.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
+            return UEObject.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
         }
         
+        #if UNITY_EDITOR
         public static T LoadAsset<T>(string path) where T : ScriptableObject
         {
             return (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
         }
+        #endif
         
         [Serializable]
         public struct ButtonByKey
@@ -36,6 +42,14 @@ namespace Code.Framework.ExtensionFolder
             public RawImage Image;
             public int Key; // Temp
             // Add ToolTip ?
+        }
+
+        // Temp
+        public static void InitializeFlowField()
+        {
+            var flowfieldGO = UEObject.FindObjectsOfType<GameObject>().FirstOrDefault(go => go.name.Equals("FlowField"));
+            flowfieldGO.TryGetComponent(out GridController gc);
+            gc.InitializeFlowField();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Code.Framework.ExtensionFolder;
 using Code.Framework.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
@@ -49,6 +50,9 @@ namespace Code.Player
         
         private void Awake()
         {
+            // TODO TEMP
+            Extensions.InitializeFlowField();
+            
             m_Data = DataManager.Instance;
             m_SelectedUnitsList = new List<GameObject>();
 

@@ -106,7 +106,7 @@ namespace Code.Managers
         private void SetUpTimer(GameObject timerObject, string _name)
         {
             timerObject.TryGetComponent<RectTransform>(out var rectTransform);
-            Extensions.FindInactiveObject(_name).TryGetComponent(out RectTransform UIRectTransform);
+            Extensions.FindInactiveObject(_name).TryGetComponent(out RectTransform UIRectTransform); // ?
             
             rectTransform.SetParent(UIRectTransform.transform);
             rectTransform.localScale = Vector3.one;
@@ -136,6 +136,7 @@ namespace Code.Managers
             m_StructureInfo.SetValues(data.structureName, data.armor);
         }
 
+        // Switch between structure and unit info
         private void SwitchBetweenInfo(bool b)
         {
             m_ObjectWithStructureInfo.SetActive(b);
