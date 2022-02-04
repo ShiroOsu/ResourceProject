@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Code.Framework.ExtensionFolder;
+using Code.Framework.FlowField;
 using Code.Framework.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
 using Player;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Code.Player
@@ -18,6 +18,9 @@ namespace Code.Player
 
         [Header("Multi Selection")] [SerializeField]
         private RectTransform m_SelectionImage;
+
+        [Header("Flow Field Controller")]
+        [SerializeField] private GridController m_GridController;
 
         private Vector2 m_BoxStartPos;
         private bool m_MultiSelect;
@@ -33,6 +36,7 @@ namespace Code.Player
 
         // Public stuff
         public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
+        //public Vector3 WorldMousePos => m_Camera.ScreenToWorldPoint(m_MousePosition);
         public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;
@@ -101,7 +105,7 @@ namespace Code.Player
                 // //TODO: Calling IsPointerOverGameObject will query UI state from last frame
                 // if (EventSystem.current.IsPointerOverGameObject())
                 // {
-                //     // Clicking on UI
+                //     // Clicking on UI ??
                 // }
                 // else
                 {
@@ -196,6 +200,10 @@ namespace Code.Player
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask))
             {
                 newPosition = hit.point;
+                // var destinationCell = m_GridController.CurrentFlowField.GetCellFromWorldPos(newPosition);
+                // m_GridController.CurrentFlowField.CreateIntegrationField(destinationCell);
+                // m_GridController.CurrentFlowField.CreateFlowField();
+                
                 PlayClickAnimation(true);
             }
             else
@@ -205,6 +213,9 @@ namespace Code.Player
 
             foreach (var unit in m_SelectedUnitsList)
             {
+                // var cellBelow = m_GridController.CurrentFlowField.GetCellFromWorldPos(unit.transform.position);
+                // var moveDirection = new Vector3(cellBelow.BestDirection.Vector.x, 0f, cellBelow.BestDirection.Vector.y);
+                
                 unit.TryGetComponent(out IUnit u);
                 u.Move(newPosition);
             }

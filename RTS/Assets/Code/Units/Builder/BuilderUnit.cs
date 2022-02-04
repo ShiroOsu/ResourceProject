@@ -60,6 +60,8 @@ namespace Code.Units.Builder
 
         public void Move(Vector3 destination)
         {
+            // flow field test
+            //m_Agent.velocity = destination * m_Agent.speed;
             m_Agent.SetDestination(destination);
         }
     }

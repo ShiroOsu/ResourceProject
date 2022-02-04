@@ -1,6 +1,6 @@
 using System;
+using Code.Managers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Code.Framework.FlowField
 {
@@ -11,9 +11,16 @@ namespace Code.Framework.FlowField
         [Tooltip("Max Height of Mountain that can be walked on")]
         public float m_MaxMountainHeight = 0.8f;
 
+        private DataManager m_Data;
+
         public FlowField CurrentFlowField { get; private set; }
         public Terrain m_Terrain;
         public Vector2Int GridSize { get; private set; }
+
+        private void Awake()
+        {
+            m_Data = DataManager.Instance;
+        }
 
         public void InitializeFlowField()
         {

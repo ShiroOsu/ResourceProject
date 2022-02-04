@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Code.Framework.ExtensionFolder;
 using Code.Framework.Logger;
 using UnityEngine;
 
@@ -10,6 +12,7 @@ namespace Code.Framework.FlowField
         private readonly float m_CellRadius;
         private readonly float m_CellDiameter;
         private readonly float m_MaxMountainHeight;
+        public Cell m_DestinationCell;
 
         public FlowField(float cellRadius, Vector2Int gridSize, float maxMountainHeight = 0.5f)
         {
@@ -70,6 +73,98 @@ namespace Code.Framework.FlowField
                 }
             }
             Log.Message("FlowField.cs", "FlowField cell cost added.");
+        }
+        
+        public void CreateIntegrationField(Cell destinationCell)
+        {
+            m_DestinationCell = destinationCell;
+            m_DestinationCell.Cost = 0;
+            m_DestinationCell.BestCost = 0;
+
+            Queue<Cell> cellsToCheck = new();
+            cellsToCheck.Enqueue(m_DestinationCell);
+
+            while (cellsToCheck.Count > 0)
+            {
+                var currentCell = cellsToCheck.Dequeue();
+                var currentNeighbors = GetNeighborCells(currentCell.GridIndex, GridDirection.CardinalDirections);
+
+                foreach (var neighbor in currentNeighbors)
+                {
+                    if (neighbor.Cost == byte.MaxValue)
+                    {
+                        continue;
+                    }
+
+                    if (neighbor.Cost + currentCell.BestCost < neighbor.BestCost)
+                    {
+                        neighbor.BestCost = (ushort)(neighbor.Cost + currentCell.BestCost);
+                        cellsToCheck.Enqueue(neighbor);
+                    }
+                }
+            }
+            Log.Message("FlowField.cs", "Integration field created.");
+        }
+
+        public void CreateFlowField()
+        {
+            foreach (var currentCell in Grid)
+            {
+                var currentNeighbors = GetNeighborCells(currentCell.GridIndex, GridDirection.AllDirections);
+                int bestCost = currentCell.BestCost;
+
+                foreach (var currentNeighbor in currentNeighbors)
+                {
+                    if (currentNeighbor.BestCost < bestCost)
+                    {
+                        bestCost = currentNeighbor.BestCost;
+                        currentCell.BestDirection = GridDirection.GetDirectionFromV2I(currentNeighbor.GridIndex - currentCell.GridIndex);
+                    }
+                }
+            }
+            Log.Message("FlowField.cs", "Flow Field created.");
+        }
+
+        private IEnumerable<Cell> GetNeighborCells(Vector2Int gridIndex, List<GridDirection> directions)
+        {
+            var neighborCells = new List<Cell>();
+
+            foreach (var currentDirection in directions)
+            {
+                var newNeighbor = GetCellAtRelativePos(gridIndex, currentDirection);
+                if (newNeighbor is not null)
+                {
+                    neighborCells.Add(newNeighbor);
+                }
+            }
+
+            return neighborCells;
+        }
+
+        private Cell GetCellAtRelativePos(Vector2Int orignPos, Vector2Int relativePos)
+        {
+            var finalPos = orignPos + relativePos;
+
+            if (finalPos.x < 0 || finalPos.x >= m_GridSize.x || finalPos.y < 0 || finalPos.y >= m_GridSize.y)
+            {
+                return null;
+            }
+            else
+            {
+                return Grid[finalPos.x, finalPos.y];
+            }
+        }
+
+        public Cell GetCellFromWorldPos(Vector3 worldPos)
+        {
+            float percentX = worldPos.x / (m_GridSize.x * m_CellDiameter);
+            float percentY = worldPos.z / (m_GridSize.y * m_CellDiameter);
+            percentX = Mathf.Clamp01(percentX);
+            percentY = Mathf.Clamp01(percentY);
+
+            var x = (int)Mathf.Clamp(Mathf.FloorToInt((m_GridSize.x) * percentX), 0f, m_GridSize.x - 1f);
+            var y = (int)Mathf.Clamp(Mathf.FloorToInt((m_GridSize.y) * percentY), 0f, m_GridSize.y - 1f);
+            return Grid[x, y];
         }
     }
 }
