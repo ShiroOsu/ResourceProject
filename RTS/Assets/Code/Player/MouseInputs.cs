@@ -98,8 +98,6 @@ namespace Code.Player
             // Context is checked to make sure it is clicked once
             if (context.started)
             {
-                // TODO: Calling IsPointerOverGameObject from within event processing will not work as expected
-                // TODO: it will query UI state from last frame 
                 if (EventSystem.current.IsPointerOverGameObject())
                 {
                     // Clicking on UI ??
@@ -121,8 +119,6 @@ namespace Code.Player
 
         public void OnLeftMouseButtonHold(InputAction.CallbackContext context)
         {
-            // TODO: Calling IsPointerOverGameObject from within event processing will not work as expected
-            // TODO: it will query UI state from last frame 
             if (!EventSystem.current.IsPointerOverGameObject() && context.performed) // Performed?
             {
                 m_MultiSelect = true;
