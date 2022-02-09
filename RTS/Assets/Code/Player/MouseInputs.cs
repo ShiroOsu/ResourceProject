@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Code.Framework.ExtensionFolder;
 using Code.Framework.FlowField;
 using Code.Framework.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
 using Player;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Code.Player
@@ -36,7 +36,6 @@ namespace Code.Player
 
         // Public stuff
         public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
-        //public Vector3 WorldMousePos => m_Camera.ScreenToWorldPoint(m_MousePosition);
         public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;
@@ -54,9 +53,6 @@ namespace Code.Player
         
         private void Awake()
         {
-            // TODO TEMP
-            Extensions.InitializeFlowField();
-            
             m_Data = DataManager.Instance;
             m_SelectedUnitsList = new List<GameObject>();
 
@@ -102,12 +98,13 @@ namespace Code.Player
             // Context is checked to make sure it is clicked once
             if (context.started)
             {
-                // //TODO: Calling IsPointerOverGameObject will query UI state from last frame
-                // if (EventSystem.current.IsPointerOverGameObject())
-                // {
-                //     // Clicking on UI ??
-                // }
-                // else
+                // TODO: Calling IsPointerOverGameObject from within event processing will not work as expected
+                // TODO: it will query UI state from last frame 
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    // Clicking on UI ??
+                }
+                else
                 {
                     ClickingOnUnitsAndStructures();
                 }
@@ -116,16 +113,20 @@ namespace Code.Player
 
         public void OnRightMouse(InputAction.CallbackContext context)
         {
-            MovingSelectedUnits();
+            if (context.started)
+            {
+                MovingSelectedUnits();
+            }
         }
 
         public void OnLeftMouseButtonHold(InputAction.CallbackContext context)
         {
-            // // TODO: Calling IsPointerOverGameObject will query UI state from last frame
-            // if (!EventSystem.current.IsPointerOverGameObject() && context.performed)
-            // {
-            //     m_MultiSelect = true;
-            // }
+            // TODO: Calling IsPointerOverGameObject from within event processing will not work as expected
+            // TODO: it will query UI state from last frame 
+            if (!EventSystem.current.IsPointerOverGameObject() && context.performed) // Performed?
+            {
+                m_MultiSelect = true;
+            }
         }
 
         private void ClickingOnUnitsAndStructures()
@@ -186,7 +187,6 @@ namespace Code.Player
                 return;
 
             var ray = m_Camera.ScreenPointToRay(m_MousePosition);
-            Vector3 newPosition;
 
             // When building, Temp?
             if (IsBuilding)
@@ -197,13 +197,10 @@ namespace Code.Player
                 return;
             }
 
+            Vector3 newPosition;
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask))
             {
                 newPosition = hit.point;
-                // var destinationCell = m_GridController.CurrentFlowField.GetCellFromWorldPos(newPosition);
-                // m_GridController.CurrentFlowField.CreateIntegrationField(destinationCell);
-                // m_GridController.CurrentFlowField.CreateFlowField();
-                
                 PlayClickAnimation(true);
             }
             else
@@ -213,9 +210,6 @@ namespace Code.Player
 
             foreach (var unit in m_SelectedUnitsList)
             {
-                // var cellBelow = m_GridController.CurrentFlowField.GetCellFromWorldPos(unit.transform.position);
-                // var moveDirection = new Vector3(cellBelow.BestDirection.Vector.x, 0f, cellBelow.BestDirection.Vector.y);
-                
                 unit.TryGetComponent(out IUnit u);
                 u.Move(newPosition);
             }
@@ -236,7 +230,7 @@ namespace Code.Player
             // Would be ideal to only needing to loop through a list that only contains selectable units
             var allUnits = FindObjectsOfType<GameObject>(false);
 
-            // If multiSelecting when last action was multiSelect it will not clear lists 
+            // If multiSelecting was last action it will not clear lists 
             ClearUnitList();
 
             foreach (var unit in allUnits)
@@ -317,8 +311,8 @@ namespace Code.Player
             }
 
             var firstUnit = m_SelectedUnitsList[0];
-            firstUnit.TryGetComponent(out IUnit iu);
-            iu.ShouldSelect(true);
+            firstUnit.TryGetComponent(out IUnit u1);
+            u1.ShouldSelect(true);
 
             if (select)
             {

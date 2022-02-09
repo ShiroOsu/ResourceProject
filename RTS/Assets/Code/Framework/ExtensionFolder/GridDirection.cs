@@ -23,15 +23,15 @@ namespace Code.Framework.ExtensionFolder
             return CardinalAndIntercardinalDirections.DefaultIfEmpty(None).FirstOrDefault(direction => direction == vector);
         }
 
-        public static readonly GridDirection None = new GridDirection(0, 0);
-        private static readonly GridDirection North = new GridDirection(0, 1);
-        private static readonly GridDirection South = new GridDirection(0, -1);
-        private static readonly GridDirection East = new GridDirection(1, 0);
-        private static readonly GridDirection West = new GridDirection(-1, 0);
-        private static readonly GridDirection NorthEast = new GridDirection(1, 1);
-        private static readonly GridDirection NorthWest = new GridDirection(-1, 1);
-        private static readonly GridDirection SouthEast = new GridDirection(1, -1);
-        private static readonly GridDirection SouthWest = new GridDirection(-1, -1);
+        public static readonly GridDirection None = new(0, 0);
+        public static readonly GridDirection North = new(0, 1);
+        public static readonly GridDirection South = new(0, -1);
+        public static readonly GridDirection East = new(1, 0);
+        public static readonly GridDirection West = new(-1, 0);
+        public static readonly GridDirection NorthEast = new(1, 1);
+        public static readonly GridDirection NorthWest = new(-1, 1);
+        public static readonly GridDirection SouthEast = new(1, -1);
+        public static readonly GridDirection SouthWest = new(-1, -1);
 
         // Cardinal = N, S, W, E
         public static readonly List<GridDirection> CardinalDirections = new()

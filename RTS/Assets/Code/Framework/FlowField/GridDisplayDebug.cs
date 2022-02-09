@@ -10,6 +10,7 @@ namespace Code.Framework.FlowField
         [Header("Only visible in play mode")] public bool m_EnableDebug;
         public Vector2Int m_MaxHandles;
         public Vector2Int m_StartOrigo;
+        public Sprite m_SpriteArrow;
 
         private void OnDrawGizmos()
         {
@@ -49,7 +50,7 @@ namespace Code.Framework.FlowField
                     {
                         Gizmos.color = Color.black;
                     }
-
+                    
                     Handles.Label(cell.WorldPos, cell.Cost.ToString(), style);
                     Gizmos.DrawWireCube(center, size);
                 }

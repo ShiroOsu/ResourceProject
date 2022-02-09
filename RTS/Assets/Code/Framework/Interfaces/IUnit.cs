@@ -14,4 +14,3 @@ namespace Code.Framework.Interfaces
         public void Move(UnityEngine.Vector3 destination);
     }
 }
-
