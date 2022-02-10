@@ -2,25 +2,26 @@ using System;
 using Code.Framework.Enums;
 using Code.Framework.TextureListByEnum;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Framework.UI
 {
     public class AllTextures : Singleton<AllTextures>
     {
-        [SerializeField] private TextureList m_Textures;
+        [SerializeField] private TextureList textures;
 
         public Texture GetTexture(TextureAssetType type)
         {
             var tex = type switch
             {
-                TextureAssetType.Builder => m_Textures[TextureAssetType.Builder],
-                TextureAssetType.Solider => m_Textures[TextureAssetType.Solider],
-                TextureAssetType.Horse => m_Textures[TextureAssetType.Horse],
-                TextureAssetType.Castle => m_Textures[TextureAssetType.Castle],
-                TextureAssetType.Barracks => m_Textures[TextureAssetType.Barracks],
-                TextureAssetType.Flag => m_Textures[TextureAssetType.Flag],
-                TextureAssetType.Build => m_Textures[TextureAssetType.Build],
-                TextureAssetType.Back => m_Textures[TextureAssetType.Back],
+                TextureAssetType.Builder => textures[TextureAssetType.Builder],
+                TextureAssetType.Solider => textures[TextureAssetType.Solider],
+                TextureAssetType.Horse => textures[TextureAssetType.Horse],
+                TextureAssetType.Castle => textures[TextureAssetType.Castle],
+                TextureAssetType.Barracks => textures[TextureAssetType.Barracks],
+                TextureAssetType.Flag => textures[TextureAssetType.Flag],
+                TextureAssetType.Build => textures[TextureAssetType.Build],
+                TextureAssetType.Back => textures[TextureAssetType.Back],
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 

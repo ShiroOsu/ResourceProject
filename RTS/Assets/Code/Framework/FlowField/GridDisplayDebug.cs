@@ -1,22 +1,23 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Framework.FlowField
 {
     public class GridDisplayDebug : MonoBehaviour
     {
-        public GridController m_GridController;
+        [FormerlySerializedAs("m_GridController")] public GridController gridController;
 
-        [Header("Only visible in play mode")] public bool m_EnableDebug;
-        public Vector2Int m_MaxHandles;
-        public Vector2Int m_StartOrigo;
-        public Sprite m_SpriteArrow;
+        [FormerlySerializedAs("m_EnableDebug")] [Header("Only visible in play mode")] public bool enableDebug;
+        [FormerlySerializedAs("m_MaxHandles")] public Vector2Int maxHandles;
+        [FormerlySerializedAs("m_StartOrigo")] public Vector2Int startOrigo;
+        [FormerlySerializedAs("m_SpriteArrow")] public Sprite spriteArrow;
 
         private void OnDrawGizmos()
         {
-            if (m_EnableDebug)
+            if (enableDebug)
             {
-                DrawGrid(m_GridController.GridSize, Color.black, m_GridController.m_CellRadius);
+                DrawGrid(gridController.GridSize, Color.black, gridController.cellRadius);
             }
         }
 
@@ -26,13 +27,13 @@ namespace Code.Framework.FlowField
             var style = GUI.skin.label;
             style.alignment = TextAnchor.MiddleCenter;
 
-            for (int x = m_StartOrigo.x; x < m_MaxHandles.x; x++)
+            for (int x = startOrigo.x; x < maxHandles.x; x++)
             {
-                for (int y = m_StartOrigo.y; y < m_MaxHandles.y; y++)
+                for (int y = startOrigo.y; y < maxHandles.y; y++)
                 {
                     var center = new Vector3(cellRadius * 2f * x + cellRadius, cellRadius,
                         cellRadius * 2f * y + cellRadius);
-                    var cellHeight = m_GridController.m_Terrain.SampleHeight(center);
+                    var cellHeight = gridController.terrain.SampleHeight(center);
                     var size = Vector3.one * cellRadius * 2f;
 
                     if (cellHeight > 0f)
@@ -40,7 +41,7 @@ namespace Code.Framework.FlowField
                         center.y = cellHeight + cellRadius;
                     }
 
-                    var cell = m_GridController.CurrentFlowField.Grid[x, y];
+                    var cell = gridController.CurrentFlowField.Grid[x, y];
 
                     if (cell.Cost > 1)
                     {

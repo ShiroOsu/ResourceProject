@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Code.Framework.ObjectPool
 {
     [ExecuteAlways]
-    public class EmittOnDisable : MonoBehaviour
+    public class EmitOnDisable : MonoBehaviour
     {
         public event Action<GameObject> OnDisableGameObject;
 

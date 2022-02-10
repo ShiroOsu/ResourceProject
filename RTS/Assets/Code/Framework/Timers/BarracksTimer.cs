@@ -18,11 +18,11 @@ namespace Code.Framework.Timers
         {
             if (add)
             {
-                Barracks.OnSpawn += Spawn;
+                Barracks.OnSpawn += Spawn; // TODO: Delegate Allocation
             }
             else
             {
-                Barracks.OnSpawn -= Spawn;
+                Barracks.OnSpawn -= Spawn; // TODO: Delegate Allocation
             }
         }
 
@@ -31,17 +31,17 @@ namespace Code.Framework.Timers
             if (!Barracks)
                 return;
 
-            m_TimerFill.maxValue = m_CurrentUnitTimeSpawn;
+            timerFill.maxValue = CurrentUnitTimeSpawn;
             
-            if (m_IsSpawning)
+            if (IsSpawning)
             {
-                foreach (var image in m_ImageQueue)
+                foreach (var image in imageQueue)
                 {
                     image.gameObject.SetActive(image.texture != null);
                 }
                 
                 ShowTimer(true);
-                m_TimerFill.value = m_CurrentTimeOnSpawn;
+                timerFill.value = CurrentTimeOnSpawn;
             }
             else
             {
@@ -51,48 +51,48 @@ namespace Code.Framework.Timers
 
         protected override void Spawn(TextureAssetType type)
         {
-            if (i >= m_ImageQueue.Length)
+            if (i >= imageQueue.Length)
             {
                 Log.Message("BarracksTimer.cs", "Queue is full!");
                 return;
             }
             
-            m_SpawnQueue.Enqueue(type);
-            m_ImageQueue[i].texture = AllTextures.Instance.GetTexture(type);
+            SpawnQueue.Enqueue(type);
+            imageQueue[i].texture = AllTextures.Instance.GetTexture(type);
             i++;
 
-            if (!m_IsSpawning)
+            if (!IsSpawning)
             {
-                StartCoroutine(SpawnRoutine(Barracks.m_UnitSpawnPoint.position, Barracks.FlagPoint));
+                StartCoroutine(SpawnRoutine(Barracks.unitSpawnPoint.position, Barracks.FlagPoint));// TODO: Delegate Allocation
             }
         }
         
         protected override IEnumerator SpawnRoutine(Vector3 startPos, Vector3 endPos)
         {
-            m_IsSpawning = true;
+            IsSpawning = true;
             
-            while (m_SpawnQueue.Count > 0)
+            while (SpawnQueue.Count > 0)
             {
-                m_CurrentTimeOnSpawn = 0f;
+                CurrentTimeOnSpawn = 0f;
             
-                var unitType = m_SpawnQueue.Dequeue();
+                var unitType = SpawnQueue.Dequeue();
                 m_CurrentUnitToSpawn = unitType;
                 
-                float timeToSpawn = m_CurrentUnitTimeSpawn = GetUnitSpawnTime(m_CurrentUnitToSpawn);
+                float timeToSpawn = CurrentUnitTimeSpawn = GetUnitSpawnTime(m_CurrentUnitToSpawn);
             
-                while (m_CurrentTimeOnSpawn < timeToSpawn)
+                while (CurrentTimeOnSpawn < timeToSpawn)
                 {
-                    m_CurrentTimeOnSpawn += Time.deltaTime;
+                    CurrentTimeOnSpawn += Time.deltaTime;
                     yield return null;
                 }
                 
-                SpawnManager.Instance.SpawnUnit(unitType, Barracks.m_UnitSpawnPoint.position, 
+                SpawnManager.Instance.SpawnUnit(unitType, Barracks.unitSpawnPoint.position, 
                      Barracks.FlagPoint);
                 
                 RemoveImageInQueue();
             }
 
-            m_IsSpawning = false;
+            IsSpawning = false;
         }
     }
 }

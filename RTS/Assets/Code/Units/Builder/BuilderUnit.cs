@@ -5,13 +5,14 @@ using Code.Managers;
 using Code.Managers.Building;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Code.Units.Builder
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class BuilderUnit : MonoBehaviour, IUnit
     {
-        [SerializeField] private GameObject m_SelectionCircle;
+        [SerializeField] private GameObject selectionCircle;
         private NavMeshAgent m_Agent;
 
         private void Awake()
@@ -30,7 +31,7 @@ namespace Code.Units.Builder
 
         public void ActivateSelectionCircle(bool active)
         {
-            m_SelectionCircle.SetActive(active);
+            selectionCircle.SetActive(active);
         }
 
         public TextureAssetType GetUnitType()

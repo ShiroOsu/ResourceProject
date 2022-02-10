@@ -3,13 +3,14 @@ using Code.Framework.Interfaces;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Code.Units.Horse
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class HorseUnit : MonoBehaviour, IUnit
     {
-        [SerializeField] private GameObject m_SelectionCircle;
+        [SerializeField] private GameObject selectionCircle;
         private NavMeshAgent m_Agent;
 
         private void Awake()
@@ -28,7 +29,7 @@ namespace Code.Units.Horse
 
         public void ActivateSelectionCircle(bool active)
         {
-            m_SelectionCircle.SetActive(active);
+            selectionCircle.SetActive(active);
         }
 
         public void OnDestroy()

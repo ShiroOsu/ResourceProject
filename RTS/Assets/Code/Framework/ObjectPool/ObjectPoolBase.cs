@@ -9,7 +9,7 @@ namespace Code.Framework.ObjectPool
         private T m_Prefab;
         private ObjectPool<T> m_ObjectPool;
 
-        private ObjectPool<T> m_Pool
+        private ObjectPool<T> Pool
         {
             get
             {
@@ -26,7 +26,7 @@ namespace Code.Framework.ObjectPool
         protected void InitPool(T prefab, int initial = 10, int max = 100, bool collectionChecks = false)
         {
             m_Prefab = prefab;
-            m_Pool = new ObjectPool<T>(CreateSetup, GetSetup, ReleaseSetup, DestroySetup, collectionChecks, initial, max);
+            Pool = new ObjectPool<T>(CreateSetup, GetSetup, ReleaseSetup, DestroySetup, collectionChecks, initial, max);
         }
 
         #region Overrides
@@ -40,8 +40,8 @@ namespace Code.Framework.ObjectPool
         
         #region Getters
 
-        public T Get() => m_Pool.Get();
-        public void Release(T obj) => m_Pool.Release(obj);
+        public T Get() => Pool.Get();
+        public void Release(T obj) => Pool.Release(obj);
 
         #endregion
     }

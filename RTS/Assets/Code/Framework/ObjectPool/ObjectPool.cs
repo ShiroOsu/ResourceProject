@@ -8,7 +8,7 @@ namespace Code.Framework.ObjectPool
         private readonly uint m_ExpandBy;
         private readonly GameObject m_Prefab;
         private readonly Transform m_Parent;
-        private readonly Stack<GameObject> objects = new Stack<GameObject>();
+        private readonly Stack<GameObject> m_Objects = new();
 
         public ObjectPool(uint initSize, GameObject prefab, Transform parent = null, uint expandBy = 1)
         {
@@ -20,30 +20,30 @@ namespace Code.Framework.ObjectPool
 
         private void Expand(uint amount)
         {
-            for (int i = 0; i < amount; i++)
+            for (var i = 0; i < amount; i++)
             {
-                GameObject instance = Object.Instantiate(m_Prefab, m_Parent);
+                var instance = Object.Instantiate(m_Prefab, m_Parent);
                 instance.SetActive(false);
 
-                EmittOnDisable emittOnDisable = instance.AddComponent<EmittOnDisable>();
-                emittOnDisable.OnDisableGameObject += UnRent;
-                objects.Push(instance);
+                var emitOnDisable = instance.AddComponent<EmitOnDisable>();
+                emitOnDisable.OnDisableGameObject += UnRent; // TODO: Delegate allocation
+                m_Objects.Push(instance);
             }
         }
 
         private void UnRent(GameObject gameObject)
         {
-            objects.Push(gameObject);
+            m_Objects.Push(gameObject);
         }
 
         public GameObject Rent(bool activate)
         {
-            if (objects.Count == 0)
+            if (m_Objects.Count == 0)
             {
                 Expand(m_ExpandBy);
             }
 
-            var instance = objects.Pop();
+            var instance = m_Objects.Pop();
             instance = instance != null ? instance : Rent(activate);
             instance.SetActive(activate);
             return instance;

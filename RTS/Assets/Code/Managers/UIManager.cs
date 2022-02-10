@@ -9,73 +9,74 @@ using Code.Structures;
 using Code.Units;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Managers
 {
     public sealed class UIManager : Singleton<UIManager>
     {
         [Header("Units")]
-        [SerializeField] private BuilderUIManager m_Builder;
-        [SerializeField] private SoldierUIManager m_Soldier;
-        [SerializeField] private HorseUIManager m_Horse;
-
+        [SerializeField] private BuilderUIManager builder;
+        [SerializeField] private SoldierUIManager soldier;
+        [SerializeField] private HorseUIManager horse;
+        
         [Header("Structures")]
-        [SerializeField] private CastleUIManager m_Castle;
-        [SerializeField] private BarracksUIManager m_Barracks;
-
+        [SerializeField] private CastleUIManager castle;
+        [SerializeField] private BarracksUIManager barracks;
+        
         [Header("UI")] 
-        [SerializeField] private GameObject m_ObjectWithStructureInfo;
-        [SerializeField] private GameObject m_ObjectWithUnitInfo;
-        [SerializeField] private StructureInfo m_StructureInfo;
-        [SerializeField] private UnitInfo m_UnitInfo;
+        [SerializeField] private GameObject objectWithStructureInfo;
+        [SerializeField] private GameObject objectWithUnitInfo;
+        [SerializeField] private StructureInfo structureInfo;
+        [SerializeField] private UnitInfo unitInfo;
         
         [Serializable] 
         public struct StructureInfo
         {
-            public TMP_Text Name;
-            public TMP_Text Armor;
+            public TMP_Text name;
+            public TMP_Text armor;
             
             public void SetValues(string name, int armor)
             {
-                Name.SetText(name);
-                Armor.SetText(armor.ToString());
+                this.name.SetText(name);
+                this.armor.SetText(armor.ToString());
             }
         }
         
         [Serializable]
         public struct UnitInfo
         {
-            public TMP_Text Name;
-            public TMP_Text Attack;
-            public TMP_Text AttackSpeed;
-            public TMP_Text Armor;
+            public TMP_Text name;
+            public TMP_Text attack;
+            public TMP_Text attackSpeed;
+            public TMP_Text armor;
             //public TMP_Text MovementSpeed; TODO
             
             public void SetValues(string name, int attack, float attackSpeed, int armor, float movementSpeed)
             {
-                Name.SetText(name);
-                Attack.SetText(attack.ToString());
-                AttackSpeed.SetText(attackSpeed.ToString());
-                Armor.SetText(armor.ToString());
+                this.name.SetText(name);
+                this.attack.SetText(attack.ToString());
+                this.attackSpeed.SetText(attackSpeed.ToString());
+                this.armor.SetText(armor.ToString());
                 //MovementSpeed.SetText(movementSpeed.ToString());
             }
         }
 
         public void UnitSelected(bool select, GameObject unit)
         {
-            unit.TryGetComponent(out IUnit IU);
-            var type = IU.GetUnitType();
+            unit.TryGetComponent(out IUnit iu);
+            var type = iu.GetUnitType();
             
             switch (type)
             {
                 case TextureAssetType.Builder:
-                    m_Builder.EnableMainUI(select, unit);
+                    builder.EnableMainUI(select, unit);
                     break;
                 case TextureAssetType.Solider:
-                    m_Soldier.EnableMainUI(select, unit);
+                    soldier.EnableMainUI(select, unit);
                     break;
                 case TextureAssetType.Horse:
-                    m_Horse.EnableMainUI(select, unit);
+                    horse.EnableMainUI(select, unit);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -87,10 +88,10 @@ namespace Code.Managers
             switch (type)
             {
                 case StructureType.Castle:
-                    m_Castle.EnableMainUI(select, structure);
+                    castle.EnableMainUI(select, structure);
                     break;
                 case StructureType.Barracks:
-                    m_Barracks.EnableMainUI(select, structure);
+                    barracks.EnableMainUI(select, structure);
                     break;
                 case StructureType.Null:
                     break;
@@ -103,14 +104,14 @@ namespace Code.Managers
         // Timers
         // ------------------------------------------------------------------------
 
-        private void SetUpTimer(GameObject timerObject, string _name)
+        private void SetUpTimer(GameObject timerObject, string name)
         {
             timerObject.TryGetComponent<RectTransform>(out var rectTransform);
-            Extensions.FindInactiveObject(_name).TryGetComponent(out RectTransform UIRectTransform); // ?
+            Extensions.FindInactiveObject(name).TryGetComponent(out RectTransform uiRectTransform);
             
-            rectTransform.SetParent(UIRectTransform.transform);
+            rectTransform.SetParent(uiRectTransform.transform);
             rectTransform.localScale = Vector3.one;
-            rectTransform.anchoredPosition3D = UIRectTransform.anchoredPosition3D;
+            rectTransform.anchoredPosition3D = uiRectTransform.anchoredPosition3D;
             rectTransform.localRotation = Quaternion.identity;
         }
         
@@ -127,20 +128,20 @@ namespace Code.Managers
         public void SetUnitStatsInfo(UnitData data)
         {
             SwitchBetweenInfo(false);
-            m_UnitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor, data.movementSpeed);
+            unitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor, data.movementSpeed);
         }
         
         public void SetStructureStatsInfo(StructureData data)
         {
             SwitchBetweenInfo(true);
-            m_StructureInfo.SetValues(data.structureName, data.armor);
+            structureInfo.SetValues(data.structureName, data.armor);
         }
 
         // Switch between structure and unit info
         private void SwitchBetweenInfo(bool b)
         {
-            m_ObjectWithStructureInfo.SetActive(b);
-            m_ObjectWithUnitInfo.SetActive(!b);
+            objectWithStructureInfo.SetActive(b);
+            objectWithUnitInfo.SetActive(!b);
         }
     }
 }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c93798c5591f3d49ad904361c827b5f, type: 3}
   m_Name: UnitSpawnData
   m_EditorClassIdentifier: 
-  BuilderSpawnTime: 2
-  SoldierSpawnTime: 3
-  HorseSpawnTime: 5
+  builderSpawnTime: 2
+  soldierSpawnTime: 3
+  horseSpawnTime: 5

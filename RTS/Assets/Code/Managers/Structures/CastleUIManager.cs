@@ -8,26 +8,26 @@ namespace Code.Managers.Structures
 {
     public class CastleUIManager : MonoBehaviour
     {
-        [SerializeField] private GameObject m_CastleUIMiddle;
-        [SerializeField] private GameObject m_Image;
-        [SerializeField] private StructureData m_Data;
+        [SerializeField] private GameObject castleUIMiddle;
+        [SerializeField] private GameObject image;
+        [SerializeField] private StructureData data;
 
         private Castle m_CastleRef;
-        private const string c_NameOfUIObjectInScene = "StructureInfo";
+        private const string CNameOfUIObjectInScene = "StructureInfo";
 
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_CastleRef = structure.GetComponent<Castle>();
-            UIManager.Instance.AddTimerToUI(m_CastleRef.CastleTimer.m_Timer, c_NameOfUIObjectInScene);
-            UIManager.Instance.SetStructureStatsInfo(m_Data);
+            UIManager.Instance.AddTimerToUI(m_CastleRef.castleTimer.timer, CNameOfUIObjectInScene);
+            UIManager.Instance.SetStructureStatsInfo(data);
             
             if (active)
             {
                 BindCastleButtons();
             }
 
-            m_CastleUIMiddle.SetActive(active);
-            m_Image.SetActive(active);
+            castleUIMiddle.SetActive(active);
+            image.SetActive(active);
 
             // When de-select remove listeners
             if (!active)

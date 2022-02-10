@@ -2,19 +2,20 @@ using Code.Framework;
 using Code.Framework.Enums;
 using Code.Framework.ObjectPool;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Managers
 {
     public class PoolManager : Singleton<PoolManager>
     {
         [Header("Structures")]
-        [SerializeField] private GameObject m_CastlePrefab = null;
-        [SerializeField] private GameObject m_BarracksPrefab = null;
-
+        [SerializeField] private GameObject castlePrefab = null; 
+        [SerializeField] private GameObject barracksPrefab = null;
+        
         [Header("Units")]
-        [SerializeField] private GameObject m_BuilderPrefab = null;
-        [SerializeField] private GameObject m_SoldierPrefab = null;
-        [SerializeField] private GameObject m_HorseUnitPrefab = null;
+        [SerializeField] private GameObject builderPrefab = null;
+        [SerializeField] private GameObject soldierPrefab = null;
+        [SerializeField] private GameObject horseUnitPrefab = null;
 
         public ObjectPool castlePool = null;
         public ObjectPool barracksPool = null;
@@ -24,11 +25,11 @@ namespace Code.Managers
 
         private void Awake()
         {
-            castlePool = new ObjectPool(5, m_CastlePrefab, new GameObject("CastlePool").transform);
-            barracksPool = new ObjectPool(5, m_BarracksPrefab, new GameObject("BarracksPool").transform);
-            builderPool = new ObjectPool(5, m_BuilderPrefab, new GameObject("BuilderPool").transform);
-            soldierPool = new ObjectPool(5, m_SoldierPrefab, new GameObject("SoliderPool").transform);
-            horseUnitPool = new ObjectPool(5, m_HorseUnitPrefab, new GameObject("HorseUnitPool").transform);
+            castlePool = new ObjectPool(5, castlePrefab, new GameObject("CastlePool").transform);
+            barracksPool = new ObjectPool(5, barracksPrefab, new GameObject("BarracksPool").transform);
+            builderPool = new ObjectPool(5, builderPrefab, new GameObject("BuilderPool").transform);
+            soldierPool = new ObjectPool(5, soldierPrefab, new GameObject("SoliderPool").transform);
+            horseUnitPool = new ObjectPool(5, horseUnitPrefab, new GameObject("HorseUnitPool").transform);
         }
 
         public GameObject GetPooledStructure(StructureType type, bool rent)

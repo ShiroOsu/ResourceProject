@@ -16,11 +16,18 @@ namespace Backlog
     // TODO: the last position SpawnFlag was placed at
     
     // TODO: Camera, Move the camera if the mouse is at the edge of screen
+    // TODO: Clamp Zoom function (Smooth zoom) 
     
     // TODO: Structures build animations
-    
+    // TODO: Structures, fix obstacle rotation
+    // TODO: Structures in scene hierarchy, naming, why is "barracksUIMiddle" called info in inspector, why is CastleUIMiddle gameObject called castleStats
+
     // TODO: Resources, Wood, Gold, Stone, etc.
     // TODO: Environment, Trees, Mountains, etc. 
     
     // TODO: Game Name, 
+    
+    
+    // OPTIONAL
+    // TODO: AutoCreate, Transfer string blocks to file ?
 }

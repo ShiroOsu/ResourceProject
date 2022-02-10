@@ -9,7 +9,7 @@ namespace Code.Framework.Tools
     public class AutoCreateWindowPopup : EditorWindow
     {
         public static event Action BeginCreation;
-        private string unitNameToSet = "";
+        private string m_UnitNameToSet = "";
 
         public static void Init()
         {
@@ -21,15 +21,15 @@ namespace Code.Framework.Tools
         private void OnGUI()
         {
             GUILayout.Label("Set name for new unit");
-            unitNameToSet = EditorGUILayout.TextField("Name: ", unitNameToSet);
+            m_UnitNameToSet = EditorGUILayout.TextField("Name: ", m_UnitNameToSet);
             
             if (GUILayout.Button("Set Name"))
             {
-                if (unitNameToSet != string.Empty)
+                if (m_UnitNameToSet != string.Empty)
                 {
-                    unitNameToSet = unitNameToSet.Replace(' ', '_');
+                    m_UnitNameToSet = m_UnitNameToSet.Replace(' ', '_');
                     
-                    AutoCreateUnit.m_UnitName = unitNameToSet;
+                    AutoCreateUnit.UnitName = m_UnitNameToSet;
                     BeginCreation?.Invoke();
                     Close();
                 }

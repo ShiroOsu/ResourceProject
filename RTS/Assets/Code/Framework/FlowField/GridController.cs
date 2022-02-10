@@ -1,19 +1,20 @@
 using Code.Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Framework.FlowField
 {
     public class GridController : MonoBehaviour
     {
-        public float m_CellRadius = 0.5f;
+        [FormerlySerializedAs("m_CellRadius")] public float cellRadius = 0.5f;
 
-        [Tooltip("Max Height of Mountain that can be walked on")]
-        public float m_MaxMountainHeight = 0.8f;
+        [FormerlySerializedAs("m_MaxMountainHeight")] [Tooltip("Max Height of Mountain that can be walked on")]
+        public float maxMountainHeight = 0.8f;
 
         private DataManager m_Data;
 
         public FlowField CurrentFlowField { get; private set; }
-        public Terrain m_Terrain;
+        [FormerlySerializedAs("m_Terrain")] public Terrain terrain;
         public Vector2Int GridSize { get; private set; }
 
         private void Awake()
@@ -23,11 +24,11 @@ namespace Code.Framework.FlowField
 
         public void InitializeFlowField()
         {
-            var terrainData = m_Terrain.terrainData;
+            var terrainData = terrain.terrainData;
             GridSize = new Vector2Int((int)terrainData.bounds.max.x, (int)terrainData.bounds.max.z);
 
-            CurrentFlowField = new FlowField(m_CellRadius, GridSize, m_MaxMountainHeight);
-            CurrentFlowField.CreateGrid(m_Terrain);
+            CurrentFlowField = new FlowField(cellRadius, GridSize, maxMountainHeight);
+            CurrentFlowField.CreateGrid(terrain);
         }
     }
 }

@@ -8,27 +8,30 @@ namespace Code.Player.Camera
     public class CameraControls : MonoBehaviour, Controls.ICameraActions
     {
         // Values set in CameraData
-        public CameraData m_Data;
+        [SerializeField] private CameraData data;
         private float m_CameraSpeed;
         private float m_RotationSpeed;
         private float m_ZoomSpeed;
 
         private Controls m_CameraControls;
+        private Transform m_ThisTransform;
         private Vector3 m_ForwardVector;
         private Vector3 m_RotationDirection;
         private Vector3 m_ZoomVector;
-        [HideInInspector] public bool m_CanZoom = true;
+        [HideInInspector] public bool canZoom = true;
 
         public void Awake()
         {
-            if (!m_Data)
+            m_ThisTransform = transform;
+            
+            if (!data)
             {
-                m_Data = ScriptableObject.CreateInstance<CameraData>();
+                data = ScriptableObject.CreateInstance<CameraData>();
             }
 
-            m_CameraSpeed = m_Data.cameraSpeed;
-            m_RotationSpeed = m_Data.rotationSpeed;
-            m_ZoomSpeed = m_Data.zoomSpeed;
+            m_CameraSpeed = data.cameraSpeed;
+            m_RotationSpeed = data.rotationSpeed;
+            m_ZoomSpeed = data.zoomSpeed;
 
             m_CameraControls = new Controls();
             m_CameraControls.Camera.SetCallbacks(this);
@@ -58,16 +61,11 @@ namespace Code.Player.Camera
             m_ForwardVector.z = direction.y;
         }
 
-        public void OnMovement(InputAction.CallbackContext context)
-        {
-            // var direction = context.ReadValue<Vector2>();
-            // m_ForwardVector.x = direction.x;
-            // m_ForwardVector.z = direction.y;
-        }
+        public void OnMovement(InputAction.CallbackContext context) { }
 
         public void OnZoom(InputAction.CallbackContext context)
         {
-            if (!m_CanZoom)
+            if (!canZoom)
                 return;
 
             var scrollValue = context.ReadValue<float>();
@@ -83,11 +81,11 @@ namespace Code.Player.Camera
 
             if (m_ZoomVector.y > 0f)
             {
-                transform.position -= m_ZoomVector * (m_ZoomSpeed * deltaTime);
+                m_ThisTransform.position -= m_ZoomVector * (m_ZoomSpeed * deltaTime);
             }
             else
             {
-                transform.position -= m_ZoomVector * (m_ZoomSpeed * deltaTime);
+                m_ThisTransform.position -= m_ZoomVector * (m_ZoomSpeed * deltaTime);
             }
         }
 
@@ -102,10 +100,10 @@ namespace Code.Player.Camera
             UpdateCameraDirection();
 
             Zoom(deltaTime);
-            transform.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
+            m_ThisTransform.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
 
-            var forwardDirection = transform.rotation * m_ForwardVector;
-            transform.position += forwardDirection.normalized * (m_CameraSpeed * deltaTime);
+            var forwardDirection = m_ThisTransform.rotation * m_ForwardVector;
+            m_ThisTransform.position += forwardDirection.normalized * (m_CameraSpeed * deltaTime);
         }
     }
 }

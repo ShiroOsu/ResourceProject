@@ -7,33 +7,34 @@ using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Code.Structures.Castle
 {
     public class Castle : MonoBehaviour, IStructure
     {
-        [SerializeField] private NavMeshObstacle m_NavMeshObstacle;
-        [SerializeField] private CustomSizer3D m_Sizer3D;
-        public Transform m_UnitSpawnPoint;
-        [SerializeField] private GameObject m_OutlineRenderer;
+        [SerializeField] private NavMeshObstacle navMeshObstacle;
+        [SerializeField] private CustomSizer3D sizer3D;
+        public Transform unitSpawnPoint;
+        [SerializeField] private GameObject outlineRenderer;
 
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
         public event Action<TextureAssetType> OnSpawn;
-        public CastleTimer CastleTimer;
+        public CastleTimer castleTimer;
 
         private void Awake()
         {
-            m_NavMeshObstacle.shape = NavMeshObstacleShape.Box;
-            m_NavMeshObstacle.size = m_Sizer3D.GetSize(gameObject.transform.lossyScale);
+            navMeshObstacle.shape = NavMeshObstacleShape.Box;
+            navMeshObstacle.size = sizer3D.GetSize(gameObject.transform.lossyScale);
         }
 
         private void Update()
         {
-            if (CastleTimer)
+            if (castleTimer)
             {
-                CastleTimer.TimerUpdate();
+                castleTimer.TimerUpdate();
             }
 
             if (Mouse.current.rightButton.isPressed)
@@ -77,13 +78,13 @@ namespace Code.Structures.Castle
         public void ShouldSelect(bool select)
         {
             UIManager.Instance.StructureSelected(StructureType.Castle, select, gameObject);
-            CastleTimer.Castle = this;
-            CastleTimer.AddActionOnSpawn(select);
-            m_OutlineRenderer.SetActive(select);
+            castleTimer.Castle = this;
+            castleTimer.AddActionOnSpawn(select);
+            outlineRenderer.SetActive(select);
 
             if (!select)
             {
-                CastleTimer.m_Timer.transform.SetParent(transform);
+                castleTimer.timer.transform.SetParent(transform);
             }
 
             if (m_Flag != null)

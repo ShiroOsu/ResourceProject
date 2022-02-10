@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Code.Framework.Enums;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Framework.Blueprint
 {
@@ -10,13 +11,12 @@ namespace Code.Framework.Blueprint
         [System.Serializable]
         public struct Blueprint
         {
-            public GameObject m_Blueprint;
-            public StructureType m_StructureType;
+            public GameObject blueprint;
+            public StructureType structureType;
         }
 
-        public Blueprint[] m_Blueprints;
-        private readonly Dictionary<StructureType, GameObject> m_Dictionary = 
-            new Dictionary<StructureType, GameObject>();
+        public Blueprint[] blueprints;
+        private readonly Dictionary<StructureType, GameObject> m_Dictionary = new();
 
         public GameObject this[StructureType type]
         {
@@ -29,9 +29,9 @@ namespace Code.Framework.Blueprint
 
         private void Init()
         {
-            foreach (var bp in m_Blueprints)
+            foreach (var bp in blueprints)
             {
-                m_Dictionary[bp.m_StructureType] = bp.m_Blueprint;
+                m_Dictionary[bp.structureType] = bp.blueprint;
             }
         }
     }

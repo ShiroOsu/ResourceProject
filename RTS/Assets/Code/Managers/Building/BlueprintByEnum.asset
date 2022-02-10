@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a0d050dd889a3478b8bd88733f13dd, type: 3}
   m_Name: BlueprintByEnum
   m_EditorClassIdentifier: 
-  m_Blueprints:
-  - m_Blueprint: {fileID: 1082441569872595318, guid: 7f81501d6d09dd943b6171eaf91dc3d4, type: 3}
-    m_StructureType: 2
-  - m_Blueprint: {fileID: 8918257048631504733, guid: eb9f4accfaf6f6a4ca12896d1e9d10d0, type: 3}
-    m_StructureType: 1
+  blueprints:
+  - blueprint: {fileID: 8918257048631504733, guid: eb9f4accfaf6f6a4ca12896d1e9d10d0, type: 3}
+    structureType: 1
+  - blueprint: {fileID: 1082441569872595318, guid: 7f81501d6d09dd943b6171eaf91dc3d4, type: 3}
+    structureType: 2

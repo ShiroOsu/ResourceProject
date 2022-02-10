@@ -5,10 +5,10 @@ namespace Code.Managers.Building
 {
     public class BuildComponents : MonoBehaviour
     {
-        public GameObject m_BuildComponents;
-        public CustomSizer3D m_BuildingBounds;
-        public BoxCollider m_BoxCollider;
-        [HideInInspector] public bool m_InTrigger;
+        public GameObject buildComponents;
+        public CustomSizer3D buildingBounds;
+        public BoxCollider boxCollider;
+        [HideInInspector] public bool inTrigger;
 
         private void Awake()
         {
@@ -19,7 +19,7 @@ namespace Code.Managers.Building
         {
             if (!other.TryGetComponent(out TerrainCollider _))
             {
-                m_InTrigger = true;
+                inTrigger = true;
             }
         }
 
@@ -27,7 +27,7 @@ namespace Code.Managers.Building
         {
             if (!other.TryGetComponent(out TerrainCollider _))
             {
-                m_InTrigger = true;
+                inTrigger = true;
             }
         }
 
@@ -35,23 +35,23 @@ namespace Code.Managers.Building
         {
             if (!other.TryGetComponent(out TerrainCollider _))
             {
-                m_InTrigger = false;
+                inTrigger = false;
             }
         }
 
         private void SetupColliderBounds()
         {
-            m_BoxCollider.center = m_BuildingBounds.m_CenterOfArea.position;
+            boxCollider.center = buildingBounds.centerOfArea.position;
 
             if (transform.localScale.x > 1f
             || transform.localScale.y > 1f
             || transform.localScale.z > 1f)
             {
-                m_BoxCollider.size = m_BuildingBounds.GetSize(transform.lossyScale);
+                boxCollider.size = buildingBounds.GetSize(transform.lossyScale);
             }
             else
             {
-                m_BoxCollider.size = m_BuildingBounds.GetSize();
+                boxCollider.size = buildingBounds.GetSize();
             }
         }
     }

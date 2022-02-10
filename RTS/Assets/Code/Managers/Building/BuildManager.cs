@@ -13,14 +13,14 @@ namespace Code.Managers.Building
 {
     public class BuildManager : Singleton<BuildManager>
     {
-        [SerializeField] private BlueprintByEnum m_Blueprints;
-        [SerializeField] private Material m_BlueprintMaterialCanNotBuild;
-        [SerializeField] private Material m_BlueprintMaterialCanBuild;
+        [SerializeField] private BlueprintByEnum blueprints;
+        [SerializeField] private Material blueprintMaterialCanNotBuild;
+        [SerializeField] private Material blueprintMaterialCanBuild;
 
         private CameraControls m_CameraControls;
         private MouseInputs m_MouseInputs;
         
-        private readonly List<GameObject> m_BuildComponentsList = new List<GameObject>();
+        private readonly List<GameObject> m_BuildComponentsList = new();
         private bool m_CanBuild;
         private bool m_DisplayStructurePlacement;
         private GameObject m_CurrentBlueprintObject;
@@ -39,7 +39,7 @@ namespace Code.Managers.Building
             foreach (var component in m_BuildComponentsList)
             {
                 component.TryGetComponent(out MeshRenderer meshRenderer);
-                meshRenderer.material = m_CanBuild ? m_BlueprintMaterialCanBuild : m_BlueprintMaterialCanNotBuild;
+                meshRenderer.material = m_CanBuild ? blueprintMaterialCanBuild : blueprintMaterialCanNotBuild;
             }
 
             return m_CanBuild;
@@ -54,14 +54,14 @@ namespace Code.Managers.Building
         {
             m_MouseInputs.IsBuilding = true;
             
-            m_CurrentBlueprintObject = Instantiate(m_Blueprints[type]);
+            m_CurrentBlueprintObject = Instantiate(blueprints[type]);
             Log.Message("Initialize Build", "build type: " + type);
             m_CurrentBuildObject = PoolManager.Instance.GetPooledStructure(type, false);
 
             m_CurrentBlueprintObject.TryGetComponent(out BuildComponents bc);
             m_CurrentBlueprintBuildComponents = bc;
             
-            foreach (Transform child in bc.m_BuildComponents.transform)
+            foreach (Transform child in bc.buildComponents.transform)
             {
                 m_BuildComponentsList.Add(child.gameObject);
             }
@@ -74,7 +74,7 @@ namespace Code.Managers.Building
         {
             m_CurrentBlueprintObject.SetActive(deActivateBuild);
             m_DisplayStructurePlacement = false;
-            m_CameraControls.m_CanZoom = true;
+            m_CameraControls.canZoom = true;
 
             if (deActivateBuild)
             {
@@ -106,7 +106,7 @@ namespace Code.Managers.Building
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
             {
-                m_CameraControls.m_CanZoom = false;
+                m_CameraControls.canZoom = false;
 
                 var groundPoint = hit.point;
                 if (m_CurrentStructureType == StructureType.Castle)
@@ -119,7 +119,7 @@ namespace Code.Managers.Building
                 m_CurrentBlueprintObject.transform.position = m_CurrentBuildObject.transform.position = groundPoint;
                 m_CurrentBlueprintObject.SetActive(true);
 
-                m_CanBuild = !m_CurrentBlueprintBuildComponents.m_InTrigger;
+                m_CanBuild = !m_CurrentBlueprintBuildComponents.inTrigger;
 
                 var scroll = Mouse.current.scroll.ReadValue();
 

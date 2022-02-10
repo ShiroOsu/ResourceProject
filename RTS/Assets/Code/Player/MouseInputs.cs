@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Code.Framework.FlowField;
 using Code.Framework.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
@@ -13,14 +12,11 @@ namespace Code.Player
 {
     public class MouseInputs : MonoBehaviour, MouseControls.IMouseActions
     {
-        [Header("General")] [SerializeField] private UnityEngine.Camera m_Camera;
-        [SerializeField] private Animator m_Animator;
+        [Header("General")] [SerializeField] private new UnityEngine.Camera camera;
+        [SerializeField] private Animator animator;
 
         [Header("Multi Selection")] [SerializeField]
-        private RectTransform m_SelectionImage;
-
-        [Header("Flow Field Controller")]
-        [SerializeField] private GridController m_GridController;
+        private RectTransform selectionImage;
 
         private Vector2 m_BoxStartPos;
         private bool m_MultiSelect;
@@ -35,7 +31,7 @@ namespace Code.Player
         private Vector2 m_MousePosition;
 
         // Public stuff
-        public Ray PlacementRay => m_Camera.ScreenPointToRay(m_MousePosition);
+        public Ray PlacementRay => camera.ScreenPointToRay(m_MousePosition);
         public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;
@@ -68,7 +64,7 @@ namespace Code.Player
         {
             m_MousePosition = Mouse.current.position.ReadValue();
 
-            if (m_Animator.gameObject.activeSelf)
+            if (animator.gameObject.activeSelf)
             {
                 StopClickAnimation();
             }
@@ -98,11 +94,11 @@ namespace Code.Player
             // Context is checked to make sure it is clicked once
             if (context.started)
             {
-                if (EventSystem.current.IsPointerOverGameObject())
-                {
-                    // Clicking on UI ??
-                }
-                else
+                // if (EventSystem.current.IsPointerOverGameObject())
+                // {
+                //     // Clicking on UI ??
+                // }
+                // else
                 {
                     ClickingOnUnitsAndStructures();
                 }
@@ -119,38 +115,38 @@ namespace Code.Player
 
         public void OnLeftMouseButtonHold(InputAction.CallbackContext context)
         {
-            if (!EventSystem.current.IsPointerOverGameObject() && context.performed) // Performed?
-            {
-                m_MultiSelect = true;
-            }
+            // if (!EventSystem.current.IsPointerOverGameObject() && context.performed) // Performed?
+            // {
+            //     m_MultiSelect = true;
+            // }
         }
 
         private void ClickingOnUnitsAndStructures()
         {
             m_BoxStartPos = m_MousePosition;
 
-            var ray = m_Camera.ScreenPointToRay(m_MousePosition);
+            var ray = camera.ScreenPointToRay(m_MousePosition);
 
-            if (Physics.Raycast(ray, out var s_Hit, Mathf.Infinity, m_StructureMask))
+            if (Physics.Raycast(ray, out var sHit, Mathf.Infinity, m_StructureMask))
             {
                 // Click on blueprint prefab, return to avoid error on mouse callback
-                if (s_Hit.transform.TryGetComponent(out BuildComponents _))
+                if (sHit.transform.TryGetComponent(out BuildComponents _))
                 {
                     return;
                 }
 
-                if (s_Hit.transform.parent.parent.TryGetComponent(out IStructure structure))
+                if (sHit.transform.parent.parent.TryGetComponent(out IStructure structure))
                 {
                     ClickOnBuilding(structure);
                 }
             }
 
-            if (!Physics.Raycast(ray, out var u_Hit, Mathf.Infinity, m_UnitMask))
+            if (!Physics.Raycast(ray, out var uHit, Mathf.Infinity, m_UnitMask))
                 return;
 
-            if (u_Hit.transform.parent.TryGetComponent(out IUnit _))
+            if (uHit.transform.parent.TryGetComponent(out IUnit _))
             {
-                ClickOnUnit(u_Hit.transform.parent.gameObject);
+                ClickOnUnit(uHit.transform.parent.gameObject);
             }
         }
 
@@ -182,7 +178,7 @@ namespace Code.Player
             if (m_SelectedUnitsList.Count < 1)
                 return;
 
-            var ray = m_Camera.ScreenPointToRay(m_MousePosition);
+            var ray = camera.ScreenPointToRay(m_MousePosition);
 
             // When building, Temp?
             if (IsBuilding)
@@ -216,8 +212,8 @@ namespace Code.Player
             Vector2 sizeDelta;
 
             var rectPosition = new Vector2
-            (m_SelectionImage.anchoredPosition.x - m_SelectionImage.sizeDelta.x * 0.5f,
-                m_SelectionImage.anchoredPosition.y - (sizeDelta = m_SelectionImage.sizeDelta).y * 0.5f);
+            (selectionImage.anchoredPosition.x - selectionImage.sizeDelta.x * 0.5f,
+                selectionImage.anchoredPosition.y - (sizeDelta = selectionImage.sizeDelta).y * 0.5f);
 
             var rect = new Rect(rectPosition, sizeDelta);
 
@@ -233,7 +229,7 @@ namespace Code.Player
             {
                 if (!unit.TryGetComponent(out IUnit _)) continue;
 
-                var unitScreenPos = m_Camera.WorldToScreenPoint(unit.transform.position);
+                var unitScreenPos = camera.WorldToScreenPoint(unit.transform.position);
 
                 if (!rect.Contains(unitScreenPos)) continue;
 
@@ -259,21 +255,21 @@ namespace Code.Player
 
         private void MultiSelectionBox()
         {
-            if (!m_SelectionImage.gameObject.activeInHierarchy)
+            if (!selectionImage.gameObject.activeInHierarchy)
             {
-                m_SelectionImage.gameObject.SetActive(true);
+                selectionImage.gameObject.SetActive(true);
             }
 
             float width = m_MousePosition.x - m_BoxStartPos.x;
             float height = m_MousePosition.y - m_BoxStartPos.y;
 
-            m_SelectionImage.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
-            m_SelectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
+            selectionImage.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+            selectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);
 
             if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
-                if (m_SelectionImage.gameObject.activeInHierarchy)
-                    m_SelectionImage.gameObject.SetActive(false);
+                if (selectionImage.gameObject.activeInHierarchy)
+                    selectionImage.gameObject.SetActive(false);
 
                 AddUnitsInSelectionBox();
 
@@ -355,12 +351,12 @@ namespace Code.Player
         {
             if (!active)
             {
-                m_Animator.gameObject.SetActive(false);
-                m_Animator.SetBool(Clicked, false);
+                animator.gameObject.SetActive(false);
+                animator.SetBool(Clicked, false);
                 return;
             }
 
-            var ray = m_Camera.ScreenPointToRay(m_MousePosition);
+            var ray = camera.ScreenPointToRay(m_MousePosition);
 
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask))
                 return;
@@ -368,10 +364,10 @@ namespace Code.Player
             if (!hit.transform.TryGetComponent(out Terrain _))
                 return;
 
-            m_Animator.gameObject.transform.position = hit.point + new Vector3(0f, 0.1f, 0f);
-            m_Animator.gameObject.transform.rotation = Quaternion.LookRotation(-hit.normal);
-            m_Animator.gameObject.SetActive(true);
-            m_Animator.SetBool(Clicked, true);
+            animator.gameObject.transform.position = hit.point + new Vector3(0f, 0.1f, 0f);
+            animator.gameObject.transform.rotation = Quaternion.LookRotation(-hit.normal);
+            animator.gameObject.SetActive(true);
+            animator.SetBool(Clicked, true);
         }
     }
 }

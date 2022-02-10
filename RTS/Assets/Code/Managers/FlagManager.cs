@@ -1,12 +1,13 @@
 using Code.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Code.Managers
 {
     public class FlagManager : Singleton<FlagManager>
     {
-        [SerializeField] private GameObject m_FlagPrefab;
+        [SerializeField] private GameObject flagPrefab;
 
         public void SetFlagPosition(GameObject flag)
         {
@@ -16,7 +17,7 @@ namespace Code.Managers
 
         public GameObject InstantiateNewFlag()
         {
-            var newFlag = Instantiate(m_FlagPrefab);
+            var newFlag = Instantiate(flagPrefab);
             newFlag.SetActive(false);
             
             return newFlag;

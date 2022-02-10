@@ -16,11 +16,11 @@ namespace Code.Framework.Timers
         {
             if (add)
             {
-                Castle.OnSpawn += Spawn;
+                Castle.OnSpawn += Spawn;// TODO: Delegate Allocation
             }
             else
             {
-                Castle.OnSpawn -= Spawn;
+                Castle.OnSpawn -= Spawn;// TODO: Delegate Allocation
             }
         }
 
@@ -29,17 +29,17 @@ namespace Code.Framework.Timers
             if (!Castle)
                 return;
             
-            m_TimerFill.maxValue = GetUnitSpawnTime(TextureAssetType.Builder);
+            timerFill.maxValue = GetUnitSpawnTime(TextureAssetType.Builder);
             
-            if (m_IsSpawning)
+            if (IsSpawning)
             {
-                foreach (var image in m_ImageQueue)
+                foreach (var image in imageQueue)
                 {
                     image.gameObject.SetActive(image.texture != null);
                 }
                 
                 ShowTimer(true);
-                m_TimerFill.value = m_CurrentTimeOnSpawn;
+                timerFill.value = CurrentTimeOnSpawn;
             }
             else
             {
@@ -49,36 +49,36 @@ namespace Code.Framework.Timers
 
         protected override void Spawn(TextureAssetType type)
         {
-            if (i >= m_ImageQueue.Length)
+            if (i >= imageQueue.Length)
             {
                 Log.Message("CastleTimer.cs", "Queue is full!");
                 return;
             }
             
-            m_SpawnQueue.Enqueue(type);
-            m_ImageQueue[i].texture = AllTextures.Instance.GetTexture(type);
+            SpawnQueue.Enqueue(type);
+            imageQueue[i].texture = AllTextures.Instance.GetTexture(type);
             i++;
 
-            if (!m_IsSpawning)
+            if (!IsSpawning)
             {
-                StartCoroutine(SpawnRoutine(Castle.m_UnitSpawnPoint.position, Castle.FlagPoint));
+                StartCoroutine(SpawnRoutine(Castle.unitSpawnPoint.position, Castle.FlagPoint));// TODO: Delegate Allocation
             }
         }
         
         protected override IEnumerator SpawnRoutine(Vector3 startPos, Vector3 endPos)
         {
-            m_IsSpawning = true;
+            IsSpawning = true;
 
-            while (m_SpawnQueue.Count > 0)
+            while (SpawnQueue.Count > 0)
             {
                 float timeToSpawn = GetUnitSpawnTime(TextureAssetType.Builder);
-                m_CurrentTimeOnSpawn = 0f;
+                CurrentTimeOnSpawn = 0f;
 
-                var unitType = m_SpawnQueue.Dequeue();
+                var unitType = SpawnQueue.Dequeue();
             
-                while (m_CurrentTimeOnSpawn < timeToSpawn)
+                while (CurrentTimeOnSpawn < timeToSpawn)
                 {
-                    m_CurrentTimeOnSpawn += Time.deltaTime;
+                    CurrentTimeOnSpawn += Time.deltaTime;
                     yield return null;
                 }
 
@@ -87,7 +87,7 @@ namespace Code.Framework.Timers
                 RemoveImageInQueue();
             }
 
-            m_IsSpawning = false;
+            IsSpawning = false;
         }
     }
 }

@@ -9,8 +9,8 @@ namespace Code.Framework.Tools
 {
     public static class AutoCreateUnit
     {
-        private static AutoCreateScriptableObject m_Unit;
-        public static string m_UnitName { get; set; }
+        private static AutoCreateScriptableObject _unit;
+        public static string UnitName { get; set; }
 
         [MenuItem("Auto Create/Unit")]
         private static void CreateUnitInit()
@@ -24,7 +24,7 @@ namespace Code.Framework.Tools
         {
             SetUp();
             CreateUnitScript();
-            CreateSO();
+            CreateSo();
             CreateUnitManager();
             AddUnitEnum();
             AddToUIManager();
@@ -38,16 +38,16 @@ namespace Code.Framework.Tools
             Log.Message("AutoCreateUnit.cs", "Creating unit prefab");
             var path = Application.dataPath + "/Code/Units/";
 
-            AutoCreate.UnitFolder(m_UnitName);
-            AutoCreate.UnitPrefab(m_UnitName);
+            AutoCreate.UnitFolder(UnitName);
+            AutoCreate.UnitPrefab(UnitName);
 
-            var scriptName = m_UnitName + ".cs";
-            path += m_UnitName + "/";
+            var scriptName = UnitName + ".cs";
+            path += UnitName + "/";
 
             var scriptFile = File.Create(path + scriptName);
             scriptFile.Close();
 
-            AutoCreate.UnitCode(scriptFile.Name, m_Unit.preCode, m_UnitName);
+            AutoCreate.UnitCode(scriptFile.Name, _unit.preCode, UnitName);
         }
 
         private static void InitializeAutoCreateWindowPopup()
@@ -55,22 +55,22 @@ namespace Code.Framework.Tools
             AutoCreateWindowPopup.Init();
         }
 
-        private static void CreateSO()
+        private static void CreateSo()
         {
             Log.Message("AutoCreateUnit.cs", "Creating Scriptable Object");
 
-            var scriptName = m_UnitName + "SO.cs";
-            var path = Application.dataPath + "/Code/Units/" + m_UnitName + "/" + scriptName;
-            AutoCreate.UnitScriptableObject(path, m_UnitName);
+            var scriptName = UnitName + "SO.cs";
+            var path = Application.dataPath + "/Code/Units/" + UnitName + "/" + scriptName;
+            AutoCreate.UnitScriptableObject(path, UnitName);
         }
 
         private static void CreateUnitManager()
         {
             Log.Message("AutoCreateUnit.cs", "Creating UnitUIManager");
 
-            var scriptName = m_UnitName + "UIManager.cs";
+            var scriptName = UnitName + "UIManager.cs";
             var path = Application.dataPath + "/Code/Managers/Units/" + scriptName;
-            AutoCreate.UnitManager(path, m_Unit.managerCode, m_UnitName);
+            AutoCreate.UnitManager(path, _unit.managerCode, UnitName);
         }
 
         private static void AddUnitEnum()
@@ -78,7 +78,7 @@ namespace Code.Framework.Tools
             Log.Message("AutoCreateUnit.cs", "Creating Enum");
 
             var path = Application.dataPath + "/Code/Framework/Enums/Enums.cs";
-            AutoCreate.UnitEnum(path, m_UnitName);
+            AutoCreate.UnitEnum(path, UnitName);
         }
 
         private static void AddToUIManager()
@@ -86,14 +86,14 @@ namespace Code.Framework.Tools
             Log.Message("AutoCreateUnit.cs", "Adding new unit to UIManager");
 
             var path = Application.dataPath + "/Code/Managers/UIManager.cs";
-            AutoCreate.UIManagerCode(path, m_UnitName);
+            AutoCreate.UIManagerCode(path, UnitName);
         }
 
         private static void SetUp()
         {
             const string path =
                 "Assets/Code/Framework/ScriptableObjects/AutoScriptableObjects/AutoCreateScriptableObject.asset";
-            m_Unit = Extensions.LoadAsset<AutoCreateScriptableObject>(path);
+            _unit = Extensions.LoadAsset<AutoCreateScriptableObject>(path);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Code.Framework.MainMenu
     {
         public void ChangeScene(string sceneName)
         {
-            // TODO Initialize flow field at load time
             SceneManager.LoadScene(sceneName);
         }
     }

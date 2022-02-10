@@ -5,14 +5,14 @@ namespace Code.Framework.Tools
     public class CustomSizer3D : MonoBehaviour
     {
         private Bounds m_Bounds;
-        public Vector3 m_Dimensions;
-        public Transform m_CenterOfArea;
+        public Vector3 dimensions;
+        public Transform centerOfArea;
 
         private void DrawArea(Color color)
         {
             Gizmos.color = color;
 
-            if (!m_CenterOfArea)
+            if (!centerOfArea)
                 return;
 
             SetArea();
@@ -22,9 +22,9 @@ namespace Code.Framework.Tools
 
         private void SetArea()
         {
-            var centerPos = m_CenterOfArea.position;
+            var centerPos = centerOfArea.position;
 
-            m_Bounds.extents = m_Dimensions;
+            m_Bounds.extents = dimensions;
             m_Bounds.center = centerPos;
         }
 
@@ -40,7 +40,7 @@ namespace Code.Framework.Tools
         {
             SetArea();
 
-            float avgOfWorldScale = (worldScale.x + worldScale.y + worldScale.z) / 3f;
+            var avgOfWorldScale = (worldScale.x + worldScale.y + worldScale.z) / 3f;
         
             return m_Bounds.size / avgOfWorldScale;
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Code.Framework.Enums;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Framework.TextureListByEnum
 {
@@ -15,10 +16,9 @@ namespace Code.Framework.TextureListByEnum
             public TextureAssetType type;
         }
 
-        private readonly Dictionary<TextureAssetType, Texture> m_Dictionary =
-            new Dictionary<TextureAssetType, Texture>();
+        private readonly Dictionary<TextureAssetType, Texture> m_Dictionary = new();
 
-        public Tex[] m_Textures;
+        public Tex[] textures;
 
         public Texture this[TextureAssetType type]
         {
@@ -31,7 +31,7 @@ namespace Code.Framework.TextureListByEnum
 
         private void Init()
         {
-            foreach (var texture in m_Textures)
+            foreach (var texture in textures)
             {
                 m_Dictionary[texture.type] = texture.tex;
             }

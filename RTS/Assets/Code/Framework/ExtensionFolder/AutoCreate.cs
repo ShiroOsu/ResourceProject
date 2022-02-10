@@ -31,15 +31,15 @@ namespace Code.Framework.ExtensionFolder
         {
             using (var outfile = new StreamWriter(File.Create(path)))
             {
-                var unitSO = unitName + "SO";
+                var unitSo = unitName + "SO";
 
                 outfile.WriteLine("using UnityEngine;");
                 outfile.WriteLine(" ");
                 outfile.WriteLine("namespace Code.Units." + unitName);
                 outfile.WriteLine("{");
-                outfile.WriteLine("[CreateAssetMenu(fileName = \"" + unitSO + "\", menuName = " +
+                outfile.WriteLine("[CreateAssetMenu(fileName = \"" + unitSo + "\", menuName = " +
                                   "\"ScriptableObjects/" + unitName + "\"" + ")]");
-                outfile.WriteLine("public class " + unitSO + " : ScriptableObject");
+                outfile.WriteLine("public class " + unitSo + " : ScriptableObject");
                 outfile.WriteLine("{");
                 outfile.WriteLine("}");
                 outfile.WriteLine("}");

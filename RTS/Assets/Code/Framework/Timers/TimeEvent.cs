@@ -13,7 +13,7 @@ namespace Code.Framework.Timers
         private bool m_Done;
 
         public delegate void OnFinishAction();
-        public event OnFinishAction m_OnFinish;
+        public event OnFinishAction OnFinish;
         
         public TimeEvent()
         {
@@ -243,7 +243,7 @@ namespace Code.Framework.Timers
 
             if (callOnFinish)
             {
-                m_OnFinish?.Invoke();
+                OnFinish?.Invoke();
             }
         }
 

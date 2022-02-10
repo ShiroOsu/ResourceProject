@@ -9,21 +9,21 @@ namespace Code.Managers.Units
     public class BuilderUIManager : MonoBehaviour
     {
         [Header("UI")]
-        [SerializeField] private GameObject m_Image;
-        [SerializeField] private UnitData m_Data;
+        [SerializeField] private GameObject image;
+        [SerializeField] private UnitData data;
 
         private BuilderUnit m_Builder;
         public void EnableMainUI(bool active, GameObject unit)
         {
             m_Builder = unit.GetComponent<BuilderUnit>();
-            UIManager.Instance.SetUnitStatsInfo(m_Data);
+            UIManager.Instance.SetUnitStatsInfo(data);
 
             if (active)
             {
                 BindBuilderButtons();
             }
             
-            m_Image.SetActive(active);
+            image.SetActive(active);
 
             if (!active)
             {

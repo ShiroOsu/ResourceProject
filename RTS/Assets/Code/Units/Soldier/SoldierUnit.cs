@@ -3,13 +3,14 @@ using Code.Framework.Interfaces;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Code.Units.Soldier
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class SoldierUnit : MonoBehaviour, IUnit
     {
-        [SerializeField] private GameObject m_SelectionCircle;
+        [SerializeField] private GameObject selectionCircle;
         private NavMeshAgent m_Agent;
 
         private void Awake()
@@ -33,7 +34,7 @@ namespace Code.Units.Soldier
         
         public void ActivateSelectionCircle(bool active)
         {
-            m_SelectionCircle.SetActive(active);
+            selectionCircle.SetActive(active);
         }
 
         public void OnDestroy()

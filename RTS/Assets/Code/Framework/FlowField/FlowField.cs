@@ -12,8 +12,8 @@ namespace Code.Framework.FlowField
         private readonly float m_CellRadius;
         private readonly float m_CellDiameter;
         private readonly float m_MaxMountainHeight;
-        public Cell m_DestinationCell;
-        private readonly Collider[] hits = new Collider[1];
+        public Cell DestinationCell;
+        private readonly Collider[] m_Hits = new Collider[1];
 
         public FlowField(float cellRadius, Vector2Int gridSize, float maxMountainHeight = 0.5f)
         {
@@ -58,7 +58,7 @@ namespace Code.Framework.FlowField
             // 255 is max cell cost 
             foreach (var cell in Grid)
             {
-                Physics.OverlapBoxNonAlloc(cell.WorldPos, cellHalfExtents, hits, Quaternion.identity, terrainMask);
+                Physics.OverlapBoxNonAlloc(cell.WorldPos, cellHalfExtents, m_Hits, Quaternion.identity, terrainMask);
 
                 if (cell.WorldPos.y > m_MaxMountainHeight)
                 {
@@ -66,9 +66,9 @@ namespace Code.Framework.FlowField
                     continue;
                 }
 
-                if (hits[0] is not null)
+                if (m_Hits[0] is not null)
                 {
-                    if (hits[0].gameObject.layer == LayerMask.NameToLayer("StructureLayer"))
+                    if (m_Hits[0].gameObject.layer == LayerMask.NameToLayer("StructureLayer"))
                     {
                         cell.IncreaseCellCost(255);
                     }
@@ -77,7 +77,7 @@ namespace Code.Framework.FlowField
                 }
 
                 // Clear hits
-                hits[0] = null;
+                m_Hits[0] = null;
             }
 
             Log.Message("FlowField.cs", "FlowField cell cost added.");
@@ -85,12 +85,12 @@ namespace Code.Framework.FlowField
 
         public void CreateIntegrationField(Cell destinationCell)
         {
-            m_DestinationCell = destinationCell;
-            m_DestinationCell.Cost = 0;
-            m_DestinationCell.BestCost = 0;
+            DestinationCell = destinationCell;
+            DestinationCell.Cost = 0;
+            DestinationCell.BestCost = 0;
 
             Queue<Cell> cellsToCheck = new();
-            cellsToCheck.Enqueue(m_DestinationCell);
+            cellsToCheck.Enqueue(DestinationCell);
 
             while (cellsToCheck.Count > 0)
             {

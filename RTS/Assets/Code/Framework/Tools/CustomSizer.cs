@@ -1,20 +1,21 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Framework.Tools
 {
     public class CustomSizer : MonoBehaviour
     {
         private Rect m_SizeArea;
-        public Vector2 m_WidthAndLength;
-        public Transform m_CenterOfArea;
+        public Vector2 widthAndLength;
+        public Transform centerOfArea;
         private Vector3[] m_Corners;
 
         private void DrawArea(Color color, bool draw)
         {
-            if (!m_CenterOfArea)
+            if (!centerOfArea)
                 return;
 
-            var centerPoint = m_CenterOfArea.localPosition;
+            var centerPoint = centerOfArea.localPosition;
             
             // Show Area in Scene view
             ShowAreaInScene();
@@ -38,7 +39,7 @@ namespace Code.Framework.Tools
 
         private void ShowAreaInScene()
         {
-            m_SizeArea.size = new Vector2(m_WidthAndLength.x, m_WidthAndLength.y);
+            m_SizeArea.size = new Vector2(widthAndLength.x, widthAndLength.y);
             m_SizeArea.center = Vector2.zero;
         }
 

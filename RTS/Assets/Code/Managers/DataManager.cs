@@ -5,6 +5,7 @@ using Code.Player.Camera.ScriptableObjects;
 using Code.Player.ScriptableObjects;
 using Code.Units;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Managers
 {
@@ -13,7 +14,7 @@ namespace Code.Managers
         [Header("Units")]
         public UnitData unitData;
 
-        public UnitSpawnData SpawnData;
+        public UnitSpawnData spawnData;
 
         [Header("Player")]
         public MouseData mouseData;

@@ -1,16 +1,17 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Code.Health
 {
     public class HealthBar : MonoBehaviour
     {
-        [SerializeField] private Image m_HealthBarImage;
-        [SerializeField] private Gradient m_Gradient;
+        [SerializeField] private Image healthBarImage;
+        [SerializeField] private Gradient gradient;
 
         private void Update()
         {
-            m_HealthBarImage.color = m_Gradient.Evaluate(m_HealthBarImage.fillAmount);
+            healthBarImage.color = gradient.Evaluate(healthBarImage.fillAmount);
         }
     }
 }

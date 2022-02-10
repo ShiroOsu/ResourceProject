@@ -4,24 +4,24 @@ namespace Code.Framework.Tools
 {
     public class DrawOutlineSelection : MonoBehaviour
     {
-        [SerializeField] private CustomSizer m_CustomSizer;
-        [SerializeField] private LineRenderer m_LineRenderer;
+        [SerializeField] private CustomSizer customSizer;
+        [SerializeField] private LineRenderer lineRenderer;
 
         private void Start()
         {
             SetLineCorners();
         }
 
-        public void SetLineCorners()
+        private void SetLineCorners()
         {
-            var corners = m_CustomSizer.GetCorners();
-            m_LineRenderer.loop = true;
-            m_LineRenderer.numCornerVertices = 5;
-            m_LineRenderer.useWorldSpace = false;
+            var corners = customSizer.GetCorners();
+            lineRenderer.loop = true;
+            lineRenderer.numCornerVertices = 5;
+            lineRenderer.useWorldSpace = false;
 
-            for (int i = 0; i < corners.Length; i++)
+            for (var i = 0; i < corners.Length; i++)
             {
-                m_LineRenderer.SetPosition(i, corners[i]);
+                lineRenderer.SetPosition(i, corners[i]);
             }
         }
     }

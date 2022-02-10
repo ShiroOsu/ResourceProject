@@ -8,26 +8,26 @@ namespace Code.Managers.Structures
 {
     public class BarracksUIManager : MonoBehaviour
     {
-        [SerializeField] private GameObject m_Image;
-        [SerializeField] private GameObject m_Info;
-        [SerializeField] private StructureData m_Data;
+        [SerializeField] private GameObject image;
+        [SerializeField] private GameObject info;
+        [SerializeField] private StructureData data;
 
         private Barracks m_BarracksRef;
-        private const string c_NameOfUIObjectInScene = "BarracksUIMiddle";
+        private const string CNameOfUIObjectInScene = "BarracksUIMiddle";
 
         public void EnableMainUI(bool active, GameObject structure)
         {
             m_BarracksRef = structure.GetComponent<Barracks>();
-            UIManager.Instance.AddTimerToUI(m_BarracksRef.BarracksTimer.m_Timer, c_NameOfUIObjectInScene);
-            UIManager.Instance.SetStructureStatsInfo(m_Data);
+            UIManager.Instance.AddTimerToUI(m_BarracksRef.barracksTimer.timer, CNameOfUIObjectInScene);
+            UIManager.Instance.SetStructureStatsInfo(data);
             
             if (active)
             {
                 BindBarracksButtons();
             }
 
-            m_Image.SetActive(active);
-            m_Info.SetActive(active);
+            image.SetActive(active);
+            info.SetActive(active);
 
             if (!active)
             {
