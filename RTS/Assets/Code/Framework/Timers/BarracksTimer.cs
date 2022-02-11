@@ -53,7 +53,7 @@ namespace Code.Framework.Timers
         {
             if (i >= imageQueue.Length)
             {
-                Log.Message("BarracksTimer.cs", "Queue is full!");
+                Log.Print("BarracksTimer.cs", "Queue is full!");
                 return;
             }
             

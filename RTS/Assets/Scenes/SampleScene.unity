@@ -155,11 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &151949680 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8932758396069380585, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
-  m_PrefabInstance: {fileID: 7666923750933712700}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &270633336 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6250924667326851402, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
@@ -550,7 +545,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-70624
+  m_Name: pb_Mesh-1312
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -820,6 +815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 659079910}
   - component: {fileID: 659079909}
+  - component: {fileID: 659079911}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -858,6 +854,19 @@ Transform:
   m_Father: {fileID: 1422433224}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &659079911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659079908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f216106b96d8ed43b48155ad70378fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorTexture: {fileID: 0}
 --- !u!1 &662076628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,7 +1263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 256301526081307544, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_Carve
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 805950392371789697, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_Layer
@@ -1310,7 +1319,7 @@ PrefabInstance:
       objectReference: {fileID: 495617981}
     - target: {fileID: 6234580181167300042, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_VersionIndex
-      value: 52
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 6234580181167300042, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
       propertyPath: m_MeshFormatVersion
@@ -3624,7 +3633,7 @@ PrefabInstance:
     - target: {fileID: 2490625688140769574, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
       propertyPath: info
       value: 
-      objectReference: {fileID: 151949680}
+      objectReference: {fileID: 7666923750933712708}
     - target: {fileID: 2490625688140769574, guid: 043deb1666c5e494d84a1e622221cc6a, type: 3}
       propertyPath: m_UI
       value: 

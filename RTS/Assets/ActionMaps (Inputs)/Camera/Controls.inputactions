@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "MoveCameraMouse",
+                    "type": "Value",
+                    "id": "31385f8a-fd34-4d76-9883-458e4556ef81",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -51,7 +60,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Desktop",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -62,7 +71,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Desktop",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -73,7 +82,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Desktop",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -84,7 +93,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Desktop",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -106,7 +115,7 @@
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Desktop",
                     "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -117,7 +126,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Desktop",
                     "action": "Rotation",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -128,8 +137,19 @@
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "Normalize(min=-1,max=1)",
-                    "groups": "",
+                    "groups": "Desktop",
                     "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "104f5154-a07b-4df7-aff0-13cf633b92f8",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Desktop",
+                    "action": "MoveCameraMouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

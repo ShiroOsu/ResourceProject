@@ -44,7 +44,7 @@ namespace Code.Framework.FlowField
                 }
             }
 
-            Log.Message("FlowField.cs", "FlowField Grid Created.");
+            Log.Print("FlowField.cs", "FlowField Grid Created.");
             SetCellsCost();
         }
 
@@ -80,7 +80,7 @@ namespace Code.Framework.FlowField
                 m_Hits[0] = null;
             }
 
-            Log.Message("FlowField.cs", "FlowField cell cost added.");
+            Log.Print("FlowField.cs", "FlowField cell cost added.");
         }
 
         public void CreateIntegrationField(Cell destinationCell)
@@ -112,7 +112,7 @@ namespace Code.Framework.FlowField
                 }
             }
 
-            Log.Message("FlowField.cs", "Integration field created.");
+            Log.Print("FlowField.cs", "Integration field created.");
         }
 
         public void CreateFlowField()
@@ -133,7 +133,7 @@ namespace Code.Framework.FlowField
                 }
             }
 
-            Log.Message("FlowField.cs", "Flow Field created.");
+            Log.Print("FlowField.cs", "Flow Field created.");
         }
 
         private IEnumerable<Cell> GetNeighborCells(Vector2Int gridIndex, List<GridDirection> directions)

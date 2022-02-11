@@ -4,6 +4,5 @@ namespace Code.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        // Hello
     }
 }

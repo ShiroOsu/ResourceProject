@@ -5,7 +5,6 @@ using Code.Managers;
 using Code.Managers.Building;
 using Player;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Code.Player
@@ -32,6 +31,7 @@ namespace Code.Player
 
         // Public stuff
         public Ray PlacementRay => camera.ScreenPointToRay(m_MousePosition);
+        public Vector2 MousePosition => m_MousePosition;
         public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;

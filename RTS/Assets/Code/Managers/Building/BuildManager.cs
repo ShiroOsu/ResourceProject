@@ -55,7 +55,7 @@ namespace Code.Managers.Building
             m_MouseInputs.IsBuilding = true;
             
             m_CurrentBlueprintObject = Instantiate(blueprints[type]);
-            Log.Message("Initialize Build", "build type: " + type);
+            Log.Print("Initialize Build", "build type: " + type);
             m_CurrentBuildObject = PoolManager.Instance.GetPooledStructure(type, false);
 
             m_CurrentBlueprintObject.TryGetComponent(out BuildComponents bc);
@@ -97,7 +97,7 @@ namespace Code.Managers.Building
 
             if (Keyboard.current.escapeKey.isPressed)
             {
-                Log.Message("BuildManager.cs", "DisableBuildPlacement by ESC key");
+                Log.Print("BuildManager.cs", "DisableBuildPlacement by ESC key");
                 DisableBuildPlacement(false);
                 return;
             }

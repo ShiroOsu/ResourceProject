@@ -51,7 +51,7 @@ namespace Code.Framework.Timers
         {
             if (i >= imageQueue.Length)
             {
-                Log.Message("CastleTimer.cs", "Queue is full!");
+                Log.Print("CastleTimer.cs", "Queue is full!");
                 return;
             }
             

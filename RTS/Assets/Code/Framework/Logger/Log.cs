@@ -7,9 +7,9 @@ namespace Code.Framework.Logger
 {
   public static class Log
   {
-    private static LogMaskThreshold _currentLogMaskThreshold = LogMaskThreshold.Debugging;
-    private static readonly StringBuilder StringBuilder = new StringBuilder(500);
-
+    private static readonly LogMaskThreshold _currentLogMaskThreshold = LogMaskThreshold.Debugging;
+    private static readonly StringBuilder StringBuilder = new(500);
+    
     private static bool PrepareLog(string header, string msg, LogMask logMask, string[] tags)
     {
       if (Log._currentLogMaskThreshold > (LogMaskThreshold) logMask)
@@ -47,7 +47,7 @@ namespace Code.Framework.Logger
       Debug.Log(Log.StringBuilder.ToString());
     }
 
-    public static void Message(string header, string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
+    public static void Print(string header, string msg, LogMask logMask = LogMask.Debugging, string[] tags = null)
     {
       if (!Log.PrepareLog(header, msg, logMask, tags))
         return;

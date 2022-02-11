@@ -55,6 +55,15 @@ namespace Camera
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveCameraMouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""31385f8a-fd34-4d76-9883-458e4556ef81"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -75,7 +84,7 @@ namespace Camera
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Desktop"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -86,7 +95,7 @@ namespace Camera
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Desktop"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -97,7 +106,7 @@ namespace Camera
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Desktop"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -108,7 +117,7 @@ namespace Camera
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Desktop"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -130,7 +139,7 @@ namespace Camera
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Desktop"",
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -141,7 +150,7 @@ namespace Camera
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Desktop"",
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -152,8 +161,19 @@ namespace Camera
                     ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": ""Normalize(min=-1,max=1)"",
-                    ""groups"": """",
+                    ""groups"": ""Desktop"",
                     ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""104f5154-a07b-4df7-aff0-13cf633b92f8"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Desktop"",
+                    ""action"": ""MoveCameraMouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -184,6 +204,7 @@ namespace Camera
             m_Camera_Movement = m_Camera.FindAction("Movement", throwIfNotFound: true);
             m_Camera_Zoom = m_Camera.FindAction("Zoom", throwIfNotFound: true);
             m_Camera_Rotation = m_Camera.FindAction("Rotation", throwIfNotFound: true);
+            m_Camera_MoveCameraMouse = m_Camera.FindAction("MoveCameraMouse", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -246,6 +267,7 @@ namespace Camera
         private readonly InputAction m_Camera_Movement;
         private readonly InputAction m_Camera_Zoom;
         private readonly InputAction m_Camera_Rotation;
+        private readonly InputAction m_Camera_MoveCameraMouse;
         public struct CameraActions
         {
             private @Controls m_Wrapper;
@@ -253,6 +275,7 @@ namespace Camera
             public InputAction @Movement => m_Wrapper.m_Camera_Movement;
             public InputAction @Zoom => m_Wrapper.m_Camera_Zoom;
             public InputAction @Rotation => m_Wrapper.m_Camera_Rotation;
+            public InputAction @MoveCameraMouse => m_Wrapper.m_Camera_MoveCameraMouse;
             public InputActionMap Get() { return m_Wrapper.m_Camera; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -271,6 +294,9 @@ namespace Camera
                     @Rotation.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotation;
                     @Rotation.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotation;
                     @Rotation.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnRotation;
+                    @MoveCameraMouse.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveCameraMouse;
+                    @MoveCameraMouse.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveCameraMouse;
+                    @MoveCameraMouse.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveCameraMouse;
                 }
                 m_Wrapper.m_CameraActionsCallbackInterface = instance;
                 if (instance != null)
@@ -284,6 +310,9 @@ namespace Camera
                     @Rotation.started += instance.OnRotation;
                     @Rotation.performed += instance.OnRotation;
                     @Rotation.canceled += instance.OnRotation;
+                    @MoveCameraMouse.started += instance.OnMoveCameraMouse;
+                    @MoveCameraMouse.performed += instance.OnMoveCameraMouse;
+                    @MoveCameraMouse.canceled += instance.OnMoveCameraMouse;
                 }
             }
         }
@@ -302,6 +331,7 @@ namespace Camera
             void OnMovement(InputAction.CallbackContext context);
             void OnZoom(InputAction.CallbackContext context);
             void OnRotation(InputAction.CallbackContext context);
+            void OnMoveCameraMouse(InputAction.CallbackContext context);
         }
     }
 }

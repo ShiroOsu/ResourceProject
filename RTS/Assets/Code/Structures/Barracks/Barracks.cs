@@ -8,7 +8,6 @@ using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Code.Structures.Barracks
 {
@@ -41,7 +40,7 @@ namespace Code.Structures.Barracks
             if (Mouse.current.rightButton.isPressed)
             {
                 m_SetSpawnFlag = false;
-                Log.Message("barracks.cs", "Update, right button was pressed");
+                Log.Print("barracks.cs", "Update, right button was pressed");
             }
 
             if (m_SetSpawnFlag)

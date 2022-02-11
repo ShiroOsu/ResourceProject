@@ -18,7 +18,7 @@ namespace Code.Framework
                 if (!_instance)
                 {
                     _instance = (new GameObject {name = nameof(T), hideFlags = HideFlags.HideAndDontSave}).AddComponent<T>();
-                    Log.Message("Singleton.cs", "Created new Singleton of type: " + nameof(T));
+                    Log.Print("Singleton.cs", "Created new Singleton of type: " + nameof(T));
                 }
                 
                 return _instance;

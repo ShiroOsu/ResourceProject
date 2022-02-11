@@ -15,7 +15,7 @@ namespace Code.Framework.Tools
         [MenuItem("Auto Create/Unit")]
         private static void CreateUnitInit()
         {
-            Log.Message("AutoCreateUnit.cs", "Create Unit Initialization");
+            Log.Print("AutoCreateUnit.cs", "Create Unit Initialization");
             AutoCreateWindowPopup.BeginCreation += CreateUnitBegin;
             InitializeAutoCreateWindowPopup();
         }
@@ -34,8 +34,8 @@ namespace Code.Framework.Tools
 
         private static void CreateUnitScript()
         {
-            Log.Message("AutoCreateUnit.cs", "Creating unit script");
-            Log.Message("AutoCreateUnit.cs", "Creating unit prefab");
+            Log.Print("AutoCreateUnit.cs", "Creating unit script");
+            Log.Print("AutoCreateUnit.cs", "Creating unit prefab");
             var path = Application.dataPath + "/Code/Units/";
 
             AutoCreate.UnitFolder(UnitName);
@@ -57,7 +57,7 @@ namespace Code.Framework.Tools
 
         private static void CreateSo()
         {
-            Log.Message("AutoCreateUnit.cs", "Creating Scriptable Object");
+            Log.Print("AutoCreateUnit.cs", "Creating Scriptable Object");
 
             var scriptName = UnitName + "SO.cs";
             var path = Application.dataPath + "/Code/Units/" + UnitName + "/" + scriptName;
@@ -66,7 +66,7 @@ namespace Code.Framework.Tools
 
         private static void CreateUnitManager()
         {
-            Log.Message("AutoCreateUnit.cs", "Creating UnitUIManager");
+            Log.Print("AutoCreateUnit.cs", "Creating UnitUIManager");
 
             var scriptName = UnitName + "UIManager.cs";
             var path = Application.dataPath + "/Code/Managers/Units/" + scriptName;
@@ -75,7 +75,7 @@ namespace Code.Framework.Tools
 
         private static void AddUnitEnum()
         {
-            Log.Message("AutoCreateUnit.cs", "Creating Enum");
+            Log.Print("AutoCreateUnit.cs", "Creating Enum");
 
             var path = Application.dataPath + "/Code/Framework/Enums/Enums.cs";
             AutoCreate.UnitEnum(path, UnitName);
@@ -83,7 +83,7 @@ namespace Code.Framework.Tools
 
         private static void AddToUIManager()
         {
-            Log.Message("AutoCreateUnit.cs", "Adding new unit to UIManager");
+            Log.Print("AutoCreateUnit.cs", "Adding new unit to UIManager");
 
             var path = Application.dataPath + "/Code/Managers/UIManager.cs";
             AutoCreate.UIManagerCode(path, UnitName);

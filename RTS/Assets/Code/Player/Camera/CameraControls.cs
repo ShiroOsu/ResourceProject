@@ -1,4 +1,6 @@
 using Camera;
+using Code.Framework.Logger;
+using Code.Managers;
 using Code.Player.Camera.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,8 +22,18 @@ namespace Code.Player.Camera
         private Vector3 m_ZoomVector;
         [HideInInspector] public bool canZoom = true;
 
+        private Vector2 m_ScreenSize;
+        private DataManager m_DataManager;
+        private MouseInputs m_MouseInputs;
+        
         public void Awake()
         {
+            m_DataManager = DataManager.Instance;
+            m_MouseInputs = m_DataManager.mouseInputs;
+            
+            m_ScreenSize.x = (Screen.width - 1);
+            m_ScreenSize.y = (Screen.height - 1);
+            
             m_ThisTransform = transform;
             
             if (!data)
@@ -53,7 +65,7 @@ namespace Code.Player.Camera
         }
 
         // WASD
-        private void UpdateCameraDirection()
+        private void UpdateCameraDirectionByKeys()
         {
             var direction = m_CameraControls.Camera.Movement.ReadValue<Vector2>();
 
@@ -61,7 +73,35 @@ namespace Code.Player.Camera
             m_ForwardVector.z = direction.y;
         }
 
+        private void UpdateCameraDirectionByMouse()
+        {
+            var direction = m_CameraControls.Camera.MoveCameraMouse.ReadValue<Vector2>();
+
+            if (m_MouseInputs.MousePosition.x > Screen.width || m_MouseInputs.MousePosition.y > Screen.height
+                || m_MouseInputs.MousePosition.x < -10 || m_MouseInputs.MousePosition.y < -10)
+                return;
+
+            if (direction.x >= m_ScreenSize.x)
+            {
+                m_ForwardVector.x = 1;
+            } 
+            else if (direction.x <= 1)
+            {
+                m_ForwardVector.x = -1;
+            }
+            
+            if (direction.y >= m_ScreenSize.y)
+            {
+                m_ForwardVector.z = 1;
+            } 
+            else if (direction.y <= 1)
+            {
+                m_ForwardVector.z = -1;
+            }
+        }
+
         public void OnMovement(InputAction.CallbackContext context) { }
+        public void OnMoveCameraMouse(InputAction.CallbackContext context) { }
 
         public void OnZoom(InputAction.CallbackContext context)
         {
@@ -97,7 +137,8 @@ namespace Code.Player.Camera
 
         private void MoveCamera(float deltaTime)
         {
-            UpdateCameraDirection();
+            UpdateCameraDirectionByKeys();
+            UpdateCameraDirectionByMouse();
 
             Zoom(deltaTime);
             m_ThisTransform.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
