@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
-using Code.Framework.FlowField;
+using System.Threading.Tasks;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -60,6 +60,11 @@ namespace Code.Framework.ExtensionFolder
             public RawImage image;
             public int key; // Temp
             // Add ToolTip ?
+        }
+
+        public static IEnumerator AsCoroutine(this Task task)
+        {
+            return new WaitUntil(() => task.IsCompleted);
         }
     }
 }

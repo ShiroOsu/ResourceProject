@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Code.Framework.ExtensionFolder
@@ -13,14 +14,16 @@ namespace Code.Framework.ExtensionFolder
             Vector = new Vector2Int(x, y);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Vector2Int(GridDirection direction)
         {
             return direction.Vector;
         }
 
-        public static GridDirection GetDirectionFromV2I(Vector2Int vector)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static GridDirection GetDirectionFromV2I(in Vector2Int vector)
         {
-            return CardinalAndIntercardinalDirections.DefaultIfEmpty(None).FirstOrDefault(direction => direction == vector);
+            return CardinalAndIntercardinalDirectionsLookup[vector];
         }
 
         public static readonly GridDirection None = new(0, 0);
@@ -34,7 +37,7 @@ namespace Code.Framework.ExtensionFolder
         public static readonly GridDirection SouthWest = new(-1, -1);
 
         // Cardinal = N, S, W, E
-        public static readonly List<GridDirection> CardinalDirections = new()
+        public static readonly GridDirection[] CardinalDirections = 
         {
             North,
             South,
@@ -43,7 +46,7 @@ namespace Code.Framework.ExtensionFolder
         };
 
         // Inter-cardinal = NW, NE, SW, SE 
-        private static readonly List<GridDirection> CardinalAndIntercardinalDirections = new()
+        public static readonly GridDirection[] CardinalAndIntercardinalDirections =
         {
             North,
             NorthEast,
@@ -55,7 +58,19 @@ namespace Code.Framework.ExtensionFolder
             West
         };
 
-        public static readonly List<GridDirection> AllDirections = new()
+        private static readonly Dictionary<Vector2Int, GridDirection> CardinalAndIntercardinalDirectionsLookup = new()
+        {
+            { North.Vector, North },
+            { NorthEast.Vector, NorthEast },
+            { NorthWest.Vector, NorthWest },
+            { South.Vector, South },
+            { SouthEast.Vector, SouthEast },
+            { SouthWest.Vector, SouthWest },
+            { East.Vector, East },
+            { West.Vector, West }
+        };
+
+        public static readonly GridDirection[] AllDirections = 
         {
             None,
             North,

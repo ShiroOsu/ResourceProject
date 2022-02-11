@@ -136,7 +136,7 @@ namespace Code.Framework.FlowField
             Log.Print("FlowField.cs", "Flow Field created.");
         }
 
-        private IEnumerable<Cell> GetNeighborCells(Vector2Int gridIndex, List<GridDirection> directions)
+        private IEnumerable<Cell> GetNeighborCells(Vector2Int gridIndex, GridDirection[] directions)
         {
             var neighborCells = new List<Cell>();
 
