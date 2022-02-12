@@ -23,6 +23,7 @@ namespace Backlog
     
     // TODO: Resources, Wood, Gold, Stone, etc.
     // TODO: Environment, Trees, Mountains, etc. 
+    // TODO: Procedural generated trees
     
     #endregion Important
     

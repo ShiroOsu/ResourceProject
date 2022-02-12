@@ -1,6 +1,7 @@
 using System;
 using Code.Framework.Enums;
 using Code.Framework.Interfaces;
+using Code.Framework.Logger;
 using Code.Framework.Timers;
 using Code.Framework.Tools;
 using Code.Managers;
@@ -39,6 +40,7 @@ namespace Code.Structures.Castle
 
             if (Mouse.current.rightButton.isPressed)
             {
+                Log.Print("Castle.cs", "right mouse button pressed");
                 m_SetSpawnFlag = false;
             }
 

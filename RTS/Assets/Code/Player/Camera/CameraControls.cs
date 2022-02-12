@@ -75,11 +75,10 @@ namespace Code.Player.Camera
 
         private void UpdateCameraDirectionByMouse()
         {
-            var direction = m_CameraControls.Camera.MoveCameraMouse.ReadValue<Vector2>();
-
-            if (m_MouseInputs.MousePosition.x > Screen.width || m_MouseInputs.MousePosition.y > Screen.height
-                || m_MouseInputs.MousePosition.x < -10 || m_MouseInputs.MousePosition.y < -10)
+            if (!Application.isFocused)
                 return;
+            
+            var direction = m_CameraControls.Camera.MoveCameraMouse.ReadValue<Vector2>();
 
             if (direction.x >= m_ScreenSize.x)
             {
