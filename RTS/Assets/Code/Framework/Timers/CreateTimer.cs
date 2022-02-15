@@ -54,7 +54,7 @@ namespace Code.Framework.Timers
             
             // Shifts all items in m_ImageQueue to the left 
             // and set texture to the next items in spawnQueue
-            for (int j = 0; j < i; j++)
+            for (var j = 0; j < i; j++)
             {
                 imageQueue[j].texture = AllTextures.Instance.GetTexture(spawnQueue[j]);
             }

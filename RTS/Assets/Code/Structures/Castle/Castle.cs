@@ -1,14 +1,12 @@
 using System;
 using Code.Framework.Enums;
+using Code.Framework.ExtensionFolder;
 using Code.Framework.Interfaces;
-using Code.Framework.Logger;
 using Code.Framework.Timers;
 using Code.Framework.Tools;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Code.Structures.Castle
 {
@@ -38,15 +36,14 @@ namespace Code.Structures.Castle
                 castleTimer.TimerUpdate();
             }
 
-            if (Mouse.current.rightButton.isPressed)
-            {
-                Log.Print("Castle.cs", "right mouse button pressed");
-                m_SetSpawnFlag = false;
-            }
-
             if (m_SetSpawnFlag)
             {
                 SetFlagPosition();
+
+                if (Extensions.WasMousePressedThisFrame())
+                {
+                    m_SetSpawnFlag = false;
+                }
             }
         }
 

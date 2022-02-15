@@ -1,7 +1,6 @@
 using Code.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Code.Managers
 {
@@ -27,7 +26,7 @@ namespace Code.Managers
         {
             var ray = DataManager.Instance.mouseInputs.PlacementRay;
 
-            // Might want to set default position if this happens ?
+            // Might want to set default position if this happens ? object allocation params layerNames
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
                 return;
             

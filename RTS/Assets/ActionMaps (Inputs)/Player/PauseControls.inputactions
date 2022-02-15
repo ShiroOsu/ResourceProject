@@ -1,0 +1,34 @@
+{
+    "name": "PauseControls",
+    "maps": [
+        {
+            "name": "Keyboard",
+            "id": "76f36a25-c307-45e4-9106-d89b93d5ed18",
+            "actions": [
+                {
+                    "name": "ESCPause",
+                    "type": "Button",
+                    "id": "f84b7398-3aa8-4065-88d7-025212e2c9aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4dc9ad8e-5320-422b-a562-737f94f1d194",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ESCPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

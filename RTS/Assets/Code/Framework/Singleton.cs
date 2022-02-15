@@ -15,12 +15,17 @@ namespace Code.Framework
                     return _instance;
 
                 _instance = FindObjectOfType<T>();
-                if (!_instance)
-                {
-                    _instance = (new GameObject {name = nameof(T), hideFlags = HideFlags.HideAndDontSave}).AddComponent<T>();
-                    Log.Print("Singleton.cs", "Created new Singleton of type: " + nameof(T));
-                }
                 
+                if (_instance) return _instance;
+                
+                _instance = (new GameObject
+                {
+                    name = nameof(T),
+                    hideFlags = HideFlags.HideAndDontSave,
+                        
+                }).AddComponent<T>();
+                
+                Log.Print("Singleton.cs", "Created new Singleton of type: " + nameof(T));
                 return _instance;
             }
         }

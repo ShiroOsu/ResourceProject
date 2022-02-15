@@ -1,13 +1,12 @@
 using System;
 using Code.Framework.Enums;
+using Code.Framework.ExtensionFolder;
 using Code.Framework.Interfaces;
-using Code.Framework.Logger;
 using Code.Framework.Timers;
 using Code.Framework.Tools;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 
 namespace Code.Structures.Barracks
 {
@@ -37,15 +36,14 @@ namespace Code.Structures.Barracks
                 barracksTimer.TimerUpdate();
             }
             
-            if (Mouse.current.rightButton.isPressed)
-            {
-                m_SetSpawnFlag = false;
-                Log.Print("barracks.cs", "Update, right button was pressed");
-            }
-
             if (m_SetSpawnFlag)
             {
                 SetFlagPosition();
+
+                if (Extensions.WasMousePressedThisFrame())
+                {
+                    m_SetSpawnFlag = false;
+                }
             }
         }
 

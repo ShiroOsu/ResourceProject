@@ -25,6 +25,8 @@ namespace Backlog
     // TODO: Environment, Trees, Mountains, etc. 
     // TODO: Procedural generated trees
     
+    // TODO: Pause Game
+
     #endregion Important
     
     #region Optional
