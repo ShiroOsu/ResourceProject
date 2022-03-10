@@ -1,7 +1,6 @@
 using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
-using Code.Managers;
 using Code.Managers.Data;
 using Code.Managers.UI;
 using UnityEngine;
@@ -13,24 +12,46 @@ namespace Code.Units.Soldier
     public class SoldierUnit : MonoBehaviour, IUnit
     {
         [SerializeField] private GameObject selectionCircle;
+        [SerializeField] private UnitData data;
+        private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
 
         private void Awake()
         {
             m_Agent = GetComponent<NavMeshAgent>();
 
-            m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
-            m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
+            m_Agent.speed = data.movementSpeed;
+            m_Agent.acceleration = data.acceleration;
+            
+            if (!m_UnitImage)
+            {
+                m_UnitImage = Extensions.FindObject("SoldierImage");
+            }
         }
 
-        public TextureAssetType GetUnitType()
+        public UnitType GetUnitType()
         {
-            return TextureAssetType.Solider;
+            return UnitType.Soldier;
+        }
+        
+        public TextureAssetType GetUnitTexture()
+        {
+            return TextureAssetType.Soldier;
+        }
+        
+        public UnitData GetUnitData()
+        {
+            return data;
+        }
+
+        public GameObject GetUnitImage()
+        {
+            return m_UnitImage;
         }
 
         public void ShouldSelect(bool select)
         {
-            UIManager.Instance.UnitSelected(select, gameObject);
+            UIManager.Instance.UnitSelected(select, gameObject, UnitType.Soldier, m_UnitImage, data);
             ActivateSelectionCircle(select);
         }
         

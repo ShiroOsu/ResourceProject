@@ -17,7 +17,7 @@ namespace Code.Timers
         [FormerlySerializedAs("m_TimerFill")] public Slider timerFill;
         [FormerlySerializedAs("m_ImageQueue")] public RawImage[] imageQueue;
 
-        protected readonly Queue<TextureAssetType> SpawnQueue = new Queue<TextureAssetType>();
+        protected readonly Queue<TextureAssetType> SpawnQueue = new();
         protected float CurrentUnitTimeSpawn;
         protected bool IsSpawning;
         protected float CurrentTimeOnSpawn;
@@ -71,7 +71,7 @@ namespace Code.Timers
             var unitTime = type switch
             {
                 TextureAssetType.Builder => DataManager.Instance.spawnData.builderSpawnTime,
-                TextureAssetType.Solider => DataManager.Instance.spawnData.soldierSpawnTime,
+                TextureAssetType.Soldier => DataManager.Instance.spawnData.soldierSpawnTime,
                 TextureAssetType.Horse => DataManager.Instance.spawnData.horseSpawnTime,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };

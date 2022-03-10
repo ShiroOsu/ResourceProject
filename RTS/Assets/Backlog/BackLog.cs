@@ -6,38 +6,49 @@ namespace Backlog
     
     #region Important
     
-    // TODO: Horse Unit, Collider does not cover the whole GameObject making it hard to click on
+    // TODO: Horse Unit, Collider does not cover the whole GameObject making it hard to click on (Only clickable on horse atm)
     
-    // TODO: Main Menu, Loading Level, ? 
+    // TODO: Loading Scene 
     
     // TODO: Multi-Selection, Rework into MouseInputs Update to "skip" EventSystem.IsPointerOverGameObject
     // TODO: Update multi-selection image anchored position so it wont start from last position 
     
     // TODO: UnitSpawnFlag, If spawning units while player is moving the corresponding structures SpawnFlag move units 
     // TODO: the last position SpawnFlag was placed at
+    // TODO: if spawning without placing a flag, spawn at unit-spawn-pos
     
-    // TODO: Clamp Zoom function (Smooth zoom) 
-    
-    // TODO: Structures build animations
     // TODO: Structures in scene hierarchy, naming, why is "barracksUIMiddle" called info in inspector, why is CastleUIMiddle gameObject called castleStats
     
-    // TODO: Resources, Wood, Gold, Stone, etc.
+    // TODO: Be able to cancel unit crafting by clicking on the images in timers
+    
+    // TODO: Resources, Wood, Gold, Stone, Food(for amount of units you can have),etc.
     // TODO: Environment, Trees, Mountains, etc. 
     // TODO: Procedural generated trees
     
-    // TODO: Pause Game
+    // TODO: Options UI
+    
+    // TODO: Save & Load Game 
 
     #endregion Important
     
     #region Bugs
     
-    //TODO: Creates a new Singleton of type T when editor exits play mode.
+    //TODO: Creates a new Singleton of type T when exiting play mode.
     
     #endregion Bugs
+
+    #region Working but not Completed
+
+    // TODO: Pause Game, Missing: UI(return to game, exit, save, load)
+    // TODO: Main Menu, Missing: Options, Load, Exit
+    // TODO: Zoom, Missing: Clamp, Smooth
+    
+    #endregion
     
     #region Optional
     
-    // TODO: AutoCreate, Transfer string blocks to file
+    // TODO: Structures build animations
+    // TODO: AutoCreate 
     // TODO: Cursor Texture
     // TODO: Game Name
     

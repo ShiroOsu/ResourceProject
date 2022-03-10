@@ -1,5 +1,6 @@
 using Code.Enums;
-using UE = UnityEngine;
+using Code.Units;
+using UnityEngine;
 
 namespace Code.Interfaces
 {
@@ -10,15 +11,18 @@ namespace Code.Interfaces
 
         public void OnDestroy();
 
-        public TextureAssetType GetUnitType();
+        public UnitType GetUnitType();
+        public TextureAssetType GetUnitTexture();
+        public UnitData GetUnitData();
+        public GameObject GetUnitImage();
 
-        public void Move(UE.Vector3 destination);
+        public void Move(Vector3 destination);
         public bool IsUnitMoving();
         
         /// <summary>
         /// Returns current position
         /// </summary>
         /// <returns> Vector3Int </returns>
-        public UE.Vector3Int GetPosition();
+        public Vector3Int GetPosition();
     }
 }

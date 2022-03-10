@@ -48,7 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358246abee08e114fbbcd112434da4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectionCircle: {fileID: 6409962247827486187}
+  selectionCircle: {fileID: 6409962247827486187}
+  data: {fileID: 11400000, guid: 3e1bc180224f7cc4ba66159801dc027a, type: 2}
+  unitImage: {fileID: 0}
 --- !u!195 &7389630584413174358
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -246,14 +248,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5d8a14e8de53744ea94634afa03425c, type: 3}
---- !u!1 &6409962247827486187 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7864905928923823504, guid: b5d8a14e8de53744ea94634afa03425c, type: 3}
-  m_PrefabInstance: {fileID: 3877881811781929083}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5140859318412349374 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8253128506340034501, guid: b5d8a14e8de53744ea94634afa03425c, type: 3}
+  m_PrefabInstance: {fileID: 3877881811781929083}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6409962247827486187 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7864905928923823504, guid: b5d8a14e8de53744ea94634afa03425c, type: 3}
   m_PrefabInstance: {fileID: 3877881811781929083}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7390341797922285955

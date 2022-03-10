@@ -32,7 +32,7 @@ namespace Code.Managers.Units
             foreach (var unit in unitList)
             {
                 unit.TryGetComponent(out IUnit u);
-                m_TextureList.Add(AllTextures.Instance.GetTexture(u.GetUnitType()));
+                m_TextureList.Add(AllTextures.Instance.GetTexture(u.GetUnitTexture()));
             }
 
             ShowTextureList();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code.Managers.Data
+namespace Code.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "UnitSpawnData", menuName = "ScriptableObjects/Units/UnitSpawnData")]
     public class UnitSpawnData : ScriptableObject

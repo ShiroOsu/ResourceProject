@@ -29,8 +29,13 @@ namespace Code.HelperClasses
         {
             return (Mouse.current.rightButton.wasReleasedThisFrame || Mouse.current.leftButton.wasReleasedThisFrame);
         }
-
-        public static GameObject FindInactiveObject(string name)
+        
+        /// <summary>
+        /// Includes inactive objects
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static GameObject FindObject(string name)
         {
             return UEObject.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
         }

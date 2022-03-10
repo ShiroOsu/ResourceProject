@@ -62,7 +62,7 @@ namespace Code.Structures
 
         public void SpawnSoldier()
         {
-            OnSpawn?.Invoke(TextureAssetType.Solider);
+            OnSpawn?.Invoke(TextureAssetType.Soldier);
         }
 
         public void SpawnHorse()

@@ -1,8 +1,6 @@
 using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
-using Code.Managers;
-using Code.Managers.Data;
 using Code.Managers.UI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,19 +11,26 @@ namespace Code.Units.Horse
     public class HorseUnit : MonoBehaviour, IUnit
     {
         [SerializeField] private GameObject selectionCircle;
+        [SerializeField] private UnitData data;
+        private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
 
         private void Awake()
         {
             m_Agent = GetComponent<NavMeshAgent>();
 
-            m_Agent.speed = DataManager.Instance.unitData.movementSpeed;
-            m_Agent.acceleration = DataManager.Instance.unitData.acceleration;
+            m_Agent.speed = data.movementSpeed;
+            m_Agent.acceleration = data.acceleration;
+            
+            if (!m_UnitImage)
+            {
+                m_UnitImage = Extensions.FindObject("HorseImage");
+            }
         }
 
         public void ShouldSelect(bool select)
         {
-            UIManager.Instance.UnitSelected(select, gameObject);
+            UIManager.Instance.UnitSelected(select, gameObject, UnitType.Horse, m_UnitImage, data);
             ActivateSelectionCircle(select);
         }
 
@@ -39,9 +44,24 @@ namespace Code.Units.Horse
             Destroy(this);
         }
 
-        public TextureAssetType GetUnitType()
+        public UnitType GetUnitType()
+        {
+            return UnitType.Horse;
+        }
+        
+        public TextureAssetType GetUnitTexture()
         {
             return TextureAssetType.Horse;
+        }
+        
+        public UnitData GetUnitData()
+        {
+            return data;
+        }
+
+        public GameObject GetUnitImage()
+        {
+            return m_UnitImage;
         }
 
         public void Move(Vector3 destination)

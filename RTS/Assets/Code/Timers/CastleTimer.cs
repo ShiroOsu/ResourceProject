@@ -16,11 +16,11 @@ namespace Code.Timers
         {
             if (add)
             {
-                Castle.OnSpawn += Spawn;// TODO: Delegate Allocation
+                Castle.OnSpawn += Spawn;
             }
             else
             {
-                Castle.OnSpawn -= Spawn;// TODO: Delegate Allocation
+                Castle.OnSpawn -= Spawn;
             }
         }
 

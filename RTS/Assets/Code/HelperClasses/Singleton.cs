@@ -15,17 +15,17 @@ namespace Code.HelperClasses
                     return _instance;
 
                 _instance = FindObjectOfType<T>();
-                
+
                 if (_instance) return _instance;
-                
+
                 _instance = (new GameObject
                 {
                     name = nameof(T),
                     hideFlags = HideFlags.HideAndDontSave,
-                        
                 }).AddComponent<T>();
-                
-                Log.Print("Singleton.cs", "Created new Singleton of type: " + nameof(T));
+
+                Log.Print("Singleton.cs",
+                    "Created new Singleton of type: " + nameof(T) + ", this singleton wont be saved");
                 return _instance;
             }
         }

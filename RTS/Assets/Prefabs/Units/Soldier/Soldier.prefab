@@ -245,7 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a730f5cfe8b55498615430a80dcdb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectionCircle: {fileID: 6482577072031413539}
+  selectionCircle: {fileID: 6482577072031413539}
+  data: {fileID: 11400000, guid: be8c6179a6ebb9a40ba114f4f3fb468d, type: 2}
 --- !u!195 &8419146751067424914
 NavMeshAgent:
   m_ObjectHideFlags: 0

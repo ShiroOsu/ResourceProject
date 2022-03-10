@@ -7,21 +7,20 @@ using UnityEngine;
 
 namespace Code.Managers.Units
 {
-    public class BuilderUIManager : MonoBehaviour
+    public class BuilderUIManager : UnitUIManager
     {
-        [Header("UI")]
-        [SerializeField] private GameObject image;
-        [SerializeField] private UnitData data;
-
         private BuilderUnit m_Builder;
-        public void EnableMainUI(bool active, GameObject unit)
+        public override UnitType Type => UnitType.Builder;
+
+        
+        public override void EnableMainUI(bool active, GameObject unit, UnitType type, GameObject image, UnitData data)
         {
             m_Builder = unit.GetComponent<BuilderUnit>();
             UIManager.Instance.SetUnitStatsInfo(data);
 
             if (active)
             {
-                BindBuilderButtons();
+                BindButtons();
             }
             
             image.SetActive(active);
@@ -41,10 +40,10 @@ namespace Code.Managers.Units
         private void BackToMainPage()
         {
             MenuButtons.Instance.UnBindMenuButtons();
-            BindBuilderButtons();
+            BindButtons();
         }
 
-        private void BindBuilderButtons()
+        protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(OpenBuildPage, 15, 
                 AllTextures.Instance.GetTexture(TextureAssetType.Build));

@@ -46,7 +46,7 @@ namespace Code.Managers
             return type switch
             {
                 TextureAssetType.Builder => builderPool.Rent(rent),
-                TextureAssetType.Solider => soldierPool.Rent(rent),
+                TextureAssetType.Soldier => soldierPool.Rent(rent),
                 TextureAssetType.Horse => horseUnitPool.Rent(rent),
                 _ => null
             };

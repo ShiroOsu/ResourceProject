@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Code.Enums;
 using UnityEngine;
 
-namespace Code.TextureListByEnum
+namespace Code.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "TextureList", menuName = "ScriptableObjects/TextureList")]
     public class TextureList : ScriptableObject

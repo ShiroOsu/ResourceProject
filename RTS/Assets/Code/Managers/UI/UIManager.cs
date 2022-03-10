@@ -1,7 +1,6 @@
 using System;
 using Code.Enums;
 using Code.HelperClasses;
-using Code.Interfaces;
 using Code.Managers.Structures;
 using Code.Managers.Units;
 using Code.ScriptableObjects;
@@ -13,11 +12,6 @@ namespace Code.Managers.UI
 {
     public sealed class UIManager : Singleton<UIManager>
     {
-        [Header("Units")]
-        [SerializeField] private BuilderUIManager builder;
-        [SerializeField] private SoldierUIManager soldier;
-        [SerializeField] private HorseUIManager horse;
-        
         [Header("Structures")]
         [SerializeField] private CastleUIManager castle;
         [SerializeField] private BarracksUIManager barracks;
@@ -58,25 +52,9 @@ namespace Code.Managers.UI
             }
         }
 
-        public void UnitSelected(bool select, GameObject unit)
+        public void UnitSelected(bool select, GameObject unit, UnitType type, GameObject image, UnitData data)
         {
-            unit.TryGetComponent(out IUnit iu);
-            var type = iu.GetUnitType();
-            
-            switch (type)
-            {
-                case TextureAssetType.Builder:
-                    builder.EnableMainUI(select, unit);
-                    break;
-                case TextureAssetType.Solider:
-                    soldier.EnableMainUI(select, unit);
-                    break;
-                case TextureAssetType.Horse:
-                    horse.EnableMainUI(select, unit);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            UnitUIProcessor.EnableUIForUnit(select, unit, type, image, data);
         }
 
         public void StructureSelected(StructureType type, bool select, GameObject structure)
@@ -103,7 +81,7 @@ namespace Code.Managers.UI
         private void SetUpTimer(GameObject timerObject, string name)
         {
             timerObject.TryGetComponent<RectTransform>(out var rectTransform);
-            Extensions.FindInactiveObject(name).TryGetComponent(out RectTransform uiRectTransform);
+            Extensions.FindObject(name).TryGetComponent(out RectTransform uiRectTransform);
             
             rectTransform.SetParent(uiRectTransform.transform);
             rectTransform.localScale = Vector3.one;

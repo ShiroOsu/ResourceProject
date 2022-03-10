@@ -42,7 +42,7 @@ namespace Code.Managers.Structures
                 AllTextures.Instance.GetTexture(TextureAssetType.Flag));
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnSoldier, 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Solider));
+                AllTextures.Instance.GetTexture(TextureAssetType.Soldier));
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnHorse, 3, 
                 AllTextures.Instance.GetTexture(TextureAssetType.Horse));

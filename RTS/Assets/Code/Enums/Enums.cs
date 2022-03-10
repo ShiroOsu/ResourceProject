@@ -6,6 +6,13 @@ namespace Code.Enums
         Castle,
         Barracks,
 	}
+
+    public enum UnitType
+    {
+        Builder,
+        Soldier,
+        Horse,
+    }
     
     // Unity layers
     public enum UnityLayer
@@ -16,7 +23,7 @@ namespace Code.Enums
     public enum TextureAssetType
     {
         Builder,
-        Solider,
+        Soldier,
         Horse,
         Castle,
         Barracks,
