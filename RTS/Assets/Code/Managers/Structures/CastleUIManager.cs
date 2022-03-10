@@ -1,7 +1,8 @@
-using Code.Framework.Enums;
-using Code.Framework.UI;
+using Code.Enums;
+using Code.Managers.UI;
+using Code.ScriptableObjects;
 using Code.Structures;
-using Code.Structures.Castle;
+using Code.UI;
 using UnityEngine;
 
 namespace Code.Managers.Structures

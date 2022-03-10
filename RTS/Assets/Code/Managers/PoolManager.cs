@@ -1,8 +1,7 @@
-using Code.Framework;
-using Code.Framework.Enums;
-using Code.Framework.ObjectPool;
+using Code.Enums;
+using Code.HelperClasses;
+using Code.Tools.ObjectPool;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Code.Managers
 {
@@ -17,19 +16,19 @@ namespace Code.Managers
         [SerializeField] private GameObject soldierPrefab = null;
         [SerializeField] private GameObject horseUnitPrefab = null;
 
-        public ObjectPool castlePool = null;
-        public ObjectPool barracksPool = null;
-        public ObjectPool builderPool = null;
-        public ObjectPool soldierPool = null;
-        public ObjectPool horseUnitPool = null;
+        public ObjectPooler castlePool = null;
+        public ObjectPooler barracksPool = null;
+        public ObjectPooler builderPool = null;
+        public ObjectPooler soldierPool = null;
+        public ObjectPooler horseUnitPool = null;
 
         private void Awake()
         {
-            castlePool = new ObjectPool(5, castlePrefab, new GameObject("CastlePool").transform);
-            barracksPool = new ObjectPool(5, barracksPrefab, new GameObject("BarracksPool").transform);
-            builderPool = new ObjectPool(5, builderPrefab, new GameObject("BuilderPool").transform);
-            soldierPool = new ObjectPool(5, soldierPrefab, new GameObject("SoliderPool").transform);
-            horseUnitPool = new ObjectPool(5, horseUnitPrefab, new GameObject("HorseUnitPool").transform);
+            castlePool = new ObjectPooler(5, castlePrefab, new GameObject("CastlePool").transform);
+            barracksPool = new ObjectPooler(5, barracksPrefab, new GameObject("BarracksPool").transform);
+            builderPool = new ObjectPooler(5, builderPrefab, new GameObject("BuilderPool").transform);
+            soldierPool = new ObjectPooler(5, soldierPrefab, new GameObject("SoliderPool").transform);
+            horseUnitPool = new ObjectPooler(5, horseUnitPrefab, new GameObject("HorseUnitPool").transform);
         }
 
         public GameObject GetPooledStructure(StructureType type, bool rent)

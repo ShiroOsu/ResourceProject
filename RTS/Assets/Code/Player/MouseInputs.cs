@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Code.Framework.Interfaces;
+using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
+using Code.Managers.Data;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Code.Player
 {
@@ -36,9 +36,7 @@ namespace Code.Player
         public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;
-        public event Action CalculateAStarPath;
-        public Vector3 aStarPath;
-
+        
         // Controls
         private MouseControls m_MouseControls;
 
@@ -205,8 +203,6 @@ namespace Code.Player
 
             foreach (var unit in m_SelectedUnitsList)
             {
-                CalculateAStarPath?.Invoke();
-                
                 unit.TryGetComponent(out IUnit u);
                 u.Move(newPosition);
             }

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Code.Framework;
-using Code.Framework.Blueprint;
-using Code.Framework.Enums;
-using Code.Framework.ExtensionFolder;
-using Code.Framework.Logger;
+using Code.Blueprints;
+using Code.Camera;
+using Code.Debugging;
+using Code.Enums;
+using Code.HelperClasses;
+using Code.Managers.Data;
 using Code.Player;
-using Code.Player.Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -84,7 +84,7 @@ namespace Code.Managers.Building
             m_MouseInputs.IsBuilding = false;
         }
 
-        // 20f is just a random amount of degrees it should rotate each time
+        // 20f is just a random amount of degrees it will rotate each time
         private void RotateBuilding(Vector2 scroll)
         {
             m_CurrentBlueprintObject.transform.Rotate(Vector3.up, scroll.normalized.y * 20f);

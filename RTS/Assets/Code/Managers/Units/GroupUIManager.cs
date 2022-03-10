@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using Code.Framework.Enums;
-using Code.Framework.Interfaces;
-using Code.Framework.UI;
+using Code.Enums;
+using Code.Interfaces;
+using Code.Managers.Data;
+using Code.UI;
 using UnityEngine;
 using UnityEngine.UI;
 

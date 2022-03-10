@@ -1,9 +1,11 @@
-using Code.Framework.Enums;
-using Code.Framework.Interfaces;
+using Code.Enums;
+using Code.HelperClasses;
+using Code.Interfaces;
 using Code.Managers;
+using Code.Managers.Data;
+using Code.Managers.UI;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Code.Units.Soldier
 {
@@ -45,6 +47,16 @@ namespace Code.Units.Soldier
         public void Move(Vector3 destination)
         {
             m_Agent.SetDestination(destination);
+        }
+
+        public bool IsUnitMoving()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Vector3Int GetPosition()
+        {
+            return Extensions.Vector3ToVector3Int(gameObject.transform.position);
         }
     }
 }

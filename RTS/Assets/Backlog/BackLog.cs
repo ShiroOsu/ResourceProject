@@ -29,6 +29,12 @@ namespace Backlog
 
     #endregion Important
     
+    #region Bugs
+    
+    //TODO: Creates a new Singleton of type T when editor exits play mode.
+    
+    #endregion Bugs
+    
     #region Optional
     
     // TODO: AutoCreate, Transfer string blocks to file

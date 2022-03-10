@@ -1,11 +1,13 @@
 using System;
-using Code.Framework.Enums;
-using Code.Framework.Interfaces;
+using Code.Enums;
+using Code.HelperClasses;
+using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
+using Code.Managers.Data;
+using Code.Managers.UI;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Code.Units.Builder
 {
@@ -62,6 +64,16 @@ namespace Code.Units.Builder
         public void Move(Vector3 destination)
         {
             m_Agent.SetDestination(destination);
+        }
+
+        public bool IsUnitMoving()
+        {
+            return !m_Agent.velocity.Equals(Vector3.zero);
+        }
+
+        public Vector3Int GetPosition()
+        {
+            return Extensions.Vector3ToVector3Int(gameObject.transform.position);
         }
     }
 }

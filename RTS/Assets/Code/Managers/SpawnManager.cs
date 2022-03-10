@@ -1,6 +1,6 @@
-using Code.Framework;
-using Code.Framework.Enums;
-using Code.Framework.Interfaces;
+using Code.Enums;
+using Code.HelperClasses;
+using Code.Interfaces;
 using UnityEngine;
 
 namespace Code.Managers
