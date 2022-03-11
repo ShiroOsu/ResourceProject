@@ -8,8 +8,6 @@ namespace Backlog
     
     // TODO: Horse Unit, Collider does not cover the whole GameObject making it hard to click on (Only clickable on horse atm)
     
-    // TODO: Loading Scene 
-    
     // TODO: Multi-Selection, Rework into MouseInputs Update to "skip" EventSystem.IsPointerOverGameObject
     // TODO: Update multi-selection image anchored position so it wont start from last position 
     
@@ -17,13 +15,13 @@ namespace Backlog
     // TODO: the last position SpawnFlag was placed at
     // TODO: if spawning without placing a flag, spawn at unit-spawn-pos
     
-    // TODO: Structures in scene hierarchy, naming, why is "barracksUIMiddle" called info in inspector, why is CastleUIMiddle gameObject called castleStats
-    
     // TODO: Be able to cancel unit crafting by clicking on the images in timers
     
     // TODO: Resources, Wood, Gold, Stone, Food(for amount of units you can have),etc.
     // TODO: Environment, Trees, Mountains, etc. 
-    // TODO: Procedural generated trees
+    // TODO: Procedural generated stuff
+
+    // TODO: Clicking on menu-buttons over a structure will select the structure 
     
     // TODO: Options UI
     

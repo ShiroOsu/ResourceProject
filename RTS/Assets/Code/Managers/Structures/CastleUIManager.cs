@@ -7,27 +7,24 @@ using UnityEngine;
 
 namespace Code.Managers.Structures
 {
-    public class CastleUIManager : MonoBehaviour
+    public class CastleUIManager : StructureUIManager
     {
-        [SerializeField] private GameObject castleUIMiddle;
-        [SerializeField] private GameObject image;
-        [SerializeField] private StructureData data;
-
         private Castle m_CastleRef;
-        private const string CNameOfUIObjectInScene = "StructureInfo";
+        public override StructureType Type => StructureType.Castle;
 
-        public void EnableMainUI(bool active, GameObject structure)
+        public override void EnableMainUI(bool active, GameObject structure, StructureType type, GameObject image, StructureData data)
         {
             m_CastleRef = structure.GetComponent<Castle>();
-            UIManager.Instance.AddTimerToUI(m_CastleRef.castleTimer.timer, CNameOfUIObjectInScene);
+            // TODO: AddTimerToUI() in the end calls Extensions.FindObject() with the name, but we can send the object instead of the name
+            UIManager.Instance.AddTimerToUI(m_CastleRef.castleTimer.timer, m_CastleRef.NameOfUIObjectInScene);
             UIManager.Instance.SetStructureStatsInfo(data);
             
             if (active)
             {
-                BindCastleButtons();
+                BindButtons();
             }
 
-            castleUIMiddle.SetActive(active);
+            m_CastleRef.castleUIMiddle.SetActive(active);
             image.SetActive(active);
 
             // When de-select remove listeners
@@ -37,7 +34,7 @@ namespace Code.Managers.Structures
             }
         }
 
-        private void BindCastleButtons()
+        protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSetSpawnFlagPosition, 0, 
                 AllTextures.Instance.GetTexture(TextureAssetType.Flag));

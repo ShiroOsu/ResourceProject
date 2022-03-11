@@ -7,28 +7,26 @@ using UnityEngine;
 
 namespace Code.Managers.Structures
 {
-    public class BarracksUIManager : MonoBehaviour
+    public class BarracksUIManager : StructureUIManager
     {
-        [SerializeField] private GameObject image;
-        [SerializeField] private GameObject info;
-        [SerializeField] private StructureData data;
-
         private Barracks m_BarracksRef;
-        private const string CNameOfUIObjectInScene = "BarracksUIMiddle";
+        public override StructureType Type => StructureType.Barracks;
 
-        public void EnableMainUI(bool active, GameObject structure)
+        
+        public override void EnableMainUI(bool active, GameObject structure, StructureType type, GameObject image, StructureData data)
         {
             m_BarracksRef = structure.GetComponent<Barracks>();
-            UIManager.Instance.AddTimerToUI(m_BarracksRef.barracksTimer.timer, CNameOfUIObjectInScene);
+            // TODO: AddTimerToUI() in the end calls Extensions.FindObject() with the name, but we can send the object instead of the name
+            UIManager.Instance.AddTimerToUI(m_BarracksRef.barracksTimer.timer, m_BarracksRef.NameOfUIObjectInScene);
             UIManager.Instance.SetStructureStatsInfo(data);
             
             if (active)
             {
-                BindBarracksButtons();
+                BindButtons();
             }
 
             image.SetActive(active);
-            info.SetActive(active);
+            m_BarracksRef.barracksUIMiddle.SetActive(active);
 
             if (!active)
             {
@@ -36,7 +34,7 @@ namespace Code.Managers.Structures
             }
         }
 
-        private void BindBarracksButtons()
+        protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.OnSetSpawnFlagPosition, 0, 
                 AllTextures.Instance.GetTexture(TextureAssetType.Flag));

@@ -57,21 +57,9 @@ namespace Code.Managers.UI
             UnitUIProcessor.EnableUIForUnit(select, unit, type, image, data);
         }
 
-        public void StructureSelected(StructureType type, bool select, GameObject structure)
+        public void StructureSelected(bool select, GameObject structure, StructureType type, GameObject image, StructureData data)
         {
-            switch (type)
-            {
-                case StructureType.Castle:
-                    castle.EnableMainUI(select, structure);
-                    break;
-                case StructureType.Barracks:
-                    barracks.EnableMainUI(select, structure);
-                    break;
-                case StructureType.Null:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            StructureUIProcessor.EnableUIForStructure(select, structure, type, image, data);
         }
         
         // ------------------------------------------------------------------------

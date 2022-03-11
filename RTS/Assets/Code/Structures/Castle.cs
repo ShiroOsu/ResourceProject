@@ -4,6 +4,7 @@ using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.UI;
+using Code.ScriptableObjects;
 using Code.Timers;
 using Code.Tools;
 using UnityEngine;
@@ -17,6 +18,11 @@ namespace Code.Structures
         [SerializeField] private CustomSizer3D sizer3D;
         public Transform unitSpawnPoint;
         [SerializeField] private GameObject outlineRenderer;
+        [SerializeField] private StructureData data;
+        private GameObject m_StructureImage;
+        public GameObject castleUIMiddle;
+        private const string c_NameOfUIObjectInScene = "CastleUIMiddle";
+        public string NameOfUIObjectInScene => c_NameOfUIObjectInScene;
 
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
@@ -28,6 +34,16 @@ namespace Code.Structures
         {
             navMeshObstacle.shape = NavMeshObstacleShape.Box;
             navMeshObstacle.size = sizer3D.GetSize(gameObject.transform.lossyScale);
+            
+            if (!m_StructureImage)
+            {
+                m_StructureImage = Extensions.FindObject("CastleImage");
+            }
+
+            if (!castleUIMiddle)
+            {
+                castleUIMiddle = Extensions.FindObject(c_NameOfUIObjectInScene);
+            }
         }
 
         private void Update()
@@ -77,7 +93,7 @@ namespace Code.Structures
 
         public void ShouldSelect(bool select)
         {
-            UIManager.Instance.StructureSelected(StructureType.Castle, select, gameObject);
+            UIManager.Instance.StructureSelected(select, gameObject, StructureType.Castle, m_StructureImage, data);
             castleTimer.Castle = this;
             castleTimer.AddActionOnSpawn(select);
             outlineRenderer.SetActive(select);
@@ -94,6 +110,21 @@ namespace Code.Structures
             {
                 m_SetSpawnFlag = false;
             }
+        }
+        
+        public StructureData GetStructureData()
+        {
+            return data;
+        }
+
+        public StructureType GetStructureType()
+        {
+            return StructureType.Castle;
+        }
+
+        public GameObject GetStructureImage()
+        {
+            return m_StructureImage;
         }
     }
 }
