@@ -22,7 +22,7 @@ namespace Code.Structures
         private GameObject m_StructureImage;
         public GameObject barracksUIMiddle;
         private const string c_NameOfUIObjectInScene = "BarracksUIMiddle";
-        public string NameOfUIObjectInScene => c_NameOfUIObjectInScene;
+        private const string c_BarracksImage = "BarracksImage";
         public event Action<TextureAssetType> OnSpawn;
 
         public Vector3 FlagPoint { get; private set; }
@@ -37,7 +37,7 @@ namespace Code.Structures
 
             if (!m_StructureImage)
             {
-                m_StructureImage = Extensions.FindObject("BarracksImage");
+                m_StructureImage = Extensions.FindObject(c_BarracksImage);
             }
 
             if (!barracksUIMiddle)

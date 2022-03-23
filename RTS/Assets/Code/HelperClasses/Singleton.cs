@@ -25,7 +25,8 @@ namespace Code.HelperClasses
                 }).AddComponent<T>();
 
                 Log.Print("Singleton.cs",
-                    "Created new Singleton of type: " + nameof(T) + ", this singleton wont be saved");
+                    "Created new Singleton of type: " + typeof(T) +
+                    ", Script calling to Singleton instance during OnDestroy most likely.");
                 return _instance;
             }
         }

@@ -12,10 +12,6 @@ namespace Code.Managers.UI
 {
     public sealed class UIManager : Singleton<UIManager>
     {
-        [Header("Structures")]
-        [SerializeField] private CastleUIManager castle;
-        [SerializeField] private BarracksUIManager barracks;
-        
         [Header("UI")] 
         [SerializeField] private GameObject objectWithStructureInfo;
         [SerializeField] private GameObject objectWithUnitInfo;
@@ -28,10 +24,10 @@ namespace Code.Managers.UI
             public TMP_Text name;
             public TMP_Text armor;
             
-            public void SetValues(string name, int armor)
+            public void SetValues(string _name, int _armor)
             {
-                this.name.SetText(name);
-                this.armor.SetText(armor.ToString());
+                name.SetText(_name);
+                armor.SetText(_armor.ToString());
             }
         }
         
@@ -43,12 +39,12 @@ namespace Code.Managers.UI
             public TMP_Text attackSpeed;
             public TMP_Text armor;
             
-            public void SetValues(string name, int attack, float attackSpeed, int armor)
+            public void SetValues(string _name, int _attack, float _attackSpeed, int _armor)
             {
-                this.name.SetText(name);
-                this.attack.SetText(attack.ToString());
-                this.attackSpeed.SetText(attackSpeed.ToString());
-                this.armor.SetText(armor.ToString());
+                name.SetText(_name);
+                attack.SetText(_attack.ToString());
+                attackSpeed.SetText(_attackSpeed.ToString());
+                armor.SetText(_armor.ToString());
             }
         }
 
@@ -63,24 +59,19 @@ namespace Code.Managers.UI
         }
         
         // ------------------------------------------------------------------------
-        // Timers
+        // Timer
         // ------------------------------------------------------------------------
-
-        private void SetUpTimer(GameObject timerObject, string name)
-        {
-            timerObject.TryGetComponent<RectTransform>(out var rectTransform);
-            Extensions.FindObject(name).TryGetComponent(out RectTransform uiRectTransform);
-            
-            rectTransform.SetParent(uiRectTransform.transform);
-            rectTransform.localScale = Vector3.one;
-            rectTransform.anchoredPosition3D = uiRectTransform.anchoredPosition3D;
-            rectTransform.localRotation = Quaternion.identity;
-        }
         
-        public void AddTimerToUI(GameObject timerObject, string nameOfUIObjectInScene)
+        public void AddTimerToUI(GameObject timerObject, GameObject structureUIMiddle)
         {
             timerObject.SetActive(false);
-            SetUpTimer(timerObject, nameOfUIObjectInScene);
+            timerObject.TryGetComponent<RectTransform>(out var timerUIRect);
+            structureUIMiddle.TryGetComponent(out RectTransform structureUIRect);
+            
+            timerUIRect.SetParent(structureUIRect.transform);
+            timerUIRect.localScale = Vector3.one;
+            timerUIRect.anchoredPosition3D = structureUIRect.anchoredPosition3D;
+            timerUIRect.localRotation = Quaternion.identity;
         }
         
         // ------------------------------------------------------------------------

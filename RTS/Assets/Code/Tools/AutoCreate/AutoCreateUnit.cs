@@ -12,7 +12,7 @@ namespace Code.Tools.AutoCreate
         private static AutoCreateScriptableObject _unit;
         public static string UnitName { get; set; }
 
-        [MenuItem("Auto Create/Unit")]
+        [MenuItem("Tools/Auto Create Unit")]
         private static void CreateUnitInit()
         {
             Log.Print("AutoCreateUnit.cs", "Code is probably broken since last folder restructure.");

@@ -17,7 +17,7 @@ namespace Backlog
     
     // TODO: Be able to cancel unit crafting by clicking on the images in timers
     
-    // TODO: Resources, Wood, Gold, Stone, Food(for amount of units you can have),etc.
+    // TODO: Resources, Wood, Gold, Stone, Food(for amount of units you can have), etc.
     // TODO: Environment, Trees, Mountains, etc. 
     // TODO: Procedural generated stuff
 
@@ -31,7 +31,7 @@ namespace Backlog
     
     #region Bugs
     
-    //TODO: Creates a new Singleton of type T when exiting play mode.
+    // TODO: Units traveling in circles when assigning new position when its not arrived at last position.
     
     #endregion Bugs
 
@@ -62,6 +62,13 @@ namespace Backlog
     #region Completed
     
     // Camera, Move the camera if the mouse is at the edge of screen : 2022-02-11
+
     
     #endregion Completed
+    
+    #region Bug fixed
+    
+    // Creates a new Singleton of type T when exiting play mode.
+
+    #endregion Bug fixed
 }

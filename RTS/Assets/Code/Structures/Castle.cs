@@ -22,7 +22,7 @@ namespace Code.Structures
         private GameObject m_StructureImage;
         public GameObject castleUIMiddle;
         private const string c_NameOfUIObjectInScene = "CastleUIMiddle";
-        public string NameOfUIObjectInScene => c_NameOfUIObjectInScene;
+        private const string c_CastleImage = "CastleImage";
 
         public Vector3 FlagPoint { get; private set; }
         private GameObject m_Flag = null;
@@ -37,7 +37,7 @@ namespace Code.Structures
             
             if (!m_StructureImage)
             {
-                m_StructureImage = Extensions.FindObject("CastleImage");
+                m_StructureImage = Extensions.FindObject(c_CastleImage);
             }
 
             if (!castleUIMiddle)

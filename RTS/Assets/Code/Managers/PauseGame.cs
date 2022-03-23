@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Code.Managers
@@ -7,11 +8,6 @@ namespace Code.Managers
         private void Awake()
         {
             GameManager.Instance.GameStateHandler += EnableAllScripts;
-        }
-
-        private void OnDestroy()
-        {
-            GameManager.Instance.GameStateHandler -= EnableAllScripts;
         }
 
         private void EnableAllScripts(GameState state)

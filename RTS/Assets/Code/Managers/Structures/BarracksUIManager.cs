@@ -16,8 +16,7 @@ namespace Code.Managers.Structures
         public override void EnableMainUI(bool active, GameObject structure, StructureType type, GameObject image, StructureData data)
         {
             m_BarracksRef = structure.GetComponent<Barracks>();
-            // TODO: AddTimerToUI() in the end calls Extensions.FindObject() with the name, but we can send the object instead of the name
-            UIManager.Instance.AddTimerToUI(m_BarracksRef.barracksTimer.timer, m_BarracksRef.NameOfUIObjectInScene);
+            UIManager.Instance.AddTimerToUI(m_BarracksRef.barracksTimer.timer, m_BarracksRef.barracksUIMiddle);
             UIManager.Instance.SetStructureStatsInfo(data);
             
             if (active)
