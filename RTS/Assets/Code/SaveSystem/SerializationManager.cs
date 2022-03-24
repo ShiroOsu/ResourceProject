@@ -87,6 +87,7 @@ namespace Code.SaveSystem
              */
             var vector3Surrogate = new Vector3SerializationSurrogate();
             var quaternionSurrogate = new QuaternionSerializationSurrogate();
+            var transformSurrogate = new TransformSerializationSurrogate();
     
             /*
              * You could potentially extend this further and create surrogates for all of the properties of
@@ -97,6 +98,8 @@ namespace Code.SaveSystem
                 vector3Surrogate);
             selector.AddSurrogate(typeof(Quaternion), new StreamingContext(StreamingContextStates.All),
                 quaternionSurrogate);
+            selector.AddSurrogate(typeof(Transform), new StreamingContext(StreamingContextStates.All),
+                transformSurrogate);
     
             formatter.SurrogateSelector = selector;
     

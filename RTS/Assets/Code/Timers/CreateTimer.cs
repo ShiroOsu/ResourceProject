@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Enums;
-using Code.Managers;
 using Code.Managers.Data;
 using Code.UI;
 using UnityEngine;
@@ -22,6 +21,14 @@ namespace Code.Timers
         protected bool IsSpawning;
         protected float CurrentTimeOnSpawn;
         protected int i = 0;
+
+        public virtual void PopulateQueueOnLoad(int imageQueueLength, TextureAssetType[] typesInQueue)
+        {
+            for (var j = 0; j < imageQueueLength; j++)
+            {
+                SpawnQueue.Enqueue(typesInQueue[j]);
+            }
+        }
 
         public virtual void AddActionOnSpawn(bool add)
         {

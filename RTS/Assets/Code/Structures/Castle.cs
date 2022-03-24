@@ -4,6 +4,7 @@ using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.UI;
+using Code.SaveSystem.Data;
 using Code.ScriptableObjects;
 using Code.Timers;
 using Code.Tools;
@@ -29,6 +30,13 @@ namespace Code.Structures
         private bool m_SetSpawnFlag = false;
         public event Action<TextureAssetType> OnSpawn;
         public CastleTimer castleTimer;
+        private CastleData m_CastleData;
+
+        private void OnEnable()
+        {
+            SaveManager.Instance.OnSave += SaveCastle;
+            SaveManager.Instance.OnLoad += LoadCastle;
+        }
 
         private void Awake()
         {
@@ -44,6 +52,8 @@ namespace Code.Structures
             {
                 castleUIMiddle = Extensions.FindObject(c_NameOfUIObjectInScene);
             }
+
+            m_CastleData = new();
         }
 
         private void Update()
@@ -125,6 +135,38 @@ namespace Code.Structures
         public GameObject GetStructureImage()
         {
             return m_StructureImage;
+        }
+
+        private void SaveCastle()
+        {
+            var t = transform;
+            m_CastleData.position = t.position;
+            m_CastleData.rotation = t.rotation;
+            m_CastleData.flagPosition = FlagPoint;
+            
+            m_CastleData.timerFillMaxValue = castleTimer.timerFill.maxValue;
+            m_CastleData.timerFillValue = castleTimer.timerFill.value;
+            m_CastleData.imageQueueLength = castleTimer.ImageQueueLength;
+            m_CastleData.textureAssetTypesInQueue = castleTimer.TypesInQueue;
+            
+            SaveData.Instance.castleData.Add(m_CastleData);
+        }
+
+        private void LoadCastle(SaveData saveData)
+        {
+            // TODO: Get ID of castle (In the case of multiple Castles in Scene)
+            var id = 0;
+            
+            m_CastleData = saveData.castleData[id];
+
+            var t = transform;
+            t.position = m_CastleData.position;
+            t.rotation = m_CastleData.rotation;
+            FlagPoint = m_CastleData.flagPosition;
+
+            castleTimer.timerFill.maxValue = m_CastleData.timerFillMaxValue;
+            castleTimer.timerFill.value = m_CastleData.timerFillValue;
+            castleTimer.PopulateQueueOnLoad(m_CastleData.imageQueueLength, m_CastleData.textureAssetTypesInQueue);
         }
     }
 }
