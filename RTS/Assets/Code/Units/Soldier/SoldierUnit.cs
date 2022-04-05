@@ -77,7 +77,7 @@ namespace Code.Units.Soldier
 
         public Vector3Int GetPosition()
         {
-            return Extensions.Vector3ToVector3Int(gameObject.transform.position);
+            return gameObject.transform.position.Vector3ToVector3Int();
         }
     }
 }

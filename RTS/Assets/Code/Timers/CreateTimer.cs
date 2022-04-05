@@ -22,14 +22,6 @@ namespace Code.Timers
         protected float CurrentTimeOnSpawn;
         protected int i = 0;
 
-        public virtual void PopulateQueueOnLoad(int imageQueueLength, TextureAssetType[] typesInQueue)
-        {
-            for (var j = 0; j < imageQueueLength; j++)
-            {
-                SpawnQueue.Enqueue(typesInQueue[j]);
-            }
-        }
-
         public virtual void AddActionOnSpawn(bool add)
         {
             

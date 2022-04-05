@@ -30,10 +30,13 @@ namespace Code.Structures
         private bool m_SetSpawnFlag = false;
         public event Action<TextureAssetType> OnSpawn;
         public CastleTimer castleTimer;
+        
         private CastleData m_CastleData;
-
+        private Guid m_DataID;
+        
         private void OnEnable()
         {
+            // TODO: How do we Load from main menu? ?????????????????????????????????????????
             SaveManager.Instance.OnSave += SaveCastle;
             SaveManager.Instance.OnLoad += LoadCastle;
         }
@@ -42,7 +45,7 @@ namespace Code.Structures
         {
             navMeshObstacle.shape = NavMeshObstacleShape.Box;
             navMeshObstacle.size = sizer3D.GetSize(gameObject.transform.lossyScale);
-            
+
             if (!m_StructureImage)
             {
                 m_StructureImage = Extensions.FindObject(c_CastleImage);
@@ -53,7 +56,12 @@ namespace Code.Structures
                 castleUIMiddle = Extensions.FindObject(c_NameOfUIObjectInScene);
             }
 
-            m_CastleData = new();
+            // TODO: Store
+            if (m_CastleData is null)
+            {
+                m_CastleData = new(Guid.NewGuid());
+                m_DataID = m_CastleData.dataID;
+            }
         }
 
         private void Update()
@@ -98,7 +106,6 @@ namespace Code.Structures
 
         public void Upgrade()
         {
-            Debug.Log(transform.name + " upgrade");
         }
 
         public void ShouldSelect(bool select)
@@ -121,52 +128,31 @@ namespace Code.Structures
                 m_SetSpawnFlag = false;
             }
         }
-        
-        public StructureData GetStructureData()
-        {
-            return data;
-        }
-
-        public StructureType GetStructureType()
-        {
-            return StructureType.Castle;
-        }
-
-        public GameObject GetStructureImage()
-        {
-            return m_StructureImage;
-        }
 
         private void SaveCastle()
         {
+            if (!gameObject.activeInHierarchy) return;
+            
             var t = transform;
             m_CastleData.position = t.position;
             m_CastleData.rotation = t.rotation;
             m_CastleData.flagPosition = FlagPoint;
-            
-            m_CastleData.timerFillMaxValue = castleTimer.timerFill.maxValue;
-            m_CastleData.timerFillValue = castleTimer.timerFill.value;
-            m_CastleData.imageQueueLength = castleTimer.ImageQueueLength;
-            m_CastleData.textureAssetTypesInQueue = castleTimer.TypesInQueue;
-            
+
             SaveData.Instance.castleData.Add(m_CastleData);
         }
 
+        // Don't want to load in the castle class
         private void LoadCastle(SaveData saveData)
         {
-            // TODO: Get ID of castle (In the case of multiple Castles in Scene)
-            var id = 0;
+            if (!gameObject.activeInHierarchy) return;
             
-            m_CastleData = saveData.castleData[id];
+            m_CastleData = saveData.castleData.GetDataByID(m_DataID);
+            if (m_CastleData is null) return;
 
             var t = transform;
             t.position = m_CastleData.position;
             t.rotation = m_CastleData.rotation;
             FlagPoint = m_CastleData.flagPosition;
-
-            castleTimer.timerFill.maxValue = m_CastleData.timerFillMaxValue;
-            castleTimer.timerFill.value = m_CastleData.timerFillValue;
-            castleTimer.PopulateQueueOnLoad(m_CastleData.imageQueueLength, m_CastleData.textureAssetTypesInQueue);
         }
     }
 }

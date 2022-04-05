@@ -1,7 +1,5 @@
 using System;
-using Code.Debugging;
 using Code.HelperClasses;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Code.Managers
@@ -15,14 +13,15 @@ namespace Code.Managers
     public class GameManager : Singleton<GameManager>, PauseControls.IKeyboardActions
     {
         public event Action <GameState>GameStateHandler;
-        private GameState m_CurrentGameState;
+        public GameState GetCurrentGameState { get; private set; }
+
         private PauseControls m_PauseControls;
 
         private void Awake()
         {
             m_PauseControls = new PauseControls();
             m_PauseControls.Keyboard.SetCallbacks(this);
-            m_CurrentGameState = GameState.Running;
+            GetCurrentGameState = GameState.Running;
         }
 
         private void OnEnable()
@@ -37,25 +36,17 @@ namespace Code.Managers
 
         private void SetState(GameState state)
         {
-            if (state == m_CurrentGameState) return;
+            if (state == GetCurrentGameState) return;
             
-            m_CurrentGameState = state;
+            GetCurrentGameState = state;
             GameStateHandler?.Invoke(state);
-        }
-
-        private void OnGUI()
-        {
-            if (m_CurrentGameState == GameState.Paused)
-            {
-                GUI.Label(new Rect(Screen.width * 0.5f - 50f, Screen.height * 0.5f - 50f, 100f, 100f), "Game Paused");
-            }
         }
 
         public void OnESCPause(InputAction.CallbackContext context)
         {
             if (context.started)
             {
-                var newGameState = m_CurrentGameState == GameState.Running ? GameState.Paused : GameState.Running;
+                var newGameState = GetCurrentGameState == GameState.Running ? GameState.Paused : GameState.Running;
                 SetState(newGameState);    
             }
         }

@@ -1,8 +1,13 @@
 #if UNITY_EDITOR
 #endif
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Code.Debugging;
+using Code.SaveSystem.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -51,15 +56,31 @@ namespace Code.HelperClasses
             return (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
         }
         #endif
-        
-        
+
+        public static T GetValue<T>(this SerializationInfo info, string name)
+        {
+            return (T)info.GetValue(name, typeof(T));
+        }
+
+        public static T GetDataByID<T>(this List<T> dataList, Guid id) where T : BaseData
+        {
+            foreach (var data in dataList)
+            {
+                if (data.dataID == id)
+                {
+                    return data;
+                }
+            }
+
+            return null;
+        } 
 
         public static IEnumerator AsCoroutine(this Task task)
         {
             return new WaitUntil(() => task.IsCompleted);
         }
         
-        public static Vector3Int Vector3ToVector3Int(Vector3 v)
+        public static Vector3Int Vector3ToVector3Int(this Vector3 v)
         {
             return new Vector3Int((int)v.x, (int)v.y, (int)v.z);
         }

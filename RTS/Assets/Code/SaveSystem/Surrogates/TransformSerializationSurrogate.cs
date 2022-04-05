@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using Code.HelperClasses;
 using UnityEngine;
 
 namespace Code.SaveSystem.Surrogates
@@ -10,8 +11,8 @@ namespace Code.SaveSystem.Surrogates
             var t = (Transform)obj;
             var position = t.position;
             info.AddValue("posX", position.x);
-            info.AddValue("posY", position.x);
-            info.AddValue("posZ", position.x);
+            info.AddValue("posY", position.y);
+            info.AddValue("posZ", position.z);
 
             var rotation = t.rotation;
             info.AddValue("rotX", rotation.x);
@@ -29,20 +30,20 @@ namespace Code.SaveSystem.Surrogates
         {
             var t = (Transform)obj;
             t.position = new Vector3(
-                (float) info.GetValue("posX", typeof(float)),
-                (float) info.GetValue("posY", typeof(float)),
-                (float) info.GetValue("posZ", typeof(float)));
+                info.GetValue<float>("posX"),
+                info.GetValue<float>("posY"),
+                info.GetValue<float>("posZ"));
             
             t.rotation = new Quaternion(
-                (float) info.GetValue("rotX", typeof(float)),
-                (float) info.GetValue("rotY", typeof(float)),
-                (float) info.GetValue("rotZ", typeof(float)),
-                (float) info.GetValue("rotW", typeof(float)));
+                info.GetValue<float>("rotX"),
+                info.GetValue<float>("rotY"),
+                info.GetValue<float>("rotZ"),
+                info.GetValue<float>("rotW"));
 
             t.localScale = new Vector3(
-                (float) info.GetValue("scaleX", typeof(float)),
-                (float) info.GetValue("scaleY", typeof(float)),
-                (float) info.GetValue("scaleZ", typeof(float)));
+                info.GetValue<float>("scaleX"),
+                info.GetValue<float>("scaleY"),
+                info.GetValue<float>("scaleZ"));
 
             return obj = t;
         }

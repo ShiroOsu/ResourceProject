@@ -11,8 +11,6 @@ namespace Code.Timers
     public class CastleTimer : CreateTimer
     {
         public Castle Castle { get; set; }
-        public int ImageQueueLength => imageQueue.Length;
-        public TextureAssetType[] TypesInQueue => SpawnQueue.ToArray();
 
         public override void AddActionOnSpawn(bool add)
         {

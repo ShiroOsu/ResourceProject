@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using Code.Debugging;
 using Code.SaveSystem.Surrogates;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace Code.SaveSystem
             var file = File.Create(path);
             binaryFormatter.Serialize(file, data);
             file.Close();
+            Log.Print("SerializationManager.cs", "data saved to file: " + file.Name);
             return true;
         }
 
@@ -67,6 +69,7 @@ namespace Code.SaveSystem
             {
                 var save = formatter.Deserialize(file);
                 file.Close();
+                Log.Print("SerializationManager.cs", "data loaded from file: " + file.Name);
                 return save;
             }
             catch (Exception e)

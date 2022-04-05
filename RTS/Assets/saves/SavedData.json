@@ -1,0 +1,75 @@
+{
+  "castleData": [
+    {
+      "position": {
+        "x": 154.188843,
+        "y": 4.81,
+        "z": 66.98721,
+        "normalized": {
+          "x": 0.916806638,
+          "y": 0.0286002532,
+          "z": 0.398305863,
+          "magnitude": 1.0,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 168.180328,
+        "sqrMagnitude": 28284.6211
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0,
+        "w": 0.0,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 180.0,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 180.0,
+          "sqrMagnitude": 32400.0
+        }
+      },
+      "timerFillMaxValue": 2.0,
+      "timerFillValue": 1.22917461,
+      "numberOfTypesInQueue": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flagPosition": {
+        "x": 125.544937,
+        "y": 1.5,
+        "z": 73.04022,
+        "normalized": {
+          "x": 0.8643145,
+          "y": 0.0103267543,
+          "z": 0.502845645,
+          "normalized": {
+            "x": 0.864314556,
+            "y": 0.0103267552,
+            "z": 0.5028457,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.00000012
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 145.253769,
+        "sqrMagnitude": 21098.6563
+      },
+      "dataID": "e4c30ec8-b97e-4a1a-a89c-cdeff76fc3a7"
+    }
+  ],
+  "barracksData": [],
+  "builderData": [],
+  "soldierData": [],
+  "horseData": []
+}

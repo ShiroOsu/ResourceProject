@@ -11,13 +11,13 @@ namespace Code.SaveSystem.Data
         public static SaveData Instance => _instance ??= new SaveData();
 
         // Structures
-        public List<CastleData> castleData;
-        public List<BarracksData> barracksData;
+        public List<CastleData> castleData = new();
+        public List<BarracksData> barracksData = new();
         
         // Units        
-        public List<BuilderData> builderData;
-        public List<SoldierData> soldierData;
-        public List<HorseData> horseData;
+        public List<BuilderData> builderData = new();
+        public List<SoldierData> soldierData = new();
+        public List<HorseData> horseData = new();
 
     }
 }
