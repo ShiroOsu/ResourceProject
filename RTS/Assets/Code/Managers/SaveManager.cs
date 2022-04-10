@@ -30,17 +30,17 @@ namespace Code.Managers
             }
             
             SaveToSavedDataObject(SaveData.Instance, index);
-            SerializationManager.Save("SavedData", SaveData.Instance);
+            SerializationManager.Save("SavedData", SaveData.Instance, index);
         }
 
         public void Save()
         {
-            
+            // ??
         }
 
         public void Load(int index)
         {
-            var loadedData = (SaveData) SerializationManager.Load(Application.persistentDataPath + "/saves/SavedData.save");
+            var loadedData = (SaveData) SerializationManager.Load(Application.persistentDataPath + $"/saves/SavedData{index}.save");
             OnLoad?.Invoke(loadedData, index);
         }
 

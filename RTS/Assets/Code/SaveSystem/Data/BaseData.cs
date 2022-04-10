@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Managers;
 
 namespace Code.SaveSystem.Data
 {
@@ -10,6 +11,11 @@ namespace Code.SaveSystem.Data
         protected BaseData(Guid id)
         {
             dataID = id;
+        }
+
+        public virtual void Save(UnityEngine.GameObject gameObject)
+        {
+            
         }
     }
 }

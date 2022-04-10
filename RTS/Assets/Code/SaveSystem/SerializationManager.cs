@@ -12,9 +12,9 @@ namespace Code.SaveSystem
 {
     public static class SerializationManager
     {
-        public static bool Save(string saveName, object data)
+        public static bool Save(string saveName, object data, int saveIndex)
         {
-            SaveAsJson(saveName, data);
+            SaveAsJson(saveName, data, saveIndex);
             var binaryFormatter = GetBinaryFormatter();
 
             if (!Directory.Exists(Application.persistentDataPath + "/saves"))
@@ -22,7 +22,7 @@ namespace Code.SaveSystem
                 Directory.CreateDirectory(Application.persistentDataPath + "/saves");
             }
 
-            var path = Application.persistentDataPath + "/saves/" + saveName + ".save";
+            var path = Application.persistentDataPath + "/saves/" + saveName + $"{saveIndex}.save";
             var file = File.Create(path);
             binaryFormatter.Serialize(file, data);
             file.Close();
@@ -31,14 +31,14 @@ namespace Code.SaveSystem
         }
 
         // Debugging save files
-        private static bool SaveAsJson(string saveName, object data)
+        private static bool SaveAsJson(string saveName, object data, int saveIndex)
         {
             if (!Directory.Exists(Application.dataPath + "/saves"))
             {
                 Directory.CreateDirectory(Application.dataPath + "/saves");
             }
 
-            var path = Application.dataPath + "/saves/" + saveName + ".json";
+            var path = Application.dataPath + "/saves/" + saveName + $"{saveIndex}.json";
 
             JsonSerializer serializer = new()
             {

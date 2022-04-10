@@ -9,9 +9,15 @@ namespace Code.SaveSystem.Data
         public Vector3 position;
         public Quaternion rotation;
             
-        // Flag
         public Vector3 flagPosition;
         
         public CastleData(Guid uniqueID) : base(uniqueID) { }
+
+        public override void Save(GameObject gameObject)
+        {
+            position = gameObject.transform.position;
+            rotation = gameObject.transform.rotation;
+            
+        }
     }
 }
