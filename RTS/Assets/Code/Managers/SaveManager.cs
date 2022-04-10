@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Code.HelperClasses;
+using Code.Interfaces;
 using Code.SaveSystem;
 using Code.SaveSystem.Data;
 using Code.ScriptableObjects;
@@ -10,27 +11,43 @@ namespace Code.Managers
 {
     public class SaveManager : Singleton<SaveManager>
     {
-        public event Action<SaveData> OnLoad;
-        public event Action OnSave;
-        public SavedData savedDataObject;
+        public event Action<SaveData, int> OnLoad;
+        public SavedData[] savedDataObject;
 
-        public void Save()
+        private void OnEnable()
         {
-            OnSave?.Invoke();
-            SaveToSavedDataObject(SaveData.Instance);
+            DontDestroyOnLoad(this);
+        }
+
+        private void Save(int index)
+        {
+            foreach (var obj in FindObjectsOfType<GameObject>(true))
+            {
+                if (obj.TryGetComponent(out ISavable savable))
+                {
+                    savable.Save();
+                }
+            }
+            
+            SaveToSavedDataObject(SaveData.Instance, index);
             SerializationManager.Save("SavedData", SaveData.Instance);
         }
 
-        public void Load()
+        public void Save()
         {
-            var loadedData = (SaveData) SerializationManager.Load(Application.persistentDataPath + "/saves/SavedData.save");
-            OnLoad?.Invoke(loadedData);
+            
         }
 
-        private void SaveToSavedDataObject(SaveData sd)
+        public void Load(int index)
         {
-            CheckIfObjectExistsAndOverride(savedDataObject.castleDataList, sd.castleData);
-            CheckIfObjectExistsAndOverride(savedDataObject.barrackDataList, sd.barracksData);
+            var loadedData = (SaveData) SerializationManager.Load(Application.persistentDataPath + "/saves/SavedData.save");
+            OnLoad?.Invoke(loadedData, index);
+        }
+
+        private void SaveToSavedDataObject(SaveData sd, int index)
+        {
+            CheckIfObjectExistsAndOverride(savedDataObject[index].castleDataList, sd.castleData);
+            CheckIfObjectExistsAndOverride(savedDataObject[index].barrackDataList, sd.barracksData);
         }
 
         private static void CheckIfObjectExistsAndOverride<T>(List<T> oldSavedList, List<T> newSaveList) where T : BaseData

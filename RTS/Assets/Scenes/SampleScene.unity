@@ -128,6 +128,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9095835531819905652, guid: aecbfb29df2d96741a728a591c5fde6d, type: 3}
   m_PrefabInstance: {fileID: 9095835531822741712}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &26476454 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4994107743652695682, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
+  m_PrefabInstance: {fileID: 1821337363}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &56975742 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5888954595873997058, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
@@ -556,7 +567,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-35264
+  m_Name: pb_Mesh-40102
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1792,7 +1803,6 @@ Transform:
   - {fileID: 633209864}
   - {fileID: 1199463513}
   - {fileID: 2031559383}
-  - {fileID: 1879118461}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2971,7 +2981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4994107743652695682, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4994107743652695682, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2980,7 +2990,7 @@ PrefabInstance:
     - target: {fileID: 4994107743652695682, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1879118462}
+      objectReference: {fileID: 0}
     - target: {fileID: 4994107743652695682, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3021,6 +3031,10 @@ PrefabInstance:
       propertyPath: yesButton
       value: 
       objectReference: {fileID: 1821337367}
+    - target: {fileID: 5888954595873997058, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
+      propertyPath: saveButton
+      value: 
+      objectReference: {fileID: 26476454}
     - target: {fileID: 7402819123569017941, guid: f68e6374f8d01354a9f7325a7a3b81a7, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -3149,51 +3163,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7666923751342713977, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
   m_PrefabInstance: {fileID: 7666923750933712700}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1879118460
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1879118461}
-  - component: {fileID: 1879118462}
-  m_Layer: 0
-  m_Name: SaveManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1879118461
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879118460}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1210114474}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1879118462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879118460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88a2bad5178f364999b359eae1b922b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  savedDataObject: {fileID: 11400000, guid: 7be2f8c7c27873e48829157a1e1a65b4, type: 2}
 --- !u!1 &1913173030 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1513220004724319574, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}

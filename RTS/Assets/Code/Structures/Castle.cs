@@ -13,7 +13,7 @@ using UnityEngine.AI;
 
 namespace Code.Structures
 {
-    public class Castle : MonoBehaviour, IStructure
+    public class Castle : MonoBehaviour, IStructure, ISavable
     {
         [SerializeField] private NavMeshObstacle navMeshObstacle;
         [SerializeField] private CustomSizer3D sizer3D;
@@ -36,9 +36,15 @@ namespace Code.Structures
         
         private void OnEnable()
         {
-            // TODO: How do we Load from main menu? ?????????????????????????????????????????
-            SaveManager.Instance.OnSave += SaveCastle;
+            // TODO: How do we Load from main menu?
             SaveManager.Instance.OnLoad += LoadCastle;
+            
+            // TODO: Store
+            if (m_CastleData is null)
+            {
+                m_CastleData = new(Guid.NewGuid());
+                m_DataID = m_CastleData.dataID;
+            }
         }
 
         private void Awake()
@@ -54,13 +60,6 @@ namespace Code.Structures
             if (!castleUIMiddle)
             {
                 castleUIMiddle = Extensions.FindObject(c_NameOfUIObjectInScene);
-            }
-
-            // TODO: Store
-            if (m_CastleData is null)
-            {
-                m_CastleData = new(Guid.NewGuid());
-                m_DataID = m_CastleData.dataID;
             }
         }
 
@@ -129,20 +128,8 @@ namespace Code.Structures
             }
         }
 
-        private void SaveCastle()
-        {
-            if (!gameObject.activeInHierarchy) return;
-            
-            var t = transform;
-            m_CastleData.position = t.position;
-            m_CastleData.rotation = t.rotation;
-            m_CastleData.flagPosition = FlagPoint;
-
-            SaveData.Instance.castleData.Add(m_CastleData);
-        }
-
         // Don't want to load in the castle class
-        private void LoadCastle(SaveData saveData)
+        private void LoadCastle(SaveData saveData, int index)
         {
             if (!gameObject.activeInHierarchy) return;
             
@@ -153,6 +140,16 @@ namespace Code.Structures
             t.position = m_CastleData.position;
             t.rotation = m_CastleData.rotation;
             FlagPoint = m_CastleData.flagPosition;
+        }
+
+        public void Save()
+        {
+            var t = transform;
+            m_CastleData.position = t.position;
+            m_CastleData.rotation = t.rotation;
+            m_CastleData.flagPosition = FlagPoint;
+
+            SaveData.Instance.castleData.Add(m_CastleData);
         }
     }
 }
