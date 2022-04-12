@@ -144,16 +144,12 @@ namespace Code.Structures
 
         public void Save()
         {
+            print("name: " + gameObject);
+            
             m_CastleData.Save(gameObject);
             m_CastleData.flagPosition = FlagPoint;
             SaveData.Instance.castleData.Add(m_CastleData);
 
-            // var t = transform;
-            // m_CastleData.position = t.position;
-            // m_CastleData.rotation = t.rotation;
-            // m_CastleData.flagPosition = FlagPoint;
-            //
-            // SaveData.Instance.castleData.Add(m_CastleData);
         }
     }
 }

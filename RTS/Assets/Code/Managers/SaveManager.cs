@@ -4,50 +4,43 @@ using Code.HelperClasses;
 using Code.Interfaces;
 using Code.SaveSystem;
 using Code.SaveSystem.Data;
-using Code.ScriptableObjects;
 using UnityEngine;
 
 namespace Code.Managers
 {
     public class SaveManager : Singleton<SaveManager>
     {
+        public GameObject savedGamesPanel;
+        
         public event Action<SaveData, int> OnLoad;
-        public SavedData[] savedDataObject;
+        
+        // Temp
+        public List<GameObject> saves = new();
 
         private void OnEnable()
         {
             DontDestroyOnLoad(this);
+            DontDestroyOnLoad(savedGamesPanel);
         }
 
-        private void Save(int index)
+        public void Save(int index)
         {
             foreach (var obj in FindObjectsOfType<GameObject>(true))
             {
-                if (obj.TryGetComponent(out ISavable savable))
+                if (obj.TryGetComponent(out ISavable savable) && obj.activeInHierarchy)
                 {
                     savable.Save();
                 }
             }
             
-            SaveToSavedDataObject(SaveData.Instance, index);
+            
             SerializationManager.Save("SavedData", SaveData.Instance, index);
-        }
-
-        public void Save()
-        {
-            // ??
         }
 
         public void Load(int index)
         {
             var loadedData = (SaveData) SerializationManager.Load(Application.persistentDataPath + $"/saves/SavedData{index}.save");
             OnLoad?.Invoke(loadedData, index);
-        }
-
-        private void SaveToSavedDataObject(SaveData sd, int index)
-        {
-            CheckIfObjectExistsAndOverride(savedDataObject[index].castleDataList, sd.castleData);
-            CheckIfObjectExistsAndOverride(savedDataObject[index].barrackDataList, sd.barracksData);
         }
 
         private static void CheckIfObjectExistsAndOverride<T>(List<T> oldSavedList, List<T> newSaveList) where T : BaseData
