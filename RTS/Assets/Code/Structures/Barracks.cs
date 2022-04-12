@@ -4,6 +4,7 @@ using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.UI;
+using Code.SaveSystem.Data;
 using Code.ScriptableObjects;
 using Code.Timers;
 using Code.Tools;
@@ -12,7 +13,7 @@ using UnityEngine.AI;
 
 namespace Code.Structures
 {
-    public class Barracks : MonoBehaviour, IStructure
+    public class Barracks : MonoBehaviour, IStructure, ISavable
     {
         [SerializeField] private NavMeshObstacle navMeshObstacle;
         [SerializeField] private CustomSizer3D sizer3D;
@@ -29,6 +30,19 @@ namespace Code.Structures
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
         public BarracksTimer barracksTimer;
+        
+        private BarracksData m_BarracksData;
+        private Guid m_DataID;
+        
+        private void OnEnable()
+        {
+            // TODO: Store
+            if (m_BarracksData is null)
+            {
+                m_BarracksData = new(Guid.NewGuid());
+                m_DataID = m_BarracksData.dataID;
+            }
+        }
 
         private void Awake()
         {
@@ -107,6 +121,7 @@ namespace Code.Structures
             }
         }
 
+        // Temp
         public StructureData GetStructureData()
         {
             return data;
@@ -128,5 +143,12 @@ namespace Code.Structures
         
         public void Destroy()
         {}
+
+        public void Save()
+        {
+            m_BarracksData.Save(gameObject);
+            m_BarracksData.flagPosition = FlagPoint;
+            SaveData.Instance.barracksData.Add(m_BarracksData);
+        }
     }
 }

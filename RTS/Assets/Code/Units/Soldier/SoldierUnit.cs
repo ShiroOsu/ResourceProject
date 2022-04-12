@@ -1,20 +1,33 @@
+using System;
 using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
-using Code.Managers.Data;
 using Code.Managers.UI;
+using Code.SaveSystem.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Code.Units.Soldier
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class SoldierUnit : MonoBehaviour, IUnit
+    public class SoldierUnit : MonoBehaviour, IUnit, ISavable
     {
         [SerializeField] private GameObject selectionCircle;
         [SerializeField] private UnitData data;
         private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
+        private SoldierData m_SoldierData;
+        private Guid m_DataID;
+        
+        private void OnEnable()
+        {
+            // TODO: Store
+            if (m_SoldierData is null)
+            {
+                m_SoldierData = new(Guid.NewGuid());
+                m_DataID = m_SoldierData.dataID;
+            }
+        }
 
         private void Awake()
         {
@@ -78,6 +91,12 @@ namespace Code.Units.Soldier
         public Vector3Int GetPosition()
         {
             return gameObject.transform.position.Vector3ToVector3Int();
+        }
+
+        public void Save()
+        {
+            m_SoldierData.Save(gameObject);
+            SaveData.Instance.soldierData.Add(m_SoldierData);
         }
     }
 }

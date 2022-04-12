@@ -1,19 +1,35 @@
+using System;
 using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers.UI;
+using Code.SaveSystem.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Code.Units.Horse
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class HorseUnit : MonoBehaviour, IUnit
+    public class HorseUnit : MonoBehaviour, IUnit, ISavable
     {
         [SerializeField] private GameObject selectionCircle;
         [SerializeField] private UnitData data;
         private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
+        
+        private HorseData m_HorseData;
+        private Guid m_DataID;
+        
+        private void OnEnable()
+        {
+            // TODO: Store
+            if (m_HorseData is null)
+            {
+                m_HorseData = new(Guid.NewGuid());
+                m_DataID = m_HorseData.dataID;
+            }
+        }
+        
 
         private void Awake()
         {
@@ -77,6 +93,12 @@ namespace Code.Units.Horse
         public Vector3Int GetPosition()
         {
             return gameObject.transform.position.Vector3ToVector3Int();
+        }
+
+        public void Save()
+        {
+            m_HorseData.Save(gameObject);
+            SaveData.Instance.horseData.Add(m_HorseData);
         }
     }
 }

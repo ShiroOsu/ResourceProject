@@ -131,21 +131,19 @@ namespace Code.Structures
         // Don't want to load in the castle class
         private void LoadCastle(SaveData saveData, int index)
         {
-            if (!gameObject.activeInHierarchy) return;
-            
-            m_CastleData = saveData.castleData.GetDataByID(m_DataID);
-            if (m_CastleData is null) return;
-
-            var t = transform;
-            t.position = m_CastleData.position;
-            t.rotation = m_CastleData.rotation;
-            FlagPoint = m_CastleData.flagPosition;
+            // if (!gameObject.activeInHierarchy) return;
+            //
+            // m_CastleData = saveData.castleData.GetDataByID(m_DataID);
+            // if (m_CastleData is null) return;
+            //
+            // var t = transform;
+            // t.position = m_CastleData.position;
+            // t.rotation = m_CastleData.rotation;
+            // FlagPoint = m_CastleData.flagPosition;
         }
 
         public void Save()
         {
-            print("name: " + gameObject);
-            
             m_CastleData.Save(gameObject);
             m_CastleData.flagPosition = FlagPoint;
             SaveData.Instance.castleData.Add(m_CastleData);

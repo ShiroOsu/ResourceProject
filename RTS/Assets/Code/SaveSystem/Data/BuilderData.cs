@@ -1,12 +1,22 @@
-using System.Numerics;
+using System;
+using UnityEngine;
 
 namespace Code.SaveSystem.Data
 {
-    [System.Serializable]
-    public struct BuilderData
+    [Serializable]
+    public class BuilderData : BaseData
     {
         public Vector3 position;
         public Quaternion rotation;
-        public float health;
+
+        public BuilderData(Guid id) : base(id)
+        {
+        }
+        
+        public override void Save(GameObject gameObject)
+        {
+            position = gameObject.transform.position;
+            rotation = gameObject.transform.rotation;
+        }
     }
 }

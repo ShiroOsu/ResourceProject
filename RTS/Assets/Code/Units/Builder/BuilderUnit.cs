@@ -4,18 +4,32 @@ using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers.Building;
 using Code.Managers.UI;
+using Code.SaveSystem.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Code.Units.Builder
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class BuilderUnit : MonoBehaviour, IUnit
+    public class BuilderUnit : MonoBehaviour, IUnit, ISavable
     {
         [SerializeField] private GameObject selectionCircle;
         [SerializeField] private UnitData data;
         private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
+
+        private BuilderData m_BuilderData;
+        private Guid m_DataID;
+        
+        private void OnEnable()
+        {
+            // TODO: Store
+            if (m_BuilderData is null)
+            {
+                m_BuilderData = new(Guid.NewGuid());
+                m_DataID = m_BuilderData.dataID;
+            }
+        }
 
         private void Awake()
         {
@@ -94,6 +108,12 @@ namespace Code.Units.Builder
         public Vector3Int GetPosition()
         {
             return gameObject.transform.position.Vector3ToVector3Int();
+        }
+
+        public void Save()
+        {
+            m_BuilderData.Save(gameObject);
+            SaveData.Instance.builderData.Add(m_BuilderData);
         }
     }
 }

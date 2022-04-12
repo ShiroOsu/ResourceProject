@@ -36,37 +36,46 @@
         }
       },
       "flagPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "magnitude": 0.0,
-        "sqrMagnitude": 0.0
+        "x": 137.047638,
+        "y": 1.5,
+        "z": 72.49052,
+        "normalized": {
+          "x": 0.8839175,
+          "y": 0.009674565,
+          "z": 0.4675428,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 155.045731,
+        "sqrMagnitude": 24039.18
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
-    },
+      "dataID": "dbba9785-1ce0-480e-9173-58d5d3f78d19"
+    }
+  ],
+  "barracksData": [
     {
       "position": {
-        "x": 154.188843,
-        "y": 4.81,
-        "z": 66.98721,
+        "x": 97.033165,
+        "y": 0.0,
+        "z": 64.38385,
         "normalized": {
-          "x": 0.916806638,
-          "y": 0.0286002532,
-          "z": 0.398305863,
+          "x": 0.833256841,
+          "y": 0.0,
+          "z": 0.552886069,
           "magnitude": 1.0,
           "sqrMagnitude": 0.99999994
         },
-        "magnitude": 168.180328,
-        "sqrMagnitude": 28284.6211
+        "magnitude": 116.450485,
+        "sqrMagnitude": 13560.7148
       },
       "rotation": {
         "x": 0.0,
-        "y": 1.0,
+        "y": -0.8660253,
         "z": 0.0,
-        "w": 0.0,
+        "w": 0.5000001,
         "eulerAngles": {
           "x": 0.0,
-          "y": 180.0,
+          "y": 240.0,
           "z": 0.0,
           "normalized": {
             "x": 0.0,
@@ -75,22 +84,348 @@
             "magnitude": 1.0,
             "sqrMagnitude": 1.0
           },
-          "magnitude": 180.0,
-          "sqrMagnitude": 32400.0
+          "magnitude": 240.0,
+          "sqrMagnitude": 57600.0
         }
       },
       "flagPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "magnitude": 0.0,
-        "sqrMagnitude": 0.0
+        "x": 125.130295,
+        "y": 1.49999809,
+        "z": 67.78193,
+        "normalized": {
+          "x": 0.879234254,
+          "y": 0.010539812,
+          "z": 0.476273119,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 142.317352,
+        "sqrMagnitude": 20254.23
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "2ce4b771-a115-4f08-885d-b997d0521ccf"
+    },
+    {
+      "position": {
+        "x": 105.460533,
+        "y": 9.536743E-07,
+        "z": 95.43325,
+        "normalized": {
+          "x": 0.7414778,
+          "y": 6.70514666E-09,
+          "z": 0.6709774,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 142.2302,
+        "sqrMagnitude": 20229.43
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": -0.49999997,
+        "z": 0.0,
+        "w": 0.866025448,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 300.0,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 300.0,
+          "sqrMagnitude": 90000.0
+        }
+      },
+      "flagPosition": {
+        "x": 145.046753,
+        "y": 1.5,
+        "z": 92.3887939,
+        "normalized": {
+          "x": 0.843401968,
+          "y": 0.008722036,
+          "z": 0.537212253,
+          "magnitude": 1.0,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 171.9782,
+        "sqrMagnitude": 29576.5
+      },
+      "dataID": "476413d0-fe76-427d-824b-864eb8d0d879"
     }
   ],
-  "barracksData": [],
-  "builderData": [],
-  "soldierData": [],
-  "horseData": []
+  "builderData": [
+    {
+      "position": {
+        "x": 127.825722,
+        "y": 0.0599994659,
+        "z": 72.86737,
+        "normalized": {
+          "x": 0.8687576,
+          "y": 0.0004077817,
+          "z": 0.49523744,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.00000012
+        },
+        "magnitude": 147.13623,
+        "sqrMagnitude": 21649.0723
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": -0.7174691,
+        "z": 0.0,
+        "w": 0.6965904,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 268.308167,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 268.308167,
+          "sqrMagnitude": 71989.27
+        }
+      },
+      "dataID": "8e200d9d-19fa-4f53-a56b-4570e64bca2b"
+    },
+    {
+      "position": {
+        "x": 137.106064,
+        "y": 0.0599994659,
+        "z": 72.98707,
+        "normalized": {
+          "x": 0.882716656,
+          "y": 0.000386288739,
+          "z": 0.469905555,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.00000012
+        },
+        "magnitude": 155.322845,
+        "sqrMagnitude": 24125.1875
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.2918738,
+        "z": 0.0,
+        "w": -0.95645684,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 326.059662,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 326.059662,
+          "sqrMagnitude": 106314.906
+        }
+      },
+      "dataID": "fd3f6d41-f696-49a1-8514-d78fe397d943"
+    },
+    {
+      "position": {
+        "x": 136.989212,
+        "y": 0.0599994659,
+        "z": 71.9939651,
+        "normalized": {
+          "x": 0.8851993,
+          "y": 0.0003877056,
+          "z": 0.465211868,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 154.755219,
+        "sqrMagnitude": 23949.18
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": -0.95645684,
+        "z": 0.0,
+        "w": -0.2918738,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 146.059662,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 146.059662,
+          "sqrMagnitude": 21333.4258
+        }
+      },
+      "dataID": "de7ab44a-e6b0-4c14-9cf4-240af7d7a21e"
+    }
+  ],
+  "soldierData": [
+    {
+      "position": {
+        "x": 125.130295,
+        "y": 0.0599994659,
+        "z": 67.78193,
+        "normalized": {
+          "x": 0.879283,
+          "y": 0.0004216126,
+          "z": 0.476299524,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 142.309464,
+        "sqrMagnitude": 20251.9844
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": -0.9948141,
+        "z": 0.0,
+        "w": 0.10170988,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 191.6753,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 191.6753,
+          "sqrMagnitude": 36739.418
+        }
+      },
+      "dataID": "ce5fa1b3-11b2-4a22-996f-eb0c6eaef9ea"
+    },
+    {
+      "position": {
+        "x": 145.046753,
+        "y": 0.0599994659,
+        "z": 92.3887939,
+        "normalized": {
+          "x": 0.843434036,
+          "y": 0.000348891568,
+          "z": 0.537232637,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.0
+        },
+        "magnitude": 171.971664,
+        "sqrMagnitude": 29574.2539
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.00270588975,
+        "z": 0.0,
+        "w": 0.9999964,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 0.310072482,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 0.310072482,
+          "sqrMagnitude": 0.0961449444
+        }
+      },
+      "dataID": "05dcfc33-aa19-463b-8d41-7cb166694897"
+    }
+  ],
+  "horseData": [
+    {
+      "position": {
+        "x": 124.052193,
+        "y": 0.0599994659,
+        "z": 68.34516,
+        "normalized": {
+          "x": 0.87586844,
+          "y": 0.000423625228,
+          "z": 0.482549876,
+          "magnitude": 1.0,
+          "sqrMagnitude": 1.00000012
+        },
+        "magnitude": 141.633362,
+        "sqrMagnitude": 20060.0117
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.628639042,
+        "z": 0.0,
+        "w": 0.7776972,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 77.8995743,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 77.8995743,
+          "sqrMagnitude": 6068.34375
+        }
+      },
+      "dataID": "af9b1def-446f-4b15-8fa7-4caaf7532850"
+    },
+    {
+      "position": {
+        "x": 144.058929,
+        "y": 0.0599994659,
+        "z": 90.89095,
+        "normalized": {
+          "x": 0.8457369,
+          "y": 0.0003522431,
+          "z": 0.5335999,
+          "normalized": {
+            "x": 0.845737,
+            "y": 0.000352243136,
+            "z": 0.5336,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.00000012
+          },
+          "magnitude": 0.99999994,
+          "sqrMagnitude": 0.99999994
+        },
+        "magnitude": 170.335388,
+        "sqrMagnitude": 29014.1445
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": -0.761626363,
+        "z": 0.0,
+        "w": 0.648016453,
+        "eulerAngles": {
+          "x": 0.0,
+          "y": 260.784424,
+          "z": 0.0,
+          "normalized": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "magnitude": 1.0,
+            "sqrMagnitude": 1.0
+          },
+          "magnitude": 260.784424,
+          "sqrMagnitude": 68008.5156
+        }
+      },
+      "dataID": "0be467fa-2864-4efc-8c6b-dab020dbc59b"
+    }
+  ]
 }
