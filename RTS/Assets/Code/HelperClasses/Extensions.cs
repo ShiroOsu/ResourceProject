@@ -7,10 +7,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Code.Debugging;
+using Code.Managers;
 using Code.SaveSystem.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UEObject = UnityEngine.Object;
 
 namespace Code.HelperClasses
@@ -34,15 +36,32 @@ namespace Code.HelperClasses
         {
             return (Mouse.current.rightButton.wasReleasedThisFrame || Mouse.current.leftButton.wasReleasedThisFrame);
         }
-        
-        /// <summary>
-        /// Includes inactive objects
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static GameObject FindObject(string name)
+
+        public static bool IsGameInRunState()
         {
-            return UEObject.FindObjectsOfType<GameObject>(true).FirstOrDefault(go => go.name.Equals(name));
+            return GameManager.Instance.GetCurrentGameState == GameState.Running;
+        }
+        
+        public static GameObject FindObject(string name, bool includeInactive = true)
+        {
+            return UEObject.FindObjectsOfType<GameObject>(includeInactive).FirstOrDefault(go => go.name.Equals(name));
+        }
+
+        public static T FindObjectOfTypeAndName<T>(string name, bool includeInactive = true) where T : UEObject
+        {
+            return UEObject.FindObjectsOfType<T>(includeInactive).FirstOrDefault(go => go.name.Equals(name));
+        }
+
+        public static T GetComponentInScene<T>(string name, bool includeInactive = true) where T : Component
+        {
+            var obj = FindObjectOfTypeAndName<T>(name, includeInactive);
+
+            if (obj.GetComponent<T>() is null)
+            {
+                Log.Error("Extensions.cs", $"Obj.GetComponent<{typeof(T)}> returned null!");
+            }
+            
+            return obj.GetComponent<T>();
         }
         
         #if UNITY_EDITOR
@@ -73,7 +92,7 @@ namespace Code.HelperClasses
             }
 
             return null;
-        } 
+        }
 
         public static IEnumerator AsCoroutine(this Task task)
         {
@@ -83,6 +102,14 @@ namespace Code.HelperClasses
         public static Vector3Int Vector3ToVector3Int(this Vector3 v)
         {
             return new Vector3Int((int)v.x, (int)v.y, (int)v.z);
+        }
+
+        // Alpha: 0 - 1
+        public static void SetImageAlpha(this Image image, float alpha)
+        {
+            var tempColor = image.color;
+            tempColor.a = alpha;
+            image.color = tempColor;
         }
     }
 }

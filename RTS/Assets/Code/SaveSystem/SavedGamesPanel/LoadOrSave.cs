@@ -1,4 +1,5 @@
 using Code.Debugging;
+using Code.HelperClasses;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,22 +17,33 @@ namespace Code.SaveSystem.SavedGamesPanel
         }
 
         [SerializeField] private SaveButton[] buttons;
+        public UnityEngine.Camera camera;
         private GameObject m_SaveImage;
+        private Sprite m_Sprite;
 
         // if saving from within game or loading from MainMenu
-        public bool m_IsSaving;
+        public bool isSaving;
+        
+        // Screenshot
+        private readonly int m_Width = Screen.width;
+        private readonly int m_Height = Screen.height;
+        private RenderTexture m_RenderTexture;
+        private Texture2D m_Texture2D;
+        private Rect m_Rect;
+        public bool CanTakeScreenShot { get; set; }
 
         private void Awake() => BindButtons();
 
         private void ButtonPressed(Image saveImage, int saveIndex)
         {
             //saveImage.sprite is null
-            if (m_IsSaving) // test
+            if (isSaving) // test
             {
-                AddSaveImage(saveImage);
+                saveImage.sprite = m_Sprite;
+                saveImage.SetImageAlpha(1f);
                 Save(saveIndex);
             }
-            else if (m_IsSaving && saveImage.sprite)
+            else if (isSaving && saveImage.sprite)
             {
                 OverrideSave(saveImage, saveIndex);
             }
@@ -43,25 +55,55 @@ namespace Code.SaveSystem.SavedGamesPanel
         
         private static void Load(int saveIndex)
         {
-            Log.Print("LoadOrSave.cs", "Load index: " + saveIndex);
             SaveManager.Instance.Load(saveIndex);
         }
 
         private static void Save(int saveIndex)
         {
-            Log.Print("LoadOrSave.cs", "Save index: " + saveIndex);
             SaveManager.Instance.Save(saveIndex);
         }
 
-        private static void OverrideSave(Image image, int saveIndex)
+        private void OverrideSave(Image image, int saveIndex)
         {
-            AddSaveImage(image);
+            image.sprite = m_Sprite;
+            image.SetImageAlpha(1f);
             Save(saveIndex);
         }
 
-        private static void AddSaveImage(Image imageToSaveTo)
+        
+        private void ScreenShot(UnityEngine.Camera _)
         {
-            // Get new image and save to imageToSaveTo
+            if (!CanTakeScreenShot) return;
+            
+            Log.Print("LoadOrSave.cs", "ScreenShot");
+            SetupForScreenShot();
+            
+            camera.targetTexture = m_RenderTexture;
+            m_Texture2D.ReadPixels(m_Rect, 0, 0);
+            m_Texture2D.Apply();
+
+            camera.targetTexture = null;
+            
+            var sprite = Sprite.Create(m_Texture2D, m_Rect, Vector2.zero);
+            m_Sprite = sprite;
+            CanTakeScreenShot = false;
+        }
+
+        private void SetupForScreenShot()
+        {
+            m_RenderTexture = new RenderTexture(m_Width, m_Height, 24);
+            m_Texture2D = new Texture2D(m_Width, m_Height, TextureFormat.RGBA32, false);
+            m_Rect = new Rect(0, 0, m_Width, m_Height);
+        }
+
+        public void BindOnPostRender()
+        {
+            UnityEngine.Camera.onPostRender += ScreenShot;
+        }
+
+        private void OnDestroy()
+        {
+            UnityEngine.Camera.onPostRender -= ScreenShot;
         }
 
         private void BindButtons()

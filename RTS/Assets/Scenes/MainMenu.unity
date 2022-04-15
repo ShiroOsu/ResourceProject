@@ -1704,6 +1704,14 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.19607843
       objectReference: {fileID: 0}
+    - target: {fileID: 1526962818204184713, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1313963264}
+    - target: {fileID: 1526962818204184713, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: isSaving
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1532097318194885457, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
       propertyPath: m_Color.a
       value: 0.19607843

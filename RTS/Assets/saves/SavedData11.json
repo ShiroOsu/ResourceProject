@@ -42,7 +42,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     },
     {
       "position": {
@@ -86,7 +86,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     },
     {
       "position": {
@@ -130,7 +130,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     },
     {
       "position": {
@@ -174,7 +174,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     },
     {
       "position": {
@@ -218,7 +218,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     },
     {
       "position": {
@@ -262,7 +262,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     },
     {
       "position": {
@@ -306,7 +306,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     },
     {
       "position": {
@@ -350,183 +350,7 @@
         "magnitude": 0.0,
         "sqrMagnitude": 0.0
       },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
-    },
-    {
-      "position": {
-        "x": 154.188843,
-        "y": 4.81,
-        "z": 66.98721,
-        "normalized": {
-          "x": 0.916806638,
-          "y": 0.0286002532,
-          "z": 0.398305863,
-          "magnitude": 1.0,
-          "sqrMagnitude": 0.99999994
-        },
-        "magnitude": 168.180328,
-        "sqrMagnitude": 28284.6211
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 1.0,
-        "z": 0.0,
-        "w": 0.0,
-        "eulerAngles": {
-          "x": 0.0,
-          "y": 180.0,
-          "z": 0.0,
-          "normalized": {
-            "x": 0.0,
-            "y": 1.0,
-            "z": 0.0,
-            "magnitude": 1.0,
-            "sqrMagnitude": 1.0
-          },
-          "magnitude": 180.0,
-          "sqrMagnitude": 32400.0
-        }
-      },
-      "flagPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "magnitude": 0.0,
-        "sqrMagnitude": 0.0
-      },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
-    },
-    {
-      "position": {
-        "x": 154.188843,
-        "y": 4.81,
-        "z": 66.98721,
-        "normalized": {
-          "x": 0.916806638,
-          "y": 0.0286002532,
-          "z": 0.398305863,
-          "magnitude": 1.0,
-          "sqrMagnitude": 0.99999994
-        },
-        "magnitude": 168.180328,
-        "sqrMagnitude": 28284.6211
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 1.0,
-        "z": 0.0,
-        "w": 0.0,
-        "eulerAngles": {
-          "x": 0.0,
-          "y": 180.0,
-          "z": 0.0,
-          "normalized": {
-            "x": 0.0,
-            "y": 1.0,
-            "z": 0.0,
-            "magnitude": 1.0,
-            "sqrMagnitude": 1.0
-          },
-          "magnitude": 180.0,
-          "sqrMagnitude": 32400.0
-        }
-      },
-      "flagPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "magnitude": 0.0,
-        "sqrMagnitude": 0.0
-      },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
-    },
-    {
-      "position": {
-        "x": 154.188843,
-        "y": 4.81,
-        "z": 66.98721,
-        "normalized": {
-          "x": 0.916806638,
-          "y": 0.0286002532,
-          "z": 0.398305863,
-          "magnitude": 1.0,
-          "sqrMagnitude": 0.99999994
-        },
-        "magnitude": 168.180328,
-        "sqrMagnitude": 28284.6211
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 1.0,
-        "z": 0.0,
-        "w": 0.0,
-        "eulerAngles": {
-          "x": 0.0,
-          "y": 180.0,
-          "z": 0.0,
-          "normalized": {
-            "x": 0.0,
-            "y": 1.0,
-            "z": 0.0,
-            "magnitude": 1.0,
-            "sqrMagnitude": 1.0
-          },
-          "magnitude": 180.0,
-          "sqrMagnitude": 32400.0
-        }
-      },
-      "flagPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "magnitude": 0.0,
-        "sqrMagnitude": 0.0
-      },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
-    },
-    {
-      "position": {
-        "x": 154.188843,
-        "y": 4.81,
-        "z": 66.98721,
-        "normalized": {
-          "x": 0.916806638,
-          "y": 0.0286002532,
-          "z": 0.398305863,
-          "magnitude": 1.0,
-          "sqrMagnitude": 0.99999994
-        },
-        "magnitude": 168.180328,
-        "sqrMagnitude": 28284.6211
-      },
-      "rotation": {
-        "x": 0.0,
-        "y": 1.0,
-        "z": 0.0,
-        "w": 0.0,
-        "eulerAngles": {
-          "x": 0.0,
-          "y": 180.0,
-          "z": 0.0,
-          "normalized": {
-            "x": 0.0,
-            "y": 1.0,
-            "z": 0.0,
-            "magnitude": 1.0,
-            "sqrMagnitude": 1.0
-          },
-          "magnitude": 180.0,
-          "sqrMagnitude": 32400.0
-        }
-      },
-      "flagPosition": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "magnitude": 0.0,
-        "sqrMagnitude": 0.0
-      },
-      "dataID": "adf05264-db34-4bcb-aa5d-ece04dd571aa"
+      "dataID": "3f1a64d3-fd44-41af-955f-c108af44eb4b"
     }
   ],
   "barracksData": [],

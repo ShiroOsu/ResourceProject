@@ -92,11 +92,6 @@ namespace Code.SaveSystem
             var quaternionSurrogate = new QuaternionSerializationSurrogate();
             var transformSurrogate = new TransformSerializationSurrogate();
     
-            /*
-             * You could potentially extend this further and create surrogates for all of the properties of
-             * a MonoBehaviour, to make it completely serializable.
-             * Maybe idk
-             */
             selector.AddSurrogate(typeof(Vector3), new StreamingContext(StreamingContextStates.All),
                 vector3Surrogate);
             selector.AddSurrogate(typeof(Quaternion), new StreamingContext(StreamingContextStates.All),

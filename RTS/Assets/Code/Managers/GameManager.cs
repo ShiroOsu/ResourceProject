@@ -1,5 +1,6 @@
 using System;
 using Code.HelperClasses;
+using Code.SaveSystem.SavedGamesPanel;
 using UnityEngine.InputSystem;
 
 namespace Code.Managers
@@ -17,11 +18,17 @@ namespace Code.Managers
 
         private PauseControls m_PauseControls;
 
+        private LoadOrSave m_LoadOrSave;
+
         private void Awake()
         {
             m_PauseControls = new PauseControls();
             m_PauseControls.Keyboard.SetCallbacks(this);
             GetCurrentGameState = GameState.Running;
+
+            m_LoadOrSave = Extensions.GetComponentInScene<LoadOrSave>("SavedGamesPanel");
+            m_LoadOrSave.camera = UnityEngine.Camera.main;
+            m_LoadOrSave.BindOnPostRender();
         }
 
         private void OnEnable()
@@ -44,11 +51,19 @@ namespace Code.Managers
 
         public void OnESCPause(InputAction.CallbackContext context)
         {
-            if (context.started)
+            if (context.started && Extensions.IsGameInRunState()) m_LoadOrSave.CanTakeScreenShot = true;
+            
+            if (context.performed)
             {
                 var newGameState = GetCurrentGameState == GameState.Running ? GameState.Paused : GameState.Running;
                 SetState(newGameState);    
             }
+        }
+
+        public void ForceGameState(GameState state)
+        {
+            GetCurrentGameState = state;
+            GameStateHandler?.Invoke(state);
         }
     }
 }
