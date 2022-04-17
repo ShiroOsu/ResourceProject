@@ -41,11 +41,11 @@ namespace Code.SaveSystem.SavedGamesPanel
             {
                 saveImage.sprite = m_Sprite;
                 saveImage.SetImageAlpha(1f);
-                Save(saveIndex);
+                Save(saveIndex, Extensions.ConvertImageToByteArray(saveImage));
             }
             else if (isSaving && saveImage.sprite)
             {
-                OverrideSave(saveImage, saveIndex);
+                OverrideSave(saveImage, saveIndex, Extensions.ConvertImageToByteArray(saveImage));
             }
             else
             {
@@ -58,16 +58,16 @@ namespace Code.SaveSystem.SavedGamesPanel
             SaveManager.Instance.Load(saveIndex);
         }
 
-        private static void Save(int saveIndex)
+        private static void Save(int saveIndex, byte[] imageInBytes)
         {
-            SaveManager.Instance.Save(saveIndex);
+            SaveManager.Instance.Save(saveIndex, imageInBytes);
         }
 
-        private void OverrideSave(Image image, int saveIndex)
+        private void OverrideSave(Image image, int saveIndex, byte[] imageInBytes)
         {
             image.sprite = m_Sprite;
             image.SetImageAlpha(1f);
-            Save(saveIndex);
+            Save(saveIndex, imageInBytes);
         }
 
         

@@ -10,20 +10,9 @@ namespace Code.Managers
 {
     public class SaveManager : Singleton<SaveManager>
     {
-        public GameObject savedGamesPanel;
-        
         public event Action<SaveData, int> OnLoad;
-        
-        // Temp
-        public List<GameObject> saves = new();
 
-        private void OnEnable()
-        {
-            DontDestroyOnLoad(this);
-            DontDestroyOnLoad(savedGamesPanel);
-        }
-
-        public void Save(int index)
+        public void Save(int index, byte[] imageInBytes)
         {
             foreach (var obj in FindObjectsOfType<GameObject>(true))
             {
@@ -32,8 +21,9 @@ namespace Code.Managers
                     savable.Save();
                 }
             }
-            
-            
+
+            SaveData.Instance.imageInBytes = new byte[imageInBytes.Length];
+            SaveData.Instance.imageInBytes = imageInBytes;
             SerializationManager.Save("SavedData", SaveData.Instance, index);
         }
 

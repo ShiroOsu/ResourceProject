@@ -64,6 +64,13 @@ namespace Code.HelperClasses
             return obj.GetComponent<T>();
         }
         
+        public static byte[] ConvertImageToByteArray(Image image)
+        {
+            var texture = (Texture2D)image.mainTexture;
+            var bytes = texture.EncodeToPNG();
+            return bytes;
+        }
+        
         #if UNITY_EDITOR
         /// <summary>
         /// Load Asset from String Path
@@ -79,6 +86,11 @@ namespace Code.HelperClasses
         public static T GetValue<T>(this SerializationInfo info, string name)
         {
             return (T)info.GetValue(name, typeof(T));
+        }
+
+        public static void AddValue<T>(this SerializationInfo info, string name)
+        {
+            info.AddValue(name, typeof(T));
         }
 
         public static T GetDataByID<T>(this List<T> dataList, Guid id) where T : BaseData

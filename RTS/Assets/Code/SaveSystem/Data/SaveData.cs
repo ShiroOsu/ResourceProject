@@ -10,6 +10,9 @@ namespace Code.SaveSystem.Data
 
         public static SaveData Instance => _instance ??= new SaveData();
 
+        // Savefile Image
+        public byte[] imageInBytes;
+        
         // Structures
         public List<CastleData> castleData = new();
         public List<BarracksData> barracksData = new();
