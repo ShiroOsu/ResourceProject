@@ -17,13 +17,14 @@ namespace Code.SaveSystem.SavedGamesPanel
         }
 
         [SerializeField] private SaveButton[] buttons;
+
+#pragma warning disable CS0108, CS0114
         public UnityEngine.Camera camera;
+#pragma warning restore CS0108, CS0114
+        
         private GameObject m_SaveImage;
         private Sprite m_Sprite;
 
-        // if saving from within game or loading from MainMenu
-        public bool isSaving;
-        
         // Screenshot
         private readonly int m_Width = Screen.width;
         private readonly int m_Height = Screen.height;
@@ -32,22 +33,24 @@ namespace Code.SaveSystem.SavedGamesPanel
         private Rect m_Rect;
         public bool CanTakeScreenShot { get; set; }
 
-        private void Awake() => BindButtons();
+        private void Awake()
+        {
+            BindButtons();   
+        }
 
         private void ButtonPressed(Image saveImage, int saveIndex)
         {
-            //saveImage.sprite is null
-            if (isSaving) // test
+            if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Save && saveImage.sprite == null)
             {
                 saveImage.sprite = m_Sprite;
                 saveImage.SetImageAlpha(1f);
                 Save(saveIndex, Extensions.ConvertImageToByteArray(saveImage));
             }
-            else if (isSaving && saveImage.sprite)
+            else if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Save && saveImage.sprite != null)
             {
                 OverrideSave(saveImage, saveIndex, Extensions.ConvertImageToByteArray(saveImage));
             }
-            else
+            else if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Load)
             {
                 Load(saveIndex);
             }
@@ -65,6 +68,8 @@ namespace Code.SaveSystem.SavedGamesPanel
 
         private void OverrideSave(Image image, int saveIndex, byte[] imageInBytes)
         {
+            Debug.Log("Override Save");
+            
             image.sprite = m_Sprite;
             image.SetImageAlpha(1f);
             Save(saveIndex, imageInBytes);

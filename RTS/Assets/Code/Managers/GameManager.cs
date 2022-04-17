@@ -7,26 +7,30 @@ namespace Code.Managers
 {
     public enum GameState
     {
+        MainMenu,
         Running,
         Paused,
     }
-    
+
     public class GameManager : Singleton<GameManager>, PauseControls.IKeyboardActions
     {
         public event Action <GameState>GameStateHandler;
         public GameState GetCurrentGameState { get; private set; }
 
         private PauseControls m_PauseControls;
-
         private LoadOrSave m_LoadOrSave;
 
         private void Awake()
         {
             m_PauseControls = new PauseControls();
             m_PauseControls.Keyboard.SetCallbacks(this);
-            GetCurrentGameState = GameState.Running;
+            GetCurrentGameState = GameState.MainMenu;
 
             m_LoadOrSave = Extensions.GetComponentInScene<LoadOrSave>("SavedGamesPanel");
+        }
+
+        public void BindLoadOrSaveCamera()
+        {
             m_LoadOrSave.camera = UnityEngine.Camera.main;
             m_LoadOrSave.BindOnPostRender();
         }

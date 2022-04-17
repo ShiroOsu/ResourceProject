@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Code.SaveSystem.Data
@@ -12,7 +13,7 @@ namespace Code.SaveSystem.Data
 
         // Savefile Image
         public byte[] imageInBytes;
-        
+
         // Structures
         public List<CastleData> castleData = new();
         public List<BarracksData> barracksData = new();

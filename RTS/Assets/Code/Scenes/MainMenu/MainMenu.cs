@@ -1,3 +1,4 @@
+using Code.Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,9 @@ namespace Code.Scenes.MainMenu
         public void ChangeScene(string sceneName)
         {
             SceneManager.LoadScene(sceneName);
+            
+            // Temp
+            GameManager.Instance.ForceGameState(GameState.Running);
         }
 
         public void SavedGames()

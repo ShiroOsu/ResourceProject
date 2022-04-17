@@ -11,6 +11,7 @@ namespace Code.Managers
         private void Awake()
         {
             GameManager.Instance.GameStateHandler += Pause;
+            GameManager.Instance.BindLoadOrSaveCamera();
         }
 
         private void Pause(GameState state)
