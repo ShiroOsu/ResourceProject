@@ -33,6 +33,21 @@ namespace Code.Managers
             OnLoad?.Invoke(loadedData, index);
         }
 
+        public Texture2D LoadImage(int saveFileIndex)
+        {
+            var loadedData = (SaveData)SerializationManager.Load(Application.persistentDataPath + $"/saves/SavedData{saveFileIndex}.save");
+
+            if (loadedData.imageInBytes == null)
+            {
+                return null;
+            }
+
+            var tempTexture2D = new Texture2D(1, 1);
+            tempTexture2D.LoadImage(loadedData.imageInBytes);
+
+            return tempTexture2D;
+        }
+
         private static void CheckIfObjectExistsAndOverride<T>(List<T> oldSavedList, List<T> newSaveList) where T : BaseData
         {
             if (oldSavedList.Count < 1)

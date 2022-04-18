@@ -1,3 +1,4 @@
+using System;
 using Code.Debugging;
 using Code.HelperClasses;
 using Code.Managers;
@@ -36,6 +37,15 @@ namespace Code.SaveSystem.SavedGamesPanel
         private void Awake()
         {
             BindButtons();   
+            m_Rect = new Rect(0, 0, m_Width, m_Height);
+        }
+
+        private void Start()
+        {
+            if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Load)
+            {
+                LoadImagesFromSaveFiles();   
+            }
         }
 
         private void ButtonPressed(Image saveImage, int saveIndex)
@@ -56,19 +66,19 @@ namespace Code.SaveSystem.SavedGamesPanel
             }
         }
         
-        private static void Load(int saveIndex)
+        private void Load(int saveIndex)
         {
             SaveManager.Instance.Load(saveIndex);
         }
 
-        private static void Save(int saveIndex, byte[] imageInBytes)
+        private void Save(int saveIndex, byte[] imageInBytes)
         {
             SaveManager.Instance.Save(saveIndex, imageInBytes);
         }
 
         private void OverrideSave(Image image, int saveIndex, byte[] imageInBytes)
         {
-            Debug.Log("Override Save");
+            Debug.Log("Override Save: " + saveIndex);
             
             image.sprite = m_Sprite;
             image.SetImageAlpha(1f);
@@ -98,7 +108,6 @@ namespace Code.SaveSystem.SavedGamesPanel
         {
             m_RenderTexture = new RenderTexture(m_Width, m_Height, 24);
             m_Texture2D = new Texture2D(m_Width, m_Height, TextureFormat.RGBA32, false);
-            m_Rect = new Rect(0, 0, m_Width, m_Height);
         }
 
         public void BindOnPostRender()
@@ -117,6 +126,20 @@ namespace Code.SaveSystem.SavedGamesPanel
             {
                 var index = i;
                 buttons[index].button.onClick.AddListener(() => ButtonPressed(buttons[index].saveImage, buttons[index].index));
+            }
+        }
+
+        private void LoadImagesFromSaveFiles()
+        {
+            for (var i = 0; i < buttons.Length; i++)
+            {
+                var saveFileImage = SaveManager.Instance.LoadImage(i);
+
+                if (saveFileImage != null)
+                {
+                    buttons[i].saveImage.sprite = Sprite.Create(saveFileImage, m_Rect, Vector2.zero);
+                    buttons[i].saveImage.SetImageAlpha(1f);
+                }
             }
         }
     }
