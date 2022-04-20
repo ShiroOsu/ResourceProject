@@ -1,2 +1,2 @@
 # ResourceProject
-Some kind of project involving resources
+RTS Project
