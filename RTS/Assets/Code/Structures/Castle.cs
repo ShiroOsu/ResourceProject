@@ -25,28 +25,14 @@ namespace Code.Structures
         private const string c_NameOfUIObjectInScene = "CastleUIMiddle";
         private const string c_CastleImage = "CastleImage";
 
-        public Vector3 FlagPoint { get; private set; }
+        public Vector3 FlagPoint { get; set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
         public event Action<TextureAssetType> OnSpawn;
         public CastleTimer castleTimer;
         
-        private CastleData m_CastleData;
-        private Guid m_DataID;
+        private readonly CastleData m_CastleData = new();
         
-        private void OnEnable()
-        {
-            // TODO: How do we Load from main menu?
-            SaveManager.Instance.OnLoad += LoadCastle;
-            
-            // TODO: Store
-            if (m_CastleData is null)
-            {
-                m_CastleData = new(Guid.NewGuid());
-                m_DataID = m_CastleData.dataID;
-            }
-        }
-
         private void Awake()
         {
             navMeshObstacle.shape = NavMeshObstacleShape.Box;
@@ -127,27 +113,12 @@ namespace Code.Structures
                 m_SetSpawnFlag = false;
             }
         }
-
-        // Don't want to load in the castle class
-        private void LoadCastle(SaveData saveData, int index)
-        {
-            // if (!gameObject.activeInHierarchy) return;
-            //
-            // m_CastleData = saveData.castleData.GetDataByID(m_DataID);
-            // if (m_CastleData is null) return;
-            //
-            // var t = transform;
-            // t.position = m_CastleData.position;
-            // t.rotation = m_CastleData.rotation;
-            // FlagPoint = m_CastleData.flagPosition;
-        }
-
+        
         public void Save()
         {
             m_CastleData.Save(gameObject);
             m_CastleData.flagPosition = FlagPoint;
             SaveData.Instance.castleData.Add(m_CastleData);
-
         }
     }
 }

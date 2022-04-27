@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Code.Tools.ObjectPool
+namespace Code
 {
     public class ObjectPooler
     {
@@ -26,7 +26,7 @@ namespace Code.Tools.ObjectPool
                 instance.SetActive(false);
 
                 var emitOnDisable = instance.AddComponent<EmitOnDisable>();
-                emitOnDisable.OnDisableGameObject += UnRent; // TODO: Delegate allocation
+                emitOnDisable.OnDisableGameObject += UnRent;
                 m_Objects.Push(instance);
             }
         }

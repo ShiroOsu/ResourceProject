@@ -2111,7 +2111,6 @@ MonoBehaviour:
   - saveImage: {fileID: 5636086142491546009}
     button: {fileID: 464423430020123866}
     index: 11
-  m_IsSaving: 0
 --- !u!114 &1759021332702543776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2124,8 +2123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa694306c91c3c6458906ae6fce0cb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savedGamesPanel: {fileID: 4138084040724651521}
-  mainMenu: {fileID: 0}
 --- !u!1 &4216648885560663752
 GameObject:
   m_ObjectHideFlags: 0

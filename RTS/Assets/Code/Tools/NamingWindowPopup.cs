@@ -8,8 +8,9 @@ namespace Code.Tools
 {
     public class NamingWindowPopup : EditorWindow
     {
-        public static event Action SetName;
+        public static event Action<string> SetName;
         private string m_Name;
+        private string m_NameToSet;
         
         public static void Init()
         {
@@ -28,8 +29,8 @@ namespace Code.Tools
                 if (m_Name != string.Empty)
                 {
                     m_Name = m_Name.Replace(' ', '_');
-                    CreateSerializationSurrogate.CreateSerializationSurrogate.Name = m_Name;
-                    SetName?.Invoke();
+                    m_NameToSet = m_Name;
+                    SetName?.Invoke(m_NameToSet);
                     Close();
                 }
                 else

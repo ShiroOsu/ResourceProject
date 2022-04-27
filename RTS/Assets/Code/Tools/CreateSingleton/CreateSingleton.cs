@@ -1,15 +1,15 @@
 using System.IO;
 using UnityEditor;
 
-namespace Code.Tools.CreateSerializationSurrogate
+namespace Code.Tools.CreateSingleton
 {
-    public static class CreateSerializationSurrogate
+    public static class CreateSingleton
     {
-        private const string c_PathToSurrogateTemplate = "Assets/Code/Tools/CreateSerializationSurrogate/SurrogateTemplate.cs";
-        private const string c_Ss = "SerializationSurrogate";
+        private const string c_PathToSingletonTemplate = "Assets/Code/Tools/CreateSingleton/SingletonTemplate.cs";
+        private const string c_Cs = ".cs";
         
-        [MenuItem("Assets/Tools/Create Serialization Surrogate", false, 1)]
-        public static void CreateSurrogate()
+        [MenuItem("Assets/Tools/Create Singleton", false, 2)]
+        public static void Create()
         {
             if (Selection.activeObject is null) return;
             
@@ -29,15 +29,15 @@ namespace Code.Tools.CreateSerializationSurrogate
                 path = "Assets/";
 
             string newString;
-            using (var sr = File.OpenText(c_PathToSurrogateTemplate))
+            using (var sr = File.OpenText(c_PathToSingletonTemplate))
             {
                 var txt = sr.ReadToEnd();
                 var tempText = txt;
-                tempText = tempText.Replace("name", name + c_Ss);
+                tempText = tempText.Replace("Name", name);
                 newString = tempText;
             }
             
-            using (var outfile = new StreamWriter(File.Create(path + "/" + name + c_Ss + ".cs")))
+            using (var outfile = new StreamWriter(File.Create(path + "/" + name + c_Cs)))
             {
                 outfile.Write(newString);
             }

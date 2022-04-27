@@ -18,18 +18,7 @@ namespace Code.Units.Builder
         private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
 
-        private BuilderData m_BuilderData;
-        private Guid m_DataID;
-        
-        private void OnEnable()
-        {
-            // TODO: Store
-            if (m_BuilderData is null)
-            {
-                m_BuilderData = new(Guid.NewGuid());
-                m_DataID = m_BuilderData.dataID;
-            }
-        }
+        private readonly BuilderData m_BuilderData = new();
 
         private void Awake()
         {

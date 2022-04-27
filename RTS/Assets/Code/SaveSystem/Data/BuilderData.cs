@@ -1,22 +1,27 @@
 using System;
+using Code.Interfaces;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Code.SaveSystem.Data
 {
     [Serializable]
-    public class BuilderData : BaseData
+    public class BuilderData : IUnitData
     {
         public Vector3 position;
         public Quaternion rotation;
 
-        public BuilderData(Guid id) : base(id)
-        {
-        }
-        
-        public override void Save(GameObject gameObject)
+        public void Save(GameObject gameObject)
         {
             position = gameObject.transform.position;
             rotation = gameObject.transform.rotation;
+        }
+
+        public void Instantiate(GameObject prefab)
+        {
+            var newObj = Object.Instantiate(prefab);
+            newObj.transform.position = position;
+            newObj.transform.rotation = rotation;
         }
     }
 }

@@ -17,19 +17,7 @@ namespace Code.Units.Horse
         private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
         
-        private HorseData m_HorseData;
-        private Guid m_DataID;
-        
-        private void OnEnable()
-        {
-            // TODO: Store
-            if (m_HorseData is null)
-            {
-                m_HorseData = new(Guid.NewGuid());
-                m_DataID = m_HorseData.dataID;
-            }
-        }
-        
+        private readonly HorseData m_HorseData = new();
 
         private void Awake()
         {

@@ -1,4 +1,3 @@
-using System;
 using Code.Debugging;
 using Code.HelperClasses;
 using Code.Managers;
@@ -19,12 +18,9 @@ namespace Code.SaveSystem.SavedGamesPanel
 
         [SerializeField] private SaveButton[] buttons;
 
-#pragma warning disable CS0108, CS0114
-        public UnityEngine.Camera camera;
-#pragma warning restore CS0108, CS0114
-        
         private GameObject m_SaveImage;
         private Sprite m_Sprite;
+        public UnityEngine.Camera Cam { get; set; }
 
         // Screenshot
         private readonly int m_Width = Screen.width;
@@ -36,36 +32,39 @@ namespace Code.SaveSystem.SavedGamesPanel
 
         private void Awake()
         {
-            BindButtons();   
+            BindButtons();
+
+            // If m_Rect is not set before LoadImagesFromSaveFiles is called the image wont show.
             m_Rect = new Rect(0, 0, m_Width, m_Height);
         }
 
         private void Start()
         {
-            if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Load)
-            {
-                LoadImagesFromSaveFiles();   
-            }
+            LoadImagesFromSaveFiles();
         }
 
         private void ButtonPressed(Image saveImage, int saveIndex)
         {
-            if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Save && saveImage.sprite == null)
+            if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Save &&
+                saveImage.sprite == null)
             {
                 saveImage.sprite = m_Sprite;
                 saveImage.SetImageAlpha(1f);
                 Save(saveIndex, Extensions.ConvertImageToByteArray(saveImage));
             }
-            else if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Save && saveImage.sprite != null)
+            else if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Save &&
+                     saveImage.sprite != null)
             {
-                OverrideSave(saveImage, saveIndex, Extensions.ConvertImageToByteArray(saveImage));
+                saveImage.sprite = m_Sprite;
+                saveImage.SetImageAlpha(1f);
+                OverrideSave(saveIndex, Extensions.ConvertImageToByteArray(saveImage));
             }
             else if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Load)
             {
                 Load(saveIndex);
             }
         }
-        
+
         private void Load(int saveIndex)
         {
             SaveManager.Instance.Load(saveIndex);
@@ -76,28 +75,31 @@ namespace Code.SaveSystem.SavedGamesPanel
             SaveManager.Instance.Save(saveIndex, imageInBytes);
         }
 
-        private void OverrideSave(Image image, int saveIndex, byte[] imageInBytes)
+        private void OverrideSave(int saveIndex, byte[] imageInBytes)
         {
-            Debug.Log("Override Save: " + saveIndex);
-            
-            image.sprite = m_Sprite;
-            image.SetImageAlpha(1f);
             Save(saveIndex, imageInBytes);
+            Log.Print("LoadOrSave.cs", $"Override Savefile{saveIndex}");
         }
 
-        
         private void ScreenShot(UnityEngine.Camera _)
         {
-            if (!CanTakeScreenShot) return;
+            // TODO: Take screenshot before opening save panel.
             
+            if (!CanTakeScreenShot) return;
+
             Log.Print("LoadOrSave.cs", "ScreenShot");
             SetupForScreenShot();
-            
-            camera.targetTexture = m_RenderTexture;
+
+            if (!Cam)
+            {
+                Cam = UnityEngine.Camera.current;
+            }
+
+            Cam.targetTexture = m_RenderTexture;
             m_Texture2D.ReadPixels(m_Rect, 0, 0);
             m_Texture2D.Apply();
 
-            camera.targetTexture = null;
+            Cam.targetTexture = null;
             
             var sprite = Sprite.Create(m_Texture2D, m_Rect, Vector2.zero);
             m_Sprite = sprite;
@@ -108,6 +110,13 @@ namespace Code.SaveSystem.SavedGamesPanel
         {
             m_RenderTexture = new RenderTexture(m_Width, m_Height, 24);
             m_Texture2D = new Texture2D(m_Width, m_Height, TextureFormat.RGBA32, false);
+            
+            // When taking the first screenshot m_Rect has the size of (0, 0),
+            // (why?) which will give a invalid AABB inAABB error. 
+            if (m_Rect.size == Vector2.zero)
+            {
+                m_Rect.size = new Vector2(m_Width, m_Height);
+            }
         }
 
         public void BindOnPostRender()
@@ -125,7 +134,8 @@ namespace Code.SaveSystem.SavedGamesPanel
             for (int i = 0; i < buttons.Length; i++)
             {
                 var index = i;
-                buttons[index].button.onClick.AddListener(() => ButtonPressed(buttons[index].saveImage, buttons[index].index));
+                buttons[index].button.onClick
+                    .AddListener(() => ButtonPressed(buttons[index].saveImage, buttons[index].index));
             }
         }
 

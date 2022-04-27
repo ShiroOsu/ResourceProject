@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Code.SaveSystem.Data
@@ -11,7 +10,7 @@ namespace Code.SaveSystem.Data
 
         public static SaveData Instance => _instance ??= new SaveData();
 
-        // Savefile Image
+        // Save-file Image
         public byte[] imageInBytes;
 
         // Structures

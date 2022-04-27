@@ -1,4 +1,4 @@
-using Code.HelperClasses;
+using Code.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,9 +9,10 @@ namespace Code.Scenes.PauseMenu
         private GameObject m_SavedGamesPanel;
         private GameObject m_PausedGamePanel;
 
-        private void Awake()
+        private void Start()
         {
-            m_SavedGamesPanel = Extensions.FindObject("SavedGamesPanel");
+            m_SavedGamesPanel = UISceneManager.Instance.GetUISceneObject("SavedGamesPanel");
+            //m_SavedGamesPanel = Extensions.FindObject("SavedGamesPanel");
             m_PausedGamePanel = gameObject;
         }
 

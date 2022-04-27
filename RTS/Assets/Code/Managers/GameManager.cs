@@ -31,7 +31,7 @@ namespace Code.Managers
 
         public void BindLoadOrSaveCamera()
         {
-            m_LoadOrSave.camera = UnityEngine.Camera.main;
+            m_LoadOrSave.Cam = UnityEngine.Camera.current;
             m_LoadOrSave.BindOnPostRender();
         }
 

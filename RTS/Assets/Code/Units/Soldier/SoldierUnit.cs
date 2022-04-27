@@ -16,18 +16,7 @@ namespace Code.Units.Soldier
         [SerializeField] private UnitData data;
         private GameObject m_UnitImage;
         private NavMeshAgent m_Agent;
-        private SoldierData m_SoldierData;
-        private Guid m_DataID;
-        
-        private void OnEnable()
-        {
-            // TODO: Store
-            if (m_SoldierData is null)
-            {
-                m_SoldierData = new(Guid.NewGuid());
-                m_DataID = m_SoldierData.dataID;
-            }
-        }
+        private readonly SoldierData m_SoldierData = new();
 
         private void Awake()
         {

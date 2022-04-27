@@ -7,7 +7,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Code.Debugging;
+using Code.Interfaces;
 using Code.Managers;
+using Code.SaveSystem;
 using Code.SaveSystem.Data;
 using UnityEditor;
 using UnityEngine;
@@ -41,7 +43,7 @@ namespace Code.HelperClasses
         {
             return GameManager.Instance.GetCurrentGameState == GameState.Running;
         }
-        
+
         public static GameObject FindObject(string name, bool includeInactive = true)
         {
             return UEObject.FindObjectsOfType<GameObject>(includeInactive).FirstOrDefault(go => go.name.Equals(name));
@@ -60,18 +62,24 @@ namespace Code.HelperClasses
             {
                 Log.Error("Extensions.cs", $"Obj.GetComponent<{typeof(T)}> returned null!");
             }
-            
+
             return obj.GetComponent<T>();
         }
-        
+
+        public static T LoadData<T>(string filepath)
+        {
+            return (T) SerializationManager.Load(Application.persistentDataPath + filepath);
+        }
+
+        // Convert image to savable format
         public static byte[] ConvertImageToByteArray(Image image)
         {
-            var texture = (Texture2D)image.mainTexture;
+            var texture = (Texture2D) image.mainTexture;
             var bytes = texture.EncodeToPNG();
             return bytes;
         }
-        
-        #if UNITY_EDITOR
+
+#if UNITY_EDITOR
         /// <summary>
         /// Load Asset from String Path
         /// </summary>
@@ -79,13 +87,13 @@ namespace Code.HelperClasses
         /// <returns></returns>
         public static T LoadAsset<T>(string path) where T : ScriptableObject
         {
-            return (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
+            return (T) AssetDatabase.LoadAssetAtPath(path, typeof(T));
         }
-        #endif
+#endif
 
         public static T GetValue<T>(this SerializationInfo info, string name)
         {
-            return (T)info.GetValue(name, typeof(T));
+            return (T) info.GetValue(name, typeof(T));
         }
 
         public static void AddValue<T>(this SerializationInfo info, string name)
@@ -93,27 +101,37 @@ namespace Code.HelperClasses
             info.AddValue(name, typeof(T));
         }
 
-        public static T GetDataByID<T>(this List<T> dataList, Guid id) where T : BaseData
-        {
-            foreach (var data in dataList)
-            {
-                if (data.dataID == id)
-                {
-                    return data;
-                }
-            }
-
-            return null;
-        }
-
         public static IEnumerator AsCoroutine(this Task task)
         {
             return new WaitUntil(() => task.IsCompleted);
         }
-        
+
+        public static void InstantiateUnitsInList<T>(this List<T> dataList, GameObject prefab) where T : IUnitData
+        {
+            foreach (var data in dataList)
+            {
+                data.Instantiate(prefab);
+                Log.Print("Extensions.cs", "Instantiate Unit: " + prefab.name);
+            }
+        }
+
+        public static void InstantiateStructuresInList<T>(this List<T> dataList, GameObject prefab) where T : IStructureData
+        {
+            foreach (var data in dataList)
+            {
+                data.Instantiate(prefab, data.GetFlagPosition());
+                Log.Print("Extensions.cs", "Instantiate Structure: " + prefab.name);
+            }
+        }
+
+        public static T GetComponentTFromObj<T>(this GameObject gameObject) where T : Component
+        {
+            return gameObject.GetComponent<T>() != null ? gameObject.GetComponent<T>() : null;
+        }
+
         public static Vector3Int Vector3ToVector3Int(this Vector3 v)
         {
-            return new Vector3Int((int)v.x, (int)v.y, (int)v.z);
+            return new Vector3Int((int) v.x, (int) v.y, (int) v.z);
         }
 
         // Alpha: 0 - 1

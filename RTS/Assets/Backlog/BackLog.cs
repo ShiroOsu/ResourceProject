@@ -1,13 +1,10 @@
 namespace Backlog
 {
     #region Sadge
-    // TODO: (Should have started this project with Networking... But since I did not it is a bit late) 
+    // TODO: (Should have started this project with Networking...) 
     #endregion Sadge
     
     #region Important
-    
-    // TODO: Horse Unit, Collider does not cover the whole GameObject making it hard to click on (Only clickable on horse atm)
-    
     // TODO: Multi-Selection, Rework into MouseInputs Update to "skip" EventSystem.IsPointerOverGameObject
     // TODO: Update multi-selection image anchored position so it wont start from last position 
     
@@ -21,11 +18,9 @@ namespace Backlog
     // TODO: Environment, Trees, Mountains, etc. 
     // TODO: Procedural generated stuff
 
-    // TODO: Clicking on menu-buttons over a structure will select the structure 
+    // TODO: Options UI.
     
-    // TODO: Options UI
-    
-    // TODO: Save & Load Game 
+    // TODO: Load a saved file to main scene.
 
     #endregion Important
     
@@ -33,12 +28,18 @@ namespace Backlog
     
     // TODO: Units traveling in circles when assigning new position when its not arrived at last position.
     
+    // TODO: Sometimes gets null ref on UI menu-buttons in savedGamesPanel.
+    
+    // TODO: Clicking on UI menu-buttons over a structure will select the structure.
+    
+    // TODO: Horse Unit, Collider does not cover the whole GameObject making it hard to click on (Only clickable on horse atm).
+    
     #endregion Bugs
 
-    #region Working but not Completed
+    #region WIP
 
-    // TODO: Pause Game, Missing: UI(return to game, exit, save, load)
-    // TODO: Main Menu, Missing: Options, Load, Exit
+    // TODO: Pause Game, Missing: UI(return to game, save, load)
+    // TODO: Main Menu, Missing: Options, Load, Quit
     // TODO: Zoom, Missing: Clamp, Smooth
     
     #endregion
@@ -61,14 +62,13 @@ namespace Backlog
     
     #region Completed
     
-    // Camera, Move the camera if the mouse is at the edge of screen : 2022-02-11
-
+    // TODO: Camera, Move the camera if the mouse is at the edge of screen : 2022-02-11
     
     #endregion Completed
     
-    #region Bug fixed
+    #region Bug fixed Maybe
     
-    // Creates a new Singleton of type T when exiting play mode.
+    //TODO: Creates a new Singleton of type T when exiting play mode.
 
-    #endregion Bug fixed
+    #endregion Bug fixed Maybe
 }

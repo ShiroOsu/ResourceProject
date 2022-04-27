@@ -1,5 +1,3 @@
-using System;
-using Code.HelperClasses;
 using Code.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,29 +6,33 @@ namespace Code.SaveSystem.SavedGamesPanel
 {
     public class BackButton : MonoBehaviour
     {
-        public GameObject savedGamesPanel;
-        public GameObject mainGameObject;
-        public GameObject pauseGameObject;
+        private GameObject m_SavedGamesPanel;
+        private GameObject m_MainGameObject;
+        private GameObject m_PauseGameObject;
         private GameObject m_MainUI;
 
         private void Awake()
         {
-            mainGameObject = Extensions.FindObject("MainMenu");
+            m_MainGameObject = UISceneManager.Instance.GetUISceneObject("MainMenu");
+            m_SavedGamesPanel = UISceneManager.Instance.GetUISceneObject("SavedGamesPanel");
+            //mainGameObject = Extensions.FindObject("MainMenu");
         }
 
         private void Update()
         {
-            if (!pauseGameObject)
+            if (!m_PauseGameObject)
             {
-                pauseGameObject = Extensions.FindObject("PauseScreen");
+                m_PauseGameObject = UISceneManager.Instance.GetUISceneObject("PauseScreen");
+                //pauseGameObject = Extensions.FindObject("PauseScreen");
             }
 
             if (!m_MainUI)
             {
-                m_MainUI = Extensions.FindObject("MainUI");
+                m_MainUI = UISceneManager.Instance.GetUISceneObject("MainUI");
+                //m_MainUI = Extensions.FindObject("MainUI");
             }
 
-            if (savedGamesPanel.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
+            if (m_SavedGamesPanel.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
             {
                 ClosePanel();
             }
@@ -38,7 +40,7 @@ namespace Code.SaveSystem.SavedGamesPanel
 
         public void ClosePanel()
         {
-            savedGamesPanel.SetActive(false);
+            m_SavedGamesPanel.SetActive(false);
 
             if (m_MainUI)
             {
@@ -46,14 +48,14 @@ namespace Code.SaveSystem.SavedGamesPanel
                 GameManager.Instance.ForceGameState(GameState.Running);
             }
 
-            if (pauseGameObject)
+            if (m_PauseGameObject)
             {
-                pauseGameObject.SetActive(false);
+                m_PauseGameObject.SetActive(false);
             }
             
-            if (mainGameObject)
+            if (m_MainGameObject)
             {
-                mainGameObject.SetActive(true);
+                m_MainGameObject.SetActive(true);
             }
         }
     }

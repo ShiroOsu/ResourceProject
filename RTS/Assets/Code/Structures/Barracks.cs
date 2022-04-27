@@ -26,23 +26,12 @@ namespace Code.Structures
         private const string c_BarracksImage = "BarracksImage";
         public event Action<TextureAssetType> OnSpawn;
 
-        public Vector3 FlagPoint { get; private set; }
+        public Vector3 FlagPoint { get; set; }
         private GameObject m_Flag = null;
         private bool m_SetSpawnFlag = false;
         public BarracksTimer barracksTimer;
         
-        private BarracksData m_BarracksData;
-        private Guid m_DataID;
-        
-        private void OnEnable()
-        {
-            // TODO: Store
-            if (m_BarracksData is null)
-            {
-                m_BarracksData = new(Guid.NewGuid());
-                m_DataID = m_BarracksData.dataID;
-            }
-        }
+        private readonly BarracksData m_BarracksData = new();
 
         private void Awake()
         {
