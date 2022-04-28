@@ -37,7 +37,7 @@ namespace Code.Managers
         {
             var loadedData = Extensions.LoadData<SaveData>($"/saves/SavedData{saveFileIndex}.save");
 
-            if (loadedData.imageInBytes == null)
+            if (loadedData == null)
             {
                 return null;
             }

@@ -69,7 +69,6 @@ namespace Code.SaveSystem
             {
                 var save = formatter.Deserialize(file);
                 file.Close();
-                Log.Print("SerializationManager.cs", "data loaded from file: " + file.Name);
                 return save;
             }
             catch (Exception e)

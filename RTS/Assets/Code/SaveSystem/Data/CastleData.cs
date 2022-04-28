@@ -1,5 +1,6 @@
 using System;
 using Code.Interfaces;
+using Code.Managers;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -25,9 +26,11 @@ namespace Code.SaveSystem.Data
 
         public void Instantiate(GameObject prefab, Vector3 flagPos)
         {
-            var newObj = Object.Instantiate(prefab);
+            var newObj = PoolManager.Instance.castlePool.Rent(true);
             newObj.transform.position = position;
             newObj.transform.rotation = rotation;
+            
+            // TODO: var flagObj = PoolManager.Instance.flagPoo.Rent(true); 
             flagPosition = flagPos;
         }
     }

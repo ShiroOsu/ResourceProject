@@ -61,6 +61,12 @@ namespace Code.SaveSystem.SavedGamesPanel
             }
             else if (SaveOrLoadManager.Instance.GetCurrentSaveOrLoadState == SaveOrLoadState.Load)
             {
+                if (saveImage.sprite == null)
+                {
+                    Log.Error("LoadOrSave.cs", $"There is no saved data on file {saveIndex}!");
+                    return;
+                }
+                
                 Load(saveIndex);
             }
         }

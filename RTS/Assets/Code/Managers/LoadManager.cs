@@ -1,6 +1,8 @@
 using Code.HelperClasses;
 using Code.SaveSystem.Data;
 using UnityEngine;
+using System.Threading.Tasks;
+using Code.Debugging;
 
 namespace Code.Managers
 {
@@ -11,12 +13,15 @@ namespace Code.Managers
         [SerializeField] private GameObject builderPrefab;
         [SerializeField] private GameObject soldierPrefab;
         [SerializeField] private GameObject horsePrefab;
-        private SaveData m_Data;
-        
-        public void InstantiateLoadedData(SaveData data)
+
+        public async Task StartInstantiateData(SaveData data)
         {
-            m_Data = data;
-            
+            InstantiateLoadedData(data);
+            await Task.Yield();
+        }
+        
+        private void InstantiateLoadedData(SaveData data)
+        {
             data.builderData.InstantiateUnitsInList(builderPrefab);
             data.soldierData.InstantiateUnitsInList(soldierPrefab);
             data.horseData.InstantiateUnitsInList(horsePrefab);

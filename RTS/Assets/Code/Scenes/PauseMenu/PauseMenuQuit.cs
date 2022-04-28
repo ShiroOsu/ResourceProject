@@ -1,4 +1,5 @@
 using Code.Interfaces;
+using Code.SaveSystem.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -34,6 +35,8 @@ namespace Code.Scenes.PauseMenu
 
         private void Confirmed()
         {
+            SaveData.Instance.OnDestroy();
+            
             #if UNITY_EDITOR
                 EditorApplication.isPlaying = false;
             #else

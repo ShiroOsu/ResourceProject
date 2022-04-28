@@ -1,7 +1,13 @@
 using System;
+using System.Collections;
+using Code.Debugging;
 using Code.HelperClasses;
+using Code.SaveSystem.Data;
 using Code.SaveSystem.SavedGamesPanel;
+using JetBrains.Annotations;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Code.Managers
 {
@@ -14,6 +20,7 @@ namespace Code.Managers
 
     public class GameManager : Singleton<GameManager>, PauseControls.IKeyboardActions
     {
+        [SerializeField] private string mainSceneName;
         public event Action <GameState>GameStateHandler;
         public GameState GetCurrentGameState { get; private set; }
 
@@ -27,6 +34,7 @@ namespace Code.Managers
             GetCurrentGameState = GameState.MainMenu;
 
             m_LoadOrSave = Extensions.GetComponentInScene<LoadOrSave>("SavedGamesPanel");
+            SaveManager.Instance.SceneLoader += SceneLoader;
         }
 
         public void BindLoadOrSaveCamera()
@@ -68,6 +76,52 @@ namespace Code.Managers
         {
             GetCurrentGameState = state;
             GameStateHandler?.Invoke(state);
+        }
+
+        private void SceneLoader(SaveData data)
+        {
+            UISceneManager.Instance.SetUIObjectActive("MainMenu", false);
+            UISceneManager.Instance.SetUIObjectActive("SavedGamesPanel", false);
+            UISceneManager.Instance.SetUIObjectActive("LoadingSceneGameObject");
+            StartCoroutine(LoadGameSceneAsync(mainSceneName, data));
+        }
+
+        private IEnumerator LoadGameSceneAsync(string sceneName, SaveData data)
+        {
+            var op = SceneManager.LoadSceneAsync(sceneName);
+
+            while (!op.isDone)
+            {
+                var value = Mathf.Round(Mathf.Clamp01(op.progress / 0.9f) * 100f);
+                Log.Print("GameManager.cs", "Load Scene progress: " + value + "%");
+                yield return null;
+            }
+
+            PoolManager.Instance.CreatePools();
+            
+            if (data is not null)
+            {
+                load(data);
+                Log.Print("GameManager.cs", "Instantiate data done");
+            }
+            
+            GameScene();
+        }
+
+        private async void load(SaveData data)
+        {
+            await LoadManager.Instance.StartInstantiateData(data);
+        }
+        
+        private void GameScene()
+        {
+            UISceneManager.Instance.SetUIObjectActive("LoadingSceneGameObject", false);
+            SetState(GameState.Running);
+        }
+
+        public void StartGame()
+        {
+            SceneLoader(null);
         }
     }
 }

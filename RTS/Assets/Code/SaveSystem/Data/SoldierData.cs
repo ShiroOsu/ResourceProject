@@ -1,7 +1,7 @@
 using System;
 using Code.Interfaces;
+using Code.Managers;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Code.SaveSystem.Data
 {
@@ -19,7 +19,7 @@ namespace Code.SaveSystem.Data
 
         public void Instantiate(GameObject prefab)
         {
-            var newObj = Object.Instantiate(prefab);
+            var newObj = PoolManager.Instance.soldierPool.Rent(true);
             newObj.transform.position = position;
             newObj.transform.rotation = rotation;
         }

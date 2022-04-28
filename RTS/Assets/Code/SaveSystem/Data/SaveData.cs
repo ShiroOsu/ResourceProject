@@ -21,5 +21,16 @@ namespace Code.SaveSystem.Data
         public List<BuilderData> builderData = new();
         public List<SoldierData> soldierData = new();
         public List<HorseData> horseData = new();
+
+        public void OnDestroy()
+        {
+            imageInBytes = null;
+            castleData = null;
+            barracksData = null;
+            builderData = null;
+            soldierData = null;
+            horseData = null;
+        }
+
     }
 }
