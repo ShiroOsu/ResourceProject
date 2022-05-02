@@ -2,6 +2,7 @@ using System;
 using Code.Interfaces;
 using Code.Managers;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Code.SaveSystem.Data
 {
@@ -20,8 +21,8 @@ namespace Code.SaveSystem.Data
         public void Instantiate(GameObject prefab)
         {
             var newObj = PoolManager.Instance.builderPool.Rent(true);
-            newObj.transform.position = position;
-            newObj.transform.rotation = rotation;
+            newObj.TryGetComponent<NavMeshAgent>(out var agent);
+            agent.Warp(position);
         }
     }
 }

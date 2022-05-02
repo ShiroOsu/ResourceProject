@@ -27,7 +27,7 @@ namespace Code.Structures
         public event Action<TextureAssetType> OnSpawn;
 
         public Vector3 FlagPoint { get; set; }
-        private GameObject m_Flag = null;
+        public GameObject Flag { get; set; }
         private bool m_SetSpawnFlag = false;
         public BarracksTimer barracksTimer;
         
@@ -35,6 +35,7 @@ namespace Code.Structures
 
         private void Awake()
         {
+            UpdateManager.Instance.OnUpdate += OnUpdate;
             navMeshObstacle.shape = NavMeshObstacleShape.Box;
             navMeshObstacle.size = sizer3D.GetSize(gameObject.transform.lossyScale);
 
@@ -49,7 +50,7 @@ namespace Code.Structures
             }
         }
 
-        private void Update()
+        private void OnUpdate()
         {
             if (barracksTimer)
             {
@@ -69,13 +70,13 @@ namespace Code.Structures
 
         private void SetFlagPosition()
         {
-            FlagManager.Instance.SetFlagPosition(m_Flag);
-            FlagPoint = m_Flag.transform.position;
+            FlagManager.Instance.SetFlagPosition(Flag);
+            FlagPoint = Flag.transform.position;
         }
 
         public void OnSetSpawnFlagPosition()
         {
-            m_Flag ??= FlagManager.Instance.InstantiateNewFlag();
+            Flag ??= FlagManager.Instance.InstantiateNewFlag();
             m_SetSpawnFlag = true;
         }
 
@@ -101,8 +102,8 @@ namespace Code.Structures
                 barracksTimer.timer.transform.SetParent(transform);
             }
 
-            if (m_Flag != null)
-                m_Flag.SetActive(select);
+            if (Flag != null)
+                Flag.SetActive(select);
 
             if (!select && m_SetSpawnFlag)
             {

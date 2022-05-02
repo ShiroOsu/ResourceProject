@@ -63,7 +63,7 @@ namespace Code.SaveSystem.SavedGamesPanel
             {
                 if (saveImage.sprite == null)
                 {
-                    Log.Error("LoadOrSave.cs", $"There is no saved data on file {saveIndex}!");
+                    Log.Error("LoadOrSave.cs", $"There is no saved data on file {saveIndex}!"); 
                     return;
                 }
                 

@@ -6,6 +6,7 @@ using Code.Managers.Building;
 using Code.Managers.Data;
 using Player;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Code.Player
@@ -50,6 +51,8 @@ namespace Code.Player
         
         private void Awake()
         {
+            UpdateManager.Instance.OnUpdate += OnUpdate;
+            
             m_Data = DataManager.Instance;
             m_SelectedUnitsList = new List<GameObject>();
 
@@ -61,7 +64,7 @@ namespace Code.Player
             m_MouseControls.Mouse.SetCallbacks(this);
         }
 
-        private void Update()
+        private void OnUpdate()
         {
             m_MousePosition = Mouse.current.position.ReadValue();
 
@@ -116,10 +119,10 @@ namespace Code.Player
 
         public void OnLeftMouseButtonHold(InputAction.CallbackContext context)
         {
-            // if (!EventSystem.current.IsPointerOverGameObject() && context.performed) // Performed?
-            // {
-            //     m_MultiSelect = true;
-            // }
+            if (!EventSystem.current.IsPointerOverGameObject() && context.performed) // Performed?
+            {
+                m_MultiSelect = true;
+            }
         }
 
         private void ClickingOnUnitsAndStructures()
@@ -261,8 +264,8 @@ namespace Code.Player
                 selectionImage.gameObject.SetActive(true);
             }
 
-            float width = m_MousePosition.x - m_BoxStartPos.x;
-            float height = m_MousePosition.y - m_BoxStartPos.y;
+            var width = m_MousePosition.x - m_BoxStartPos.x;
+            var height = m_MousePosition.y - m_BoxStartPos.y;
 
             selectionImage.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
             selectionImage.anchoredPosition = m_BoxStartPos + new Vector2(width * 0.5f, height * 0.5f);

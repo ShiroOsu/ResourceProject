@@ -15,15 +15,11 @@ namespace Code.Managers
         [SerializeField] private GameObject soldierPrefab;
         [SerializeField] private GameObject horseUnitPrefab;
 
-        [Header("Misc")] 
-        [SerializeField] private GameObject flagPrefab;
-
         public ObjectPooler castlePool;
         public ObjectPooler barracksPool;
         public ObjectPooler builderPool;
         public ObjectPooler soldierPool;
         public ObjectPooler horseUnitPool;
-        public ObjectPooler flagPool;
 
         public void CreatePools()
         {
@@ -32,15 +28,6 @@ namespace Code.Managers
             builderPool = new ObjectPooler(5, builderPrefab, new GameObject("BuilderPool").transform);
             soldierPool = new ObjectPooler(5, soldierPrefab, new GameObject("SoliderPool").transform);
             horseUnitPool = new ObjectPooler(5, horseUnitPrefab, new GameObject("HorseUnitPool").transform);
-            flagPool = new ObjectPooler(5, flagPrefab, new GameObject("FlagPool").transform);
-        }
-
-        public GameObject GetPooledMisc(TextureAssetType type, bool rent)
-        {
-            return type switch
-            {
-                _ => null
-            };
         }
 
         public GameObject GetPooledStructure(StructureType type, bool rent)

@@ -1,8 +1,8 @@
 using System;
 using Code.Interfaces;
 using Code.Managers;
+using Code.Structures;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Code.SaveSystem.Data
 {
@@ -30,8 +30,9 @@ namespace Code.SaveSystem.Data
             newObj.transform.position = position;
             newObj.transform.rotation = rotation;
             
-            // TODO: var flagObj = PoolManager.Instance.flagPoo.Rent(true); 
-            flagPosition = flagPos;
+            var flagObj = FlagManager.Instance.InstantiateNewFlag();
+            newObj.TryGetComponent<Castle>(out var castle);
+            castle.Flag = flagObj;
         }
     }
 }

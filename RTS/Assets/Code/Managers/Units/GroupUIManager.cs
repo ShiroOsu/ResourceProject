@@ -21,8 +21,8 @@ namespace Code.Managers.Units
         private void Awake()
         {
             m_Data = DataManager.Instance;
-            m_Data.mouseInputs.OnUpdateUnitList += HandleUnitList; // TODO: Delegate Allocation
-            m_Data.mouseInputs.OnDisableUnitImages += DisableUnitImages; // TODO: Delegate Allocation
+            m_Data.mouseInputs.OnUpdateUnitList += HandleUnitList; 
+            m_Data.mouseInputs.OnDisableUnitImages += DisableUnitImages;
 
             m_ParentObject = getParent.transform.parent.gameObject;
         }
