@@ -15,36 +15,53 @@ namespace Code.Managers.UI
         [Header("UI")] 
         [SerializeField] private GameObject objectWithStructureInfo;
         [SerializeField] private GameObject objectWithUnitInfo;
+        [SerializeField] private GameObject objectWithResourceInfo;
         [SerializeField] private StructureInfo structureInfo;
         [SerializeField] private UnitInfo unitInfo;
+        [SerializeField] private ResourceInfo resourceInfo;
         
         [Serializable] 
         public struct StructureInfo
         {
-            public TMP_Text name;
-            public TMP_Text armor;
+            public TMP_Text structureName;
+            public TMP_Text structureArmor;
             
-            public void SetValues(string _name, int _armor)
+            public void SetValues(string name, int armor)
             {
-                name.SetText(_name);
-                armor.SetText(_armor.ToString());
+                structureName.SetText(name);
+                structureArmor.SetText(armor.ToString());
             }
         }
         
         [Serializable]
         public struct UnitInfo
         {
-            public TMP_Text name;
-            public TMP_Text attack;
-            public TMP_Text attackSpeed;
-            public TMP_Text armor;
+            public TMP_Text unitName;
+            public TMP_Text unitAttack;
+            public TMP_Text unitAttackSpeed;
+            public TMP_Text unitArmor;
             
-            public void SetValues(string _name, int _attack, float _attackSpeed, int _armor)
+            public void SetValues(string name, int attack, float attackSpeed, int armor)
             {
-                name.SetText(_name);
-                attack.SetText(_attack.ToString());
-                attackSpeed.SetText(_attackSpeed.ToString());
-                armor.SetText(_armor.ToString());
+                unitName.SetText(name);
+                unitAttack.SetText(attack.ToString());
+                unitAttackSpeed.SetText(attackSpeed.ToString());
+                unitArmor.SetText(armor.ToString());
+            }
+        }
+        
+        [Serializable]
+        public struct ResourceInfo
+        {
+            public TMP_Text resourceName;
+            public TMP_Text resourceArmor;
+            public TMP_Text resources;
+            
+            public void SetValues(string name, uint resourcesLeft, int armor)
+            {
+                resourceName.SetText(name);
+                resources.SetText(resourcesLeft.ToString());
+                resourceArmor.SetText(armor.ToString());
             }
         }
 
@@ -56,6 +73,11 @@ namespace Code.Managers.UI
         public void StructureSelected(bool select, GameObject structure, StructureType type, GameObject image, StructureData data)
         {
             StructureUIProcessor.EnableUIForStructure(select, structure, type, image, data);
+        }
+
+        public void ResourceSelected(bool select, GameObject resource, ResourceType type, GameObject image, ResourceData data)
+        {
+            // resourceUIProcessor
         }
         
         // ------------------------------------------------------------------------
@@ -80,21 +102,42 @@ namespace Code.Managers.UI
 
         public void SetUnitStatsInfo(UnitData data)
         {
-            SwitchBetweenInfo(false);
+            SetObjectInfoActive(3);
             unitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor);
         }
         
         public void SetStructureStatsInfo(StructureData data)
         {
-            SwitchBetweenInfo(true);
+            SetObjectInfoActive(1);
             structureInfo.SetValues(data.structureName, data.armor);
         }
-
-        // Switch between structure and unit info
-        private void SwitchBetweenInfo(bool b)
+        
+        public void SetResourceStatsInfo(ResourceData data)
         {
-            objectWithStructureInfo.SetActive(b);
-            objectWithUnitInfo.SetActive(!b);
+            SetObjectInfoActive(2);
+            resourceInfo.SetValues(data.resourceName, data.resourcesLeft, data.armor);
+        }
+
+        private void SetObjectInfoActive(uint objIndex, bool active = true)
+        {
+            switch (objIndex)
+            {
+                case 1: // structure 1
+                    objectWithStructureInfo.SetActive(active);
+                    objectWithResourceInfo.SetActive(!active);
+                    objectWithUnitInfo.SetActive(!active);
+                    break;
+                case 2: // resource 2
+                    objectWithStructureInfo.SetActive(!active);
+                    objectWithResourceInfo.SetActive(active);
+                    objectWithUnitInfo.SetActive(!active);
+                    break;
+                case 3: // unit 3
+                    objectWithStructureInfo.SetActive(!active);
+                    objectWithResourceInfo.SetActive(!active);
+                    objectWithUnitInfo.SetActive(active);
+                    break;
+            }
         }
     }
 }

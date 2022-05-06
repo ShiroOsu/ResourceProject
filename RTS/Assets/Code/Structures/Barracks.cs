@@ -111,22 +111,11 @@ namespace Code.Structures
             }
         }
 
-        // Temp
-        public StructureData GetStructureData()
-        {
-            return data;
-        }
-
         public StructureType GetStructureType()
         {
             return StructureType.Barracks;
         }
-
-        public GameObject GetStructureImage()
-        {
-            return m_StructureImage;
-        }
-
+       
         public void Upgrade()
         {
         }

@@ -13,6 +13,13 @@ namespace Code.Enums
         Soldier,
         Horse,
     }
+
+    public enum ResourceType
+    {
+        Gold,
+        Wood,
+        Food,
+    }
     
     // Unity layers
     public enum UnityLayer

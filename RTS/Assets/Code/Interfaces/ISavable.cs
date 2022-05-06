@@ -17,4 +17,10 @@
         public UnityEngine.Vector3 GetFlagPosition();
         public void Instantiate(UnityEngine.GameObject prefab, UnityEngine.Vector3 flagPos);
     }
+
+    public interface IResourceData
+    {
+        public void Save(UnityEngine.GameObject gameObject, uint resourceLeft, uint workers);
+        public void Instantiate(UnityEngine.GameObject prefab);
+    }
 }

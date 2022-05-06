@@ -1656,6 +1656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 237076104686127573}
   timerFill: {fileID: 1693355654382477854}
+  removeFromQueue: {fileID: 3809752661937638728}
   imageQueue:
   - {fileID: 1591243763916178818}
   - {fileID: 1141222382323132693}
@@ -2640,6 +2641,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3809752661937638728 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5854604710692993635, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+  m_PrefabInstance: {fileID: 7341234815553468203}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &4193067066952365000 stripped

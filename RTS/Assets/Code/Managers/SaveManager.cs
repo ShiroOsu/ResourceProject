@@ -10,12 +10,13 @@ namespace Code.Managers
     public class SaveManager : Singleton<SaveManager>
     {
         public event Action<SaveData> SceneLoader;
+        private const string c_StartCastle = "StartCastle"; // Temp ?
 
         public void Save(int index, byte[] imageInBytes)
         {
-            foreach (var obj in FindObjectsOfType<GameObject>(true))
+            foreach (var obj in FindObjectsOfType<GameObject>(false))
             {
-                if (obj.TryGetComponent(out ISavable savable) && obj.activeInHierarchy)
+                if (obj.TryGetComponent(out ISavable savable) && obj.name != c_StartCastle)
                 {
                     savable.Save();
                 }

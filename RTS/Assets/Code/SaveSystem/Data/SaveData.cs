@@ -21,6 +21,9 @@ namespace Code.SaveSystem.Data
         public List<BuilderData> builderData = new();
         public List<SoldierData> soldierData = new();
         public List<HorseData> horseData = new();
+        
+        // Resources
+        public List<GoldmineData> goldminesData = new();
 
         public void OnDestroy()
         {
@@ -30,6 +33,7 @@ namespace Code.SaveSystem.Data
             builderData = null;
             soldierData = null;
             horseData = null;
+            goldminesData = null;
         }
 
     }

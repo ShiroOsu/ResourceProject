@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -10,10 +11,10 @@ using Code.Debugging;
 using Code.Interfaces;
 using Code.Managers;
 using Code.SaveSystem;
-using Code.SaveSystem.Data;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using UEObject = UnityEngine.Object;
 
@@ -37,6 +38,61 @@ namespace Code.HelperClasses
         public static bool WasMouseReleasedThisFrame()
         {
             return (Mouse.current.rightButton.wasReleasedThisFrame || Mouse.current.leftButton.wasReleasedThisFrame);
+        }
+
+        public static bool WasLeftMousePressed()
+        {
+            return Mouse.current.leftButton.wasPressedThisFrame;
+        }
+        
+        public static bool WasRightMousePressed()
+        {
+            return Mouse.current.rightButton.wasPressedThisFrame;
+        }
+        
+        public static bool WasLeftMouseReleased()
+        {
+            return Mouse.current.leftButton.wasReleasedThisFrame;
+        }
+        
+        public static bool WasRightMouseReleased()
+        {
+            return Mouse.current.rightButton.wasReleasedThisFrame;
+        }
+
+        public static bool WasKeyPressed(this KeyCode key)
+        {
+            return Keyboard.current[_lookup[(int)key]].wasPressedThisFrame;
+        }
+        
+        public static bool WasKeyReleased(this KeyCode key)
+        {
+            return Keyboard.current[_lookup[(int)key]].wasReleasedThisFrame;
+        }
+
+        public static bool IsKeyPressing(this KeyCode key, float threshold = 0f)
+        {
+            return Keyboard.current[_lookup[(int)key]].IsActuated(threshold);
+        }
+
+        private static Key[] _lookup = CreateKeyArray();
+        private static Key[] CreateKeyArray()
+        {
+            var keyCodes = Enum.GetValues(typeof(KeyCode));
+            var maxKey = keyCodes.Cast<int>().Max();
+            _lookup = new Key[maxKey];
+
+            foreach (KeyCode key in keyCodes)
+            {
+                var keyStr = key.ToString();
+                if (Enum.TryParse<Key>(keyStr, true, out var value))
+                {
+                    _lookup[(int)key] = value;
+                }
+            }
+            _lookup[(int)KeyCode.Return] = Key.Enter;
+            _lookup[(int)KeyCode.KeypadEnter] = Key.NumpadEnter;
+            return _lookup;
         }
 
         public static bool IsGameInRunState()
@@ -69,6 +125,16 @@ namespace Code.HelperClasses
         public static T LoadData<T>(string filepath)
         {
             return (T) SerializationManager.Load(Application.persistentDataPath + filepath);
+        }
+
+        public static T ExGetComponent<T>(this GameObject gameObject)
+        {
+            var b = gameObject.TryGetComponent(out T component);
+            if (!b)
+            {
+                Log.Error("Extensions.cs", $"{gameObject.name} does not have component of type: {typeof(T)}!");
+            }
+            return component;
         }
 
         // Convert image to savable format

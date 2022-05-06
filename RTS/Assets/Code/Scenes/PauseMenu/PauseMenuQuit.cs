@@ -1,8 +1,7 @@
-using Code.Interfaces;
+using Code.HelperClasses;
 using Code.SaveSystem.Data;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Code.Scenes.PauseMenu
@@ -22,7 +21,7 @@ namespace Code.Scenes.PauseMenu
 
         private void Update()
         {
-            if (quitPanel.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
+            if (quitPanel.activeInHierarchy && KeyCode.Escape.WasKeyPressed())
             {
                 quitPanel.SetActive(false);
             }
@@ -35,6 +34,7 @@ namespace Code.Scenes.PauseMenu
 
         private void Confirmed()
         {
+            // TODO: What if unexpected shutdown
             SaveData.Instance.OnDestroy();
             
             #if UNITY_EDITOR

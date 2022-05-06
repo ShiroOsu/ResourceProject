@@ -63,7 +63,7 @@ namespace Code.Timers
 
             if (!IsSpawning)
             {
-                StartCoroutine(SpawnRoutine(Barracks.unitSpawnPoint.position, Barracks.FlagPoint));// TODO: Delegate Allocation
+                StartCoroutine(SpawnRoutine(Barracks.unitSpawnPoint.position, Barracks.FlagPoint));
             }
         }
         
@@ -78,10 +78,17 @@ namespace Code.Timers
                 var unitType = SpawnQueue.Dequeue();
                 m_CurrentUnitToSpawn = unitType;
                 
-                float timeToSpawn = CurrentUnitTimeSpawn = GetUnitSpawnTime(m_CurrentUnitToSpawn);
+                var timeToSpawn = CurrentUnitTimeSpawn = GetUnitSpawnTime(m_CurrentUnitToSpawn);
             
                 while (CurrentTimeOnSpawn < timeToSpawn)
                 {
+                    if (imageQueue[0].texture == null)
+                    {
+                        IsSpawning = false;
+                        ClearTimer();
+                        yield break;
+                    }
+                    
                     CurrentTimeOnSpawn += Time.deltaTime;
                     yield return null;
                 }

@@ -71,22 +71,30 @@ namespace Code.Timers
 
             while (SpawnQueue.Count > 0)
             {
-                float timeToSpawn = GetUnitSpawnTime(TextureAssetType.Builder);
+                var timeToSpawn = GetUnitSpawnTime(TextureAssetType.Builder);
                 CurrentTimeOnSpawn = 0f;
 
                 var unitType = SpawnQueue.Dequeue();
             
                 while (CurrentTimeOnSpawn < timeToSpawn)
                 {
+                    if (imageQueue[0].texture == null)
+                    {
+                        IsSpawning = false;
+                        ClearTimer();
+                        yield break;
+                    }
+                    
                     CurrentTimeOnSpawn += Time.deltaTime;
                     yield return null;
                 }
 
-                SpawnManager.Instance.SpawnUnit(unitType, startPos, endPos);  
-
-                RemoveImageInQueue();
+                if (imageQueue[0].texture != null)
+                {
+                    SpawnManager.Instance.SpawnUnit(unitType, startPos, endPos);
+                    RemoveImageInQueue();
+                }
             }
-
             IsSpawning = false;
         }
     }

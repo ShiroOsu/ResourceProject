@@ -1,6 +1,6 @@
+using Code.HelperClasses;
 using Code.Managers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Code.Scenes.PauseMenu
 {
@@ -12,13 +12,12 @@ namespace Code.Scenes.PauseMenu
         private void Start()
         {
             m_SavedGamesPanel = UISceneManager.Instance.GetUISceneObject("SavedGamesPanel");
-            //m_SavedGamesPanel = Extensions.FindObject("SavedGamesPanel");
             m_PausedGamePanel = gameObject;
         }
 
         private void Update()
         {
-            if (m_SavedGamesPanel.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
+            if (m_SavedGamesPanel.activeInHierarchy && KeyCode.Escape.WasKeyPressed())
             {
                 ClosePanel(false);
             }

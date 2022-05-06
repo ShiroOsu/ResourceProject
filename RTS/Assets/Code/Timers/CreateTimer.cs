@@ -14,13 +14,19 @@ namespace Code.Timers
     {
         [FormerlySerializedAs("m_Timer")] public GameObject timer;
         [FormerlySerializedAs("m_TimerFill")] public Slider timerFill;
+        public Button removeFromQueue;
         [FormerlySerializedAs("m_ImageQueue")] public RawImage[] imageQueue;
 
         protected readonly Queue<TextureAssetType> SpawnQueue = new();
         protected float CurrentUnitTimeSpawn;
         protected bool IsSpawning;
         protected float CurrentTimeOnSpawn;
-        protected int i = 0;
+        protected int i;
+
+        private void Awake()
+        {
+            removeFromQueue.onClick.AddListener(RemoveFromQueueByButton);
+        }
 
         public virtual void AddActionOnSpawn(bool add)
         {
@@ -40,6 +46,24 @@ namespace Code.Timers
         protected virtual IEnumerator SpawnRoutine(Vector3 startPos, Vector3 endPos)
         {
             return null;
+        }
+
+        private void RemoveFromQueueByButton()
+        {
+            if (SpawnQueue.Count > 0)
+            {
+                RemoveImageInQueue();
+                CurrentTimeOnSpawn = 0f;
+            }
+        }
+
+        protected void ClearTimer()
+        {
+            if (imageQueue[0].texture == null)
+            {
+                SpawnQueue.Clear();
+                ShowTimer(false);
+            }
         }
 
         protected void RemoveImageInQueue()
@@ -75,6 +99,11 @@ namespace Code.Timers
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
             return unitTime;
+        }
+
+        private void OnDestroy()
+        {
+            removeFromQueue.onClick.RemoveAllListeners();
         }
     }
 }
