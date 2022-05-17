@@ -29,6 +29,9 @@ namespace Code.Managers.Units
 
         private void HandleUnitList(List<GameObject> unitList)
         {
+            m_TextureList.Clear();
+            DisableUnitImages();
+            
             foreach (var unit in unitList)
             {
                 unit.TryGetComponent(out IUnit u);

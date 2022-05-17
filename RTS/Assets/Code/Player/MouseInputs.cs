@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
 using Code.Managers.Data;
+using Code.Managers.UI;
+using Code.Resources;
+using Code.Units.Builder;
 using Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,16 +32,22 @@ namespace Code.Player
         // Interaction
         private LayerMask m_UnitMask;
         private LayerMask m_StructureMask;
+        private LayerMask m_ResourceMask;
         private LayerMask m_GroundMask;
-
-        private List<GameObject> m_SelectedUnitsList;
 
         private Vector2 m_MousePosition;
 
         // Public stuff
         public Ray PlacementRay => camera.ScreenPointToRay(m_MousePosition);
+        public List<GameObject> SelectedUnitsList { get; private set; }
+
         public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
+        public void OnUpdateUnitListInvoker(List<GameObject> unitList)
+        {
+            OnUpdateUnitList?.Invoke(unitList);            
+        }
+
         public event Action OnDisableUnitImages;
         
         // Controls
@@ -47,7 +57,7 @@ namespace Code.Player
         private float m_Timer = 1f;
 
         private IStructure m_CurrentStructure;
-        private IResource m_CurrentResource;
+        public IResource CurrentResource;
         private static readonly int Clicked = Animator.StringToHash("Clicked");
 
         private DataManager m_Data;
@@ -57,10 +67,11 @@ namespace Code.Player
             UpdateManager.Instance.OnUpdate += OnUpdate;
             
             m_Data = DataManager.Instance;
-            m_SelectedUnitsList = new List<GameObject>();
+            SelectedUnitsList = new List<GameObject>();
 
             m_UnitMask = m_Data.mouseData.unitMask;
             m_StructureMask = m_Data.mouseData.structureMask;
+            m_ResourceMask = m_Data.mouseData.resourceMask;
             m_GroundMask = m_Data.mouseData.groundMask;
 
             m_MouseControls = new MouseControls();
@@ -147,8 +158,11 @@ namespace Code.Player
                 {
                     ClickOnBuilding(structure);
                 }
+            }
 
-                if (sHit.transform.parent.TryGetComponent(out IResource resource))
+            if (Physics.Raycast(ray, out var rHit, Mathf.Infinity, m_ResourceMask))
+            {
+                if (rHit.transform.parent.TryGetComponent(out IResource resource))
                 {
                     ClickOnResource(resource);
                 }
@@ -168,6 +182,7 @@ namespace Code.Player
             if (structure == m_CurrentStructure)
                 return;
 
+            ClearCurrentResource();
             ClearCurrentStructure();
             ClearUnitList();
 
@@ -179,7 +194,7 @@ namespace Code.Player
 
         private void ClickOnResource(IResource resource)
         {
-            if (resource == m_CurrentResource) return;
+            if (resource == CurrentResource) return;
             
             ClearUnitList();
             ClearCurrentStructure();
@@ -187,22 +202,23 @@ namespace Code.Player
             
             SelectUnits(false);
 
-            m_CurrentResource = resource;
-            m_CurrentResource.ShouldSelect(true);
+            CurrentResource = resource;
+            CurrentResource.ShouldSelect(true);
         }
 
         private void ClickOnUnit(GameObject unit)
         {
             ClearCurrentStructure();
+            ClearCurrentResource();
             ClearUnitList();
 
-            m_SelectedUnitsList.Add(unit);
+            SelectedUnitsList.Add(unit);
             SelectUnits(true);
         }
 
         private void MovingSelectedUnits()
         {
-            if (m_SelectedUnitsList.Count < 1)
+            if (SelectedUnitsList.Count < 1)
                 return;
 
             var ray = camera.ScreenPointToRay(m_MousePosition);
@@ -217,6 +233,24 @@ namespace Code.Player
             }
 
             Vector3 newPosition;
+            
+            if (Physics.Raycast(ray, out var rHit, Mathf.Infinity, m_ResourceMask))
+            {
+                newPosition = rHit.point;
+                var resource = rHit.transform.parent.gameObject.ExGetComponent<Goldmine>(); 
+
+                foreach (var unit in SelectedUnitsList)
+                {
+                    unit.TryGetComponent(out IUnit u);
+                    if (u.GetUnitType() != UnitType.Builder)
+                        continue;
+                    
+                    var builder = u.GetUnitObject().ExGetComponent<BuilderUnit>();
+                    builder.MoveToResource(newPosition, resource);
+                }
+                return;
+            }
+            
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, m_GroundMask))
             {
                 newPosition = hit.point;
@@ -227,7 +261,7 @@ namespace Code.Player
                 return;
             }
 
-            foreach (var unit in m_SelectedUnitsList)
+            foreach (var unit in SelectedUnitsList)
             {
                 unit.TryGetComponent(out IUnit u);
                 u.Move(newPosition);
@@ -261,17 +295,18 @@ namespace Code.Player
                 if (!rect.Contains(unitScreenPos)) continue;
 
                 // Limit determined by amount on units fits on the UI middle border (35x3)
-                if (!m_SelectedUnitsList.Contains(unit) && m_SelectedUnitsList.Count < 105)
+                if (!SelectedUnitsList.Contains(unit) && SelectedUnitsList.Count < 105)
                 {
-                    m_SelectedUnitsList.Add(unit);
+                    SelectedUnitsList.Add(unit);
                 }
             }
 
-            // From structure selection to unit, un select current structure
+            // From structure selection to unit, un select current structure/resource
             ClearCurrentStructure();
+            ClearCurrentResource();
 
             // If there is only one unit in selected, single select that unit, do not multi select
-            if (m_SelectedUnitsList.Count == 1)
+            if (SelectedUnitsList.Count == 1)
             {
                 SelectUnits(true);
                 return;
@@ -306,7 +341,7 @@ namespace Code.Player
 
         private void SelectUnits(bool select)
         {
-            foreach (var unit in m_SelectedUnitsList)
+            foreach (var unit in SelectedUnitsList)
             {
                 unit.TryGetComponent(out IUnit u);
 
@@ -318,18 +353,18 @@ namespace Code.Player
                 return;
             }
 
-            m_SelectedUnitsList.Clear();
+            SelectedUnitsList.Clear();
         }
 
         private void MultiSelectUnits(bool select)
         {
-            foreach (var unit in m_SelectedUnitsList)
+            foreach (var unit in SelectedUnitsList)
             {
                 unit.TryGetComponent(out IUnit u);
                 u.ActivateSelectionCircle(true);
             }
 
-            var firstUnit = m_SelectedUnitsList[0];
+            var firstUnit = SelectedUnitsList[0];
             firstUnit.TryGetComponent(out IUnit u1);
             u1.ShouldSelect(true);
 
@@ -338,7 +373,7 @@ namespace Code.Player
                 return;
             }
 
-            m_SelectedUnitsList.Clear();
+            SelectedUnitsList.Clear();
         }
 
         private void ClearUnitList()
@@ -356,16 +391,16 @@ namespace Code.Player
 
         private void ClearCurrentResource()
         {
-            m_CurrentResource?.ShouldSelect(false);
-            m_CurrentResource = null;
+            CurrentResource?.ShouldSelect(false);
+            CurrentResource = null;
         }
 
         private void SetUnitGroup(bool select)
         {
-            if (m_SelectedUnitsList.Count < 1)
+            if (SelectedUnitsList.Count < 1)
                 return;
 
-            OnUpdateUnitList?.Invoke(m_SelectedUnitsList);
+            OnUpdateUnitList?.Invoke(SelectedUnitsList);
             MultiSelectUnits(select);
         }
 

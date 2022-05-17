@@ -50,6 +50,11 @@ namespace Code.Units.Soldier
         {
             return m_UnitImage;
         }
+        
+        public GameObject GetUnitObject()
+        {
+            return gameObject;
+        }
 
         public void ShouldSelect(bool select)
         {
@@ -75,11 +80,6 @@ namespace Code.Units.Soldier
         public bool IsUnitMoving()
         {
             throw new System.NotImplementedException();
-        }
-
-        public Vector3Int GetPosition()
-        {
-            return gameObject.transform.position.Vector3ToVector3Int();
         }
 
         public void Save()

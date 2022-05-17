@@ -21,6 +21,8 @@ namespace Backlog
     // TODO: Options UI.
     
     // TODO: Load a saved file to main scene.
+    
+    // TODO: Separate "AllTextures" into respective texture SO.
 
     #endregion Important
     

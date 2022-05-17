@@ -8,23 +8,23 @@ using UnityEngine;
 
 namespace Code.Managers.Resource
 {
-    public class GoldmineUIManager : MonoBehaviour
+    public class GoldmineUIManager : ResourceUIManager
     {
         private Goldmine m_GoldmineRef;
-        //public StructureType Type => StructureType.Castle;
+        public override ResourceType Type => ResourceType.Gold;
 
-        public void EnableMainUI(bool active, GameObject resource, StructureType type, GameObject image, ResourceData data)
+        public override void EnableMainUI(bool active, GameObject resource, ResourceType type, GameObject image, ResourceData data)
         {
             m_GoldmineRef = resource.ExGetComponent<Goldmine>();
-            //UIManager.Instance.AddTimerToUI(m_GoldmineRef.castleTimer.timer, m_GoldmineRef.castleUIMiddle);
+            UIManager.Instance.AddTimerToUI(m_GoldmineRef.goldmineWorkers.timer, m_GoldmineRef.goldmineUIMiddle);
             UIManager.Instance.SetResourceStatsInfo(data);
             
             if (active)
             {
-                //BindButtons();
+                BindButtons();
             }
 
-            //m_GoldmineRef.castleUIMiddle.SetActive(active);
+            m_GoldmineRef.goldmineUIMiddle.SetActive(active);
             image.SetActive(active);
 
             // When de-select remove listeners
@@ -34,13 +34,10 @@ namespace Code.Managers.Resource
             }
         }
 
-        // protected override void BindButtons()
-        // {
-        //     MenuButtons.Instance.BindMenuButton(m_GoldmineRef.OnSetSpawnFlagPosition, 0, 
-        //         AllTextures.Instance.GetTexture(TextureAssetType.Flag));
-        //     
-        //     MenuButtons.Instance.BindMenuButton(m_GoldmineRef.OnSpawnBuilderButton, 4, 
-        //         AllTextures.Instance.GetTexture(TextureAssetType.Builder));
-        // }
+        protected override void BindButtons()
+        {
+            // MenuButtons.Instance.BindMenuButton(m_GoldmineRef.OnDestroyMine, 1,
+            //     AllTextures.Instance.GetTexture(TextureAssetType.Destroy));
+        }
     }
 }

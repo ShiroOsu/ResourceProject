@@ -20,6 +20,7 @@ namespace Code.Timers
         protected readonly Queue<TextureAssetType> SpawnQueue = new();
         protected float CurrentUnitTimeSpawn;
         protected bool IsSpawning;
+        protected bool IsWorking;
         protected float CurrentTimeOnSpawn;
         protected int i;
 
@@ -48,7 +49,12 @@ namespace Code.Timers
             return null;
         }
 
-        private void RemoveFromQueueByButton()
+        protected virtual IEnumerator WorkRoutine()
+        {
+            return null;
+        }
+
+        protected virtual void RemoveFromQueueByButton()
         {
             if (SpawnQueue.Count > 0)
             {

@@ -13,16 +13,11 @@ namespace Code.Interfaces
 
         public UnitType GetUnitType();
         public TextureAssetType GetUnitTexture();
-        public UnitData GetUnitData();
-        public GameObject GetUnitImage();
+        public UnitData GetUnitData(); // Temp
+        public GameObject GetUnitImage(); // Temp
+        public GameObject GetUnitObject();
 
         public void Move(Vector3 destination);
         public bool IsUnitMoving();
-        
-        /// <summary>
-        /// Returns current position
-        /// </summary>
-        /// <returns> Vector3Int </returns>
-        public Vector3Int GetPosition();
     }
 }

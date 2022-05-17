@@ -17,7 +17,10 @@ MonoBehaviour:
     m_Bits: 512
   structureMask:
     serializedVersion: 2
-    m_Bits: 5120
+    m_Bits: 1024
+  resourceMask:
+    serializedVersion: 2
+    m_Bits: 4096
   groundMask:
     serializedVersion: 2
     m_Bits: 128

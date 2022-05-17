@@ -1,42 +1,101 @@
+using Code.Enums;
+using Code.HelperClasses;
 using Code.Interfaces;
+using Code.Managers;
+using Code.Managers.UI;
 using Code.SaveSystem.Data;
+using Code.ScriptableObjects;
+using Code.Tools;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Code.Resources
 {
     public class Goldmine : MonoBehaviour, IResource, ISavable
     {
+        [SerializeField] private ResourceData data;
+        [SerializeField] private NavMeshObstacle navMeshObstacle;
+        [SerializeField] private CustomSizer3D sizer3D;
+        [SerializeField] private GameObject outlineRenderer;
+        public GameObject goldmineUIMiddle;
+        public Transform removedUnitsSpawnPos;
         public uint currentGoldLeft;
         public uint currentWorkersInMine;
+        public GoldmineWorkers goldmineWorkers;
         
-        private const uint c_MaxNumberOfWorkers = 10;
-        private const uint c_MaxAmountOfGold = 1000000;
 
         private readonly GoldmineData m_GoldmineData = new();
+        private GameObject m_ResourceImage;
+        private const string c_NameOfUIObjectInScene = "GoldmineUIMiddle";
+        private const string c_ResourceImage = "GoldmineImage";
 
         private void Awake()
         {
+            UpdateManager.Instance.OnUpdate += OnUpdate;
             
+            // Destroy goldmine when it reaches 0 resources left?
+            // Otherwise the gold will be set to default again in awake
+            currentGoldLeft = m_GoldmineData.gold == 0 ? data.resourcesLeft : m_GoldmineData.gold;
+            
+            // This might be hard,
+            // So I will not think about it before goldmine is working
+            //currentWorkersInMine = m_GoldmineData.workersInMine;
+            
+            navMeshObstacle.shape = NavMeshObstacleShape.Box;
+            navMeshObstacle.size = sizer3D.GetSize(gameObject.transform.lossyScale);
+            
+            if (!m_ResourceImage)
+            {
+                m_ResourceImage = Extensions.FindObject(c_ResourceImage);
+            }
+
+            if (!goldmineUIMiddle)
+            {
+                goldmineUIMiddle = Extensions.FindObject(c_NameOfUIObjectInScene);
+            }
         }
 
-        public void Save()
+        private void OnUpdate()
         {
-            m_GoldmineData.Save(gameObject, currentGoldLeft, currentWorkersInMine);
+            if (!goldmineWorkers)
+            {
+                return;
+            }
+            
+            goldmineWorkers.TimerUpdate();
+        }
+
+        public bool AddWorkerToMine(TextureAssetType type)
+        {
+            return goldmineWorkers.AddWorker(type);
         }
 
         public void ShouldSelect(bool select)
         {
-            //UIManager.Instance.ResourceSelected(select, gameObject, gameObject);
-            
-            //UIManager.Instance.StructureSelected(select, gameObject, StructureType.Castle, m_StructureImage, data);
-            //castleTimer.Castle = this;
-            //castleTimer.AddActionOnSpawn(select);
-            //outlineRenderer.SetActive(select);
+            UIManager.Instance.ResourceSelected(select, gameObject, ResourceType.Gold, m_ResourceImage, data);
+            goldmineWorkers.Goldmine = this;
+            outlineRenderer.SetActive(select);
 
             if (!select)
             {
-                //castleTimer.timer.transform.SetParent(transform);
+                goldmineWorkers.gameObject.transform.SetParent(transform);
             }
+        }
+
+        public void ReduceResources(uint amount)
+        {
+            currentGoldLeft -= amount;
+            data.resourcesLeft = currentGoldLeft;
+            if (outlineRenderer.activeInHierarchy)
+            {
+                UIManager.Instance.SetResourceStatsInfo(data);
+            }
+        }
+        
+        public void Save()
+        {
+            m_GoldmineData.Save(gameObject, currentGoldLeft, currentWorkersInMine);
+            SaveData.Instance.goldminesData.Add(m_GoldmineData);
         }
     }
 }

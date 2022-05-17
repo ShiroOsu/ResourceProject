@@ -9,6 +9,7 @@ namespace Code.ScriptableObjects
     {
         public LayerMask unitMask;
         public LayerMask structureMask;
+        public LayerMask resourceMask;
         public LayerMask groundMask;
 
         // During game time the health of the player data will be "runTimeHealth"

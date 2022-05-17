@@ -37,6 +37,9 @@ namespace Code.Enums
         Flag,
         Build,
         Back, // No texture for this yet
+        Gold,
+        Wood,
+        Food,
 	}
 
     public enum LogMaskThreshold

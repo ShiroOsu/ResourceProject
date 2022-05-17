@@ -67,6 +67,10 @@ namespace Code.Units.Horse
         {
             return m_UnitImage;
         }
+        public GameObject GetUnitObject()
+        {
+            return gameObject;
+        }
 
         public void Move(Vector3 destination)
         {
@@ -76,11 +80,6 @@ namespace Code.Units.Horse
         public bool IsUnitMoving()
         {
             throw new System.NotImplementedException();
-        }
-
-        public Vector3Int GetPosition()
-        {
-            return gameObject.transform.position.Vector3ToVector3Int();
         }
 
         public void Save()

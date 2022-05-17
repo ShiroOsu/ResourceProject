@@ -1,6 +1,7 @@
 using System;
 using Code.Enums;
 using Code.HelperClasses;
+using Code.Managers.Resource;
 using Code.Managers.Structures;
 using Code.Managers.Units;
 using Code.ScriptableObjects;
@@ -63,6 +64,11 @@ namespace Code.Managers.UI
                 resources.SetText(resourcesLeft.ToString());
                 resourceArmor.SetText(armor.ToString());
             }
+
+            public void UpdateResourcesLeft(uint amount)
+            {
+                resources.SetText(amount.ToString());
+            }
         }
 
         public void UnitSelected(bool select, GameObject unit, UnitType type, GameObject image, UnitData data)
@@ -77,7 +83,7 @@ namespace Code.Managers.UI
 
         public void ResourceSelected(bool select, GameObject resource, ResourceType type, GameObject image, ResourceData data)
         {
-            // resourceUIProcessor
+            ResourceUIProcessor.EnableUIForResource(select, resource, type, image, data);
         }
         
         // ------------------------------------------------------------------------
