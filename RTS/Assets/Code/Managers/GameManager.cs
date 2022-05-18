@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Code.Debugging;
 using Code.HelperClasses;
+using Code.Managers.Data;
 using Code.SaveSystem.Data;
 using Code.SaveSystem.SavedGamesPanel;
 using UnityEngine;

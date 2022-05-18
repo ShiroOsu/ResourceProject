@@ -1,3 +1,4 @@
+using System;
 using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
@@ -20,22 +21,19 @@ namespace Code.Resources
         public GameObject goldmineUIMiddle;
         public Transform removedUnitsSpawnPos;
         public uint currentGoldLeft;
+        public uint goldLoadedFromData;
         public uint currentWorkersInMine;
         public GoldmineWorkers goldmineWorkers;
-        
 
         private readonly GoldmineData m_GoldmineData = new();
         private GameObject m_ResourceImage;
         private const string c_NameOfUIObjectInScene = "GoldmineUIMiddle";
         private const string c_ResourceImage = "GoldmineImage";
-
+        private bool m_FirstSelect = true;
+        
         private void Awake()
         {
             UpdateManager.Instance.OnUpdate += OnUpdate;
-            
-            // Destroy goldmine when it reaches 0 resources left?
-            // Otherwise the gold will be set to default again in awake
-            currentGoldLeft = m_GoldmineData.gold == 0 ? data.resourcesLeft : m_GoldmineData.gold;
             
             // This might be hard,
             // So I will not think about it before goldmine is working
@@ -72,6 +70,13 @@ namespace Code.Resources
 
         public void ShouldSelect(bool select)
         {
+            if (m_FirstSelect)
+            {            
+                currentGoldLeft = goldLoadedFromData != 0 ? goldLoadedFromData : data.resourcesLeft;
+                data.resourcesLeft = currentGoldLeft;
+                m_FirstSelect = false;
+            }
+            
             UIManager.Instance.ResourceSelected(select, gameObject, ResourceType.Gold, m_ResourceImage, data);
             goldmineWorkers.Goldmine = this;
             outlineRenderer.SetActive(select);
@@ -86,7 +91,7 @@ namespace Code.Resources
         {
             currentGoldLeft -= amount;
             data.resourcesLeft = currentGoldLeft;
-            if (outlineRenderer.activeInHierarchy)
+            if (outlineRenderer.activeInHierarchy) // If it is selected
             {
                 UIManager.Instance.SetResourceStatsInfo(data);
             }

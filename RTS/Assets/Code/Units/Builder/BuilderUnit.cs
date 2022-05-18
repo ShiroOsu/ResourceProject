@@ -112,7 +112,7 @@ namespace Code.Units.Builder
         private IEnumerator HasAgentReachedDestination(NavMeshAgent agent, Vector3 dest, IResource resource)
         {
             var curDist = Vector3.Distance(agent.transform.position, dest);
-            const float distAwayFromEnd = 4f;
+            const float distAwayFromEnd = 3f;
             
             while (curDist > distAwayFromEnd && agent.hasPath)
             {
@@ -127,7 +127,7 @@ namespace Code.Units.Builder
         private void ReachedResource(IResource resource)
         {
             var added = resource.AddWorkerToMine(GetUnitTexture());
-            m_Agent.SetDestination(m_Agent.transform.position);
+            m_Agent.SetDestination(m_Agent.transform.position); // Stop moving agent
 
             if (!added)
             {
@@ -142,6 +142,8 @@ namespace Code.Units.Builder
                 gameObject.SetActive(false);
                 m_DataManager.mouseInputs.OnUpdateUnitListInvoker(selectedUnits);
             }
+            
+            // TODO: Happens for every unit in selection, only needs to happen once
             resource.ShouldSelect(true);
             m_DataManager.mouseInputs.CurrentResource = resource;
         }

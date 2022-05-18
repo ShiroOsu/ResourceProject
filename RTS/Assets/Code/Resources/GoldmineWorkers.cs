@@ -14,6 +14,8 @@ namespace Code.Resources
 
         public bool AddWorker(TextureAssetType type)
         {
+            timerFill.maxValue = C_TimeUntilHarvest;
+            
             if (i >= imageQueue.Length)
             {
                 Log.Print("GoldmineWorkers.cs", "Goldmine is full!");
@@ -38,10 +40,9 @@ namespace Code.Resources
 
             while (SpawnQueue.Count > 0)
             {
-                const float timeToSpawn = 2f;
                 CurrentTimeOnSpawn = 0f;
             
-                while (CurrentTimeOnSpawn < timeToSpawn)
+                while (CurrentTimeOnSpawn < C_TimeUntilHarvest)
                 {
                     if (imageQueue[0].texture == null)
                     {
@@ -54,7 +55,7 @@ namespace Code.Resources
                     yield return null;
                 }
 
-                Log.Print("GoldmineWorkers.cs", "Added X amount of gold.");
+                Log.Print("GoldmineWorkers.cs", $"Added {SpawnQueue.Count * 10} amount of gold.");
                 Goldmine.ReduceResources((uint)SpawnQueue.Count * 10);
                 // PlayerResources.Instance.AddGold(10 * SpawnQueue.Count * (UpgradeLevel));
                 
@@ -72,6 +73,7 @@ namespace Code.Resources
                 }
                 
                 ShowTimer(true);
+                timerFill.value = CurrentTimeOnSpawn;
             }
             else
             {

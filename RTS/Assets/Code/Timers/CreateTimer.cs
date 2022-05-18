@@ -19,6 +19,7 @@ namespace Code.Timers
 
         protected readonly Queue<TextureAssetType> SpawnQueue = new();
         protected float CurrentUnitTimeSpawn;
+        protected const float C_TimeUntilHarvest = 2f;
         protected bool IsSpawning;
         protected bool IsWorking;
         protected float CurrentTimeOnSpawn;
@@ -72,6 +73,7 @@ namespace Code.Timers
             }
         }
 
+        // TODO: Does not remove correct image when removed by button click
         protected void RemoveImageInQueue()
         {
             i--; // i is equal to the length of m_SpawnQueue

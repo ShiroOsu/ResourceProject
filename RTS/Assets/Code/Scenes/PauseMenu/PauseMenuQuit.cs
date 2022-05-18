@@ -48,5 +48,10 @@ namespace Code.Scenes.PauseMenu
         {
             quitPanel.SetActive(false);
         }
+
+        private void OnDestroy()
+        {
+            SaveData.Instance.OnDestroy();
+        }
     }
 }

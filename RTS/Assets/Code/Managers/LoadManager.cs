@@ -7,11 +7,13 @@ namespace Code.Managers
 {
     public class LoadManager : Singleton<LoadManager>
     {
+        // TODO: List by Enum
         [SerializeField] private GameObject castlePrefab;
         [SerializeField] private GameObject barracksPrefab;
         [SerializeField] private GameObject builderPrefab;
         [SerializeField] private GameObject soldierPrefab;
         [SerializeField] private GameObject horsePrefab;
+        [SerializeField] private GameObject goldminePrefab;
 
         public async Task StartInstantiateData(SaveData data)
         {
@@ -27,6 +29,7 @@ namespace Code.Managers
             
             data.castleData.InstantiateStructuresInList(castlePrefab);
             data.barracksData.InstantiateStructuresInList(barracksPrefab);
+            data.goldminesData.InstantiateResourcesInList(goldminePrefab);
         }
     }
 }

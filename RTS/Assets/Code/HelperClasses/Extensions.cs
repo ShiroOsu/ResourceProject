@@ -190,6 +190,15 @@ namespace Code.HelperClasses
             }
         }
 
+        public static void InstantiateResourcesInList<T>(this List<T> dataList, GameObject prefab) where T : IResourceData
+        {
+            foreach (var data in dataList)
+            {
+                data.Instantiate(prefab);
+                Log.Print("Extensions.cs", "Instantiate Resource: " + prefab.name);
+            }
+        }
+
         public static T GetComponentTFromObj<T>(this GameObject gameObject) where T : Component
         {
             return gameObject.GetComponent<T>() != null ? gameObject.GetComponent<T>() : null;

@@ -20,6 +20,7 @@ namespace Code.SaveSystem.Data
             rotation = gameObject.transform.rotation;
 
             gold = resourcesLeft;
+            Debug.Log("gold to save: " + gold);
             workersInMine = workers;
         }
 
@@ -30,7 +31,8 @@ namespace Code.SaveSystem.Data
             newObj.transform.rotation = rotation;
 
             var goldmine = newObj.ExGetComponent<Goldmine>();
-            goldmine.currentGoldLeft = gold;
+            Debug.Log("LoadedGold: " + gold);
+            goldmine.goldLoadedFromData = gold;
             goldmine.currentWorkersInMine = workersInMine;
         }
     }

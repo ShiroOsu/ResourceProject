@@ -8,5 +8,7 @@ namespace Code.ScriptableObjects
         public string resourceName;
         public uint resourcesLeft;
         public int armor = 10;
+
+        public const uint C_MaxAmount = 1000000;
     }
 }
