@@ -11,7 +11,6 @@ namespace Code.Managers
         private void Awake()
         {
             GameManager.Instance.GameStateHandler += Pause;
-            GameManager.Instance.BindLoadOrSaveCamera();
 
             m_PauseGameObject = UISceneManager.Instance.GetUISceneObject("PauseScreen");
             m_MainUI = UISceneManager.Instance.GetUISceneObject("MainUI");

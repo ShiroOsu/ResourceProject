@@ -31,6 +31,8 @@ namespace Code.Managers.Units
         {
             m_TextureList.Clear();
             DisableUnitImages();
+
+            if (unitList.Count < 1) return;
             
             foreach (var unit in unitList)
             {

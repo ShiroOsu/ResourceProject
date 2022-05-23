@@ -23,12 +23,16 @@ namespace Code.Managers
         
         private void InstantiateLoadedData(SaveData data)
         {
+            // units
             data.builderData.InstantiateUnitsInList(builderPrefab);
             data.soldierData.InstantiateUnitsInList(soldierPrefab);
             data.horseData.InstantiateUnitsInList(horsePrefab);
             
+            // structures
             data.castleData.InstantiateStructuresInList(castlePrefab);
             data.barracksData.InstantiateStructuresInList(barracksPrefab);
+            
+            // resources
             data.goldminesData.InstantiateResourcesInList(goldminePrefab);
         }
     }

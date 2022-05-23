@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using Code.Debugging;
 using Code.HelperClasses;
-using Code.Managers.Data;
 using Code.SaveSystem.Data;
-using Code.SaveSystem.SavedGamesPanel;
+using Code.Tools;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -25,7 +24,7 @@ namespace Code.Managers
         public GameState GetCurrentGameState { get; private set; }
 
         private PauseControls m_PauseControls;
-        private LoadOrSave m_LoadOrSave;
+        private readonly WaitForEndOfFrame m_FrameEnd = new();
 
         private void Awake()
         {
@@ -33,14 +32,7 @@ namespace Code.Managers
             m_PauseControls.Keyboard.SetCallbacks(this);
             GetCurrentGameState = GameState.MainMenu;
 
-            m_LoadOrSave = Extensions.GetComponentInScene<LoadOrSave>("SavedGamesPanel");
             SaveManager.Instance.SceneLoader += SceneLoader;
-        }
-
-        public void BindLoadOrSaveCamera()
-        {
-            m_LoadOrSave.Cam = UnityEngine.Camera.current;
-            m_LoadOrSave.BindOnPostRender();
         }
 
         private void OnEnable()
@@ -63,8 +55,6 @@ namespace Code.Managers
 
         public void OnESCPause(InputAction.CallbackContext context)
         {
-            if (context.started && Extensions.IsGameInRunState()) m_LoadOrSave.CanTakeScreenShot = true;
-            
             if (context.performed)
             {
                 var newGameState = GetCurrentGameState == GameState.Running ? GameState.Paused : GameState.Running;
@@ -117,6 +107,15 @@ namespace Code.Managers
         {
             UISceneManager.Instance.SetUIObjectActive("LoadingSceneGameObject", false);
             SetState(GameState.Running);
+
+            StartCoroutine(TakeFirstScreenshot());
+        }
+        
+        private IEnumerator TakeFirstScreenshot()
+        {
+            yield return m_FrameEnd;
+            Screenshot.Instance.canTakeScreenshot = true;
+            Screenshot.Instance.ScreenShot(UnityEngine.Camera.main);
         }
 
         public void StartGame()

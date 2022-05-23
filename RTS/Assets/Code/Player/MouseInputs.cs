@@ -6,7 +6,6 @@ using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
 using Code.Managers.Data;
-using Code.Managers.UI;
 using Code.Resources;
 using Code.Units.Builder;
 using Player;
@@ -43,11 +42,6 @@ namespace Code.Player
 
         public bool IsBuilding { get; set; }
         public event Action<List<GameObject>> OnUpdateUnitList;
-        public void OnUpdateUnitListInvoker(List<GameObject> unitList)
-        {
-            OnUpdateUnitList?.Invoke(unitList);            
-        }
-
         public event Action OnDisableUnitImages;
         
         // Controls
@@ -248,6 +242,11 @@ namespace Code.Player
                     var builder = u.GetUnitObject().ExGetComponent<BuilderUnit>();
                     builder.MoveToResource(newPosition, resource);
                 }
+
+                ClearUnitList();
+                resource.ShouldSelect(true);
+                CurrentResource = resource;
+
                 return;
             }
             
