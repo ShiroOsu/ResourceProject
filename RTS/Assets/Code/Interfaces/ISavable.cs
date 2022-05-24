@@ -23,4 +23,10 @@
         public void Save(UnityEngine.GameObject gameObject, uint resourceLeft, uint workers);
         public void Instantiate(UnityEngine.GameObject prefab);
     }
+
+    public interface IPlayerResourceData
+    {
+        public void Save(int gold, int stone, int wood, int food);
+        public void LoadResources();
+    }
 }

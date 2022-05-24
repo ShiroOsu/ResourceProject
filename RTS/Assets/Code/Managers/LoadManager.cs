@@ -34,6 +34,9 @@ namespace Code.Managers
             
             // resources
             data.goldminesData.InstantiateResourcesInList(goldminePrefab);
+            
+            // player
+            data.playerResourceData.LoadResources();
         }
     }
 }

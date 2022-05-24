@@ -56,8 +56,9 @@ namespace Code.Resources
                 }
 
                 Log.Print("GoldmineWorkers.cs", $"Added {SpawnQueue.Count * 10} amount of gold.");
-                Goldmine.ReduceResources((uint)SpawnQueue.Count * 10);
-                // PlayerResources.Instance.AddGold(10 * SpawnQueue.Count * (UpgradeLevel));
+                var goldAmount = SpawnQueue.Count * 10;
+                Goldmine.ReduceResources((uint)goldAmount);
+                PlayerResources.Instance.AddResource(goldAmount);
                 
             }
             IsWorking = false;

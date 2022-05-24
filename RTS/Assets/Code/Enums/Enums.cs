@@ -17,6 +17,7 @@ namespace Code.Enums
     public enum ResourceType
     {
         Gold,
+        Stone,
         Wood,
         Food,
     }

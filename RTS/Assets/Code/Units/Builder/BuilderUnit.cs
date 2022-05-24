@@ -4,7 +4,6 @@ using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers.Building;
-using Code.Managers.Data;
 using Code.Managers.UI;
 using Code.SaveSystem.Data;
 using UnityEngine;
@@ -21,12 +20,10 @@ namespace Code.Units.Builder
         private NavMeshAgent m_Agent;
 
         private readonly BuilderData m_BuilderData = new();
-        private DataManager m_DataManager;
 
         private void Awake()
         {
             m_Agent = GetComponent<NavMeshAgent>();
-            m_DataManager = DataManager.Instance;
 
             m_Agent.speed = data.movementSpeed;
             m_Agent.acceleration = data.acceleration;
@@ -120,7 +117,11 @@ namespace Code.Units.Builder
                 yield return null;
             }
 
-            ReachedResource(resource);
+            if (curDist <= distAwayFromResource)
+            {
+                ReachedResource(resource);
+            }
+
             yield return null;
         }
 

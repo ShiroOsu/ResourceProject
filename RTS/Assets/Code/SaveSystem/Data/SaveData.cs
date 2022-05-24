@@ -24,6 +24,9 @@ namespace Code.SaveSystem.Data
         
         // Resources
         public List<GoldmineData> goldminesData = new();
+        
+        // Player
+        public PlayerResourceData playerResourceData = new();
 
         public void OnDestroy()
         {
@@ -34,6 +37,7 @@ namespace Code.SaveSystem.Data
             soldierData = null;
             horseData = null;
             goldminesData = null;
+            playerResourceData = null;
         }
 
     }
