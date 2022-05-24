@@ -65,13 +65,6 @@ namespace Code.Tools
         {
             m_RenderTexture = new RenderTexture(m_Width, m_Height, 24);
             m_Texture2D = new Texture2D(m_Width, m_Height, TextureFormat.RGBA32, false);
-            
-            // When taking the first screenshot m_Rect has the size of (0, 0),
-            // (why?) which will give a invalid AABB inAABB error. 
-            if (ScreenRect.size == Vector2.zero)
-            {
-                ScreenRect = new Rect(0, 0, m_Width, m_Height);
-            }
         }
         
         private void BindOnPostRender()
