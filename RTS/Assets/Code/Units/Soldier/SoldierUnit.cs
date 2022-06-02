@@ -82,6 +82,11 @@ namespace Code.Units.Soldier
             throw new System.NotImplementedException();
         }
 
+        public void StopAgent(bool stop)
+        {
+            m_Agent.isStopped = stop;
+        }
+
         public void Save()
         {
             m_SoldierData.Save(gameObject);

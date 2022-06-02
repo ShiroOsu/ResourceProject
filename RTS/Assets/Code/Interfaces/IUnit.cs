@@ -18,6 +18,7 @@ namespace Code.Interfaces
         public GameObject GetUnitObject();
 
         public void Move(Vector3 destination);
+        public void StopAgent(bool stop);
         public bool IsUnitMoving();
     }
 }

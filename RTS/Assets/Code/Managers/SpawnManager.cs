@@ -12,6 +12,7 @@ namespace Code.Managers
             var unit = PoolManager.Instance.GetPooledUnit(type, true);
             unit.transform.position = startPos;
             unit.TryGetComponent(out IUnit u);
+            u.StopAgent(false);
             u.Move(endPos);
         }
     }

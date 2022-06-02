@@ -81,6 +81,11 @@ namespace Code.Units.Horse
         {
             throw new System.NotImplementedException();
         }
+        
+        public void StopAgent(bool stop)
+        {
+            m_Agent.isStopped = stop;
+        }
 
         public void Save()
         {

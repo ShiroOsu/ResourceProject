@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Code.Debugging;
 using Code.HelperClasses;
+using Code.Resources;
 using Code.SaveSystem.Data;
 using Code.Tools;
 using UnityEngine;
@@ -105,6 +106,7 @@ namespace Code.Managers
         
         private void GameScene()
         {
+            PlayerResources.Instance.SetDataValues();
             UISceneManager.Instance.SetUIObjectActive("LoadingSceneGameObject", false);
             SetState(GameState.Running);
 

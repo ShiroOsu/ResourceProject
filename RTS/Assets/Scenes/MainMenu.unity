@@ -1964,6 +1964,14 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.19607843
       objectReference: {fileID: 0}
+    - target: {fileID: 1566421602124066095, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: m_ScaleFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566421602124066095, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1759021332702543776, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
       propertyPath: mainMenu
       value: 
@@ -2044,6 +2052,18 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.19607843
       objectReference: {fileID: 0}
+    - target: {fileID: 5733514773918020566, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5733514773918020566, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5733514773918020566, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -45
+      objectReference: {fileID: 0}
     - target: {fileID: 6397642870275564911, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
@@ -2108,6 +2128,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1313963264}
+    - target: {fileID: 7610443462350090042, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8112084640890397738, guid: 2cafdab0ea7334f48a6f9bb0eacb305b, type: 3}
       propertyPath: m_Color.a
       value: 0.19607843

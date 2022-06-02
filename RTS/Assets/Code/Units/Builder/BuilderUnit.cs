@@ -93,7 +93,7 @@ namespace Code.Units.Builder
         public void MoveToResource(Vector3 destination, IResource resource)
         {
             m_Agent.SetDestination(destination);
-            StartCoroutine(HasAgentReachedDestination(m_Agent, destination, resource));
+            StartCoroutine(HasAgentReachedDestination(destination, resource));
         }
         
         public void Move(Vector3 destination)
@@ -106,17 +106,17 @@ namespace Code.Units.Builder
             return !m_Agent.velocity.Equals(Vector3.zero);
         }
 
-        private IEnumerator HasAgentReachedDestination(NavMeshAgent agent, Vector3 dest, IResource resource)
+        private IEnumerator HasAgentReachedDestination(Vector3 dest, IResource resource)
         {
-            var curDist = Vector3.Distance(agent.transform.position, dest);
+            var curDist = Vector3.Distance(m_Agent.transform.position, dest);
             const float distAwayFromResource = 4f;
             
-            while (curDist > distAwayFromResource && agent.hasPath)
+            while (curDist > distAwayFromResource)
             {
-                curDist = Vector3.Distance(agent.transform.position, dest);
+                curDist = Vector3.Distance(m_Agent.transform.position, dest);
                 yield return null;
             }
-
+            
             if (curDist <= distAwayFromResource)
             {
                 ReachedResource(resource);
@@ -128,7 +128,7 @@ namespace Code.Units.Builder
         private void ReachedResource(IResource resource)
         {
             var added = resource.AddWorkerToMine(GetUnitTexture());
-            m_Agent.SetDestination(m_Agent.transform.position); // Stop moving agent
+            StopAgent(true);
 
             if (!added)
             {
@@ -137,6 +137,11 @@ namespace Code.Units.Builder
             
             ShouldSelect(false);
             gameObject.SetActive(false);
+        }
+        
+        public void StopAgent(bool stop)
+        {
+            m_Agent.isStopped = stop;
         }
 
         public void Save()

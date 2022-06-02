@@ -667,7 +667,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-94810
+  m_Name: pb_Mesh-56226
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4124,6 +4124,10 @@ PrefabInstance:
       propertyPath: m_Texture
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2507757479581573102, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+      propertyPath: goldAmount
+      value: 
+      objectReference: {fileID: 7666923750933712701}
     - target: {fileID: 2538176517923416009, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -6213,6 +6217,17 @@ PrefabInstance:
     - {fileID: 4733560403646786757, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
     - {fileID: 5717586531695257195, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+--- !u!114 &7666923750933712701 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1784271562377524260, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
+  m_PrefabInstance: {fileID: 7666923750933712700}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8918257048329998003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8918257048631504737, guid: 0ad7fdcb8d923f848ad36c6590a220c6, type: 3}
