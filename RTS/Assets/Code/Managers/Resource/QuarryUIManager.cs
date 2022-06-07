@@ -8,15 +8,14 @@ using UnityEngine;
 
 namespace Code.Managers.Resource
 {
-    public class GoldmineUIManager : ResourceUIManager
+    public class QuarryUIManager : ResourceUIManager
     {
-        private Goldmine m_GoldmineRef;
-        public override ResourceType Type => ResourceType.Gold;
-
+        private Quarry m_QuarryRef;
+        public override ResourceType Type => ResourceType.Stone;
         public override void EnableMainUI(bool active, GameObject resource, ResourceType type, GameObject image, ResourceData data)
         {
-            m_GoldmineRef = resource.ExGetComponent<Goldmine>();
-            UIManager.Instance.AddTimerToUI(m_GoldmineRef.goldmineWorkers.timer, m_GoldmineRef.goldmineUIMiddle);
+            m_QuarryRef = resource.ExGetComponent<Quarry>();
+            UIManager.Instance.AddTimerToUI(m_QuarryRef.quarryWorkers.timer, m_QuarryRef.quarryUIMiddle);
             UIManager.Instance.SetResourceStatsInfo(data, active);
             
             if (active)
@@ -24,7 +23,7 @@ namespace Code.Managers.Resource
                 BindButtons();
             }
 
-            m_GoldmineRef.goldmineUIMiddle.SetActive(active);
+            m_QuarryRef.quarryUIMiddle.SetActive(active);
             image.SetActive(active);
 
             // When de-select remove listeners

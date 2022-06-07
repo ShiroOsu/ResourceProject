@@ -127,7 +127,7 @@ namespace Code.Units.Builder
 
         private void ReachedResource(IResource resource)
         {
-            var added = resource.AddWorkerToMine(GetUnitTexture());
+            var added = resource.AddWorkers(GetUnitTexture());
             StopAgent(true);
 
             if (!added)

@@ -24,6 +24,7 @@ namespace Code.SaveSystem.Data
         
         // Resources
         public List<GoldmineData> goldminesData = new();
+        public List<QuarryData> quarryData = new();
         
         // Player
         public PlayerResourceData playerResourceData = new();
@@ -37,6 +38,7 @@ namespace Code.SaveSystem.Data
             soldierData = null;
             horseData = null;
             goldminesData = null;
+            quarryData = null;
             playerResourceData = null;
         }
 

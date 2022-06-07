@@ -1,4 +1,5 @@
 using System;
+using Code.Debugging;
 using Code.Enums;
 using Code.HelperClasses;
 using Code.Managers.Resource;
@@ -105,44 +106,40 @@ namespace Code.Managers.UI
         // ------------------------------------------------------------------------
         // Info (Stats etc ... )
         // ------------------------------------------------------------------------
-
-        public void SetUnitStatsInfo(UnitData data)
+        
+        public void SetUnitStatsInfo(UnitData data, bool active)
         {
-            SetObjectInfoActive(3);
+            SetDataInfoActive(DataType.Unit, active);
             unitInfo.SetValues(data.unitName, data.attack, data.attackSpeed, data.armor);
         }
         
-        public void SetStructureStatsInfo(StructureData data)
+        public void SetStructureStatsInfo(StructureData data, bool active)
         {
-            SetObjectInfoActive(1);
+            SetDataInfoActive(DataType.Structure, active);
             structureInfo.SetValues(data.structureName, data.armor);
         }
         
-        public void SetResourceStatsInfo(ResourceData data)
+        public void SetResourceStatsInfo(ResourceData data, bool active)
         {
-            SetObjectInfoActive(2);
+            SetDataInfoActive(DataType.Resource, active);
             resourceInfo.SetValues(data.resourceName, data.resourcesLeft, data.armor);
         }
-
-        private void SetObjectInfoActive(uint objIndex, bool active = true)
+        
+        private void SetDataInfoActive(DataType type, bool active)
         {
-            switch (objIndex)
+            switch (type)
             {
-                case 1: // structure 1
-                    objectWithStructureInfo.SetActive(active);
-                    objectWithResourceInfo.SetActive(!active);
-                    objectWithUnitInfo.SetActive(!active);
-                    break;
-                case 2: // resource 2
-                    objectWithStructureInfo.SetActive(!active);
-                    objectWithResourceInfo.SetActive(active);
-                    objectWithUnitInfo.SetActive(!active);
-                    break;
-                case 3: // unit 3
-                    objectWithStructureInfo.SetActive(!active);
-                    objectWithResourceInfo.SetActive(!active);
+                case DataType.Unit:
                     objectWithUnitInfo.SetActive(active);
                     break;
+                case DataType.Structure:
+                    objectWithStructureInfo.SetActive(active);
+                    break;
+                case DataType.Resource:
+                    objectWithResourceInfo.SetActive(active);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
     }

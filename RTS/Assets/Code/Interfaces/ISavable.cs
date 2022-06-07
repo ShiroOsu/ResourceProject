@@ -26,7 +26,7 @@
 
     public interface IPlayerResourceData
     {
-        public void Save(int gold, int stone, int wood, int food);
+        public void Save(int gold, int stone, int wood, int food, int units);
         public void LoadResources();
     }
 }

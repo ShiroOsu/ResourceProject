@@ -1,4 +1,3 @@
-using System;
 using Code.Enums;
 using Code.HelperClasses;
 using Code.Interfaces;
@@ -12,32 +11,30 @@ using UnityEngine.AI;
 
 namespace Code.Resources
 {
-    public class Goldmine : MonoBehaviour, IResource, ISavable
+    public class Quarry : MonoBehaviour, IResource, ISavable
     {
         [SerializeField] private ResourceData data;
         [SerializeField] private NavMeshObstacle navMeshObstacle;
         [SerializeField] private CustomSizer3D sizer3D;
         [SerializeField] private GameObject outlineRenderer;
-        public GameObject goldmineUIMiddle;
+        public GameObject quarryUIMiddle;
         public Transform removedUnitsSpawnPos;
-        public uint currentGoldLeft;
-        public uint goldLoadedFromData;
-        public uint currentWorkersInMine;
-        public GoldmineWorkers goldmineWorkers;
+        public uint currentStoneLeft;
+        public uint stoneLoadedFromData;
+        public uint currentQuarryWorkers;
+        public QuarryWorkers quarryWorkers;
 
-        private readonly GoldmineData m_GoldmineData = new();
+        private readonly QuarryData m_QuarryData = new();
         private GameObject m_ResourceImage;
-        private const string c_NameOfUIObjectInScene = "GoldmineUIMiddle";
-        private const string c_ResourceImage = "GoldmineImage";
+        private const string c_NameOfUIObjectInScene = "QuarryUIMiddle";
+        private const string c_ResourceImage = "QuarryImage";
         private bool m_FirstSelect = true;
-        
+
         private void Awake()
         {
             UpdateManager.Instance.OnUpdate += OnUpdate;
             
-            // This might be hard,
-            // So I will not think about it before goldmine is working
-            //currentWorkersInMine = m_GoldmineData.workersInMine;
+            //currentQuarryWorkers = m_QuarryData.quarryWorkers;
             
             navMeshObstacle.shape = NavMeshObstacleShape.Box;
             navMeshObstacle.size = sizer3D.GetSize(gameObject.transform.lossyScale);
@@ -47,60 +44,60 @@ namespace Code.Resources
                 m_ResourceImage = Extensions.FindObject(c_ResourceImage);
             }
 
-            if (!goldmineUIMiddle)
+            if (!quarryUIMiddle)
             {
-                goldmineUIMiddle = Extensions.FindObject(c_NameOfUIObjectInScene);
+                quarryUIMiddle = Extensions.FindObject(c_NameOfUIObjectInScene);
             }
         }
-
+        
         private void OnUpdate()
         {
-            if (!goldmineWorkers)
+            if (!quarryWorkers)
             {
                 return;
             }
             
-            goldmineWorkers.TimerUpdate();
+            quarryWorkers.TimerUpdate();
         }
-
-        public bool AddWorkers(TextureAssetType type)
-        {
-            return goldmineWorkers.AddWorker(type);
-        }
-
+        
         public void ShouldSelect(bool select)
         {
             if (m_FirstSelect)
             {            
-                currentGoldLeft = goldLoadedFromData != 0 ? goldLoadedFromData : data.resourcesLeft;
-                data.resourcesLeft = currentGoldLeft;
+                currentStoneLeft = stoneLoadedFromData != 0 ? stoneLoadedFromData : data.resourcesLeft;
+                data.resourcesLeft = currentStoneLeft;
                 m_FirstSelect = false;
             }
             
-            UIManager.Instance.ResourceSelected(select, gameObject, ResourceType.Gold, m_ResourceImage, data);
-            goldmineWorkers.Goldmine = this;
+            UIManager.Instance.ResourceSelected(select, gameObject, ResourceType.Stone, m_ResourceImage, data);
+            quarryWorkers.Quarry = this;
             outlineRenderer.SetActive(select);
 
             if (!select)
             {
-                goldmineWorkers.gameObject.transform.SetParent(transform);
+                quarryWorkers.gameObject.transform.SetParent(transform);
             }
+        }
+
+        public bool AddWorkers(TextureAssetType type)
+        {
+            return quarryWorkers.AddWorker(type);
         }
 
         public void ReduceResources(uint amount)
         {
-            currentGoldLeft -= amount;
-            data.resourcesLeft = currentGoldLeft;
+            currentStoneLeft -= amount;
+            data.resourcesLeft = currentStoneLeft;
             if (outlineRenderer.activeInHierarchy) // If it is selected
             {
                 UIManager.Instance.SetResourceStatsInfo(data, true);
             }
         }
-        
+
         public void Save()
         {
-            m_GoldmineData.Save(gameObject, currentGoldLeft, currentWorkersInMine);
-            SaveData.Instance.goldminesData.Add(m_GoldmineData);
+            m_QuarryData.Save(gameObject, currentStoneLeft, currentQuarryWorkers);
+            SaveData.Instance.quarryData.Add(m_QuarryData);
         }
     }
 }

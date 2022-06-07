@@ -231,7 +231,8 @@ namespace Code.Player
             if (Physics.Raycast(ray, out var rHit, Mathf.Infinity, m_ResourceMask))
             {
                 newPosition = rHit.point;
-                var resource = rHit.transform.parent.gameObject.ExGetComponent<Goldmine>(); 
+                var resource = rHit.transform.parent.gameObject.ExGetComponent<IResource>();
+                Debug.Log(resource);
 
                 foreach (var unit in SelectedUnitsList)
                 {

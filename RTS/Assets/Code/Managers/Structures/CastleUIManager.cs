@@ -16,7 +16,7 @@ namespace Code.Managers.Structures
         {
             m_CastleRef = structure.GetComponent<Castle>();
             UIManager.Instance.AddTimerToUI(m_CastleRef.castleTimer.timer, m_CastleRef.castleUIMiddle);
-            UIManager.Instance.SetStructureStatsInfo(data);
+            UIManager.Instance.SetStructureStatsInfo(data, active);
             
             if (active)
             {

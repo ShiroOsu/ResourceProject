@@ -6,21 +6,21 @@ using UnityEngine;
 namespace Code.SaveSystem.Data
 {
     [System.Serializable]
-    public class GoldmineData : IResourceData
+    public class QuarryData : IResourceData
     {
         public Vector3 position;
         public Quaternion rotation;
         
-        public uint gold;
-        public uint workersInMine;
+        public uint stone;
+        public uint quarryWorkers;
         
         public void Save(GameObject gameObject, uint resourcesLeft, uint workers)
         {
             position = gameObject.transform.position;
             rotation = gameObject.transform.rotation;
 
-            gold = resourcesLeft;
-            workersInMine = workers;
+            stone = resourcesLeft;
+            quarryWorkers = workers;
         }
 
         public void Instantiate(GameObject prefab)
@@ -29,10 +29,9 @@ namespace Code.SaveSystem.Data
             newObj.transform.position = position;
             newObj.transform.rotation = rotation;
 
-            var goldmine = newObj.ExGetComponent<Goldmine>();
-            Debug.Log("LoadedGold: " + gold);
-            goldmine.goldLoadedFromData = gold;
-            goldmine.currentWorkersInMine = workersInMine;
+            var quarry = newObj.ExGetComponent<Quarry>();
+            quarry.stoneLoadedFromData = stone;
+            quarry.currentQuarryWorkers = quarryWorkers;
         }
     }
 }

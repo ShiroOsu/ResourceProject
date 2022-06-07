@@ -17,7 +17,7 @@ namespace Code.Managers.Structures
         {
             m_BarracksRef = structure.GetComponent<Barracks>();
             UIManager.Instance.AddTimerToUI(m_BarracksRef.barracksTimer.timer, m_BarracksRef.barracksUIMiddle);
-            UIManager.Instance.SetStructureStatsInfo(data);
+            UIManager.Instance.SetStructureStatsInfo(data, active);
             
             if (active)
             {

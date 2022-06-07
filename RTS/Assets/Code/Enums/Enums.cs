@@ -20,6 +20,7 @@ namespace Code.Enums
         Stone,
         Wood,
         Food,
+        Units,
     }
     
     // Unity layers
@@ -42,6 +43,13 @@ namespace Code.Enums
         Wood,
         Food,
 	}
+
+    public enum DataType
+    {
+        Unit,
+        Structure,
+        Resource,
+    }
 
     public enum LogMaskThreshold
     {

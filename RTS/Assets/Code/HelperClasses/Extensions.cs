@@ -136,8 +136,8 @@ namespace Code.HelperClasses
             }
             return component;
         }
-
-        // Convert image to savable format
+        
+        // Convert image to a savable format
         public static byte[] ConvertImageToByteArray(Image image)
         {
             var texture = (Texture2D) image.mainTexture;

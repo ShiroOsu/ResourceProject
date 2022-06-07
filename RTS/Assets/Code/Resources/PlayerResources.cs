@@ -19,8 +19,9 @@ namespace Code.Resources
         private int m_Stone;
         private int m_Wood;
         private int m_Food;
+        private int m_Units;
 
-        public void AddResource(int gold = 0, int stone = 0, int wood = 0, int food = 0)
+        public void AddResource(int gold = 0, int stone = 0, int wood = 0, int food = 0, int units = 0)
         {
             m_FirstLoad = false;
             
@@ -28,6 +29,7 @@ namespace Code.Resources
             m_Stone += stone;
             m_Wood += wood;
             m_Food += food;
+            m_Units += units;
             
             UpdateResourcePanel();
         }
@@ -41,6 +43,7 @@ namespace Code.Resources
                 ResourceType.Stone => m_Stone.ToString(),
                 ResourceType.Wood => m_Wood.ToString(),
                 ResourceType.Food => m_Food.ToString(),
+                ResourceType.Units => m_Units.ToString(),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
@@ -53,6 +56,7 @@ namespace Code.Resources
             m_Stone = startResources.stone;
             m_Wood = startResources.wood;
             m_Food = startResources.food;
+            m_Units = 0;
             UpdateResourcePanel();
         }
 
@@ -63,7 +67,7 @@ namespace Code.Resources
 
         public void Save()
         {
-            m_ResourceData.Save(m_Gold, m_Stone, m_Wood, m_Food);
+            m_ResourceData.Save(m_Gold, m_Stone, m_Wood, m_Food, m_Units);
             SaveData.Instance.playerResourceData = m_ResourceData;
         }
     }

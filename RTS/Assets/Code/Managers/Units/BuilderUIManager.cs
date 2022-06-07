@@ -16,7 +16,7 @@ namespace Code.Managers.Units
         public override void EnableMainUI(bool active, GameObject unit, UnitType type, GameObject image, UnitData data)
         {
             m_Builder = unit.GetComponent<BuilderUnit>();
-            UIManager.Instance.SetUnitStatsInfo(data);
+            UIManager.Instance.SetUnitStatsInfo(data, active);
 
             if (active)
             {
