@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 using System;
-using Code.Debugging;
+using Code.Tools.Debugging;
 using UnityEditor;
 using UnityEngine;
 

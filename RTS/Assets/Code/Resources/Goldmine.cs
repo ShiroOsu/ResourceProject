@@ -1,12 +1,12 @@
 using System;
-using Code.Enums;
-using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers;
-using Code.Managers.UI;
 using Code.SaveSystem.Data;
 using Code.ScriptableObjects;
 using Code.Tools;
+using Code.Tools.Enums;
+using Code.Tools.HelperClasses;
+using Code.UI;
 using UnityEngine;
 using UnityEngine.AI;
 

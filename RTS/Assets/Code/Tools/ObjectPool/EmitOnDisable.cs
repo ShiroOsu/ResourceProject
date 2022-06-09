@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Code
+namespace Code.Tools.ObjectPool
 {
     [ExecuteAlways]
     public class EmitOnDisable : MonoBehaviour

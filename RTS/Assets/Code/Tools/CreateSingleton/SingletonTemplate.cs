@@ -1,4 +1,4 @@
-using Code.HelperClasses;
+using Code.Tools.HelperClasses;
 
 namespace Code.Tools.CreateSingleton
 {

@@ -1,5 +1,5 @@
-using Code.Debugging;
-using Code.Managers.Data;
+using Code.Tools.Debugging;
+using Code.UI;
 using UnityEngine;
 
 namespace Code.Managers

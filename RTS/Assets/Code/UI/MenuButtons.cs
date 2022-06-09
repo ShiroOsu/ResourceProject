@@ -1,5 +1,5 @@
 using System;
-using Code.HelperClasses;
+using Code.Tools.HelperClasses;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

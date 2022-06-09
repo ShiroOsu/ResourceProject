@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Code.HelperClasses;
 using Code.ScriptableObjects;
+using Code.Tools.HelperClasses;
 
 namespace Code.Managers
 {

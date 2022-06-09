@@ -1,6 +1,6 @@
-using Code.Enums;
-using Code.HelperClasses;
 using Code.ScriptableObjects;
+using Code.Tools.Enums;
+using Code.Tools.HelperClasses;
 using UnityEngine;
 
 namespace Code.UI

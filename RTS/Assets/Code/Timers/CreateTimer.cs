@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Code.Enums;
-using Code.Managers.Data;
+using Code.Managers;
+using Code.Tools.Enums;
 using Code.UI;
 using UnityEngine;
 using UnityEngine.Serialization;

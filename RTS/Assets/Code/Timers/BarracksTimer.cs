@@ -1,8 +1,8 @@
 using System.Collections;
-using Code.Debugging;
-using Code.Enums;
 using Code.Managers;
 using Code.Structures;
+using Code.Tools.Debugging;
+using Code.Tools.Enums;
 using Code.UI;
 using UnityEngine;
 

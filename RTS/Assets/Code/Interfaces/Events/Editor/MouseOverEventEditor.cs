@@ -1,8 +1,7 @@
-using Code.Interfaces.Events;
 using UnityEditor;
 using UnityEngine;
 
-namespace Code.Framework.Interfaces.Events.Editor
+namespace Code.Interfaces.Events.Editor
 {
     [CustomEditor(typeof(MouseOverEvent))]
     public class MouseOverEventEditor : UnityEditor.Editor

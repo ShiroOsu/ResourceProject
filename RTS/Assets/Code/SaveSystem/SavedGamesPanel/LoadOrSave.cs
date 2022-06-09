@@ -1,7 +1,7 @@
-using Code.Debugging;
-using Code.HelperClasses;
 using Code.Managers;
 using Code.Tools;
+using Code.Tools.Debugging;
+using Code.Tools.HelperClasses;
 using UnityEngine;
 using UnityEngine.UI;
 

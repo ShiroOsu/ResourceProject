@@ -1,5 +1,6 @@
-using Code.Enums;
-using Code.HelperClasses;
+using Code.Tools.Enums;
+using Code.Tools.HelperClasses;
+using Code.Tools.ObjectPool;
 using UnityEngine;
 
 namespace Code.Managers

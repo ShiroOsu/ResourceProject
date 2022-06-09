@@ -1,6 +1,6 @@
-using Code.Debugging;
-using Code.HelperClasses;
 using Code.Managers;
+using Code.Tools.Debugging;
+using Code.Tools.HelperClasses;
 using UnityEngine;
 
 namespace Code.Tools

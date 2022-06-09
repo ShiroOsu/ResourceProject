@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Code.Enums;
-using Code.HelperClasses;
 using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
-using Code.Managers.Data;
-using Code.Resources;
+using Code.Tools.Enums;
+using Code.Tools.HelperClasses;
+using Code.UI;
 using Code.Units.Builder;
 using Player;
 using UnityEngine;
@@ -232,7 +231,6 @@ namespace Code.Player
             {
                 newPosition = rHit.point;
                 var resource = rHit.transform.parent.gameObject.ExGetComponent<IResource>();
-                Debug.Log(resource);
 
                 foreach (var unit in SelectedUnitsList)
                 {
@@ -366,7 +364,7 @@ namespace Code.Player
 
             var firstUnit = SelectedUnitsList[0];
             firstUnit.TryGetComponent(out IUnit u1);
-            u1.ShouldSelect(true);
+            UIImage.Instance.SetImage(u1.GetUnitImage());
 
             if (select)
             {

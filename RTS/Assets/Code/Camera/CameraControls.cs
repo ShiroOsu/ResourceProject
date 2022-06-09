@@ -1,6 +1,5 @@
 using Camera;
 using Code.Managers;
-using Code.Managers.Data;
 using Code.Player;
 using Code.ScriptableObjects;
 using UnityEngine;

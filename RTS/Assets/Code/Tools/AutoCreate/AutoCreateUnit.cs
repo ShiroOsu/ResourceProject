@@ -1,7 +1,7 @@
 #if UNITY_EDITOR
 using System.IO;
-using Code.Debugging;
-using Code.HelperClasses;
+using Code.Tools.Debugging;
+using Code.Tools.HelperClasses;
 using UnityEditor;
 using UnityEngine;
 

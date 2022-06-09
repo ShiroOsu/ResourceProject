@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Code
+namespace Code.Tools.ObjectPool
 {
     public class ObjectPooler
     {

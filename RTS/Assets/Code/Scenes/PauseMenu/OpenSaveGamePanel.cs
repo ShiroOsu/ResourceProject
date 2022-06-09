@@ -1,5 +1,6 @@
-using Code.HelperClasses;
 using Code.Managers;
+using Code.Tools.HelperClasses;
+using Code.UI;
 using UnityEngine;
 
 namespace Code.Scenes.PauseMenu

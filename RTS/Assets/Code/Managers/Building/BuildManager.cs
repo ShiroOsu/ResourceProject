@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using Code.Camera;
-using Code.Debugging;
-using Code.Enums;
-using Code.HelperClasses;
-using Code.Managers.Data;
 using Code.Player;
 using Code.ScriptableObjects;
+using Code.Tools.Debugging;
+using Code.Tools.Enums;
+using Code.Tools.HelperClasses;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

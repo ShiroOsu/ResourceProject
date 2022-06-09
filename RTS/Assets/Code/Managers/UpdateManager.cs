@@ -1,5 +1,5 @@
 using System;
-using Code.HelperClasses;
+using Code.Tools.HelperClasses;
 using UnityEngine;
 
 namespace Code.Managers
