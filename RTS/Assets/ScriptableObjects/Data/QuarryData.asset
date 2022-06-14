@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: QuarryData
   m_EditorClassIdentifier: 
   resourceName: Quarry
-  resourcesLeft: 10000000
+  resourcesLeft: 1000000
   armor: 10

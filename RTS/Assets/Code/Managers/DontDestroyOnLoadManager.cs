@@ -12,6 +12,11 @@ namespace Code.Managers
         {
             foreach (var obj in dontDestroyOnLoad)
             {
+                if (!obj)
+                {
+                    continue;
+                }
+                
                 DontDestroyOnLoad(obj);
             }
             
@@ -20,7 +25,7 @@ namespace Code.Managers
             #if UNITY_EDITOR
                 Debug.unityLogger.logEnabled = true;
             #else
-                Debug.unityLogger.logEnavled = false;
+                Debug.unityLogger.logEnabled = false;
             #endif
         }
     }

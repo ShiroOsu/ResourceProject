@@ -125,7 +125,7 @@ namespace Code.Player
         {
         }
 
-        // OnLeftMouseButtonHold, temp
+        // OnLeftMouseButtonHold
         private void CheckMultiSelect()
         {
             if (!EventSystem.current.IsPointerOverGameObject() && Extensions.WasLeftMousePressed() && KeyCode.LeftShift.IsKeyPressing())

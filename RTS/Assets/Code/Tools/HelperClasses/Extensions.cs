@@ -93,6 +93,16 @@ namespace Code.Tools.HelperClasses
             return _lookup;
         }
 
+        /// <summary>
+        /// T is Enum
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IEnumerable<T> GetValues<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
+        }
+
         public static bool IsGameInRunState()
         {
             return GameManager.Instance.GetCurrentGameState == GameState.Running;

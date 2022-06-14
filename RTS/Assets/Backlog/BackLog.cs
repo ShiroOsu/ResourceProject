@@ -23,6 +23,10 @@ namespace Backlog
     // TODO: Load a saved file to main scene.
     
     // TODO: Separate "AllTextures" into respective texture SO.
+    
+    // TODO: Increase resource yield by having specialized workers and further increase their yield by upgrades ?
+        // Amount from harvest could be fixed and instead,
+        // have the time until harvest be lowered by having more workers.
 
     #endregion Important
     
@@ -30,19 +34,16 @@ namespace Backlog
     
     // TODO: Units traveling in circles when assigning new position when its not arrived at last position.
     
-    // TODO: Sometimes gets null ref on UI menu-buttons in savedGamesPanel.
-    
-    // TODO: Clicking on UI menu-buttons over a structure will select the structure.
+    // TODO: UI Panels does not block mouse clicks (On structures etc..)
     
     // TODO: Horse Unit, Collider does not cover the whole GameObject making it hard to click on (Only clickable on horse atm).
     
     #endregion Bugs
 
     #region WIP
-
-    // TODO: Pause Game, Missing: UI(return to game, save, load)
-    // TODO: Main Menu, Missing: Options, Load, Quit
-    // TODO: Zoom, Missing: Clamp, Smooth
+    
+    // TODO: Main Menu, Missing: Options, Quit
+    // TODO: Zoom, Missing: Clamp, Smooth zooming?
     
     #endregion
     
@@ -52,6 +53,7 @@ namespace Backlog
     // TODO: AutoCreate 
     // TODO: Cursor Texture
     // TODO: Game Name
+    // TODO: Pause Game, Load in-game
     
     #endregion Optional
 
@@ -64,7 +66,9 @@ namespace Backlog
     
     #region Completed
     
-    // TODO: Camera, Move the camera if the mouse is at the edge of screen : 2022-02-11
+    // Camera, Move the camera if the mouse is at the edge of screen : 2022-02-11
+    // Null ref on UI menu-buttons in savedGamesPanel : 2022-05-24
+
     
     #endregion Completed
     

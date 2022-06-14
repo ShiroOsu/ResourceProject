@@ -140,7 +140,10 @@ namespace Code.Camera
             UpdateCameraDirectionByMouse();
 
             Zoom(deltaTime);
+            
+            #if UNITY_EDITOR
             m_ThisTransform.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
+            #endif
 
             var forwardDirection = m_ThisTransform.rotation * m_ForwardVector;
             m_ThisTransform.position += forwardDirection.normalized * (m_CameraSpeed * deltaTime);

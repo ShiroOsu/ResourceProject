@@ -5,6 +5,7 @@ using Code.SaveSystem;
 using Code.SaveSystem.Data;
 using Code.Tools;
 using Code.Tools.Debugging;
+using Code.Tools.DeveloperConsole;
 using Code.Tools.HelperClasses;
 using Code.UI;
 using UnityEngine;
@@ -63,6 +64,11 @@ namespace Code.Managers
                 var newGameState = GetCurrentGameState == GameState.Running ? GameState.Paused : GameState.Running;
                 SetState(newGameState);    
             }
+        }
+
+        public void OnToggleConsole(InputAction.CallbackContext context)
+        {
+            DeveloperConsoleBehaviour.Instance.Toggle(context);
         }
 
         public void ForceGameState(GameState state)
