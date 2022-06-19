@@ -1,11 +1,13 @@
 using System.IO;
 using UnityEditor;
+using UnityEngine;
 
 namespace Code.Tools.CreateDeveloperCommand
 {
     public static class CreateDeveloperCommand
     {
         private const string c_PathToCommandTemplate = "Assets/Code/Tools/CreateDeveloperCommand/CommandTemplate.cs";
+        private const string c_PathToScriptableObjectsFolder = "Assets/ScriptableObjects/Commands/";
         private const string c_Cs = ".cs";
 
         [MenuItem("Assets/Tools/Create Developer Command", false, 3)]
@@ -43,8 +45,18 @@ namespace Code.Tools.CreateDeveloperCommand
                 outfile.Write(newString);
             }
 
+            var scriptName = name + "Command";
             NamingWindowPopup.SetName -= StartCreate;
+            
+            IsCompiling.Init(scriptName);
             AssetDatabase.Refresh();
+            EditorUtility.RequestScriptReload();
+        }
+
+        public static void CreateScriptableObject(string commandName)
+        {
+            var newAsset = ScriptableObject.CreateInstance(commandName);
+            AssetDatabase.CreateAsset(newAsset, c_PathToScriptableObjectsFolder + commandName + ".asset");
         }
 
         private static void Init()

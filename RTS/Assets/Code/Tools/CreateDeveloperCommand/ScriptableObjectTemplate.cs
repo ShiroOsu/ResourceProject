@@ -3,8 +3,8 @@
 //
 // namespace Code.ScriptableObjects.Commands
 // {
-//     [CreateAssetMenu(fileName = "Temp Command", menuName = "ScriptableObjects/Developer Console/Temp Command")]
-//     public class TempCommand : ConsoleCommand
+//     [CreateAssetMenu(fileName = "Template Command", menuName = "ScriptableObjects/Developer Console/Template Command")]
+//     public class TemplateCommand : ConsoleCommand
 //     {
 //         public override bool Process(string[] arguments)
 //         {

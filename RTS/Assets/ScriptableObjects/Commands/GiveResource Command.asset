@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52cb6aa8d5a7277409b893c209180eaf, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c5010f3cb565a04c929a8a1abc96e1c, type: 3}
   m_Name: GiveResource Command
   m_EditorClassIdentifier: 
-  commandWord: give
-  commandTooltip: Gives the player a amount of selected resource type
+  commandWord: Give
+  tooltip: Gives player X resource.

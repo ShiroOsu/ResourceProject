@@ -21,7 +21,7 @@ namespace Code.Tools
 
         private void OnGUI()
         {
-            GUILayout.Label("Set Name");
+            GUILayout.Label("Naming Window");
             m_Name = EditorGUILayout.TextField("Name: ", m_Name);
 
             if (GUILayout.Button("Set Name"))

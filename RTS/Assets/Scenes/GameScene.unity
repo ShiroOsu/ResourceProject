@@ -2048,6 +2048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: b9cab1ec934ead94e9943134849f15d5, type: 2}
+  mapTerrain: {fileID: 389455336}
   canZoom: 1
 --- !u!1 &1301084781 stripped
 GameObject:
@@ -3353,6 +3354,7 @@ MonoBehaviour:
   spawnData: {fileID: 11400000, guid: ef5f7d19ef5419644a1e335bc6b81736, type: 2}
   mouseData: {fileID: 11400000, guid: 0a89b7ac4383e254b8e6b5ce8aba97c5, type: 2}
   cameraData: {fileID: 11400000, guid: b9cab1ec934ead94e9943134849f15d5, type: 2}
+  cameraControls: {fileID: 1246216132}
   mouseInputs: {fileID: 659079909}
 --- !u!1 &1925922228 stripped
 GameObject:

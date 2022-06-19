@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Help Command
   m_EditorClassIdentifier: 
   commandWord: Help
-  commandTooltip: Lists available commands
+  tooltip: List all available commands.

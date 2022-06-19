@@ -153,6 +153,11 @@ namespace Code.Tools.HelperClasses
             return bytes;
         }
 
+        public static bool StringEquals(this string str, string strToCompare)
+        {
+            return str.Equals(strToCompare, StringComparison.OrdinalIgnoreCase);
+        }
+
 #if UNITY_EDITOR
         /// <summary>
         /// Load Asset from String Path

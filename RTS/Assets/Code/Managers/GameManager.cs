@@ -68,7 +68,9 @@ namespace Code.Managers
 
         public void OnToggleConsole(InputAction.CallbackContext context)
         {
+            //#if UNITY_EDITOR
             DeveloperConsoleBehaviour.Instance.Toggle(context);
+            //#endif
         }
 
         public void ForceGameState(GameState state)

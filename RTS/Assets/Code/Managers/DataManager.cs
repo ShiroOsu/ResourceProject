@@ -1,3 +1,4 @@
+using Code.Camera;
 using Code.Player;
 using Code.ScriptableObjects;
 using Code.Tools.HelperClasses;
@@ -16,6 +17,7 @@ namespace Code.Managers
         [Header("Player")]
         public MouseData mouseData;
         public CameraData cameraData;
+        public CameraControls cameraControls;
         public MouseInputs mouseInputs;
     }
 }

@@ -34,6 +34,8 @@ namespace Code.Scenes.PauseMenu
 
         private void Confirmed()
         {
+            // Add a quick load option? When application quits it saves
+            // to a separate file which can be loaded with a continue button? 
             // TODO: What if unexpected shutdown
             SaveData.Instance.OnDestroy();
             

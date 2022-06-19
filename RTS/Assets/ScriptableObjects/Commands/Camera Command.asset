@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5715f76b3867bc54dbebab80f03e24b8, type: 3}
-  m_Name: SavedDataObject
+  m_Script: {fileID: 11500000, guid: b78af50fc3b5807418d970ab1b10d401, type: 3}
+  m_Name: Camera Command
   m_EditorClassIdentifier: 
-  castleDataList: []
-  barrackDataList: []
+  commandWord: Camera
+  tooltip: Rotate, Reset, MouseControls

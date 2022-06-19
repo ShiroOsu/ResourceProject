@@ -8,6 +8,7 @@ namespace Code.Tools.DeveloperConsole
 {
     public class DeveloperConsoleBehaviour : Singleton<DeveloperConsoleBehaviour>
     {
+        // Inspector
         [SerializeField] private string prefix = "";
         public ConsoleCommand[] commands;
 
@@ -35,12 +36,12 @@ namespace Code.Tools.DeveloperConsole
 
             if (uiCanvas.activeSelf)
             {
-                m_DataManager.mouseInputs.enabled = true; // not working
+                DisableMouseControls();
                 uiCanvas.SetActive(false);
             }
             else
             {
-                m_DataManager.mouseInputs.enabled = false;
+                DisableMouseControls(false);
                 uiCanvas.SetActive(true);
                 inputField.ActivateInputField();
             }
@@ -50,6 +51,12 @@ namespace Code.Tools.DeveloperConsole
         {
             m_DeveloperConsole.ProcessCommand(inputValue);
             inputField.text = "";
+        }
+
+        private void DisableMouseControls(bool enable = true)
+        {
+            m_DataManager.mouseInputs.enabled = enable;
+            m_DataManager.cameraControls.enabled = enable;
         }
     }
 }
