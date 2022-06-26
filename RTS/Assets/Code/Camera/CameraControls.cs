@@ -1,6 +1,8 @@
+using System;
 using Camera;
 using Code.Managers;
 using Code.ScriptableObjects;
+using Code.Tools.Debugging;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,12 +13,13 @@ namespace Code.Camera
         // Values set in CameraData
         [SerializeField] private CameraData data;
         [SerializeField] private Terrain mapTerrain;
+        [SerializeField] private UnityEngine.Camera camera;
         private float m_CameraSpeed;
         private float m_RotationSpeed;
 
         private Controls m_CameraControls;
-        private Transform m_ThisTransform;
         private Vector2 m_MapBorders;
+        private readonly Vector2[] m_CameraBounds = new Vector2[4];
         private Vector3 m_ForwardVector;
         private Vector3 m_RotationDirection;
         private Vector3 m_ZoomVector;
@@ -39,8 +42,7 @@ namespace Code.Camera
             m_ScreenSize.x = (Screen.width - 1);
             m_ScreenSize.y = (Screen.height - 1);
             
-            m_ThisTransform = transform;
-            m_StartRotation = m_ThisTransform.rotation;
+            m_StartRotation = transform.rotation;
             CanMoveCameraWithMouse = true;
             
             if (!data)
@@ -70,6 +72,63 @@ namespace Code.Camera
         private void OnUpdate()
         {
             MoveCamera(Time.deltaTime);
+        }
+
+        private void CalculateCameraBounds()
+        {
+            var bottomLeftRay = camera.ViewportPointToRay(Vector3.zero);
+            var bottomRightRay = camera.ViewportPointToRay(Vector3.right);
+            var topLeftRay = camera.ViewportPointToRay(Vector3.up);
+            var topRightRay = camera.ViewportPointToRay(new Vector3(1, 1, 0));
+
+            m_CameraBounds[0] = GetPointAtHeight(bottomLeftRay, 0);
+            m_CameraBounds[1] = GetPointAtHeight(topLeftRay, 0);
+            m_CameraBounds[2] = GetPointAtHeight(topRightRay, 0);
+            m_CameraBounds[3] = GetPointAtHeight(bottomRightRay, 0); // not used
+        }
+
+        private Vector3 KeepCameraInBounds(ref Vector3 nextDirection)
+        {
+            var nextX = nextDirection.x * 10f;
+            var nextY = nextDirection.z * 10f;
+            
+            // Camera can still move up or down if its at the left or right edge
+            if (m_CameraBounds[1].x + nextX <= 0f && !(m_CameraBounds[0].y + nextY <= 0f || m_CameraBounds[1].y + nextY >= m_MapBorders.y)
+                || m_CameraBounds[2].x + nextX >= m_MapBorders.x && !(m_CameraBounds[0].y + nextY <= 0f || m_CameraBounds[1].y + nextY >= m_MapBorders.y))
+            {
+                return new Vector3(0f, 0f, nextDirection.z);
+            }
+
+            // Camera can still move left or right if its at the up or down edge
+            if (m_CameraBounds[0].y + nextY <= 0f && !(m_CameraBounds[1].x + nextX <= 0f || m_CameraBounds[2].x + nextX >= m_MapBorders.x)
+                || m_CameraBounds[1].y + nextY >= m_MapBorders.y && !(m_CameraBounds[1].x + nextX <= 0f || m_CameraBounds[2].x + nextX >= m_MapBorders.x))
+            {
+                return new Vector3(nextDirection.x, 0f, 0f);
+            }
+            
+            // Left side, Right side, Down, Up
+            if (m_CameraBounds[1].x + nextX <= 0f || m_CameraBounds[2].x + nextX >= m_MapBorders.x || 
+                m_CameraBounds[0].y + nextY <= 0f || m_CameraBounds[1].y + nextY >= m_MapBorders.y)
+            {
+                return Vector3.zero;
+            }
+
+            return nextDirection;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawRay(camera.ViewportPointToRay(Vector3.zero));
+            Gizmos.DrawRay(camera.ViewportPointToRay(Vector3.right));
+            Gizmos.DrawRay(camera.ViewportPointToRay(Vector3.up));
+            Gizmos.DrawRay(camera.ViewportPointToRay(new Vector3(1, 1, 0)));
+        }
+
+        private static Vector2 GetPointAtHeight(Ray ray, float height)
+        {
+            var point = ray.origin + ((ray.origin.y - height) / -ray.direction.y) * ray.direction;
+            return new Vector2(point.x, point.z);
         }
 
         // WASD
@@ -132,18 +191,18 @@ namespace Code.Camera
         {
             var zoom = m_ZoomVector * 0.01f;
 
-            if (m_ThisTransform.position.y - zoom.y > 60f || m_ThisTransform.position.y - zoom.y < 10f)
+            if (transform.position.y - zoom.y > 60f || transform.position.y - zoom.y < 10f)
             {
                 return;
             }
             
             if (m_ZoomVector.y > 0f)
             {
-                m_ThisTransform.position -= zoom;
+                transform.position -= zoom;
             }
             else
             {
-                m_ThisTransform.position -= zoom;
+                transform.position -= zoom;
             }
         }
 
@@ -155,27 +214,29 @@ namespace Code.Camera
 
         private void MoveCamera(float deltaTime)
         {
+            CalculateCameraBounds();
             UpdateCameraDirectionByKeys();
             UpdateCameraDirectionByMouse();
 
+            var t = transform;
+
             if (CanRotate)
             {
-                m_ThisTransform.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
+                t.Rotate(m_RotationDirection * (m_RotationSpeed * deltaTime), Space.Self);
             }
 
-            var forwardDirection = m_ThisTransform.rotation * m_ForwardVector;
-
-            if (m_ThisTransform.position.x >= m_MapBorders.x || m_ThisTransform.position.z >= m_MapBorders.y)
-            {
-                return;
-            }
             
-            m_ThisTransform.position += forwardDirection.normalized * (m_CameraSpeed * deltaTime);
+            var forwardDirection = t.rotation * m_ForwardVector;
+            var nextDirection = forwardDirection.normalized * (m_CameraSpeed * deltaTime);
+
+            nextDirection = KeepCameraInBounds(ref nextDirection);
+            
+            t.position += nextDirection;
         }
 
         public void CameraReset()
         {
-            m_ThisTransform.rotation = m_StartRotation;
+            transform.rotation = m_StartRotation;
         }
     }
 }

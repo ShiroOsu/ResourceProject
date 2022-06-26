@@ -28,7 +28,7 @@ namespace Code.Tools.DeveloperConsole
             
             ProcessCommand(commandInput, arguments);
         }
-        
+
         private void ProcessCommand(string commandInput, string[] arguments)
         {
             foreach (var command in m_Commands)
