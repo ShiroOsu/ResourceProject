@@ -2049,7 +2049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: b9cab1ec934ead94e9943134849f15d5, type: 2}
   mapTerrain: {fileID: 389455336}
-  camera: {fileID: 963194227}
+  _camera: {fileID: 963194227}
   canZoom: 1
 --- !u!1 &1301084781 stripped
 GameObject:
@@ -4740,79 +4740,79 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[1].key
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[2].key
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[3].key
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[4].key
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[5].key
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[6].key
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[7].key
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[8].key
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[9].key
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[10].key
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[11].key
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[12].key
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[13].key
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[14].key
-      value: 14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[15].key
-      value: 15
+      value: 98
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[16].key
-      value: 16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[17].key
-      value: 17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[18].key
-      value: 18
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[19].key
-      value: 19
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540918530544968313, guid: dd29da7e753fac5469e5cc37ea3b4a4f, type: 3}
       propertyPath: buttonByKey.Array.data[0].image

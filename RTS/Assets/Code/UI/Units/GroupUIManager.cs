@@ -26,7 +26,7 @@ namespace Code.UI.Units
             m_ParentObject = getParent.transform.parent.gameObject;
         }
 
-        private void HandleUnitList(List<GameObject> unitList)
+        private void HandleUnitList(HashSet<GameObject> unitList)
         {
             m_TextureList.Clear();
             DisableUnitImages();

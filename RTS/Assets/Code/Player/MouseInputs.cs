@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
@@ -37,10 +38,10 @@ namespace Code.Player
 
         // Public stuff
         public Ray PlacementRay => camera.ScreenPointToRay(m_MousePosition);
-        public List<GameObject> SelectedUnitsList { get; private set; }
+        public HashSet<GameObject> SelectedUnitsList { get; private set; }
 
         public bool IsBuilding { get; set; }
-        public event Action<List<GameObject>> OnUpdateUnitList;
+        public event Action<HashSet<GameObject>> OnUpdateUnitList;
         public event Action OnDisableUnitImages;
         
         // Controls
@@ -60,7 +61,7 @@ namespace Code.Player
             UpdateManager.Instance.OnUpdate += OnUpdate;
             
             m_Data = DataManager.Instance;
-            SelectedUnitsList = new List<GameObject>();
+            SelectedUnitsList = new HashSet<GameObject>();
 
             m_UnitMask = m_Data.mouseData.unitMask;
             m_StructureMask = m_Data.mouseData.structureMask;
@@ -278,7 +279,7 @@ namespace Code.Player
 
             // Temp, because it finds ALL GameObjects in scene then loops through them,
             // then looking for the objects with the IUnit interface
-            // Would be ideal to only needing to loop through a list that only contains selectable units
+            // Would be "ideal" to only needing to loop through a list that only contains selectable units
             var allUnits = FindObjectsOfType<GameObject>(false);
 
             // If multiSelecting was last action it will not clear lists 
@@ -362,7 +363,7 @@ namespace Code.Player
                 u.ActivateSelectionCircle(true);
             }
 
-            var firstUnit = SelectedUnitsList[0];
+            var firstUnit = SelectedUnitsList.First();
             firstUnit.TryGetComponent(out IUnit u1);
             UIImage.Instance.SetImage(u1.GetUnitImage());
 

@@ -1,8 +1,6 @@
-using System;
 using Camera;
 using Code.Managers;
 using Code.ScriptableObjects;
-using Code.Tools.Debugging;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,7 +11,7 @@ namespace Code.Camera
         // Values set in CameraData
         [SerializeField] private CameraData data;
         [SerializeField] private Terrain mapTerrain;
-        [SerializeField] private UnityEngine.Camera camera;
+        [SerializeField] private UnityEngine.Camera _camera;
         private float m_CameraSpeed;
         private float m_RotationSpeed;
 
@@ -76,10 +74,10 @@ namespace Code.Camera
 
         private void CalculateCameraBounds()
         {
-            var bottomLeftRay = camera.ViewportPointToRay(Vector3.zero);
-            var bottomRightRay = camera.ViewportPointToRay(Vector3.right);
-            var topLeftRay = camera.ViewportPointToRay(Vector3.up);
-            var topRightRay = camera.ViewportPointToRay(new Vector3(1, 1, 0));
+            var bottomLeftRay = _camera.ViewportPointToRay(Vector3.zero);
+            var bottomRightRay = _camera.ViewportPointToRay(Vector3.right);
+            var topLeftRay = _camera.ViewportPointToRay(Vector3.up);
+            var topRightRay = _camera.ViewportPointToRay(new Vector3(1, 1, 0));
 
             m_CameraBounds[0] = GetPointAtHeight(bottomLeftRay, 0);
             m_CameraBounds[1] = GetPointAtHeight(topLeftRay, 0);
@@ -119,10 +117,10 @@ namespace Code.Camera
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.magenta;
-            Gizmos.DrawRay(camera.ViewportPointToRay(Vector3.zero));
-            Gizmos.DrawRay(camera.ViewportPointToRay(Vector3.right));
-            Gizmos.DrawRay(camera.ViewportPointToRay(Vector3.up));
-            Gizmos.DrawRay(camera.ViewportPointToRay(new Vector3(1, 1, 0)));
+            Gizmos.DrawRay(_camera.ViewportPointToRay(Vector3.zero));
+            Gizmos.DrawRay(_camera.ViewportPointToRay(Vector3.right));
+            Gizmos.DrawRay(_camera.ViewportPointToRay(Vector3.up));
+            Gizmos.DrawRay(_camera.ViewportPointToRay(new Vector3(1, 1, 0)));
         }
 
         private static Vector2 GetPointAtHeight(Ray ray, float height)

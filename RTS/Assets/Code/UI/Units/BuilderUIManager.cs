@@ -44,15 +44,16 @@ namespace Code.UI.Units
         protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(OpenBuildPage, 15, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Build));
+                AllTextures.Instance.GetTexture(TextureAssetType.Build), KeyCode.A);
         }
 
         private void BindBuildings()
         {
-            MenuButtons.Instance.BindMenuButton(BackToMainPage, 15, AllTextures.Instance.GetTexture(TextureAssetType.Builder));
+            MenuButtons.Instance.BindMenuButton(BackToMainPage, 15, 
+                AllTextures.Instance.GetTexture(TextureAssetType.Builder), KeyCode.B);
             
             MenuButtons.Instance.BindMenuButton(() => m_Builder.OnStructureBuildButton(StructureType.Barracks), 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Barracks));
+                AllTextures.Instance.GetTexture(TextureAssetType.Barracks), KeyCode.J);
         }
     }
 }
