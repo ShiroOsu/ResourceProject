@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Managers;
+using Code.Resources;
 using Code.Tools.Enums;
 using Code.UI;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Code.Timers
         [FormerlySerializedAs("m_TimerFill")] public Slider timerFill;
         public Button removeFromQueue;
         [FormerlySerializedAs("m_ImageQueue")] public RawImage[] imageQueue;
+        private PlayerResources m_PlayerResources;
 
         protected readonly Queue<TextureAssetType> SpawnQueue = new();
         protected float CurrentUnitTimeSpawn;
@@ -28,6 +30,7 @@ namespace Code.Timers
         private void Awake()
         {
             removeFromQueue.onClick.AddListener(RemoveFromQueueByButton);
+            m_PlayerResources = PlayerResources.Instance;
         }
 
         public virtual void AddActionOnSpawn(bool add)
@@ -55,11 +58,32 @@ namespace Code.Timers
             return null;
         }
 
+        // TODO: Does not remove correct image when removed by button click ?
         protected virtual void RemoveFromQueueByButton()
         {
             if (SpawnQueue.Count > 0)
             {
-                RemoveImageInQueue();
+                if (SpawnQueue.Count > 1)
+                {
+                    i--; // i = length of imageQueue, i--; is last element in array    
+                }
+                
+                // Disable gameObject and remove texture
+                imageQueue[i].gameObject.SetActive(false);
+                imageQueue[i].texture = null;
+
+                var queue = SpawnQueue.ToArray();
+
+                // Give resources back when removing
+                var lastInQueue = queue[^1];
+                UnitResource(lastInQueue);
+                
+                // Re-set textures of remaining textures in imageQueue
+                for (var j = 0; j < i; j++)
+                {
+                    imageQueue[j].texture = AllTextures.Instance.GetTexture(queue[j]);
+                }
+                
                 CurrentTimeOnSpawn = 0f;
             }
         }
@@ -73,22 +97,20 @@ namespace Code.Timers
             }
         }
 
-        // TODO: Does not remove correct image when removed by button click
+        // TODO: Does not remove correct image when removed by button click ?
         protected void RemoveImageInQueue()
         {
-            i--; // i is equal to the length of m_SpawnQueue
-            // Remove last texture
+            i--; // i = length of imageQueue, i-- is last element in array
+            // Disable gameObject and remove texture
             imageQueue[i].gameObject.SetActive(false);
             imageQueue[i].texture = null;
-            
-            // Grab m_SpawnQueue as Array
-            var spawnQueue = SpawnQueue.ToArray();
-            
-            // Shifts all items in m_ImageQueue to the left 
-            // and set texture to the next items in spawnQueue
+
+            var queue = SpawnQueue.ToArray();
+
+            // Re-set textures of remaining textures in imageQueue
             for (var j = 0; j < i; j++)
             {
-                imageQueue[j].texture = AllTextures.Instance.GetTexture(spawnQueue[j]);
+                imageQueue[j].texture = AllTextures.Instance.GetTexture(queue[j]);
             }
         }
 
@@ -109,7 +131,13 @@ namespace Code.Timers
             return unitTime;
         }
 
-        private void OnDestroy()
+        private void UnitResource(TextureAssetType type)
+        {
+            var costs = ShopManager.Instance.GetUnitCost(type);
+            m_PlayerResources.AddResource(costs.gold, 0, 0, -costs.food);
+        }
+
+        private void OnDestroy() 
         {
             removeFromQueue.onClick.RemoveAllListeners();
         }

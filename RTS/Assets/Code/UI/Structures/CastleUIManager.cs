@@ -34,10 +34,10 @@ namespace Code.UI.Structures
         protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSetSpawnFlagPosition, 0, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Flag));
+                AllTextures.Instance.GetTexture(TextureAssetType.Flag), "", KeyCode.F);
             
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSpawnBuilderButton, 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Builder));
+                AllTextures.Instance.GetTexture(TextureAssetType.Builder), "", KeyCode.Q);
         }
     }
 }

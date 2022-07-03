@@ -19,8 +19,16 @@ namespace Code.Resources
         private int m_Stone;
         private int m_Wood;
         private int m_Food;
-        private int m_Units;
+        private int m_Units; // total units, probably temp, use food instead for max units
 
+        /// <summary>
+        /// Add or subtract resources
+        /// </summary>
+        /// <param name="gold"></param>
+        /// <param name="stone"></param>
+        /// <param name="wood"></param>
+        /// <param name="food"></param>
+        /// <param name="units"></param>
         public void AddResource(int gold = 0, int stone = 0, int wood = 0, int food = 0, int units = 0)
         {
             m_FirstLoad = false;
@@ -44,6 +52,19 @@ namespace Code.Resources
                 ResourceType.Wood => m_Wood.ToString(),
                 ResourceType.Food => m_Food.ToString(),
                 ResourceType.Units => m_Units.ToString(),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+        }
+
+        public int GetResourceInt(ResourceType type)
+        {
+            return type switch
+            {
+                ResourceType.Gold => m_Gold,
+                ResourceType.Stone => m_Stone,
+                ResourceType.Wood => m_Wood,
+                ResourceType.Food => m_Food,
+                ResourceType.Units => m_Units,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }

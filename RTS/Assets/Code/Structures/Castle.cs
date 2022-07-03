@@ -5,6 +5,7 @@ using Code.SaveSystem.Data;
 using Code.ScriptableObjects;
 using Code.Timers;
 using Code.Tools;
+using Code.Tools.Debugging;
 using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
 using Code.UI;
@@ -82,6 +83,12 @@ namespace Code.Structures
 
         public void OnSpawnBuilderButton()
         {
+            if (!ShopManager.Instance.CanAffordUnit(UnitType.Builder))
+            {
+                Log.Print("Castle.cs", "Could not afford to create a Builder unit!");
+                return;
+            }
+            
             OnSpawn?.Invoke(TextureAssetType.Builder);
         }
 

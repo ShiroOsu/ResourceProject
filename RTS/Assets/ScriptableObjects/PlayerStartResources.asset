@@ -15,4 +15,4 @@ MonoBehaviour:
   gold: 1000
   stone: 1000
   wood: 1000
-  food: 1000
+  food: 0

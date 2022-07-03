@@ -1,6 +1,5 @@
 using System;
 using Code.Managers;
-using Code.Tools.Debugging;
 using Code.Tools.HelperClasses;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -19,6 +18,7 @@ namespace Code.UI
         [Serializable]
         private struct ButtonByKey
         {
+            public string toolTipText;
             public GameObject @object;
             public Button button;
             public RawImage image;
@@ -27,12 +27,14 @@ namespace Code.UI
 
         [SerializeField] private ButtonByKey[] buttonByKey;
 
-        public void BindMenuButton(UnityAction action, int buttonIndex, Texture texture, KeyCode key = KeyCode.None)
+        public void BindMenuButton(UnityAction action, int buttonIndex, Texture texture, string toolTip, KeyCode key = KeyCode.None)
         {
+            // W, A, S, D moves the camera
             Assert.IsFalse(key is KeyCode.W or KeyCode.A or KeyCode.S or KeyCode.D);
 
             buttonByKey[buttonIndex].button.onClick.AddListener(action);
             buttonByKey[buttonIndex].image.texture = texture;
+            buttonByKey[buttonIndex].toolTipText = toolTip;
             buttonByKey[buttonIndex].key = key;
             buttonByKey[buttonIndex].@object.SetActive(true);
         }
@@ -56,6 +58,7 @@ namespace Code.UI
             {
                 var byKey = button;
 
+                byKey.toolTipText = string.Empty;
                 byKey.button.onClick.RemoveAllListeners();
                 byKey.@object.SetActive(false);
                 byKey.image.texture = null;

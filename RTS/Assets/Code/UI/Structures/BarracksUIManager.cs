@@ -34,13 +34,13 @@ namespace Code.UI.Structures
         protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.OnSetSpawnFlagPosition, 0, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Flag));
+                AllTextures.Instance.GetTexture(TextureAssetType.Flag), "", KeyCode.F);
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnSoldier, 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Soldier));
+                AllTextures.Instance.GetTexture(TextureAssetType.Soldier), "", KeyCode.Q);
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnHorse, 3, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Horse));
+                AllTextures.Instance.GetTexture(TextureAssetType.Horse), "", KeyCode.E);
         }
     }
 }

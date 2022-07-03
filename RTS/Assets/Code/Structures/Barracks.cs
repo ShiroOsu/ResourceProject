@@ -5,6 +5,7 @@ using Code.SaveSystem.Data;
 using Code.ScriptableObjects;
 using Code.Timers;
 using Code.Tools;
+using Code.Tools.Debugging;
 using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
 using Code.UI;
@@ -82,11 +83,21 @@ namespace Code.Structures
 
         public void SpawnSoldier()
         {
+            if (!ShopManager.Instance.CanAffordUnit(UnitType.Soldier))
+            {
+                Log.Print("Barracks.cs", "Could not afford to create a Soldier unit");
+                return;
+            }
             OnSpawn?.Invoke(TextureAssetType.Soldier);
         }
 
         public void SpawnHorse()
         {
+            if (!ShopManager.Instance.CanAffordUnit(UnitType.Horse))
+            {
+                Log.Print("Barracks.cs", "Could not afford to create a Horse unit");
+                return;
+            }
             OnSpawn?.Invoke(TextureAssetType.Horse);
         }
 

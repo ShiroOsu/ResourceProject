@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using Code.Interfaces;
+using Code.Managers;
 using Code.Managers.Building;
+using Code.Resources;
 using Code.SaveSystem.Data;
+using Code.Tools.Debugging;
 using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
 using Code.UI;
@@ -20,11 +23,13 @@ namespace Code.Units.Builder
         private NavMeshAgent m_Agent;
 
         private readonly BuilderData m_BuilderData = new();
-
+        private ShopManager m_Shop;
+        
         private void Awake()
         {
             m_Agent = GetComponent<NavMeshAgent>();
-
+            m_Shop = ShopManager.Instance;
+            
             m_Agent.speed = data.movementSpeed;
             m_Agent.acceleration = data.acceleration;
 
@@ -80,9 +85,19 @@ namespace Code.Units.Builder
             switch (type)
             {
                 case StructureType.Castle:
+                    if (!ShopManager.Instance.CanAffordBuilding(type))
+                    {
+                        Log.Print("BuilderUnit.cs", "Could not afford to create a Castle building!");
+                        return;
+                    }
                     BuildManager.Instance.InitBuild(type);
                     break;
                 case StructureType.Barracks:
+                    if (!ShopManager.Instance.CanAffordBuilding(type))
+                    {
+                        Log.Print("BuilderUnit.cs", "Could not afford to create a Barracks building!");
+                        return;
+                    }
                     BuildManager.Instance.InitBuild(type);
                     break;
                 default:
