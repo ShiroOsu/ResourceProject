@@ -83,6 +83,8 @@ namespace Code.Structures
 
         public void SpawnSoldier()
         {
+            if (QueueFull()) return;
+            
             if (!ShopManager.Instance.CanAffordUnit(UnitType.Soldier))
             {
                 Log.Print("Barracks.cs", "Could not afford to create a Soldier unit");
@@ -93,6 +95,8 @@ namespace Code.Structures
 
         public void SpawnHorse()
         {
+            if (QueueFull()) return;
+            
             if (!ShopManager.Instance.CanAffordUnit(UnitType.Horse))
             {
                 Log.Print("Barracks.cs", "Could not afford to create a Horse unit");
@@ -131,8 +135,16 @@ namespace Code.Structures
         {
         }
         
-        public void Destroy()
-        {}
+        public void Destroy() {}
+
+        private bool QueueFull()
+        {
+            if (!barracksTimer.IsQueueFull) 
+                return false;
+            
+            Log.Print("Barracks.cs", "Could not buy unit, queue is full!");
+            return true;
+        }
 
         public void Save()
         {

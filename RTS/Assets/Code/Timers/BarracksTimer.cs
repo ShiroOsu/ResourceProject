@@ -13,6 +13,7 @@ namespace Code.Timers
         private TextureAssetType m_CurrentUnitToSpawn;
         
         public Barracks Barracks { get; set; }
+        public bool IsQueueFull => (i >= imageQueue.Length);
         
         public override void AddActionOnSpawn(bool add)
         {

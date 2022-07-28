@@ -37,7 +37,7 @@ namespace Code.UI.Structures
                 AllTextures.Instance.GetTexture(TextureAssetType.Flag), "", KeyCode.F);
             
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSpawnBuilderButton, 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Builder), "", KeyCode.Q);
+                AllTextures.Instance.GetTexture(TextureAssetType.Builder), "This is a test tooltip to test menu button text window it should be able to resize it self yes, test test test 123. + \n hello this is a new line", KeyCode.Q);
         }
     }
 }

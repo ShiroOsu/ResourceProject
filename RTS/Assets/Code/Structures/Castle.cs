@@ -83,9 +83,11 @@ namespace Code.Structures
 
         public void OnSpawnBuilderButton()
         {
+            if (QueueFull()) return;
+            
             if (!ShopManager.Instance.CanAffordUnit(UnitType.Builder))
             {
-                Log.Print("Castle.cs", "Could not afford to create a Builder unit!");
+                Log.Print("Castle.cs", "Could not afford a Builder unit!");
                 return;
             }
             
@@ -120,6 +122,15 @@ namespace Code.Structures
             {
                 m_SetSpawnFlag = false;
             }
+        }
+        
+        private bool QueueFull()
+        {
+            if (!castleTimer.IsQueueFull) 
+                return false;
+            
+            Log.Print("Castle.cs", "Could not buy unit, queue is full!");
+            return true;
         }
         
         public void Save()

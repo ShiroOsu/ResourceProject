@@ -13,6 +13,7 @@ using Code.Tools.Debugging;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 using UEObject = UnityEngine.Object;
 
@@ -56,6 +57,21 @@ namespace Code.Tools.HelperClasses
         public static bool WasRightMouseReleased()
         {
             return Mouse.current.rightButton.wasReleasedThisFrame;
+        }
+
+        public static KeyCode GetCurrentKeyPressed()
+        {
+            foreach (var key in _lookup)
+            {
+                var keyCode = (KeyCode)key;
+                if (keyCode.WasKeyPressed())
+                {
+                    return keyCode;
+                }
+            }
+            
+            Log.Print("Extensions.cs", "Key not found!");
+            return KeyCode.None;
         }
 
         public static bool WasKeyPressed(this KeyCode key)

@@ -32,6 +32,10 @@ namespace Code.UI
             // W, A, S, D moves the camera
             Assert.IsFalse(key is KeyCode.W or KeyCode.A or KeyCode.S or KeyCode.D);
 
+            if (!string.IsNullOrEmpty(toolTip))
+            {
+                print(toolTip);
+            }
             buttonByKey[buttonIndex].button.onClick.AddListener(action);
             buttonByKey[buttonIndex].image.texture = texture;
             buttonByKey[buttonIndex].toolTipText = toolTip;
@@ -44,10 +48,11 @@ namespace Code.UI
             foreach (var key in buttonByKey)
             {
                 if (key.key == KeyCode.None) continue;
-
+            
                 if (key.key.WasKeyPressed() && key.@object.activeSelf)
                 {
                     key.button.onClick.Invoke();
+                    return;
                 }
             }
         }

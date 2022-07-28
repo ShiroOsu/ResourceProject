@@ -11,6 +11,7 @@ namespace Code.Timers
     public class CastleTimer : CreateTimer
     {
         public Castle Castle { get; set; }
+        public bool IsQueueFull => (i >= imageQueue.Length);
 
         public override void AddActionOnSpawn(bool add)
         {
