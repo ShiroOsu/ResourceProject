@@ -22,13 +22,7 @@ namespace Code.Interfaces.Events.Editor
             EditorGUILayout.PropertyField(m_TextMeshPro);
             EditorGUILayout.Space();
             EditorGUILayout.PropertyField(m_TextArea);
-
-
-            if (GUILayout.Button("Set tool tip text"))
-            {
-                m_MouseOverEvent.SetToolTipText();
-            }
-
+            
             serializedObject.ApplyModifiedProperties();
         }
     }

@@ -6,23 +6,19 @@ namespace Code.Interfaces.Events
 {
     public class MouseOverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public GameObject inGameTextArea = null;
+        public GameObject inGameTextArea;
         public TextMeshPro inGameTextToolTip;
-        public string textArea;
+        public string TextArea { private get; set; }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            inGameTextToolTip.SetText(TextArea);
             inGameTextArea.SetActive(true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             inGameTextArea.SetActive(false);
-        }
-
-        public void SetToolTipText()
-        {
-            inGameTextToolTip.SetText(textArea);
         }
     }
 }

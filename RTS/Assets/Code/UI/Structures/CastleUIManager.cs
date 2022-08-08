@@ -1,3 +1,4 @@
+using Code.Managers;
 using Code.ScriptableObjects;
 using Code.Structures;
 using Code.Tools.Enums;
@@ -31,13 +32,22 @@ namespace Code.UI.Structures
             }
         }
 
+        private static string BuilderTip()
+        {
+            var builderCost = ShopManager.Instance.GetUnitCost(TextureAssetType.Builder);
+            return "Create Builder unit." +
+                   $"\nGold: {builderCost.gold}" +
+                   $"\nFood: {builderCost.food}" +
+                   "\nHotkey: Q"; // Temp, add a Text component that will show KeyCode onto the button (need to make a new gameObject...)
+        }
+
         protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSetSpawnFlagPosition, 0, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Flag), "", KeyCode.F);
+                AllTextures.Instance.GetTexture(TextureAssetType.Flag), "Spawned units travel position.", KeyCode.F);
             
             MenuButtons.Instance.BindMenuButton(m_CastleRef.OnSpawnBuilderButton, 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Builder), "This is a test tooltip to test menu button text window it should be able to resize it self yes, test test test 123. + \n hello this is a new line", KeyCode.Q);
+                AllTextures.Instance.GetTexture(TextureAssetType.Builder), BuilderTip(), KeyCode.Q);
         }
     }
 }

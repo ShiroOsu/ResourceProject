@@ -108,7 +108,7 @@ namespace Code.Managers
             }
         }
 
-        // TextureAssetType because that is the enum used for create timers 
+        // TextureAssetType, because that is the enum used for create timers 
         public UnitCost GetUnitCost(TextureAssetType type) => m_UnitCosts[(UnitType)type];
         public StructureCost GetStructureCost(TextureAssetType type) => m_StructureCosts[(StructureType)type];
     }

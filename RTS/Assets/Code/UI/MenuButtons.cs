@@ -1,4 +1,5 @@
 using System;
+using Code.Interfaces.Events;
 using Code.Managers;
 using Code.Tools.HelperClasses;
 using UnityEngine;
@@ -18,10 +19,10 @@ namespace Code.UI
         [Serializable]
         private struct ButtonByKey
         {
-            public string toolTipText;
             public GameObject @object;
             public Button button;
             public RawImage image;
+            public MouseOverEvent mouseOverEvent;
             public KeyCode key;
         }
 
@@ -31,14 +32,10 @@ namespace Code.UI
         {
             // W, A, S, D moves the camera
             Assert.IsFalse(key is KeyCode.W or KeyCode.A or KeyCode.S or KeyCode.D);
-
-            if (!string.IsNullOrEmpty(toolTip))
-            {
-                print(toolTip);
-            }
+            
             buttonByKey[buttonIndex].button.onClick.AddListener(action);
             buttonByKey[buttonIndex].image.texture = texture;
-            buttonByKey[buttonIndex].toolTipText = toolTip;
+            buttonByKey[buttonIndex].mouseOverEvent.TextArea = toolTip;
             buttonByKey[buttonIndex].key = key;
             buttonByKey[buttonIndex].@object.SetActive(true);
         }
@@ -63,7 +60,7 @@ namespace Code.UI
             {
                 var byKey = button;
 
-                byKey.toolTipText = string.Empty;
+                byKey.mouseOverEvent.TextArea = string.Empty;
                 byKey.button.onClick.RemoveAllListeners();
                 byKey.@object.SetActive(false);
                 byKey.image.texture = null;
