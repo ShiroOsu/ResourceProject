@@ -2241,6 +2241,7 @@ MonoBehaviour:
   builderPrefab: {fileID: 8717004148852162051, guid: 53015e7ed2b33c7439aca0dd67a44a13, type: 3}
   soldierPrefab: {fileID: 2669723595896632583, guid: 2a99a8fefe6ff0943879edf0dc9509ec, type: 3}
   horseUnitPrefab: {fileID: 9034889283149449850, guid: 5504bc9394a2a7940b86be9108f71713, type: 3}
+  workerUnitPrefab: {fileID: 7633648905702545791, guid: f7928b77edbc1eb4a8751d8f612ea6d0, type: 3}
 --- !u!4 &1930229439
 Transform:
   m_ObjectHideFlags: 0
@@ -2352,6 +2353,7 @@ MonoBehaviour:
   builderPrefab: {fileID: 8717004148852162051, guid: 53015e7ed2b33c7439aca0dd67a44a13, type: 3}
   soldierPrefab: {fileID: 2669723595896632583, guid: 2a99a8fefe6ff0943879edf0dc9509ec, type: 3}
   horsePrefab: {fileID: 9034889283149449850, guid: 5504bc9394a2a7940b86be9108f71713, type: 3}
+  workerPrefab: {fileID: 7633648905702545791, guid: f7928b77edbc1eb4a8751d8f612ea6d0, type: 3}
   goldminePrefab: {fileID: 5356995427864378480, guid: 6af43255b04e0f443a4b47037ba70ed4, type: 3}
 --- !u!1 &2118576048
 GameObject:
@@ -2458,6 +2460,9 @@ MonoBehaviour:
     food: 0
   - unitType: 2
     gold: 25
+    food: 0
+  - unitType: 3
+    gold: 10
     food: 0
 --- !u!4 &2145985391
 Transform:

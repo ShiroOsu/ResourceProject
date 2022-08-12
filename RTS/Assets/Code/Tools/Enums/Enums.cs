@@ -12,6 +12,7 @@ namespace Code.Tools.Enums
         Builder,
         Soldier,
         Horse,
+        Worker,
     }
 
     public enum ResourceType
@@ -29,11 +30,15 @@ namespace Code.Tools.Enums
         UI = 5,
 	}
 
+    // Because this is used for getting unit costs,
+    // make sure the unit order is the same as in UnitType. 
+    // Changing this will cause the scriptableObject 'AllTextures' to change.
     public enum TextureAssetType
     {
         Builder,
         Soldier,
         Horse,
+        Worker,
         Castle,
         Barracks,
         Flag,

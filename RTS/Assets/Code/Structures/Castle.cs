@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Code.Interfaces;
 using Code.Managers;
 using Code.SaveSystem.Data;
@@ -92,6 +93,19 @@ namespace Code.Structures
             }
             
             OnSpawn?.Invoke(TextureAssetType.Builder);
+        }
+
+        public void OnSpawnWorkerButton()
+        {
+            if (QueueFull()) return;
+
+            if (!ShopManager.Instance.CanAffordUnit(UnitType.Worker))
+            {
+                Log.Print("Castle.cs", "Could not afford a Worker unit!");
+                return;
+            }
+            
+            OnSpawn?.Invoke(TextureAssetType.Worker);
         }
 
         public void Destroy()

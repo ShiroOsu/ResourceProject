@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Code.Units.Worker;
 
 namespace Code.SaveSystem.Data
 {
@@ -21,6 +22,7 @@ namespace Code.SaveSystem.Data
         public List<BuilderData> builderData = new();
         public List<SoldierData> soldierData = new();
         public List<HorseData> horseData = new();
+        public List<WorkerData> workerData = new();
         
         // Resources
         public List<GoldmineData> goldminesData = new();
@@ -37,6 +39,7 @@ namespace Code.SaveSystem.Data
             builderData = null;
             soldierData = null;
             horseData = null;
+            workerData = null;
             goldminesData = null;
             quarryData = null;
             playerResourceData = null;

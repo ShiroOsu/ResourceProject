@@ -66,6 +66,7 @@ namespace Code.Managers
                 UnitType.Builder => m_UnitCosts[type].Buy(m_PlayerResources),
                 UnitType.Soldier => m_UnitCosts[type].Buy(m_PlayerResources),
                 UnitType.Horse => m_UnitCosts[type].Buy(m_PlayerResources),
+                UnitType.Worker => m_UnitCosts[type].Buy(m_PlayerResources),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
@@ -108,8 +109,9 @@ namespace Code.Managers
             }
         }
 
-        // TextureAssetType, because that is the enum used for create timers 
+        // TextureAssetType, because that is the enum used for create timers
+        // int cast, if TextureAssetType order does not match UnitType it will return error.
         public UnitCost GetUnitCost(TextureAssetType type) => m_UnitCosts[(UnitType)type];
-        public StructureCost GetStructureCost(TextureAssetType type) => m_StructureCosts[(StructureType)type];
+        public StructureCost GetStructureCost(StructureType type) => m_StructureCosts[type];
     }
 }

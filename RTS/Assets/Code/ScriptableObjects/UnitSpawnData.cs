@@ -8,5 +8,6 @@ namespace Code.ScriptableObjects
         public float builderSpawnTime;
         public float soldierSpawnTime;
         public float horseSpawnTime;
+        public float workerSpawnTime;
     }
 }

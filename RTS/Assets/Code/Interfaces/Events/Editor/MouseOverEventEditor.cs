@@ -6,7 +6,6 @@ namespace Code.Interfaces.Events.Editor
     [CustomEditor(typeof(MouseOverEvent))]
     public class MouseOverEventEditor : UnityEditor.Editor
     {
-        private SerializedProperty m_TextArea;
         private SerializedProperty m_InGameTextArea;
         private SerializedProperty m_TextMeshPro;
 
@@ -14,15 +13,12 @@ namespace Code.Interfaces.Events.Editor
         {
             var m_MouseOverEvent = (MouseOverEvent)target;
 
-            m_TextArea = serializedObject.FindProperty("textArea");
             m_InGameTextArea = serializedObject.FindProperty("inGameTextArea");
             m_TextMeshPro = serializedObject.FindProperty("inGameTextToolTip");
         
             EditorGUILayout.PropertyField(m_InGameTextArea);
             EditorGUILayout.PropertyField(m_TextMeshPro);
             EditorGUILayout.Space();
-            EditorGUILayout.PropertyField(m_TextArea);
-            
             serializedObject.ApplyModifiedProperties();
         }
     }

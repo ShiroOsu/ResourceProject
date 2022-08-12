@@ -1,3 +1,4 @@
+using Code.Tools;
 using Code.Tools.Enums;
 using Code.Units;
 using Code.Units.Builder;
@@ -9,7 +10,6 @@ namespace Code.UI.Units
     {
         private BuilderUnit m_Builder;
         public override UnitType Type => UnitType.Builder;
-
         
         public override void EnableMainUI(bool active, GameObject unit, UnitType type, GameObject image, UnitData data)
         {
@@ -44,16 +44,16 @@ namespace Code.UI.Units
         protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(OpenBuildPage, 15, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Build), "", KeyCode.B);
+                AllTextures.Instance.GetTexture(TextureAssetType.Build), Tooltips.BuilderPage(), KeyCode.B);
         }
 
         private void BindBuildings()
         {
             MenuButtons.Instance.BindMenuButton(BackToMainPage, 15, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Builder), "", KeyCode.B);
+                AllTextures.Instance.GetTexture(TextureAssetType.Builder), Tooltips.CloseBuildPage(), KeyCode.B);
             
             MenuButtons.Instance.BindMenuButton(() => m_Builder.OnStructureBuildButton(StructureType.Barracks), 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Barracks), "", KeyCode.J);
+                AllTextures.Instance.GetTexture(TextureAssetType.Barracks), Tooltips.BuildStructure(StructureType.Barracks), KeyCode.J);
         }
     }
 }

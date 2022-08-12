@@ -3,7 +3,6 @@ using System.Collections;
 using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
-using Code.Resources;
 using Code.SaveSystem.Data;
 using Code.Tools.Debugging;
 using Code.Tools.Enums;
@@ -14,24 +13,28 @@ using UnityEngine.AI;
 
 namespace Code.Units.Builder
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    public class BuilderUnit : MonoBehaviour, IUnit, ISavable
+    public class BuilderUnit : BaseUnit
     {
         [SerializeField] private GameObject selectionCircle;
-        [SerializeField] private UnitData data;
+        [SerializeField] private UnitData unitData;
+        
         private GameObject m_UnitImage;
-        private NavMeshAgent m_Agent;
 
         private readonly BuilderData m_BuilderData = new();
         private ShopManager m_Shop;
+        private BuildManager m_BuildManager;
         
         private void Awake()
         {
-            m_Agent = GetComponent<NavMeshAgent>();
             m_Shop = ShopManager.Instance;
+            m_BuildManager = BuildManager.Instance;
+
+            Agent = GetComponent<NavMeshAgent>();
+            Agent.speed = unitData.movementSpeed;
+            Agent.acceleration = unitData.acceleration;
             
-            m_Agent.speed = data.movementSpeed;
-            m_Agent.acceleration = data.acceleration;
+            UnitType = UnitType.Builder;
+            TextureAssetType = TextureAssetType.Builder;
 
             if (!m_UnitImage)
             {
@@ -39,45 +42,20 @@ namespace Code.Units.Builder
             }
         }
 
-        public void ShouldSelect(bool select)
+        public override void ShouldSelect(bool select)
         {
-            UIManager.Instance.UnitSelected(select, gameObject, UnitType.Builder, m_UnitImage, data);
+            UIManager.Instance.UnitSelected(select, gameObject, UnitType.Builder, m_UnitImage, unitData);
             ActivateSelectionCircle(select);
         }
 
-        public void ActivateSelectionCircle(bool active)
+        public override void ActivateSelectionCircle(bool active)
         {
             selectionCircle.SetActive(active);
         }
-
-        public UnitType GetUnitType()
-        {
-            return UnitType.Builder;
-        }
         
-        public TextureAssetType GetUnitTexture()
-        {
-            return TextureAssetType.Builder;
-        }
-
-        public UnitData GetUnitData()
-        {
-            return data;
-        }
-
-        public GameObject GetUnitImage()
+        public override GameObject GetUnitImage()
         {
             return m_UnitImage;
-        }
-
-        public GameObject GetUnitObject()
-        {
-            return gameObject;
-        }
-
-        public void OnDestroy()
-        {
-            Destroy(this);
         }
 
         public void OnStructureBuildButton(StructureType type)
@@ -85,81 +63,31 @@ namespace Code.Units.Builder
             switch (type)
             {
                 case StructureType.Castle:
-                    if (!ShopManager.Instance.CanAffordBuilding(type))
+                    if (!m_Shop.CanAffordBuilding(type))
                     {
                         Log.Print("BuilderUnit.cs", "Could not afford to create a Castle building!");
                         return;
                     }
-                    BuildManager.Instance.InitBuild(type);
+                    m_BuildManager.InitBuild(type);
                     break;
+                
                 case StructureType.Barracks:
-                    if (!ShopManager.Instance.CanAffordBuilding(type))
+                    if (!m_Shop.CanAffordBuilding(type))
                     {
                         Log.Print("BuilderUnit.cs", "Could not afford to create a Barracks building!");
                         return;
                     }
-                    BuildManager.Instance.InitBuild(type);
+                    m_BuildManager.InitBuild(type);
                     break;
+                
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 
-        public void MoveToResource(Vector3 destination, IResource resource)
-        {
-            m_Agent.SetDestination(destination);
-            StartCoroutine(HasAgentReachedDestination(destination, resource));
-        }
         
-        public void Move(Vector3 destination)
-        {
-            m_Agent.SetDestination(destination);
-        }
 
-        public bool IsUnitMoving()
-        {
-            return !m_Agent.velocity.Equals(Vector3.zero);
-        }
-
-        private IEnumerator HasAgentReachedDestination(Vector3 dest, IResource resource)
-        {
-            var curDist = Vector3.Distance(m_Agent.transform.position, dest);
-            const float distAwayFromResource = 4f;
-            
-            while (curDist > distAwayFromResource)
-            {
-                curDist = Vector3.Distance(m_Agent.transform.position, dest);
-                yield return null;
-            }
-            
-            if (curDist <= distAwayFromResource)
-            {
-                ReachedResource(resource);
-            }
-
-            yield return null;
-        }
-
-        private void ReachedResource(IResource resource)
-        {
-            var added = resource.AddWorkers(GetUnitTexture());
-            StopAgent(true);
-
-            if (!added)
-            {
-                return;
-            }
-            
-            ShouldSelect(false);
-            gameObject.SetActive(false);
-        }
-        
-        public void StopAgent(bool stop)
-        {
-            m_Agent.isStopped = stop;
-        }
-
-        public void Save()
+        public override void Save()
         {
             m_BuilderData.Save(gameObject);
             SaveData.Instance.builderData.Add(m_BuilderData);

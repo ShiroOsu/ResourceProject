@@ -2,6 +2,7 @@ using System;
 using Code.Interfaces.Events;
 using Code.Managers;
 using Code.Tools.HelperClasses;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
@@ -23,11 +24,20 @@ namespace Code.UI
             public Button button;
             public RawImage image;
             public MouseOverEvent mouseOverEvent;
+            public TMP_Text keyBind;
             public KeyCode key;
         }
 
         [SerializeField] private ButtonByKey[] buttonByKey;
 
+        /// <summary>
+        /// Buttons in UI for the corresponding unit/structure.
+        /// </summary>
+        /// <param name="action"> Action on pressed. </param>
+        /// <param name="buttonIndex"> Index of buttons. </param>
+        /// <param name="texture"> Texture of button. </param>
+        /// <param name="toolTip"> Tooltip text when mouse hover over button. </param>
+        /// <param name="key"> Hotkey for the button. </param>
         public void BindMenuButton(UnityAction action, int buttonIndex, Texture texture, string toolTip, KeyCode key = KeyCode.None)
         {
             // W, A, S, D moves the camera
@@ -37,6 +47,7 @@ namespace Code.UI
             buttonByKey[buttonIndex].image.texture = texture;
             buttonByKey[buttonIndex].mouseOverEvent.TextArea = toolTip;
             buttonByKey[buttonIndex].key = key;
+            buttonByKey[buttonIndex].keyBind.SetText(key.ToString());
             buttonByKey[buttonIndex].@object.SetActive(true);
         }
 
@@ -60,11 +71,12 @@ namespace Code.UI
             {
                 var byKey = button;
 
-                byKey.mouseOverEvent.TextArea = string.Empty;
                 byKey.button.onClick.RemoveAllListeners();
-                byKey.@object.SetActive(false);
+                byKey.mouseOverEvent.TextArea = string.Empty;
                 byKey.image.texture = null;
+                byKey.keyBind.SetText(string.Empty);
                 byKey.key = KeyCode.None;
+                byKey.@object.SetActive(false);
             }
         }
     }

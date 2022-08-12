@@ -8,6 +8,7 @@ using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
 using Code.UI;
 using Code.Units.Builder;
+using Code.Units.Worker;
 using Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -236,11 +237,11 @@ namespace Code.Player
                 foreach (var unit in SelectedUnitsList)
                 {
                     unit.TryGetComponent(out IUnit u);
-                    if (u.GetUnitType() != UnitType.Builder)
+                    if (u.GetUnitType() != UnitType.Worker)
                         continue;
                     
-                    var builder = u.GetUnitObject().ExGetComponent<BuilderUnit>();
-                    builder.MoveToResource(newPosition, resource);
+                    var worker = u.GetUnitObject().ExGetComponent<WorkerUnit>();
+                    worker.MoveToResource(newPosition, resource);
                 }
 
                 ClearUnitList();

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4306763612183238106}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: OutlineCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5076285016309150190}
   - component: {fileID: 2429768255137257712}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: NavMeshObstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,10 +181,10 @@ MonoBehaviour:
   navMeshObstacle: {fileID: 2429768255137257712}
   sizer3D: {fileID: 1122922998704073282}
   outlineRenderer: {fileID: 684726734420508367}
-  boxCollider: {fileID: 0}
   goldmineUIMiddle: {fileID: 0}
   removedUnitsSpawnPos: {fileID: 374999592881225964}
   currentGoldLeft: 0
+  goldLoadedFromData: 0
   currentWorkersInMine: 0
   goldmineWorkers: {fileID: 2672972892838981809}
 --- !u!114 &2672972892838981809
@@ -319,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374999592881225964}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RemovedUnitSpawnPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,6 +355,10 @@ PrefabInstance:
     - target: {fileID: 8002957348612079487, guid: e54ab0249ad56b94ab9aabcbf59a8c3f, type: 3}
       propertyPath: m_Name
       value: OutlineSelection
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002957348612079487, guid: e54ab0249ad56b94ab9aabcbf59a8c3f, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8002957348612079487, guid: e54ab0249ad56b94ab9aabcbf59a8c3f, type: 3}
       propertyPath: m_IsActive
@@ -519,13 +523,65 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1407353636984472048, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4526057667644838015, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729920163318238398, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5135725903599723105, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5414038869840673710, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089224020358492972, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618123519901448819, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7180322537530800196, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7398021507534274302, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
       propertyPath: m_Name
       value: CreateTimer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7398021507534274302, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346543388089986248, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447597828917350011, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8783331567035802770, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8914690448239295444, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111558464413214979, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35c9178915fbeb8448c7abe56a79cae4, type: 3}

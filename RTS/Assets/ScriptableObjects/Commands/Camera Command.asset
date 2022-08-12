@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Camera Command
   m_EditorClassIdentifier: 
   commandWord: Camera
-  tooltip: Rotate, Reset, MouseControls
+  tooltip: Rotate, Reset, MouseControl

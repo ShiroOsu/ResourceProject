@@ -1,5 +1,6 @@
 using Code.ScriptableObjects;
 using Code.Structures;
+using Code.Tools;
 using Code.Tools.Enums;
 using UnityEngine;
 
@@ -34,13 +35,13 @@ namespace Code.UI.Structures
         protected override void BindButtons()
         {
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.OnSetSpawnFlagPosition, 0, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Flag), "", KeyCode.F);
+                AllTextures.Instance.GetTexture(TextureAssetType.Flag), Tooltips.Flag(), KeyCode.F);
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnSoldier, 4, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Soldier), "", KeyCode.Q);
+                AllTextures.Instance.GetTexture(TextureAssetType.Soldier), Tooltips.CreateUnit(TextureAssetType.Soldier), KeyCode.Q);
             
             MenuButtons.Instance.BindMenuButton(m_BarracksRef.SpawnHorse, 3, 
-                AllTextures.Instance.GetTexture(TextureAssetType.Horse), "", KeyCode.E);
+                AllTextures.Instance.GetTexture(TextureAssetType.Horse), Tooltips.CreateUnit(TextureAssetType.Horse), KeyCode.E);
         }
     }
 }

@@ -49,8 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionCircle: {fileID: 6409962247827486187}
-  data: {fileID: 11400000, guid: 3e1bc180224f7cc4ba66159801dc027a, type: 2}
-  unitImage: {fileID: 0}
+  unitData: {fileID: 11400000, guid: 3e1bc180224f7cc4ba66159801dc027a, type: 2}
 --- !u!195 &7389630584413174358
 NavMeshAgent:
   m_ObjectHideFlags: 0
