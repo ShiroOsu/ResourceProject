@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Code.Camera;
+using Code.Interfaces;
 using Code.Player;
 using Code.ScriptableObjects;
 using Code.Tools.Debugging;
@@ -78,6 +79,8 @@ namespace Code.Managers.Building
             if (deActivateBuild)
             {
                 m_CurrentBuildObject.transform.rotation = m_CurrentBlueprintObject.transform.rotation;
+                m_CurrentBuildObject.TryGetComponent<IFoV>(out var fov);
+                fov.EnableFoV();
                 m_CurrentBuildObject.SetActive(true);
             }
             m_MouseInputs.IsBuilding = false;

@@ -9,11 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bc42e457865ecc4e96d68ccc4ca4854, type: 3}
-  m_Name: CastleData
+  m_Script: {fileID: 11500000, guid: 446a72c27aa739b4db36457ebe38a986, type: 3}
+  m_Name: UnitData
   m_EditorClassIdentifier: 
-  structureName: Castle
-  health: 1000
-  mana: 100
-  armor: 10
-  fieldOfView: 10
+  unitName: 
+  maxHealth: 10
+  armor: 2
+  hpRegen: 1
+  attack: 1
+  attackSpeed: 1
+  movementSpeed: 10
+  fieldOfView: 3
+  acceleration: 16
+  turnSpeed: 1
+  navMeshSurfaceUnitID: 1479372276

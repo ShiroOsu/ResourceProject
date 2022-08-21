@@ -16,11 +16,10 @@ MonoBehaviour:
   maxHealth: 10
   armor: 2
   hpRegen: 1
-  damage: 1
+  attack: 1
   attackSpeed: 1
   movementSpeed: 10
+  fieldOfView: 5
   acceleration: 16
   turnSpeed: 1
-  soldierID: -1372625422
-  builderID: 0
-  horseID: -334000983
+  navMeshSurfaceUnitID: 1479372276

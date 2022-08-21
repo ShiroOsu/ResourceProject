@@ -4,6 +4,7 @@ using Code.Interfaces;
 using Code.Managers;
 using Code.Managers.Building;
 using Code.SaveSystem.Data;
+using Code.ScriptableObjects;
 using Code.Tools.Debugging;
 using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
@@ -17,6 +18,7 @@ namespace Code.Units.Builder
     {
         [SerializeField] private GameObject selectionCircle;
         [SerializeField] private UnitData unitData;
+        [SerializeField] private GameObject fovObject;
         
         private GameObject m_UnitImage;
 
@@ -28,7 +30,9 @@ namespace Code.Units.Builder
         {
             m_Shop = ShopManager.Instance;
             m_BuildManager = BuildManager.Instance;
-
+            
+            fovObject.transform.localScale = new Vector3(unitData.fieldOfView, 0f, unitData.fieldOfView);
+            
             Agent = GetComponent<NavMeshAgent>();
             Agent.speed = unitData.movementSpeed;
             Agent.acceleration = unitData.acceleration;
@@ -40,6 +44,11 @@ namespace Code.Units.Builder
             {
                 m_UnitImage = Extensions.FindObject("BuilderImage");
             }
+        }
+
+        public override void EnableFoV(bool fov = true)
+        {
+            fovObject.SetActive(fov);
         }
 
         public override void ShouldSelect(bool select)

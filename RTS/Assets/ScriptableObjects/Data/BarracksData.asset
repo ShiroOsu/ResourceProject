@@ -16,3 +16,4 @@ MonoBehaviour:
   health: 1000
   mana: 100
   armor: 10
+  fieldOfView: 30

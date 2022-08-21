@@ -1,6 +1,7 @@
 using System.Collections;
 using Code.Interfaces;
 using Code.SaveSystem.Data;
+using Code.ScriptableObjects;
 using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
 using Code.UI;
@@ -13,6 +14,8 @@ namespace Code.Units.Worker
     {
         [SerializeField] private GameObject selectionCircle;
         [SerializeField] private UnitData unitData;
+        [SerializeField] private GameObject fovObject;
+        
         private GameObject m_UnitImage;
         private readonly WorkerData m_WorkerData = new();
 
@@ -20,6 +23,8 @@ namespace Code.Units.Worker
         {
             UnitType = UnitType.Worker;
             TextureAssetType = TextureAssetType.Worker;
+            
+            fovObject.transform.localScale = new Vector3(unitData.fieldOfView, 0f, unitData.fieldOfView);
             
             Agent = GetComponent<NavMeshAgent>();
             Agent.speed = unitData.movementSpeed;
@@ -29,6 +34,11 @@ namespace Code.Units.Worker
             {
                 m_UnitImage = Extensions.FindObject("WorkerImage");
             }
+        }
+
+        public override void EnableFoV(bool fov = true)
+        {
+            fovObject.SetActive(fov);
         }
 
         public override GameObject GetUnitImage()

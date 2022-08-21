@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace Code.Units
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class BaseUnit : MonoBehaviour, IUnit, ISavable
+    public abstract class BaseUnit : MonoBehaviour, IUnit, ISavable, IFoV //UnitBase
     {
         protected NavMeshAgent Agent;
         protected UnitType UnitType;
@@ -23,5 +23,6 @@ namespace Code.Units
         public virtual void Move(Vector3 destination) => Agent.SetDestination(destination);
         public virtual void StopAgent(bool stop) => Agent.isStopped = stop;
         public virtual void Save() => throw new NotImplementedException();
+        public virtual void EnableFoV(bool fov = true) => throw new NotImplementedException();
     }
 }

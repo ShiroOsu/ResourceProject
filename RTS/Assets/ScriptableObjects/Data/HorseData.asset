@@ -19,6 +19,7 @@ MonoBehaviour:
   attack: 10
   attackSpeed: 2.5
   movementSpeed: 50
+  fieldOfView: 5
   acceleration: 16
   turnSpeed: 1
   navMeshSurfaceUnitID: 1479372276

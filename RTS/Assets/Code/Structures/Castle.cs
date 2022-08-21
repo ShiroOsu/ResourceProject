@@ -15,12 +15,13 @@ using UnityEngine.AI;
 
 namespace Code.Structures
 {
-    public class Castle : MonoBehaviour, IStructure, ISavable
+    public class Castle : MonoBehaviour, IStructure, ISavable, IFoV
     {
         [SerializeField] private NavMeshObstacle navMeshObstacle;
         [SerializeField] private CustomSizer3D sizer3D;
         public Transform unitSpawnPoint;
         [SerializeField] private GameObject outlineRenderer;
+        [SerializeField] private GameObject fovObject;
         [SerializeField] private StructureData data;
         private GameObject m_StructureImage;
         public GameObject castleUIMiddle;
@@ -40,6 +41,8 @@ namespace Code.Structures
             UpdateManager.Instance.OnUpdate += OnUpdate;
             navMeshObstacle.shape = NavMeshObstacleShape.Box;
             navMeshObstacle.size = sizer3D.GetSize(gameObject.transform.lossyScale);
+            
+            fovObject.transform.localScale = new Vector3(data.fieldOfView, 0f, data.fieldOfView); 
 
             if (!m_StructureImage)
             {
@@ -68,6 +71,11 @@ namespace Code.Structures
                     m_SetSpawnFlag = false;
                 }
             }
+        }
+
+        public void EnableFoV(bool fov = true)
+        {
+            fovObject.SetActive(fov);
         }
 
         private void SetFlagPosition()

@@ -1,4 +1,5 @@
 using Code.SaveSystem.Data;
+using Code.ScriptableObjects;
 using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
 using Code.UI;
@@ -10,7 +11,9 @@ namespace Code.Units.Soldier
     public class SoldierUnit : BaseUnit
     {
         [SerializeField] private GameObject selectionCircle;
-        [SerializeField] private UnitData data;
+        [SerializeField] private UnitData unitData;
+        [SerializeField] private GameObject fovObject;
+        
         private GameObject m_UnitImage;
         private readonly SoldierData m_SoldierData = new();
 
@@ -19,16 +22,23 @@ namespace Code.Units.Soldier
             UnitType = UnitType.Soldier;
             TextureAssetType = TextureAssetType.Soldier;
             
+            fovObject.transform.localScale = new Vector3(unitData.fieldOfView, 0f, unitData.fieldOfView);
+            
             Agent = GetComponent<NavMeshAgent>();
-            Agent.speed = data.movementSpeed;
-            Agent.acceleration = data.acceleration;
+            Agent.speed = unitData.movementSpeed;
+            Agent.acceleration = unitData.acceleration;
             
             if (!m_UnitImage)
             {
                 m_UnitImage = Extensions.FindObject("SoldierImage");
             }
         }
-        
+
+        public override void EnableFoV(bool fov = true)
+        {
+            fovObject.SetActive(fov);
+        }
+
         public override GameObject GetUnitImage()
         {
             return m_UnitImage;
@@ -36,7 +46,7 @@ namespace Code.Units.Soldier
 
         public override void ShouldSelect(bool select)
         {
-            UIManager.Instance.UnitSelected(select, gameObject, UnitType.Soldier, m_UnitImage, data);
+            UIManager.Instance.UnitSelected(select, gameObject, UnitType.Soldier, m_UnitImage, unitData);
             ActivateSelectionCircle(select);
         }
         

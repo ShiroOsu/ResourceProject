@@ -9,5 +9,6 @@ namespace Code.ScriptableObjects
         public float health = 1000f;
         public float mana = 100f;
         public int armor = 10;
+        public float fieldOfView = 20f;
     }
 }

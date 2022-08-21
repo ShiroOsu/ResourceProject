@@ -11,6 +11,7 @@ namespace Code.Tools
         private readonly int m_Height = Screen.height;
         private RenderTexture m_RenderTexture;
         private Texture2D m_Texture2D;
+        private UnityEngine.Camera m_MainCamera;
         
         public Rect ScreenRect { get; private set; }
         public Sprite ScreenSprite { get; private set; }
@@ -41,21 +42,22 @@ namespace Code.Tools
 
         public void ScreenShot(UnityEngine.Camera cam)
         {
-            if (!canTakeScreenshot) return;
+            if (!canTakeScreenshot || !cam.CompareTag("MainCamera")) 
+                return;
+            
+            if (!m_MainCamera && cam.CompareTag("MainCamera"))
+            {
+                m_MainCamera = cam;
+            }
             
             Log.Print("Screenshot.cs", "ScreenShot");
             SetupForScreenShot();
 
-            if (!cam)
-            {
-                cam = UnityEngine.Camera.current;
-            }
-
-            cam.targetTexture = m_RenderTexture;
+            m_MainCamera.targetTexture = m_RenderTexture;
             m_Texture2D.ReadPixels(ScreenRect, 0, 0);
             m_Texture2D.Apply();
 
-            cam.targetTexture = null;
+            m_MainCamera.targetTexture = null;
             
             var sprite = Sprite.Create(m_Texture2D, ScreenRect, Vector2.zero);
             ScreenSprite = sprite;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code.Units
+namespace Code.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/Units/UnitData")]
     public class UnitData : ScriptableObject
@@ -18,6 +18,7 @@ namespace Code.Units
         public float attackSpeed = 1f;
 
         public float movementSpeed = 10f;
+        public float fieldOfView = 2f;
         [HideInInspector] public float acceleration = 16f;
         [HideInInspector] public float turnSpeed = 1f;
 

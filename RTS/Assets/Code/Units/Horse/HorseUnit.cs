@@ -1,4 +1,5 @@
 using Code.SaveSystem.Data;
+using Code.ScriptableObjects;
 using Code.Tools.Enums;
 using Code.Tools.HelperClasses;
 using Code.UI;
@@ -10,6 +11,8 @@ namespace Code.Units.Horse
     {
         [SerializeField] private GameObject selectionCircle;
         [SerializeField] private UnitData unitData;
+        [SerializeField] private GameObject fovObject;
+        
         private GameObject m_UnitImage;
         private readonly HorseData m_HorseData = new();
 
@@ -17,6 +20,9 @@ namespace Code.Units.Horse
         {
             UnitType = UnitType.Horse;
             TextureAssetType = TextureAssetType.Horse;
+            
+            // not Z-axis ????
+            fovObject.transform.localScale = new Vector3(unitData.fieldOfView, 0f, unitData.fieldOfView);
             
             Agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             Agent.speed = unitData.movementSpeed;
@@ -26,6 +32,11 @@ namespace Code.Units.Horse
             {
                 m_UnitImage = Extensions.FindObject("HorseImage");
             }
+        }
+
+        public override void EnableFoV(bool fov = true)
+        {
+            fovObject.SetActive(fov);
         }
 
         public override void ShouldSelect(bool select)
